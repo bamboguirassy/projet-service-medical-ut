@@ -1,0 +1,108 @@
+<div class="row justify-content-center" *ngIf="entity">
+  <div class="col col-12 col-xl-8">
+    <form
+      [formGroup]="userForm"
+      novalidate
+      class="mb-4"
+      (ngSubmit)="updateProfile(userForm)"
+    >
+      <tc-form-group>
+        <tc-form-label>Photo</tc-form-label>
+        <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
+
+        <div class="d-flex align-items-center">
+          <tc-avatar [src]="currentAvatar" [size]="100"></tc-avatar>
+          <button
+            tc-button
+            [type]="'button'"
+            [afterIcon]="'icofont-ui-user'"
+            [view]="'accent'"
+            [outline]="true"
+            (click)="fileInput.click()"
+          >
+            Changer photo
+          </button>
+        </div>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-form-label>Prénoms</tc-form-label>
+        <tc-input [placeholder]="'Prénoms'" formControlName="prenom"></tc-input>
+      </tc-form-group>
+
+      <tc-form-group>
+        <tc-form-label>Nom de famille</tc-form-label>
+        <tc-input [placeholder]="'Nom de famille'" formControlName="nom"></tc-input>
+      </tc-form-group>
+
+      <div class="row">
+        <div class="col-12 col-sm-6">
+          <tc-form-group>
+            <tc-form-label>Email</tc-form-label>
+            <tc-input [placeholder]="'Adresse Email'" formControlName="email" [type]="'email'"></tc-input>
+          </tc-form-group>
+        </div>
+
+        <div class="col-12 col-sm-6">
+          <tc-form-group>
+            <tc-form-label>Téléphone</tc-form-label>
+            <tc-input [placeholder]="'Numéro de téléphone'" formControlName="telephone" [type]="'tel'"></tc-input>
+          </tc-form-group>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <button tc-button [view]="'success'" [disabled]="!changes || userForm.invalid">
+            Enregistrer les modifications
+          </button>
+        </div>
+        <div class="col text-right">
+          <button
+            tc-button
+            [type]="'button'"
+            [view]="'error'"
+            [outline]="true"
+          >
+            <span class="d-none d-sm-block">Supprimer le compte</span>
+            <span class="d-sm-none">Supprimer</span>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <hr>
+
+    <h4>Changement de mot de passe</h4>
+
+    <form ngNativeValidate #passwordForm="ngForm" (ngSubmit)="updatePassword()" >
+      <div class="row">
+        <div class="col-12 col-sm-6">
+          <tc-form-group>
+            <tc-form-label>Mot de passe actuel</tc-form-label>
+            <tc-input name="currentPassword" type="password" [required]="true" [(ngModel)]="passwordModel.oldPassword" [placeholder]="'Mot de passe actuel'"></tc-input>
+          </tc-form-group>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-sm-6">
+          <tc-form-group>
+            <tc-form-label>Nouveau mot de passe</tc-form-label>
+            <tc-input name="newPassword" type="password" [required]="true" [(ngModel)]="passwordModel.newPassword" [placeholder]="'Nouveau mot de passe'"></tc-input>
+          </tc-form-group>
+        </div>
+
+        <div class="col-12 col-sm-6">
+          <tc-form-group>
+            <tc-form-label>Confirmation nouveau mot de passe</tc-form-label>
+            <tc-input name="confirmPassword" type="password" [required]="true" [(ngModel)]="passwordModel.confirmPassword" [placeholder]="'Confirmation nouveau mot de passe'"></tc-input>
+          </tc-form-group>
+        </div>
+      </div>
+
+      <button [disabled]="passwordForm.invalid || (passwordModel.newPassword!=passwordModel.confirmPassword)" tc-button [view]="'default'" [outline]="true" [type]="'submit'">
+        Changer mot de passe
+      </button>
+    </form>
+  </div>
+</div>

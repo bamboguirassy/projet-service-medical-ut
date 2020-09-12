@@ -1,0 +1,158 @@
+<tc-card *ngIf="entity && userSrv.resourceName|clonable">
+    <form #form="ngForm" novalidate>
+        <tc-card [outline]="true">
+            <div class="actions">
+                <button [outline]="true" type="button" (click)="location.back()" tc-button view="accent"
+                    beforeIcon="fa fa-mail-reply">Retour</button>
+                <button [outline]="true" class="pull-right" (click)="refreshCloneData()" afterIcon="fa fa-refresh"
+                    tc-button type="button" view="success">Rafraichir</button>
+            </div>
+        </tc-card>
+        <tc-card [outline]="true" title="Détails">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Username</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.username" name="username" id="username"
+                            #username="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="username">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Email</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.email" name="email" id="email"
+                            #email="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="email"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Enabled</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.enabled" name="enabled" id="enabled"
+                            #enabled="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="enabled">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Password</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.password" name="password" id="password"
+                            #password="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="password">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>LastLogin</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.lastLogin" name="lastLogin" id="lastLogin"
+                            #lastLogin="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="lastLogin">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>ConfirmationToken</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.confirmationToken" name="confirmationToken"
+                            id="confirmationToken" #confirmationToken="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="confirmationToken">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>PasswordRequestedAt</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.passwordRequestedAt"
+                            name="passwordRequestedAt" id="passwordRequestedAt" #passwordRequestedAt="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="passwordRequestedAt">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Roles</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.roles" name="roles" id="roles"
+                            #roles="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="roles"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Prenom</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.prenom" name="prenom" id="prenom"
+                            #prenom="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="prenom"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Nom</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="nom"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Telephone</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.telephone" name="telephone" id="telephone"
+                            #telephone="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="telephone">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+            </div>
+        </tc-card>
+        <tc-card [outline]="true">
+            <div class="actions">
+                <button [outline]="true" type="button" (click)="location.back()" tc-button view="error"
+                    beforeIcon="fa fa-close">Annuler</button>
+                <button [outline]="true" type="button" [disabled]="form.invalid" class="ml-1 pull-right"
+                    (click)="clone()" beforeIcon="fa fa-save" tc-button view="warning">
+                    Enregistrer
+                </button>
+                <button [outline]="true" class="ml-1 pull-right" (click)="refreshCloneData()" afterIcon="fa fa-refresh"
+                    tc-button type="button" view="success">Rafraichir</button>
+                <button class="ml-1 pull-right" afterIcon="fa fa-eraser" tc-button type="reset"
+                    [outline]="true">Vider</button>
+            </div>
+        </tc-card>
+    </form>
+</tc-card>
+<app-access-denied *ngIf="!(userSrv.resourceName|clonable)"></app-access-denied>

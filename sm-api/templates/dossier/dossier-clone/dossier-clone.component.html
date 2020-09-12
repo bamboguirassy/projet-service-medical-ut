@@ -1,0 +1,170 @@
+<tc-card *ngIf="entity && dossierSrv.resourceName|clonable" [tcGradient]="lightGradient">
+    <form #form="ngForm" novalidate>
+        <tc-card [outline]="true" [view]="secondViewBorder">
+            <div class="actions">
+                <button [outline]="true" type="button" (click)="location.back()" tc-button view="accent"
+                    beforeIcon="icofont-reply">Retour</button>
+                <button class="float-right" (click)="refreshCloneData()" afterIcon="icofont-refresh"
+                    tc-button type="button" view="success">Rafraichir</button>
+            </div>
+        </tc-card>
+        <tc-card [outline]="true" title="Détails" [view]="secondViewBorder" [tcGradient]="secondGradient">
+            <div class="row">
+                                                                                                <div class="col-12 col-md-6">
+                            <tc-form-group>
+                                <tc-form-label>Numero</tc-form-label>
+                                <tc-input required="required" [(ngModel)]="entity.numero" name="numero" id="numero" #numero="ngModel">
+                                </tc-input>
+                                <tc-form-description>
+                                    <app-form-field-validation-message [formField]="numero"></app-form-field-validation-message>
+                                </tc-form-description>
+                            </tc-form-group>
+                        </div>
+                                                                                <div class="col-12 col-md-6">
+                            <tc-form-group>
+                                <tc-form-label>Prenoms</tc-form-label>
+                                <tc-input required="required" [(ngModel)]="entity.prenoms" name="prenoms" id="prenoms" #prenoms="ngModel">
+                                </tc-input>
+                                <tc-form-description>
+                                    <app-form-field-validation-message [formField]="prenoms"></app-form-field-validation-message>
+                                </tc-form-description>
+                            </tc-form-group>
+                        </div>
+                                                                                <div class="col-12 col-md-6">
+                            <tc-form-group>
+                                <tc-form-label>Nom</tc-form-label>
+                                <tc-input required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
+                                </tc-input>
+                                <tc-form-description>
+                                    <app-form-field-validation-message [formField]="nom"></app-form-field-validation-message>
+                                </tc-form-description>
+                            </tc-form-group>
+                        </div>
+                                                                                <div class="col-12 col-md-6">
+                            <tc-form-group>
+                                <tc-form-label>DateNaissance</tc-form-label>
+                                <tc-input required="required" [(ngModel)]="entity.dateNaissance" name="dateNaissance" id="dateNaissance" #dateNaissance="ngModel">
+                                </tc-input>
+                                <tc-form-description>
+                                    <app-form-field-validation-message [formField]="dateNaissance"></app-form-field-validation-message>
+                                </tc-form-description>
+                            </tc-form-group>
+                        </div>
+                                                                                <div class="col-12 col-md-6">
+                            <tc-form-group>
+                                <tc-form-label>Cni</tc-form-label>
+                                <tc-input required="required" [(ngModel)]="entity.cni" name="cni" id="cni" #cni="ngModel">
+                                </tc-input>
+                                <tc-form-description>
+                                    <app-form-field-validation-message [formField]="cni"></app-form-field-validation-message>
+                                </tc-form-description>
+                            </tc-form-group>
+                        </div>
+                                                                                <div class="col-12 col-md-6">
+                            <tc-form-group>
+                                <tc-form-label>Telephone</tc-form-label>
+                                <tc-input required="required" [(ngModel)]="entity.telephone" name="telephone" id="telephone" #telephone="ngModel">
+                                </tc-input>
+                                <tc-form-description>
+                                    <app-form-field-validation-message [formField]="telephone"></app-form-field-validation-message>
+                                </tc-form-description>
+                            </tc-form-group>
+                        </div>
+                                                                                <div class="col-12 col-md-6">
+                            <tc-form-group>
+                                <tc-form-label>TypePatient</tc-form-label>
+                                <tc-input required="required" [(ngModel)]="entity.typePatient" name="typePatient" id="typePatient" #typePatient="ngModel">
+                                </tc-input>
+                                <tc-form-description>
+                                    <app-form-field-validation-message [formField]="typePatient"></app-form-field-validation-message>
+                                </tc-form-description>
+                            </tc-form-group>
+                        </div>
+                                                                                <div class="col-12 col-md-6">
+                            <tc-form-group>
+                                <tc-form-label>LienParente</tc-form-label>
+                                <tc-input required="required" [(ngModel)]="entity.lienParente" name="lienParente" id="lienParente" #lienParente="ngModel">
+                                </tc-input>
+                                <tc-form-description>
+                                    <app-form-field-validation-message [formField]="lienParente"></app-form-field-validation-message>
+                                </tc-form-description>
+                            </tc-form-group>
+                        </div>
+                                                                                <div class="col-12 col-md-6">
+                            <tc-form-group>
+                                <tc-form-label>Matricule</tc-form-label>
+                                <tc-input required="required" [(ngModel)]="entity.matricule" name="matricule" id="matricule" #matricule="ngModel">
+                                </tc-input>
+                                <tc-form-description>
+                                    <app-form-field-validation-message [formField]="matricule"></app-form-field-validation-message>
+                                </tc-form-description>
+                            </tc-form-group>
+                        </div>
+                                                                                <div class="col-12 col-md-6">
+                            <tc-form-group>
+                                <tc-form-label>PrenomTravailleur</tc-form-label>
+                                <tc-input required="required" [(ngModel)]="entity.prenomTravailleur" name="prenomTravailleur" id="prenomTravailleur" #prenomTravailleur="ngModel">
+                                </tc-input>
+                                <tc-form-description>
+                                    <app-form-field-validation-message [formField]="prenomTravailleur"></app-form-field-validation-message>
+                                </tc-form-description>
+                            </tc-form-group>
+                        </div>
+                                                                                <div class="col-12 col-md-6">
+                            <tc-form-group>
+                                <tc-form-label>NomTravailleur</tc-form-label>
+                                <tc-input required="required" [(ngModel)]="entity.nomTravailleur" name="nomTravailleur" id="nomTravailleur" #nomTravailleur="ngModel">
+                                </tc-input>
+                                <tc-form-description>
+                                    <app-form-field-validation-message [formField]="nomTravailleur"></app-form-field-validation-message>
+                                </tc-form-description>
+                            </tc-form-group>
+                        </div>
+                                                                                <div class="col-12 col-md-6">
+                            <tc-form-group>
+                                <tc-form-label>Genre</tc-form-label>
+                                <tc-input required="required" [(ngModel)]="entity.genre" name="genre" id="genre" #genre="ngModel">
+                                </tc-input>
+                                <tc-form-description>
+                                    <app-form-field-validation-message [formField]="genre"></app-form-field-validation-message>
+                                </tc-form-description>
+                            </tc-form-group>
+                        </div>
+                                                                                <div class="col-12 col-md-6">
+                            <tc-form-group>
+                                <tc-form-label>DateCreation</tc-form-label>
+                                <tc-input required="required" [(ngModel)]="entity.dateCreation" name="dateCreation" id="dateCreation" #dateCreation="ngModel">
+                                </tc-input>
+                                <tc-form-description>
+                                    <app-form-field-validation-message [formField]="dateCreation"></app-form-field-validation-message>
+                                </tc-form-description>
+                            </tc-form-group>
+                        </div>
+                                                                                <div class="col-12 col-md-6">
+                            <tc-form-group>
+                                <tc-form-label>UserEmail</tc-form-label>
+                                <tc-input required="required" [(ngModel)]="entity.userEmail" name="userEmail" id="userEmail" #userEmail="ngModel">
+                                </tc-input>
+                                <tc-form-description>
+                                    <app-form-field-validation-message [formField]="userEmail"></app-form-field-validation-message>
+                                </tc-form-description>
+                            </tc-form-group>
+                        </div>
+                                                </div>
+        </tc-card>
+        <tc-card [outline]="true" [view]="secondViewBorder">
+            <div class="actions">
+                <button [outline]="true" type="button" (click)="location.back()" tc-button view="error"
+                    beforeIcon="icofont-close">Annuler</button>
+                <button type="button" [disabled]="form.invalid" class="ml-1 float-right"
+                    (click)="clone()" [beforeIcon]="'icofont-save'" tc-button [view]="'warning'">
+                    Enregistrer
+                </button>
+                <button class="ml-1 float-right" (click)="refreshCloneData()" afterIcon="icofont-refresh"
+                    tc-button type="button" view="success">Rafraichir</button>
+                <button class="ml-1 float-right" afterIcon="icofont-eraser" tc-button type="reset">Vider</button>
+            </div>
+        </tc-card>
+    </form>
+</tc-card>
+<app-access-denied *ngIf="!(dossierSrv.resourceName|clonable)"></app-access-denied>

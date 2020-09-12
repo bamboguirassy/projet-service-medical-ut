@@ -1,0 +1,38 @@
+<tc-card *ngIf="pathologieSrv.resourceName|listable" [tcGradient]="lightGradient">
+  <tc-card [view]="secondViewBorder" [outline]="true">
+    <div class="row">
+      <div class="col-12">
+        <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findAll()">Rafraichir</button>
+      </div>
+    </div>
+  </tc-card>
+  <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
+                                                        <tc-table-col [columnTitle]="'Nom'" [columnName]="'nom'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value>
+                      <span class="nowrap">{{ value }}</span>
+                    </ng-template>
+                </tc-table-col>
+                                                <tc-table-col [columnTitle]="'Description'" [columnName]="'description'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value>
+                      <span class="nowrap">{{ value }}</span>
+                    </ng-template>
+                </tc-table-col>
+                        <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+      <ng-template #tableTDTemplate let-row="row">
+        <div class="actions">
+          <button *ngIf="pathologieSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'" [view]="'warning'" [square]="true" [tcShape]="500"
+            [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
+          <button *ngIf="pathologieSrv.resourceName|clonable" [outline]="true" tc-button [afterIcon]="'icofont-copy'" [square]="true" [tcShape]="500"
+            [size]="'sm'" [routerLink]="[row.id,'clone']"></button>
+          <button *ngIf="pathologieSrv.resourceName|deletable" (click)="remove(row)" tc-button [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
+            [size]="'sm'"></button>
+          <button *ngIf="pathologieSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'" [view]="'accent'" [square]="true" [tcShape]="500"
+            [size]="'sm'" [routerLink]="[row.id]"></button>
+        </div>
+      </ng-template>
+    </tc-table-col>
+  </tc-table>
+  <app-empty-table-message *ngIf="!items.length" ></app-empty-table-message>
+  <app-pathologie-new (creation)="onCreate($event)"></app-pathologie-new>
+</tc-card>
+<app-access-denied *ngIf="!(pathologieSrv.resourceName|listable)"></app-access-denied>

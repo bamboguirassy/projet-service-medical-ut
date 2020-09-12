@@ -1,0 +1,98 @@
+<tc-card *ngIf="dossierSrv.resourceName|listable" [tcGradient]="lightGradient">
+  <tc-card [view]="secondViewBorder" [outline]="true">
+    <div class="row">
+      <div class="col-12">
+        <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findAll()">Rafraichir</button>
+      </div>
+    </div>
+  </tc-card>
+  <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
+                                                        <tc-table-col [columnTitle]="'Numero'" [columnName]="'numero'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value>
+                      <span class="nowrap">{{ value }}</span>
+                    </ng-template>
+                </tc-table-col>
+                                                <tc-table-col [columnTitle]="'Prenoms'" [columnName]="'prenoms'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value>
+                      <span class="nowrap">{{ value }}</span>
+                    </ng-template>
+                </tc-table-col>
+                                                <tc-table-col [columnTitle]="'Nom'" [columnName]="'nom'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value>
+                      <span class="nowrap">{{ value }}</span>
+                    </ng-template>
+                </tc-table-col>
+                                                <tc-table-col [columnTitle]="'DateNaissance'" [columnName]="'dateNaissance'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value>
+                      <span class="nowrap">{{ value }}</span>
+                    </ng-template>
+                </tc-table-col>
+                                                <tc-table-col [columnTitle]="'Cni'" [columnName]="'cni'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value>
+                      <span class="nowrap">{{ value }}</span>
+                    </ng-template>
+                </tc-table-col>
+                                                <tc-table-col [columnTitle]="'Telephone'" [columnName]="'telephone'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value>
+                      <span class="nowrap">{{ value }}</span>
+                    </ng-template>
+                </tc-table-col>
+                                                <tc-table-col [columnTitle]="'TypePatient'" [columnName]="'typePatient'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value>
+                      <span class="nowrap">{{ value }}</span>
+                    </ng-template>
+                </tc-table-col>
+                                                <tc-table-col [columnTitle]="'LienParente'" [columnName]="'lienParente'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value>
+                      <span class="nowrap">{{ value }}</span>
+                    </ng-template>
+                </tc-table-col>
+                                                <tc-table-col [columnTitle]="'Matricule'" [columnName]="'matricule'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value>
+                      <span class="nowrap">{{ value }}</span>
+                    </ng-template>
+                </tc-table-col>
+                                                <tc-table-col [columnTitle]="'PrenomTravailleur'" [columnName]="'prenomTravailleur'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value>
+                      <span class="nowrap">{{ value }}</span>
+                    </ng-template>
+                </tc-table-col>
+                                                <tc-table-col [columnTitle]="'NomTravailleur'" [columnName]="'nomTravailleur'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value>
+                      <span class="nowrap">{{ value }}</span>
+                    </ng-template>
+                </tc-table-col>
+                                                <tc-table-col [columnTitle]="'Genre'" [columnName]="'genre'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value>
+                      <span class="nowrap">{{ value }}</span>
+                    </ng-template>
+                </tc-table-col>
+                                                <tc-table-col [columnTitle]="'DateCreation'" [columnName]="'dateCreation'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value>
+                      <span class="nowrap">{{ value }}</span>
+                    </ng-template>
+                </tc-table-col>
+                                                <tc-table-col [columnTitle]="'UserEmail'" [columnName]="'userEmail'" [enableSorting]="true">
+                    <ng-template #tableTDTemplate let-value>
+                      <span class="nowrap">{{ value }}</span>
+                    </ng-template>
+                </tc-table-col>
+                        <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+      <ng-template #tableTDTemplate let-row="row">
+        <div class="actions">
+          <button *ngIf="dossierSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'" [view]="'warning'" [square]="true" [tcShape]="500"
+            [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
+          <button *ngIf="dossierSrv.resourceName|clonable" [outline]="true" tc-button [afterIcon]="'icofont-copy'" [square]="true" [tcShape]="500"
+            [size]="'sm'" [routerLink]="[row.id,'clone']"></button>
+          <button *ngIf="dossierSrv.resourceName|deletable" (click)="remove(row)" tc-button [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
+            [size]="'sm'"></button>
+          <button *ngIf="dossierSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'" [view]="'accent'" [square]="true" [tcShape]="500"
+            [size]="'sm'" [routerLink]="[row.id]"></button>
+        </div>
+      </ng-template>
+    </tc-table-col>
+  </tc-table>
+  <app-empty-table-message *ngIf="!items.length" ></app-empty-table-message>
+  <app-dossier-new (creation)="onCreate($event)"></app-dossier-new>
+</tc-card>
+<app-access-denied *ngIf="!(dossierSrv.resourceName|listable)"></app-access-denied>

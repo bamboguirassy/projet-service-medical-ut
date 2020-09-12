@@ -1,0 +1,14 @@
+<ul *ngIf="userFormField.control.status=='INVALID'">
+    <li *ngIf="userFormField.control.errors?.required">
+        Champ obligatoire <sup>*</sup>
+    </li>
+    <li *ngIf="userFormField.control.errors?.minlength">
+        Nombre minimum de caractere non respecté
+    </li>
+    <li *ngIf="userFormField.control.errors?.min">
+        Valeur minimum non respectée
+    </li>
+    <li *ngIf="userFormField.control.errors?.max">
+        Valeur maximale dépassée
+    </li>
+</ul>

@@ -1,0 +1,25 @@
+[
+  {
+    "title": "Tableau de bord",
+    "icon": {
+      "class": "icofont-dashboard-web"
+    },
+    "routing": "default-dashboard"
+  },
+  {
+    "title": "Paramétrage",
+    "icon": {
+      "class": "icofont-tools-alt-2"
+    },
+    "sub": [
+      {
+        "title": "Groupe d'utilisateurs",
+        "routing": "group"
+      },
+      {
+        "title": "Utilisateurs",
+        "routing": "user"
+      }
+    ]
+  }
+]

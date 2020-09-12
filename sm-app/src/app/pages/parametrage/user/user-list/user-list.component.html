@@ -1,0 +1,123 @@
+<tc-card *ngIf="userSrv.resourceName|listable" [tcGradient]="lightGradient">
+    <tc-card view="error" [outline]="true">
+        <div class="row">
+            <div class="col-12">
+                <button class="float-right" tc-button afterIcon="icofont-refresh"
+                    (click)="findAll()">Rafraichir</button>
+            </div>
+        </div>
+    </tc-card>
+    <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
+        <tc-table-col [enableSorting]="false" [columnTitle]="'Photo'" [columnName]="'pathImage'">
+            <ng-template #tableTDTemplate let-value>
+                <tc-avatar *ngIf="value" [src]="value"></tc-avatar>
+                <i *ngIf="!value" class="icofont-ui-user icofont-2x"></i>
+            </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Prenom'" [columnName]="'prenom'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+                <span class="nowrap" *ngIf="value">{{ value }}</span>
+                <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+            </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Nom'" [columnName]="'nom'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+                <span class="nowrap" *ngIf="value">{{ value }}</span>
+                <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+            </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Telephone'" [columnName]="'telephone'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+                <a *ngIf="value" href="tel:{{ value }}"><span class="nowrap">{{ value }}</span></a>
+                <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+            </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Email'" [columnName]="'email'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+                <a *ngIf="value" href="mailto:{{ value }}">{{ value }}</a>
+                <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+            </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Fonction'" [columnName]="'fonction'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+                <span class="nowrap" *ngIf="value">{{ value }}</span>
+                <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+            </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Etat Compte'" [columnName]="'enabled'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value let-row="row">
+                <ng-container [ngSwitch]="row?.id !== currentUser?.id && userSrv.resourceName|editable">
+                    <tc-switcher *ngSwitchCase="true" (valueChanged)="onChange($event, row)" [value]="value">
+                    </tc-switcher>
+                    <tc-badge *ngSwitchCase="false" view="{{value ? 'success' : 'error'}}">
+                        {{ value ? 'Activé' : 'Désactivé' }} </tc-badge>
+                </ng-container>
+            </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Dernière Connexion'" [columnName]="'lastLogin'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+                <span *ngIf="value" class="nowrap">{{ value|date:'dd MMM, yyyy à HH:mm:ss' }}</span>
+                <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+            </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Actions'">
+            <ng-template #tableTDTemplate let-row="row">
+                <div class="actions">
+                    <button *ngIf="userSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
+                        [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"
+                        [routerLink]="[row.id,'edit']"></button>
+                    <button *ngIf="(userSrv.resourceName|deletable) && currentUser?.id!=row.id" (click)="remove(row)"
+                        tc-button [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
+                        [size]="'sm'"></button>
+                    <button *ngIf="userSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'"
+                        [view]="'accent'" [square]="true" [tcShape]="500" [size]="'sm'"
+                        [routerLink]="[row.id]"></button>
+                    <button nz-tooltip nzTooltipTitle="Modifier Groupe" *ngIf="userSrv.resourceName|editable"
+                        [outline]="true" tc-button [afterIcon]="'icofont-users-alt-2'" [square]="true" [tcShape]="500"
+                        [size]="'sm'" (click)="toggleGroupModal(row)"></button>
+                </div>
+            </ng-template>
+        </tc-table-col>
+    </tc-table>
+    <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
+    <app-user-new (creation)="onCreate($event)"></app-user-new>
+</tc-card>
+<!-- <app-access-denied *ngIf="!(userSrv.resourceName|listable)"></app-access-denied> -->
+
+<nz-modal [nzWidth]="720" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="modalTitle"
+    [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+    <ng-template #modalTitle>
+        Modification de Groupe - {{ selectedUser?.prenom }} {{ selectedUser?.nom }}
+    </ng-template>
+
+    <ng-template #modalContent>
+
+        <form #form="ngForm" novalidate>
+
+            <div class="row">
+                <div class="col-12 col-md-12">
+                    <tc-form-group>
+                        <tc-form-label>Groupes</tc-form-label>
+                        <nz-select (nzOpenChange)="fetchGroups()" nzMode="tags" name="groupe"
+                            nzPlaceHolder="Selectionner le(s) groupe(s)" [(ngModel)]="selectedGroups">
+                            <ng-container *ngFor="let group of groups">
+                                <nz-option [nzDisabled]="group?.code === 'GC' && selectedUser && belongTo('GC')"
+                                    *ngIf="!fetching" [nzLabel]="group.name" [nzValue]="group">
+                                </nz-option>
+                            </ng-container>
+                            <nz-option *ngIf="fetching" nzDisabled nzCustomContent>
+                                <i nz-icon nzType="loading" class="loading-icon"></i> Veuillez patienter...
+                            </nz-option>
+                        </nz-select>
+                    </tc-form-group>
+                </div>
+            </div>
+        </form>
+
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <button nz-button [disabled]="loadingIndicator" nzType="default" (click)="closeModal()">Annuler</button>
+        <button nz-button nzType="primary" (click)="updateGroup()" [nzLoading]="loadingIndicator">Valider</button>
+    </ng-template>
+</nz-modal>

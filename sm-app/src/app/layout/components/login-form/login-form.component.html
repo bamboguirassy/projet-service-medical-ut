@@ -1,0 +1,19 @@
+<form [formGroup]="loginForm" ngNativeValidate (ngSubmit)="login()" >
+  <tc-form-group>
+    <tc-input [placeholder]="'Nom d\'utilisateur'" formControlName="username"></tc-input>
+  </tc-form-group>
+
+  <tc-form-group>
+    <tc-input [placeholder]="'Mot de passe'" [type]="'password'" formControlName="password"></tc-input>
+  </tc-form-group>
+
+  <tc-form-group>
+    <tc-switcher [value]="true">Se rappeler de moi</tc-switcher>
+  </tc-form-group>
+
+  <div class="actions justify-content-between">
+    <button [outline]="true" [disabled]="loginForm.invalid" tc-button [view]="'accent'" [beforeIcon]="'icofont-login'">
+      Se connecter
+    </button>
+  </div>
+</form>

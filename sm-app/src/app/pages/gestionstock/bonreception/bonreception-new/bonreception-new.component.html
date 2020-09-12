@@ -1,0 +1,37 @@
+<div class="add-action-box" *ngIf="bonReceptionSrv.resourceName|creable">
+  <button tc-button [afterIcon]="'icofont-plus'" [view]="'accent'" [square]="true" [tcShape]="500"
+    (click)="openModal()"></button>
+</div>
+<app-access-denied *ngIf="!(bonReceptionSrv.resourceName|creable)"></app-access-denied>
+
+<!-- Modal window -->
+<nz-modal nzWidth="50%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
+  [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+  <ng-template #modalBody>
+    <form #form="ngForm" ngNativeValidate>
+      <div class="row">
+        <div class="col-12">
+          <tc-form-group>
+            <tc-form-label>Date</tc-form-label>
+            <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.date" name="date" id="date" #date="ngModel"></nz-date-picker>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="date"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+        (click)="closeModal()">Fermer</button>
+      <button [disabled]="form.invalid" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'"
+        tc-button [view]="'accent'">
+        Enregistrer
+      </button>
+    </div>
+  </ng-template>
+</nz-modal>
+<!-- end Modal window -->

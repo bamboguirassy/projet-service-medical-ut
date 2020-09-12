@@ -1,0 +1,13 @@
+<div class="access-denied">
+    <nz-empty nzNotFoundImage="assets/img/acces_non_autorise.png" [nzNotFoundContent]="contentTpl"
+        [nzNotFoundFooter]="footerTpl">
+        <ng-template #contentTpl>
+            <span> Vous n'êtes pas autorisé à visualiser cette page. <br>
+                Si vous pensez qu'il s'agit d'une erreur, merci de contacter votre administrateur.
+            </span>
+        </ng-template>
+        <ng-template #footerTpl>
+            <button nz-button nzType="primary" (click)="location.back()" class="mb-2">Revenir à la page précédente</button>
+        </ng-template>
+    </nz-empty>
+</div>

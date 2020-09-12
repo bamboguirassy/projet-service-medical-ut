@@ -1,0 +1,76 @@
+<tc-card *ngIf="dossierSrv.resourceName|showable" [tcGradient]="lightGradient">
+    <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
+        <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-mail-reply">Retour</button>
+        <button [outline]="true" (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
+            beforeIcon="icofont-refresh">Rafraichir</button>
+        <button (click)="remove(entity)" *ngIf="dossierSrv.resourceName|deletable" [outline]="true" tc-button view="error"
+            beforeIcon="icofont-trash" class="ml-1">Supprimer</button>
+        <button *ngIf="dossierSrv.resourceName|editable" [routerLink]="['/'+orientation,dossierSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+            class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit">Modifier</button>
+    </tc-card>
+    <div class="row">
+        <div class="col-12">
+            <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
+                <table class="table">
+                                                                                                <tr>
+                            <th>Numero</th>
+                            <td>{{ entity?.numero }}</td>
+                        </tr>
+                                                                                <tr>
+                            <th>Prenoms</th>
+                            <td>{{ entity?.prenoms }}</td>
+                        </tr>
+                                                                                <tr>
+                            <th>Nom</th>
+                            <td>{{ entity?.nom }}</td>
+                        </tr>
+                                                                                <tr>
+                            <th>DateNaissance</th>
+                            <td>{{ entity?.dateNaissance }}</td>
+                        </tr>
+                                                                                <tr>
+                            <th>Cni</th>
+                            <td>{{ entity?.cni }}</td>
+                        </tr>
+                                                                                <tr>
+                            <th>Telephone</th>
+                            <td>{{ entity?.telephone }}</td>
+                        </tr>
+                                                                                <tr>
+                            <th>TypePatient</th>
+                            <td>{{ entity?.typePatient }}</td>
+                        </tr>
+                                                                                <tr>
+                            <th>LienParente</th>
+                            <td>{{ entity?.lienParente }}</td>
+                        </tr>
+                                                                                <tr>
+                            <th>Matricule</th>
+                            <td>{{ entity?.matricule }}</td>
+                        </tr>
+                                                                                <tr>
+                            <th>PrenomTravailleur</th>
+                            <td>{{ entity?.prenomTravailleur }}</td>
+                        </tr>
+                                                                                <tr>
+                            <th>NomTravailleur</th>
+                            <td>{{ entity?.nomTravailleur }}</td>
+                        </tr>
+                                                                                <tr>
+                            <th>Genre</th>
+                            <td>{{ entity?.genre }}</td>
+                        </tr>
+                                                                                <tr>
+                            <th>DateCreation</th>
+                            <td>{{ entity?.dateCreation }}</td>
+                        </tr>
+                                                                                <tr>
+                            <th>UserEmail</th>
+                            <td>{{ entity?.userEmail }}</td>
+                        </tr>
+                                                    </table>
+            </tc-card>
+        </div>
+    </div>
+</tc-card>
+<app-access-denied *ngIf="!(dossierSrv.resourceName|showable)"></app-access-denied>

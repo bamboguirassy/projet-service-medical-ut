@@ -1,0 +1,71 @@
+<div class="add-action-box" *ngIf="docteurSrv.resourceName|creable">
+  <button tc-button [afterIcon]="'icofont-plus'" [view]="'accent'" [square]="true" [tcShape]="500"
+    (click)="openModal()"></button>
+</div>
+<app-access-denied *ngIf="!(docteurSrv.resourceName|creable)"></app-access-denied>
+
+<!-- Modal window -->
+<nz-modal nzWidth="60%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
+  [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+  <ng-template #modalBody>
+    <form #form="ngForm" ngNativeValidate>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <tc-form-group>
+            <tc-form-label>Prenoms</tc-form-label>
+            <tc-input required="required" [(ngModel)]="entity.prenoms" name="prenoms" id="prenoms" #prenoms="ngModel">
+            </tc-input>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="prenoms"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+        <div class="col-12 col-md-6">
+          <tc-form-group>
+            <tc-form-label>Nom</tc-form-label>
+            <tc-input required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
+            </tc-input>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="nom"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+        <div class="col-12 col-md-6">
+          <tc-form-group>
+            <tc-form-label>Specialite</tc-form-label>
+            <tc-input [(ngModel)]="entity.specialite" name="specialite" id="specialite" #specialite="ngModel">
+            </tc-input>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="specialite"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+        <div class="col-12 col-md-6">
+          <tc-form-group>
+            <tc-form-label>Photo</tc-form-label>
+            <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
+            <div class="d-flex align-items-center">
+              <tc-avatar [src]="currentAvatar" [size]="100"></tc-avatar>
+              <button tc-button [type]="'button'" [afterIcon]="'icofont-ui-user'" [view]="'accent'" [outline]="true"
+                (click)="fileInput.click()">
+                Choisir photo
+              </button>
+            </div>
+          </tc-form-group>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+        (click)="closeModal()">Fermer</button>
+      <button [disabled]="form.invalid" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'"
+        tc-button [view]="'accent'">
+        Enregistrer
+      </button>
+    </div>
+  </ng-template>
+</nz-modal>
+<!-- end Modal window -->

@@ -1,0 +1,80 @@
+<tc-card *ngIf="dossierSrv.resourceName|showable" [tcGradient]="lightGradient">
+    <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
+        <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-mail-reply">Retour</button>
+        <button [outline]="true" (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
+            beforeIcon="icofont-refresh">Rafraichir</button>
+        <button (click)="remove(entity)" *ngIf="dossierSrv.resourceName|deletable" [outline]="true" tc-button
+            view="error" beforeIcon="icofont-trash" class="ml-1">Supprimer</button>
+        <button *ngIf="dossierSrv.resourceName|editable"
+            [routerLink]="['/'+orientation,dossierSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+            class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit">Modifier</button>
+    </tc-card>
+    <div class="row">
+        <div class="col-12">
+            <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
+                <blockquote class="blockquote">
+                    <p class="mb-0">Patient: {{entity?.prenoms+' '+entity?.nom}} <span
+                            *ngIf="entity?.typePatient=='famille'">{{entity?.lienParente+' de '+entity?.prenomTravailleur+' '+entity?.nomTravailleur}}</span>
+                        - {{entity?.typePatient}} </p>
+                    <footer class="blockquote-footer"> <cite title="Source Title">Depuis le
+                            {{entity?.dateCreation|date:'dd/MM/yyyy'}} par {{ entity?.userEmail }}</cite></footer>
+                </blockquote>
+            </tc-card>
+        </div>
+        <div class="col-12 col-md-4">
+            <tc-card [outline]="true" [view]="secondViewBorder" [title]="'Détails'" [tcGradient]="secondGradient">
+                <table class="table">
+                    <tr>
+                        <th>Date Naissance</th>
+                        <td>{{ entity?.dateNaissance|date:'dd/MM/yyyy' }}</td>
+                    </tr>
+                    <tr>
+                        <th>CNI</th>
+                        <td>
+                            <span *ngIf="entity?.cni">{{ entity?.cni }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.cni">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Téléphone</th>
+                        <td>
+                            <span *ngIf="entity?.telephone">{{ entity?.telephone }}</span>
+                            <tc-badge view="error" *ngIf="!entity?.telephone">Indéfinie</tc-badge>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Matricule</th>
+                        <td>{{ entity?.matricule }}</td>
+                    </tr>
+                    <tr>
+                        <th>Genre</th>
+                        <td>{{ entity?.genre }}</td>
+                    </tr>
+                    <tr>
+                        <th>Structure</th>
+                        <td>{{ entity?.structure }}</td>
+                    </tr>
+                </table>
+            </tc-card>
+        </div>
+        <div class="col-12 col-md-8">
+            <tc-card [outline]="true" [view]="secondViewBorder" [title]="'Infos sup.'" [tcGradient]="secondGradient">
+                <nz-collapse nzAccordion>
+                    <nz-collapse-panel nzHeader="Consultations" [nzActive]="true">
+                        <p>PN content</p>
+                    </nz-collapse-panel>
+                    <nz-collapse-panel nzHeader="Inputations">
+                        <p>PN content</p>
+                    </nz-collapse-panel>
+                    <nz-collapse-panel nzHeader="Rendez-vous">
+                        <p>PN content</p>
+                    </nz-collapse-panel>
+                    <nz-collapse-panel nzHeader="Repos Médicaux">
+                        <p>PN content</p>
+                    </nz-collapse-panel>
+                </nz-collapse>
+            </tc-card>
+        </div>
+    </div>
+</tc-card>
+<app-access-denied *ngIf="!(dossierSrv.resourceName|showable)"></app-access-denied>
