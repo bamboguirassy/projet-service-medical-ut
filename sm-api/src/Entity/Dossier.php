@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -129,6 +131,16 @@ epoux ou enfant"})
      * @ORM\Column(type="string", length=145)
      */
     private $structure;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Consultation::class, mappedBy="dossier")
+     */
+    private $consultations;
+
+    public function __construct()
+    {
+        $this->consultations = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -323,6 +335,37 @@ epoux ou enfant"})
     public function setStructure(string $structure): self
     {
         $this->structure = $structure;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Consultation[]
+     */
+    public function getConsultations(): Collection
+    {
+        return $this->consultations;
+    }
+
+    public function addConsultation(Consultation $consultation): self
+    {
+        if (!$this->consultations->contains($consultation)) {
+            $this->consultations[] = $consultation;
+            $consultation->setDossier1($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConsultation(Consultation $consultation): self
+    {
+        if ($this->consultations->contains($consultation)) {
+            $this->consultations->removeElement($consultation);
+            // set the owning side to null (unless already changed)
+            if ($consultation->getDossier1() === $this) {
+                $consultation->setDossier1(null);
+            }
+        }
 
         return $this;
     }
