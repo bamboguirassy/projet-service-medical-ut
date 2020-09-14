@@ -1,3 +1,3 @@
 export class BamboAbstractObject {
-    id: number;
+    id: any;
 }

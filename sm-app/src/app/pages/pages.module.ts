@@ -1,3 +1,8 @@
+import { ConsultationShowComponent } from './gestionmedicale/consultation/consultation-show/consultation-show.component';
+import { ConsultationNewComponent } from './gestionmedicale/consultation/consultation-new/consultation-new.component';
+import { ConsultationListComponent } from './gestionmedicale/consultation/consultation-list/consultation-list.component';
+import { ConsultationEditComponent } from './gestionmedicale/consultation/consultation-edit/consultation-edit.component';
+import { ConsultationCloneComponent } from './gestionmedicale/consultation/consultation-clone/consultation-clone.component';
 import { DossierShowComponent } from './gestionmedicale/dossier/dossier-show/dossier-show.component';
 import { DossierNewComponent } from './gestionmedicale/dossier/dossier-new/dossier-new.component';
 import { DossierListComponent } from './gestionmedicale/dossier/dossier-list/dossier-list.component';
@@ -68,6 +73,7 @@ import { PathologieEditComponent } from './parametrage/pathologie/pathologie-edi
 import { PathologieListComponent } from './parametrage/pathologie/pathologie-list/pathologie-list.component';
 import { PathologieNewComponent } from './parametrage/pathologie/pathologie-new/pathologie-new.component';
 import { PathologieShowComponent } from './parametrage/pathologie/pathologie-show/pathologie-show.component';
+import { ConsultationDossierComponent } from './gestionmedicale/consultation/consultation-dossier/consultation-dossier.component';
 
 @NgModule({
   imports: [
@@ -168,7 +174,13 @@ import { PathologieShowComponent } from './parametrage/pathologie/pathologie-sho
     DossierEditComponent,
     DossierListComponent,
     DossierNewComponent,
-    DossierShowComponent
+    DossierShowComponent,
+    ConsultationCloneComponent,
+    ConsultationEditComponent,
+    ConsultationListComponent,
+    ConsultationNewComponent,
+    ConsultationShowComponent,
+    ConsultationDossierComponent
   ],
   exports: [ ],
   entryComponents: [ ],

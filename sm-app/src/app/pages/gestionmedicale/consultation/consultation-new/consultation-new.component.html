@@ -1,0 +1,64 @@
+<button (click)="openModal()" tc-button [afterIcon]="'icofont-plus'" *ngIf="consultationSrv.resourceName|creable"
+  view="info">Consultation</button>
+<app-access-denied *ngIf="!(consultationSrv.resourceName|creable)"></app-access-denied>
+
+<!-- Modal window -->
+<nz-modal nzWidth="80%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
+  [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+  <ng-template #modalBody>
+    <form #form="ngForm" ngNativeValidate>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <tc-form-group>
+            <tc-form-label>Date</tc-form-label>
+            <nz-date-picker required="required" [(ngModel)]="entity.date" name="date" id="date" #date="ngModel"
+              [nzFormat]="'dd/MM/yyyy'"></nz-date-picker>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="date"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+        <div class="col-12 col-md-6">
+          <tc-form-group>
+            <tc-form-label>Docteur</tc-form-label>
+            <nz-select name="docteur" id="docteur"
+            #docteur="ngModel" required="required" nzPlaceHolder="Selectionner le docteur" nzAllowClear nzShowSearch [(ngModel)]="selectedDocteur">
+              <ng-container *ngFor="let docteur of docteurs">
+                <nz-option nzCustomContent [nzValue]="docteur" [nzLabel]="docteur.prenoms+' '+docteur.nom"><span class="nowrap"><tc-avatar [src]="docteur.filepath"></tc-avatar> {{docteur.prenoms+' '+docteur.nom}}</span>  </nz-option>
+              </ng-container>
+            </nz-select>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="docteur"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+        <div class="col-12 col-md-6">
+          <tc-form-group>
+            <tc-form-label>Pathologie diagnostiquée</tc-form-label>
+            <nz-select name="pathologie" id="pathologie"
+            #pathologie="ngModel" nzPlaceHolder="Selectionner la pathologie" nzAllowClear nzShowSearch [(ngModel)]="selectedPathologie">
+              <ng-container *ngFor="let pathologie of pathologies">
+                <nz-option [nzValue]="pathologie" [nzLabel]="pathologie.nom"></nz-option>
+              </ng-container>
+            </nz-select>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="pathologie"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+        (click)="closeModal()">Fermer</button>
+      <button [disabled]="form.invalid" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'"
+        tc-button [view]="'accent'">
+        Enregistrer
+      </button>
+    </div>
+  </ng-template>
+</nz-modal>
+<!-- end Modal window -->

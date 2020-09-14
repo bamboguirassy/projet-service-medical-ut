@@ -1,3 +1,4 @@
+import { Consultation } from './../consultation/consultation';
 import { BamboAbstractObject } from './../../../shared/classes/bambo-abstract-object';
 
 export class Dossier extends BamboAbstractObject {
@@ -17,4 +18,5 @@ export class Dossier extends BamboAbstractObject {
     userEmail: string;
     etat: boolean;
     structure: string;
+    consultations: Consultation[];
 }
