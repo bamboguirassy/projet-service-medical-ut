@@ -1,0 +1,124 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\ReposMedical;
+use App\Form\ReposMedicalType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use App\Utils\Utils;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+/**
+ * @Route("/api/reposmedical")
+ */
+class ReposMedicalController extends AbstractController
+{
+    /**
+     * @Rest\Get(path="/", name="repos_medical_index")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_REPOSMEDICAL_INDEX")
+     */
+    public function index(): array
+    {
+        $reposMedicals = $this->getDoctrine()
+            ->getRepository(ReposMedical::class)
+            ->findAll();
+
+        return count($reposMedicals)?$reposMedicals:[];
+    }
+
+    /**
+     * @Rest\Post(Path="/create", name="repos_medical_new")
+     * @Rest\View(StatusCode=200)
+     * @IsGranted("ROLE_REPOSMEDICAL_CREATE")
+     */
+    public function create(Request $request): ReposMedical    {
+        $reposMedical = new ReposMedical();
+        $form = $this->createForm(ReposMedicalType::class, $reposMedical);
+        $form->submit(Utils::serializeRequestContent($request));
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($reposMedical);
+        $entityManager->flush();
+
+        return $reposMedical;
+    }
+
+    /**
+     * @Rest\Get(path="/{id}", name="repos_medical_show",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode=200)
+     * @IsGranted("ROLE_REPOSMEDICAL_SHOW")
+     */
+    public function show(ReposMedical $reposMedical): ReposMedical    {
+        return $reposMedical;
+    }
+
+    
+    /**
+     * @Rest\Put(path="/{id}/edit", name="repos_medical_edit",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode=200)
+     * @IsGranted("ROLE_REPOSMEDICAL_EDIT")
+     */
+    public function edit(Request $request, ReposMedical $reposMedical): ReposMedical    {
+        $form = $this->createForm(ReposMedicalType::class, $reposMedical);
+        $form->submit(Utils::serializeRequestContent($request));
+
+        $this->getDoctrine()->getManager()->flush();
+
+        return $reposMedical;
+    }
+    
+    /**
+     * @Rest\Put(path="/{id}/clone", name="repos_medical_clone",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode=200)
+     * @IsGranted("ROLE_REPOSMEDICAL_CLONE")
+     */
+    public function cloner(Request $request, ReposMedical $reposMedical):  ReposMedical {
+        $em=$this->getDoctrine()->getManager();
+        $reposMedicalNew=new ReposMedical();
+        $form = $this->createForm(ReposMedicalType::class, $reposMedicalNew);
+        $form->submit(Utils::serializeRequestContent($request));
+        $em->persist($reposMedicalNew);
+
+        $em->flush();
+
+        return $reposMedicalNew;
+    }
+
+    /**
+     * @Rest\Delete("/{id}", name="repos_medical_delete",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode=200)
+     * @IsGranted("ROLE_REPOSMEDICAL_EDIT")
+     */
+    public function delete(ReposMedical $reposMedical): ReposMedical    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($reposMedical);
+        $entityManager->flush();
+
+        return $reposMedical;
+    }
+    
+    /**
+     * @Rest\Post("/delete-selection/", name="repos_medical_selection_delete")
+     * @Rest\View(StatusCode=200)
+     * @IsGranted("ROLE_REPOSMEDICAL_DELETE")
+     */
+    public function deleteMultiple(Request $request): array {
+        $entityManager = $this->getDoctrine()->getManager();
+        $reposMedicals = Utils::getObjectFromRequest($request);
+        if (!count($reposMedicals)) {
+            throw $this->createNotFoundException("Selectionner au minimum un élément à supprimer.");
+        }
+        foreach ($reposMedicals as $reposMedical) {
+            $reposMedical = $entityManager->getRepository(ReposMedical::class)->find($reposMedical->id);
+            $entityManager->remove($reposMedical);
+        }
+        $entityManager->flush();
+
+        return $reposMedicals;
+    }
+}

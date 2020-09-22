@@ -144,11 +144,17 @@ class GroupController extends AbstractController {
                     ]),
             new AccessGroup("Gestion médicale", [
                 new AccessModel('DOSSIER', "Dossier Médical"),
-                new AccessModel('CONSULTATION', "Consultation")
+                new AccessModel('CONSULTATION', "Consultation"),
+                new AccessModel('INPUTATION', "Inputation"),
+                new AccessModel('RENDEZVOUS', "Rendez-vous"),
+                new AccessModel('REPOSMEDICAL', "Repos-Medical"),
+                new AccessModel('SYMPTOME', "Symptome"),
+                new AccessModel('MEDICAMENTREMIS', "Médicament Rémis"),
                     ]),
             new AccessGroup("Gestion Stock médicament", [
                 new AccessModel('BONRECEPTION', "Bon Réception"),
                 new AccessModel('MEDICAMENT', "Médicament"),
+                new AccessModel('MEDICAMENTRECEPTION', "Médicament Réceptionné"),
                     ])
         ];
 

@@ -1,0 +1,24 @@
+<tc-card *ngIf="symptomeSrv.resourceName|showable" [tcGradient]="lightGradient">
+    <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
+        <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-mail-reply">Retour</button>
+        <button [outline]="true" (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
+            beforeIcon="icofont-refresh">Rafraichir</button>
+        <button (click)="remove(entity)" *ngIf="symptomeSrv.resourceName|deletable" [outline]="true" tc-button view="error"
+            beforeIcon="icofont-trash" class="ml-1">Supprimer</button>
+        <button *ngIf="symptomeSrv.resourceName|editable" [routerLink]="['/'+orientation,symptomeSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+            class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit">Modifier</button>
+    </tc-card>
+    <div class="row">
+        <div class="col-12">
+            <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
+                <table class="table">
+                                                                                                <tr>
+                            <th>Nom</th>
+                            <td>{{ entity?.nom }}</td>
+                        </tr>
+                                                    </table>
+            </tc-card>
+        </div>
+    </div>
+</tc-card>
+<app-access-denied *ngIf="!(symptomeSrv.resourceName|showable)"></app-access-denied>
