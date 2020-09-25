@@ -74,6 +74,11 @@ import { PathologieListComponent } from './parametrage/pathologie/pathologie-lis
 import { PathologieNewComponent } from './parametrage/pathologie/pathologie-new/pathologie-new.component';
 import { PathologieShowComponent } from './parametrage/pathologie/pathologie-show/pathologie-show.component';
 import { ConsultationDossierComponent } from './gestionmedicale/consultation/consultation-dossier/consultation-dossier.component';
+import { RendezVousCloneComponent } from './gestionmedicale/rendezvous/rendezvous-clone/rendezvous-clone.component';
+import { RendezVousEditComponent } from './gestionmedicale/rendezvous/rendezvous-edit/rendezvous-edit.component';
+import { RendezVousListComponent } from './gestionmedicale/rendezvous/rendezvous-list/rendezvous-list.component';
+import { RendezVousShowComponent } from './gestionmedicale/rendezvous/rendezvous-show/rendezvous-show.component';
+import { RendezVousNewComponent } from './gestionmedicale/rendezvous/rendezvous-new/rendezvous-new.component';
 
 @NgModule({
   imports: [
@@ -180,7 +185,12 @@ import { ConsultationDossierComponent } from './gestionmedicale/consultation/con
     ConsultationListComponent,
     ConsultationNewComponent,
     ConsultationShowComponent,
-    ConsultationDossierComponent
+    ConsultationDossierComponent,
+    RendezVousCloneComponent,
+    RendezVousEditComponent,
+    RendezVousListComponent,
+    RendezVousShowComponent,
+    RendezVousNewComponent
   ],
   exports: [ ],
   entryComponents: [ ],

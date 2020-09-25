@@ -23,7 +23,8 @@
                         </blockquote>
                     </div>
                     <div class="col-12 col-md-6">
-                        <app-consultation-new [dossier]="entity"></app-consultation-new>
+                        <app-consultation-new class="mr-3" [dossier]="entity"></app-consultation-new>
+                        <app-rendezvous-new [dossier]="entity"></app-rendezvous-new>
                     </div>
                 </div>
                 
@@ -75,7 +76,7 @@
                         <p>PN content</p>
                     </nz-collapse-panel>
                     <nz-collapse-panel nzHeader="Rendez-vous">
-                        <p>PN content</p>
+                        <app-rendezvous-list></app-rendezvous-list>
                     </nz-collapse-panel>
                     <nz-collapse-panel nzHeader="Repos Médicaux">
                         <p>PN content</p>

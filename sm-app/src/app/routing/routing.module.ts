@@ -1,4 +1,5 @@
 import { consultationRoutes } from './../pages/gestionmedicale/consultation/consultation.routes';
+import { rendezVousRoutes } from './../pages/gestionmedicale/rendezvous/rendezvous.routes';
 import { dossierRoutes } from './../pages/gestionmedicale/dossier/dossier.routes';
 import { medicamentRoutes } from './../pages/gestionstock/medicament/medicament.routes';
 import { bonReceptionRoutes } from './../pages/gestionstock/bonreception/bonreception.routes';
@@ -37,7 +38,8 @@ const VERTICAL_ROUTES: Routes = [
   bonReceptionRoutes,
   medicamentRoutes,
   dossierRoutes,
-  consultationRoutes
+  consultationRoutes,
+  rendezVousRoutes
   
 ];
 
