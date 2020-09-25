@@ -94,7 +94,7 @@ class Consultation
         return $this;
     }
 
-    public function getDocteur(): ?Docteur
+    public function getDocteur()
     {
         return $this->docteur;
     }
@@ -106,7 +106,7 @@ class Consultation
         return $this;
     }
 
-    public function getDossier(): ?Dossier
+    public function getDossier()
     {
         return $this->dossier;
     }
@@ -118,7 +118,7 @@ class Consultation
         return $this;
     }
 
-    public function getPathologieDiagnostiquee(): ?Pathologie
+    public function getPathologieDiagnostiquee()
     {
         return $this->pathologieDiagnostiquee;
     }

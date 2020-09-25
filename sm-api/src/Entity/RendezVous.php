@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * RendezVous
  *
- * @ORM\Table(name="rendez-vous", indexes={@ORM\Index(name="fk_rendez-vous_dossier1_idx", columns={"dossier"})})
+ * @ORM\Table(name="rendezVous", indexes={@ORM\Index(name="fk_rendezVous_dossier1_idx", columns={"dossier"})})
  * @ORM\Entity
  */
 class RendezVous
@@ -131,7 +131,7 @@ class RendezVous
         return $this;
     }
 
-    public function getDossier(): ?Dossier
+    public function getDossier()
     {
         return $this->dossier;
     }
