@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -65,24 +67,34 @@ class Consultation
      */
     private $pathologieDiagnostiquee;
 
-    public function getId(): ?int
+    /**
+     * @ORM\OneToMany(targetEntity=Symptome::class, mappedBy="consultation")
+     */
+    private $symptomes;
+
+    public function __construct()
+    {
+        $this->symptomes = new ArrayCollection();
+    }
+
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate()
     {
         return $this->date;
     }
 
-    public function setDate(?\DateTimeInterface $date): self
+    public function setDate($date): self
     {
         $this->date = $date;
 
         return $this;
     }
 
-    public function getUserEmail(): ?string
+    public function getUserEmail()
     {
         return $this->userEmail;
     }
@@ -99,7 +111,7 @@ class Consultation
         return $this->docteur;
     }
 
-    public function setDocteur(?Docteur $docteur): self
+    public function setDocteur($docteur): self
     {
         $this->docteur = $docteur;
 
@@ -111,7 +123,7 @@ class Consultation
         return $this->dossier;
     }
 
-    public function setDossier(?Dossier $dossier): self
+    public function setDossier($dossier): self
     {
         $this->dossier = $dossier;
 
@@ -123,9 +135,40 @@ class Consultation
         return $this->pathologieDiagnostiquee;
     }
 
-    public function setPathologieDiagnostiquee(?Pathologie $pathologieDiagnostiquee): self
+    public function setPathologieDiagnostiquee($pathologieDiagnostiquee): self
     {
         $this->pathologieDiagnostiquee = $pathologieDiagnostiquee;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Symptome[]
+     */
+    public function getSymptomes(): Collection
+    {
+        return $this->symptomes;
+    }
+
+    public function addSymptome(Symptome $symptome): self
+    {
+        if (!$this->symptomes->contains($symptome)) {
+            $this->symptomes[] = $symptome;
+            $symptome->setConsultation1($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSymptome(Symptome $symptome): self
+    {
+        if ($this->symptomes->contains($symptome)) {
+            $this->symptomes->removeElement($symptome);
+            // set the owning side to null (unless already changed)
+            if ($symptome->getConsultation1() === $this) {
+                $symptome->setConsultation1(null);
+            }
+        }
 
         return $this;
     }

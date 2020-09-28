@@ -1,3 +1,5 @@
+import { SymptomeNewComponent } from './gestionmedicale/symptome/symptome-new/symptome-new.component';
+import { SymptomeListComponent } from './gestionmedicale/symptome/symptome-list/symptome-list.component';
 import { ReposMedicalNewComponent } from './gestionmedicale/reposmedical/reposmedical-new/reposmedical-new.component';
 import { ConsultationShowComponent } from './gestionmedicale/consultation/consultation-show/consultation-show.component';
 import { ConsultationNewComponent } from './gestionmedicale/consultation/consultation-new/consultation-new.component';
@@ -203,6 +205,8 @@ import { ReposMedicalDossierComponent } from './gestionmedicale/reposmedical/rep
     ReposMedicalCloneComponent,
     ReposMedicalNewComponent,
     ReposMedicalDossierComponent,
+    SymptomeListComponent,
+    SymptomeNewComponent
   ],
   exports: [ ],
   entryComponents: [ ],

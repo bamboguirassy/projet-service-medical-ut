@@ -18,7 +18,12 @@
         <span class="nowrap"></span>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'UserEmail'" [columnName]="'userEmail'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Prescrit par'" [columnName]="'docteur'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap">{{ value?.prenoms+' '+value?.nom }}</span>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Utilisateur'" [columnName]="'userEmail'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <span class="nowrap">{{ value }}</span>
       </ng-template>
@@ -39,6 +44,5 @@
     </tc-table-col>
   </tc-table>
   <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
-  <app-reposmedical-new (creation)="onCreate($event)"></app-reposmedical-new>
 </tc-card>
 <app-access-denied *ngIf="!(reposMedicalSrv.resourceName|listable)"></app-access-denied>

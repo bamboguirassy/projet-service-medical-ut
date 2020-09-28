@@ -30,6 +30,20 @@ class SymptomeController extends AbstractController
 
         return count($symptomes)?$symptomes:[];
     }
+    
+    /**
+     * @Rest\Get(path="/{id}/consultation", name="symptome_consultation")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_SYMPTOME_INDEX")
+     */
+    public function findByConsultation(\App\Entity\Consultation $consultation): array
+    {
+        $symptomes = $this->getDoctrine()
+            ->getRepository(Symptome::class)
+            ->findByConsultation($consultation);
+
+        return count($symptomes)?$symptomes:[];
+    }
 
     /**
      * @Rest\Post(Path="/create", name="symptome_new")

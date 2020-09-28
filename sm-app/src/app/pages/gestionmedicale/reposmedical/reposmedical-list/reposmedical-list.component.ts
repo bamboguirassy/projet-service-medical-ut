@@ -17,14 +17,14 @@ export class ReposMedicalListComponent extends BasePageComponent<ReposMedical> i
     super(store, reposMedicalSrv);
 
     this.pageData = {
-      title: 'ReposMedical',
+      title: 'Repos médicaux préscrits',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des reposmedicals'
+          title: 'Liste des repos medicaux'
         }
       ]
     };

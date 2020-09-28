@@ -1,9 +1,10 @@
+import { Symptome } from './../symptome';
 import { BasePageComponent } from '../../../base-page/base-page.component';
 import { IAppState } from './../../../../interfaces/app-state';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { SymptomeService } from '../symptome.service';
-import { Symptome } from '../symptome';
+import { Consultation } from '../../consultation/consultation';
 
 @Component({
   selector: 'app-symptome-list',
@@ -12,27 +13,16 @@ import { Symptome } from '../symptome';
 })
 export class SymptomeListComponent extends BasePageComponent<Symptome> implements OnInit, OnDestroy {
 
-  constructor(store: Store<IAppState>,
-              public symptomeSrv: SymptomeService) {
-    super(store, symptomeSrv);
+  secondGradient = ['#fff', '#F5F6F1'];
+  @Input() consultation: Consultation;
 
-    this.pageData = {
-      title: 'Symptome',
-      breadcrumbs: [
-        {
-          title: 'Accueil',
-          route: ''
-        },
-        {
-          title: 'Liste des symptomes'
-        }
-      ]
-    };
+  constructor(store: Store<IAppState>,
+    public symptomeSrv: SymptomeService) {
+    super(store, symptomeSrv);
   }
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.findAll();
   }
 
   ngOnDestroy() {
@@ -40,9 +30,22 @@ export class SymptomeListComponent extends BasePageComponent<Symptome> implement
   }
 
   handlePostDelete() {
-    this.findAll();
+    this.findByConsultation(this.consultation);
   }
 
-  handlePostLoad(){}
+  handlePostLoad() { }
+
+  findByConsultation(consultation: Consultation) {
+    this.symptomeSrv.findByConsultation(consultation)
+      .subscribe((data: any) => {
+        this.consultation.symptomes = data;
+      }, err => this.symptomeSrv.httpSrv.catchError(err));
+  }
+
+  
+
+  onCreate(item: Symptome) {
+    this.findByConsultation(this.consultation);
+  }
 
 }

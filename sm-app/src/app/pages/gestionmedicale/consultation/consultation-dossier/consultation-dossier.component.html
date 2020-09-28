@@ -18,20 +18,20 @@
           <span *ngIf="value" class="nowrap label label-info">{{ value?.nom }}</span>
         </ng-template>
       </tc-table-col>
-      <tc-table-col [columnTitle]="'Utilisateur'" [columnName]="'userEmail'" [enableSorting]="true">
+      <tc-table-col [columnTitle]="'Prescrite par'" [columnName]="'docteur'" [enableSorting]="true">
         <ng-template #tableTDTemplate let-value>
-          <span class="nowrap">{{ value }}</span>
+          <span class="nowrap">{{ value?.prenoms+' '+value?.nom }}</span>
         </ng-template>
       </tc-table-col>
       <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
         <ng-template #tableTDTemplate let-row="row">
-          <div class="actions">
+          <div class="actions nowrap">
             <button *ngIf="consultationSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
               [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
             <button *ngIf="consultationSrv.resourceName|deletable" (click)="remove(row)" tc-button
               [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
             <button *ngIf="consultationSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'"
-              [view]="'accent'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id]"></button>
+              [view]="'accent'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="['/horizontal',consultationSrv.getRoutePrefixWithoutSlash(),row.id]"></button>
           </div>
         </ng-template>
       </tc-table-col>

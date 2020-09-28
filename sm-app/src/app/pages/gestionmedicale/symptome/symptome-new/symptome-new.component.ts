@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChildren } from '@angular/core';
+import { Consultation } from './../../consultation/consultation';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChildren, Input } from '@angular/core';
 import { SymptomeService } from '../symptome.service';
 import { Symptome } from '../symptome';
 import { Router } from '@angular/router';
@@ -16,6 +17,7 @@ export class SymptomeNewComponent implements OnInit {
   entity: Symptome;
   @Output() creation: EventEmitter<Symptome> = new EventEmitter();
   isModalVisible = false;
+  @Input() consultation: Consultation;
 
   constructor(public symptomeSrv: SymptomeService,
     public router: Router) {
@@ -25,6 +27,7 @@ export class SymptomeNewComponent implements OnInit {
   ngOnInit(): void {}
 
   save() {
+    this.entity.consultation = this.consultation.id;
     this.symptomeSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
