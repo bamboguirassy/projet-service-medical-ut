@@ -17,7 +17,7 @@ export class DossierShowComponent extends BasePageComponent<Dossier> implements 
 
   constructor(store: Store<IAppState>,
     public dossierSrv: DossierService,
-    private activatedRoute: ActivatedRoute,
+    public activatedRoute: ActivatedRoute,
     public location: Location) {
     super(store, dossierSrv);
     this.pageData = {

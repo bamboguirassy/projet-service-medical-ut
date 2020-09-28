@@ -40,6 +40,12 @@ class ReposMedicalController extends AbstractController
         $reposMedical = new ReposMedical();
         $form = $this->createForm(ReposMedicalType::class, $reposMedical);
         $form->submit(Utils::serializeRequestContent($request));
+        $reqData = Utils::getObjectFromRequest($request);
+        if(!isset($reqData->date)) {
+            throw $this->createNotFoundException("La date de prescription est obligatoire !");
+        }
+        $reposMedical->setDate(new \DateTime($reqData->date));
+        $reposMedical->setUserEmail($this->getUser());
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($reposMedical);

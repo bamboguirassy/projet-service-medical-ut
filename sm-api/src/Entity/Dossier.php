@@ -137,9 +137,27 @@ epoux ou enfant"})
      */
     private $consultations;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ReposMedical::class, mappedBy="dossier")
+     */
+    private $reposMedicals;
+
+    /**
+     * @ORM\OneToMany(targetEntity=RendezVous::class, mappedBy="dossier")
+     */
+    private $rendezVous;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Inputation::class, mappedBy="dossier")
+     */
+    private $inputations;
+
     public function __construct()
     {
         $this->consultations = new ArrayCollection();
+        $this->reposMedicals = new ArrayCollection();
+        $this->rendezVous = new ArrayCollection();
+        $this->inputations = new ArrayCollection();
     }
 
     public function getId()
@@ -364,6 +382,99 @@ epoux ou enfant"})
             // set the owning side to null (unless already changed)
             if ($consultation->getDossier1() === $this) {
                 $consultation->setDossier1(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ReposMedical[]
+     */
+    public function getReposMedicals(): Collection
+    {
+        return $this->reposMedicals;
+    }
+
+    public function addReposMedical(ReposMedical $reposMedical): self
+    {
+        if (!$this->reposMedicals->contains($reposMedical)) {
+            $this->reposMedicals[] = $reposMedical;
+            $reposMedical->setDossier1($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReposMedical(ReposMedical $reposMedical): self
+    {
+        if ($this->reposMedicals->contains($reposMedical)) {
+            $this->reposMedicals->removeElement($reposMedical);
+            // set the owning side to null (unless already changed)
+            if ($reposMedical->getDossier1() === $this) {
+                $reposMedical->setDossier1(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RendezVous[]
+     */
+    public function getRendezVous(): Collection
+    {
+        return $this->rendezVous;
+    }
+
+    public function addRendezVous(RendezVous $rendezVous): self
+    {
+        if (!$this->rendezVous->contains($rendezVous)) {
+            $this->rendezVous[] = $rendezVous;
+            $rendezVous->setDossier1($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRendezVous(RendezVous $rendezVous): self
+    {
+        if ($this->rendezVous->contains($rendezVous)) {
+            $this->rendezVous->removeElement($rendezVous);
+            // set the owning side to null (unless already changed)
+            if ($rendezVous->getDossier1() === $this) {
+                $rendezVous->setDossier1(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Inputation[]
+     */
+    public function getInputations(): Collection
+    {
+        return $this->inputations;
+    }
+
+    public function addInputation(Inputation $inputation): self
+    {
+        if (!$this->inputations->contains($inputation)) {
+            $this->inputations[] = $inputation;
+            $inputation->setDossier1($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInputation(Inputation $inputation): self
+    {
+        if ($this->inputations->contains($inputation)) {
+            $this->inputations->removeElement($inputation);
+            // set the owning side to null (unless already changed)
+            if ($inputation->getDossier1() === $this) {
+                $inputation->setDossier1(null);
             }
         }
 

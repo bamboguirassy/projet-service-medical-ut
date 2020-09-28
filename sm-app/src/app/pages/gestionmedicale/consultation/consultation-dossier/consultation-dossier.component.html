@@ -9,10 +9,16 @@
     <tc-table [itemsPerPage]="10" [rows]="consultations" [hovered]="true" [pagination]="true" [search]="true">
       <tc-table-col [columnTitle]="'Date'" [columnName]="'date'" [enableSorting]="true">
         <ng-template #tableTDTemplate let-value>
-          <span class="nowrap">{{ value }}</span>
+          <span class="nowrap">{{ value|date:'dd/MM/yyyy' }}</span>
         </ng-template>
       </tc-table-col>
-      <tc-table-col [columnTitle]="'UserEmail'" [columnName]="'userEmail'" [enableSorting]="true">
+      <tc-table-col [columnTitle]="'Pathologie Diagnostiquée'" [columnName]="'pathologieDiagnostiquee'" [enableSorting]="true">
+        <ng-template #tableTDTemplate let-value>
+          <tc-badge *ngIf="!value" view="error"><span class="nowrap">Non précisée</span></tc-badge>
+          <span *ngIf="value" class="nowrap label label-info">{{ value?.nom }}</span>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Utilisateur'" [columnName]="'userEmail'" [enableSorting]="true">
         <ng-template #tableTDTemplate let-value>
           <span class="nowrap">{{ value }}</span>
         </ng-template>
@@ -22,8 +28,6 @@
           <div class="actions">
             <button *ngIf="consultationSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
               [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
-            <button *ngIf="consultationSrv.resourceName|clonable" [outline]="true" tc-button [afterIcon]="'icofont-copy'"
-              [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'clone']"></button>
             <button *ngIf="consultationSrv.resourceName|deletable" (click)="remove(row)" tc-button
               [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
             <button *ngIf="consultationSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'"

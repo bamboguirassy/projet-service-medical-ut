@@ -1,3 +1,4 @@
+import { ReposMedicalNewComponent } from './gestionmedicale/reposmedical/reposmedical-new/reposmedical-new.component';
 import { ConsultationShowComponent } from './gestionmedicale/consultation/consultation-show/consultation-show.component';
 import { ConsultationNewComponent } from './gestionmedicale/consultation/consultation-new/consultation-new.component';
 import { ConsultationListComponent } from './gestionmedicale/consultation/consultation-list/consultation-list.component';
@@ -79,6 +80,11 @@ import { RendezVousEditComponent } from './gestionmedicale/rendezvous/rendezvous
 import { RendezVousListComponent } from './gestionmedicale/rendezvous/rendezvous-list/rendezvous-list.component';
 import { RendezVousShowComponent } from './gestionmedicale/rendezvous/rendezvous-show/rendezvous-show.component';
 import { RendezVousNewComponent } from './gestionmedicale/rendezvous/rendezvous-new/rendezvous-new.component';
+import { ReposMedicalEditComponent } from './gestionmedicale/reposmedical/reposmedical-edit/reposmedical-edit.component';
+import { ReposMedicalListComponent } from './gestionmedicale/reposmedical/reposmedical-list/reposmedical-list.component';
+import { ReposMedicalShowComponent } from './gestionmedicale/reposmedical/reposmedical-show/reposmedical-show.component';
+import { ReposMedicalCloneComponent } from './gestionmedicale/reposmedical/reposmedical-clone/reposmedical-clone.component';
+import { ReposMedicalDossierComponent } from './gestionmedicale/reposmedical/repos-medical-dossier/repos-medical-dossier.component';
 
 @NgModule({
   imports: [
@@ -190,7 +196,13 @@ import { RendezVousNewComponent } from './gestionmedicale/rendezvous/rendezvous-
     RendezVousEditComponent,
     RendezVousListComponent,
     RendezVousShowComponent,
-    RendezVousNewComponent
+    RendezVousNewComponent,
+    ReposMedicalEditComponent,
+    ReposMedicalListComponent,
+    ReposMedicalShowComponent,
+    ReposMedicalCloneComponent,
+    ReposMedicalNewComponent,
+    ReposMedicalDossierComponent,
   ],
   exports: [ ],
   entryComponents: [ ],

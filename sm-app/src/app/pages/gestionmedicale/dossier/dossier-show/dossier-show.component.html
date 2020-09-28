@@ -24,7 +24,8 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <app-consultation-new class="mr-3" [dossier]="entity"></app-consultation-new>
-                        <app-rendezvous-new [dossier]="entity"></app-rendezvous-new>
+                        <app-rendezvous-new class="mr-3" [dossier]="entity"></app-rendezvous-new>
+                        <app-reposmedical-new [dossier]="entity" (creation)="findEntity(activatedRoute.snapshot.params.id)"></app-reposmedical-new>
                     </div>
                 </div>
                 
@@ -79,7 +80,7 @@
                         <app-rendezvous-list></app-rendezvous-list>
                     </nz-collapse-panel>
                     <nz-collapse-panel nzHeader="Repos Médicaux">
-                        <p>PN content</p>
+                        <app-repos-medical-dossier [reposMedicals]="entity?.reposMedicals"></app-repos-medical-dossier>
                     </nz-collapse-panel>
                 </nz-collapse>
             </tc-card>
