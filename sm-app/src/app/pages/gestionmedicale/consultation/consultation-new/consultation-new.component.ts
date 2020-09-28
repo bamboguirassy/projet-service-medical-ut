@@ -45,7 +45,7 @@ export class ConsultationNewComponent implements OnInit {
     this.entity.dossier = this.dossier.id;
     this.entity.docteur = this.selectedDocteur.id;
     if(this.selectedPathologie) {
-      this.entity.pathologie = this.selectedPathologie.id;
+      this.entity.pathologieDiagnostiquee = this.selectedPathologie.id;
     }
     this.entity.date = this.datePipe.transform(this.entity.date,'yyyy-MM-dd');
     this.consultationSrv.create(this.entity)
