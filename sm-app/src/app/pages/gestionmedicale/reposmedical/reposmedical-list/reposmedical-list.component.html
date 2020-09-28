@@ -12,7 +12,27 @@
         <span class="nowrap">{{ value|date:'dd/MM/yyyy' }}</span>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'NombreJour'" [columnName]="'nombreJour'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Matricule'" [columnName]="'dossier'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap">{{ value?.matricule }}</span>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Dossier'" [columnName]="'dossier'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap">{{ value?.numero }}</span>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Prénoms'" [columnName]="'dossier'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap">{{ value?.prenoms }}</span>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Nom'" [columnName]="'dossier'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap">{{ value?.nom }}</span>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Nombre Jour'" [columnName]="'nombreJour'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <tc-badge view="info"><span class="nowrap"><b>{{ value }}</b> jours</span></tc-badge>
         <span class="nowrap"></span>
@@ -33,8 +53,6 @@
         <div class="actions">
           <button *ngIf="reposMedicalSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
             [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
-          <button *ngIf="reposMedicalSrv.resourceName|clonable" [outline]="true" tc-button [afterIcon]="'icofont-copy'"
-            [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'clone']"></button>
           <button *ngIf="reposMedicalSrv.resourceName|deletable" (click)="remove(row)" tc-button
             [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
           <button *ngIf="reposMedicalSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'"

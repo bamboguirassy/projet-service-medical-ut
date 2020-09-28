@@ -18,6 +18,7 @@
                             <tc-radio-option [value]="'PER'">PER</tc-radio-option>
                             <tc-radio-option [value]="'PATS'">PATS</tc-radio-option>
                             <tc-radio-option [value]="'FAMILLE'">FAMILLE</tc-radio-option>
+                            <tc-radio-option [value]="'ETUDIANT'">ETUDIANT</tc-radio-option>
                         </tc-radio>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="typePatient">
@@ -93,7 +94,7 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6" [hidden]="entity?.typePatient!='famille'">
+                <div class="col-12 col-md-6" [hidden]="entity?.typePatient!='FAMILLE'">
                     <tc-form-group>
                         <tc-form-label>Lien de Parenté</tc-form-label>
                         <tc-radio required="required" [(ngModel)]="entity.lienParente" name="lienParente"
@@ -111,7 +112,8 @@
                 </div>
                 <div class="col-12 col-md-6">
                     <tc-form-group>
-                        <tc-form-label>Matricule {{entity?.typePatient=='famille'?'du travailleur':''}}</tc-form-label>
+                        <tc-form-label *ngIf="entity?.typePatient!='ETUDIANT'">Matricule {{entity?.typePatient=='FAMILLE'?'du travailleur':''}}</tc-form-label>
+                        <tc-form-label *ngIf="entity?.typePatient=='ETUDIANT'">Numéro Carte Etudiant</tc-form-label>
                         <tc-input required="required" [(ngModel)]="entity.matricule" name="matricule" id="matricule"
                             #matricule="ngModel">
                         </tc-input>

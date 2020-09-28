@@ -22,7 +22,7 @@ export class ConsultationListComponent extends BasePageComponent<Consultation> i
     super(store, consultationSrv);
 
     this.pageData = {
-      title: 'Consultation',
+      title: 'Consultations',
       breadcrumbs: [
         {
           title: 'Accueil',
