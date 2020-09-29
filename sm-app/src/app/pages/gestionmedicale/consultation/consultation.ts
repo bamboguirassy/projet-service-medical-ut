@@ -1,3 +1,4 @@
+import { MedicamentRemis } from './../medicamentremis/medicamentremis';
 import { Symptome } from './../symptome/symptome';
 import { Dossier } from './../dossier/dossier';
 import { Docteur } from '../../parametrage/docteur/docteur';
@@ -11,4 +12,5 @@ export class Consultation extends BamboAbstractObject {
     pathologieDiagnostiquee?: Pathologie;
     dossier: Dossier;
     symptomes?: Symptome[];
+    medicamentPrescrits?: MedicamentRemis[];
 }

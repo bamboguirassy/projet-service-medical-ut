@@ -1,9 +1,10 @@
 import { BasePageComponent } from '../../../base-page/base-page.component';
 import { IAppState } from './../../../../interfaces/app-state';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MedicamentRemisService } from '../medicamentremis.service';
 import { MedicamentRemis } from '../medicamentremis';
+import { Consultation } from '../../consultation/consultation';
 
 @Component({
   selector: 'app-medicamentremis-list',
@@ -12,27 +13,15 @@ import { MedicamentRemis } from '../medicamentremis';
 })
 export class MedicamentRemisListComponent extends BasePageComponent<MedicamentRemis> implements OnInit, OnDestroy {
 
-  constructor(store: Store<IAppState>,
-              public medicamentRemiSrv: MedicamentRemisService) {
-    super(store, medicamentRemiSrv);
+  @Input() consultation: Consultation;
 
-    this.pageData = {
-      title: 'MedicamentRemis',
-      breadcrumbs: [
-        {
-          title: 'Accueil',
-          route: ''
-        },
-        {
-          title: 'Liste des medicamentremiss'
-        }
-      ]
-    };
+  constructor(store: Store<IAppState>,
+    public medicamentRemiSrv: MedicamentRemisService) {
+    super(store, medicamentRemiSrv);
   }
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.findAll();
   }
 
   ngOnDestroy() {
@@ -40,9 +29,20 @@ export class MedicamentRemisListComponent extends BasePageComponent<MedicamentRe
   }
 
   handlePostDelete() {
-    this.findAll();
+    this.findMedicamentPrescrits();
   }
 
-  handlePostLoad(){}
+  handlePostLoad() { }
+
+  onCreate() {
+    this.findMedicamentPrescrits();
+  }
+
+  findMedicamentPrescrits() {
+    this.medicamentRemiSrv.findByConsultation(this.consultation)
+      .subscribe((data: any) => {
+        this.consultation.medicamentPrescrits = data;
+      },err=>this.medicamentRemiSrv.httpSrv.catchError(err));
+  }
 
 }

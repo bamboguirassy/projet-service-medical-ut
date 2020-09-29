@@ -1,5 +1,5 @@
 <button *ngIf="symptomeSrv.resourceName|creable" tc-button [afterIcon]="'icofont-plus'" [view]="'accent'"
-  [square]="true" (click)="openModal()"></button>
+   (click)="openModal()"></button>
 <app-access-denied *ngIf="!(symptomeSrv.resourceName|creable)"></app-access-denied>
 
 <!-- Modal window -->

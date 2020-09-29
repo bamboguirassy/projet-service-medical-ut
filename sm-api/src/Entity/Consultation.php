@@ -72,9 +72,15 @@ class Consultation
      */
     private $symptomes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=MedicamentRemis::class, mappedBy="consultation")
+     */
+    private $medicamentPrescrits;
+
     public function __construct()
     {
         $this->symptomes = new ArrayCollection();
+        $this->medicamentPrescrits = new ArrayCollection();
     }
 
     public function getId()
@@ -167,6 +173,37 @@ class Consultation
             // set the owning side to null (unless already changed)
             if ($symptome->getConsultation1() === $this) {
                 $symptome->setConsultation1(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MedicamentRemis[]
+     */
+    public function getMedicamentPrescrits(): Collection
+    {
+        return $this->medicamentPrescrits;
+    }
+
+    public function addMedicamentPrescrit(MedicamentRemis $medicamentPrescrit): self
+    {
+        if (!$this->medicamentPrescrits->contains($medicamentPrescrit)) {
+            $this->medicamentPrescrits[] = $medicamentPrescrit;
+            $medicamentPrescrit->setConsultation1($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedicamentPrescrit(MedicamentRemis $medicamentPrescrit): self
+    {
+        if ($this->medicamentPrescrits->contains($medicamentPrescrit)) {
+            $this->medicamentPrescrits->removeElement($medicamentPrescrit);
+            // set the owning side to null (unless already changed)
+            if ($medicamentPrescrit->getConsultation1() === $this) {
+                $medicamentPrescrit->setConsultation1(null);
             }
         }
 

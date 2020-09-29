@@ -30,6 +30,20 @@ class MedicamentRemisController extends AbstractController
 
         return count($medicamentRemis)?$medicamentRemis:[];
     }
+    
+    /**
+     * @Rest\Get(path="/{id}/consultation", name="medicament_remis_consultation")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_MEDICAMENTREMIS_INDEX")
+     */
+    public function findByConsultation(\App\Entity\Consultation $consultation): array
+    {
+        $medicamentRemis = $this->getDoctrine()
+            ->getRepository(MedicamentRemis::class)
+            ->findByConsultation($consultation);
+
+        return count($medicamentRemis)?$medicamentRemis:[];
+    }
 
     /**
      * @Rest\Post(Path="/create", name="medicament_remis_new")
@@ -40,6 +54,11 @@ class MedicamentRemisController extends AbstractController
         $medicamentRemi = new MedicamentRemis();
         $form = $this->createForm(MedicamentRemisType::class, $medicamentRemi);
         $form->submit(Utils::serializeRequestContent($request));
+        if($medicamentRemi->getMedicament()->getQuantiteStock()<$medicamentRemi->getQuantite()) {
+            throw $this->createNotFoundException("Quantité Stock insuffisante pour ".$medicamentRemi->getMedicament()->getNom()." !");
+        }
+        
+        $medicamentRemi->getMedicament()->setQuantiteStock($medicamentRemi->getMedicament()->getQuantiteStock()-$medicamentRemi->getQuantite());
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($medicamentRemi);
@@ -97,6 +116,9 @@ class MedicamentRemisController extends AbstractController
     public function delete(MedicamentRemis $medicamentRemi): MedicamentRemis    {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($medicamentRemi);
+        
+        $medicamentRemi->getMedicament()->setQuantiteStock($medicamentRemi->getMedicament()->getQuantiteStock()+$medicamentRemi->getQuantite());
+        
         $entityManager->flush();
 
         return $medicamentRemi;

@@ -48,12 +48,13 @@ class MedicamentRemis
      */
     private $medicament;
 
-    public function getId(): ?int
+
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getQuantite(): ?int
+    public function getQuantite()
     {
         return $this->quantite;
     }
@@ -65,29 +66,28 @@ class MedicamentRemis
         return $this;
     }
 
-    public function getConsultation(): ?Consultation
+    public function getConsultation()
     {
         return $this->consultation;
     }
 
-    public function setConsultation(?Consultation $consultation): self
+    public function setConsultation($consultation): self
     {
         $this->consultation = $consultation;
 
         return $this;
     }
 
-    public function getMedicament(): ?Medicament
+    public function getMedicament()
     {
         return $this->medicament;
     }
 
-    public function setMedicament(?Medicament $medicament): self
+    public function setMedicament($medicament): self
     {
         $this->medicament = $medicament;
 
         return $this;
     }
-
 
 }

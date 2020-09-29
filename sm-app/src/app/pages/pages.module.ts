@@ -1,3 +1,6 @@
+import { MedicamentRemisEditComponent } from './gestionmedicale/medicamentremis/medicamentremis-edit/medicamentremis-edit.component';
+import { MedicamentRemisNewComponent } from './gestionmedicale/medicamentremis/medicamentremis-new/medicamentremis-new.component';
+import { MedicamentRemisListComponent } from './gestionmedicale/medicamentremis/medicamentremis-list/medicamentremis-list.component';
 import { InputationShowComponent } from './gestionmedicale/inputation/inputation-show/inputation-show.component';
 import { InputationNewComponent } from './gestionmedicale/inputation/inputation-new/inputation-new.component';
 import { InputationListComponent } from './gestionmedicale/inputation/inputation-list/inputation-list.component';
@@ -220,7 +223,10 @@ import { RendezVousDossierComponent } from './gestionmedicale/rendezvous/rendez-
     InputationNewComponent,
     InputationShowComponent,
     ImputationDossierComponent,
-    RendezVousDossierComponent
+    RendezVousDossierComponent,
+    MedicamentRemisListComponent,
+    MedicamentRemisNewComponent,
+    MedicamentRemisEditComponent,
   ],
   exports: [ ],
   entryComponents: [ ],

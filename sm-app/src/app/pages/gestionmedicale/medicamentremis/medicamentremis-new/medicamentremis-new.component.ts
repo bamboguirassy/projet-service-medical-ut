@@ -1,7 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChildren } from '@angular/core';
+import { MedicamentService } from './../../../gestionstock/medicament/medicament.service';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChildren, Input } from '@angular/core';
 import { MedicamentRemisService } from '../medicamentremis.service';
 import { MedicamentRemis } from '../medicamentremis';
 import { Router } from '@angular/router';
+import { Medicament } from 'src/app/pages/gestionstock/medicament/medicament';
+import { Consultation } from '../../consultation/consultation';
 
 @Component({
   selector: 'app-medicamentremis-new',
@@ -16,20 +19,28 @@ export class MedicamentRemisNewComponent implements OnInit {
   entity: MedicamentRemis;
   @Output() creation: EventEmitter<MedicamentRemis> = new EventEmitter();
   isModalVisible = false;
+  medicaments: Medicament[] = [];
+  selectedMedicament: Medicament;
+  @Input() consultation: Consultation;
 
   constructor(public medicamentRemiSrv: MedicamentRemisService,
-    public router: Router) {
+    public router: Router, public medicamentSrv: MedicamentService) {
     this.entity = new MedicamentRemis();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.findMedicaments();
+  }
 
   save() {
+    this.entity.consultation = this.consultation.id;
+    this.entity.medicament = this.selectedMedicament.id;
     this.medicamentRemiSrv.create(this.entity)
       .subscribe((data: any) => {
-        this.closeModal();
         this.creation.emit(data);
+        this.findMedicaments();
         this.entity = new MedicamentRemis();
+        this.selectedMedicament = null;
       }, error => this.medicamentRemiSrv.httpSrv.catchError(error));
   }
 
@@ -41,6 +52,13 @@ export class MedicamentRemisNewComponent implements OnInit {
   // close modal window
   closeModal() {
     this.isModalVisible = false;
+  }
+
+  findMedicaments() {
+    this.medicamentSrv.findAll()
+    .subscribe((data: any)=>{
+      this.medicaments = data;
+    },err=>this.medicamentSrv.httpSrv.catchError(err));
   }
 
 }
