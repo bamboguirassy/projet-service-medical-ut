@@ -4,6 +4,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RendezVousService } from '../rendezvous.service';
 import { RendezVous } from '../rendezvous';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-rendezvous-list',
@@ -12,8 +13,11 @@ import { RendezVous } from '../rendezvous';
 })
 export class RendezVousListComponent extends BasePageComponent<RendezVous> implements OnInit, OnDestroy {
 
+  dates: any;
+
   constructor(store: Store<IAppState>,
-              public rendezVousSrv: RendezVousService) {
+    public rendezVousSrv: RendezVousService,
+    public datePipe: DatePipe) {
     super(store, rendezVousSrv);
 
     this.pageData = {
@@ -43,6 +47,18 @@ export class RendezVousListComponent extends BasePageComponent<RendezVous> imple
     this.findAll();
   }
 
-  handlePostLoad(){}
+  handlePostLoad() {
+    this.dates = null;
+  }
+
+  filter() {
+    var formattedDate = { startDate: null, endDate: null };
+    formattedDate.startDate = this.datePipe.transform(this.dates[0], 'yyyy-MM-dd');
+    formattedDate.endDate = this.datePipe.transform(this.dates[1], 'yyyy-MM-dd');
+    this.rendezVousSrv.findByDate(formattedDate)
+      .subscribe((data: any) => {
+        this.items = data;
+      }, err => this.rendezVousSrv.httpSrv.catchError(err));
+  }
 
 }

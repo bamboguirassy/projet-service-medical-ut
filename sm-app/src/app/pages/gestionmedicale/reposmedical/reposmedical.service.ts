@@ -13,5 +13,9 @@ export class ReposMedicalService extends BamboAbstractService {
     this.routePrefix = 'reposmedical/';
     this.resourceName = 'REPOSMEDICAL';
   }
+
+  findByDate(dateInterval: any) {
+    return this.httpSrv.post(this.routePrefix + 'filter-by-date/', dateInterval);
+  }
   
 }

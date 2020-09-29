@@ -1,13 +1,10 @@
-import { PathologieService } from './../../../parametrage/pathologie/pathologie.service';
-import { DocteurService } from './../../../parametrage/docteur/docteur.service';
 import { BasePageComponent } from '../../../base-page/base-page.component';
 import { IAppState } from './../../../../interfaces/app-state';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ConsultationService } from '../consultation.service';
 import { Consultation } from '../consultation';
-import { Docteur } from 'src/app/pages/parametrage/docteur/docteur';
-import { Pathologie } from 'src/app/pages/parametrage/pathologie/pathologie';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-consultation-list',
@@ -16,9 +13,11 @@ import { Pathologie } from 'src/app/pages/parametrage/pathologie/pathologie';
 })
 export class ConsultationListComponent extends BasePageComponent<Consultation> implements OnInit, OnDestroy {
 
+  dates: any;
 
   constructor(store: Store<IAppState>,
-    public consultationSrv: ConsultationService) {
+    public consultationSrv: ConsultationService,
+    public datePipe: DatePipe) {
     super(store, consultationSrv);
 
     this.pageData = {
@@ -48,6 +47,18 @@ export class ConsultationListComponent extends BasePageComponent<Consultation> i
     this.findAll();
   }
 
-  handlePostLoad() { }
+  handlePostLoad() {
+    this.dates = null;
+  }
+
+  filter() {
+    var formattedDate = { startDate: null, endDate: null };
+    formattedDate.startDate = this.datePipe.transform(this.dates[0], 'yyyy-MM-dd');
+    formattedDate.endDate = this.datePipe.transform(this.dates[1], 'yyyy-MM-dd');
+    this.consultationSrv.findByDate(formattedDate)
+      .subscribe((data: any) => {
+        this.items = data;
+      }, err => this.consultationSrv.httpSrv.catchError(err));
+  }
 
 }

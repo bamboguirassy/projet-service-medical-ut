@@ -1,8 +1,17 @@
 <tc-card *ngIf="inputationSrv.resourceName|listable" [tcGradient]="lightGradient">
   <tc-card [view]="secondViewBorder" [outline]="true">
     <div class="row">
-      <div class="col-12">
-        <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findAll()">Rafraichir</button>
+      <div class="col-12 col-md-7">
+        <tc-form-group>
+          <nz-range-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="dates" [nzSize]="'default'"></nz-range-picker>
+        </tc-form-group>
+      </div>
+      <div class="col-12 col-md-2">
+        <button [disabled]="!dates" tc-button afterIcon="icofont-filter" (click)="filter()"
+          view="accent">Filtrer</button>
+      </div>
+      <div class="col-12 col-md-3">
+        <button tc-button afterIcon="icofont-refresh" (click)="findAll()">Rafraichir</button>
       </div>
     </div>
   </tc-card>

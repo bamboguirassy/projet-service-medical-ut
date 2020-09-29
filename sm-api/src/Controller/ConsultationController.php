@@ -15,20 +15,39 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 /**
  * @Route("/api/consultation")
  */
-class ConsultationController extends AbstractController
-{
+class ConsultationController extends AbstractController {
+
     /**
      * @Rest\Get(path="/", name="consultation_index")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_CONSULTATION_INDEX")
      */
-    public function index(): array
-    {
+    public function index(): array {
         $consultations = $this->getDoctrine()
-            ->getRepository(Consultation::class)
-            ->findAll();
+                ->getRepository(Consultation::class)
+                ->findAll();
 
-        return count($consultations)?$consultations:[];
+        return count($consultations) ? $consultations : [];
+    }
+
+    /**
+     * @Rest\Post(path="/filter-by-date/", name="consultation_filter_date")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_CONSULTATION_INDEX")
+     */
+    public function findByDate(Request $request): array {
+        $reqData = Utils::getObjectFromRequest($request);
+        if (!(isset($reqData->startDate) || isset($reqData->endDate))) {
+            throw $this->createNotFoundException("Il faut un interval de date pour filtrer...");
+        }
+        $em = $this->getDoctrine()->getManager();
+        $consultations = $em->createQuery('select c from App\Entity\Consultation c '
+                        . 'where c.date>=?1 and c.date<=?2')
+                ->setParameter(1, $reqData->startDate)
+                ->setParameter(2, $reqData->endDate)
+                ->getResult();
+
+        return count($consultations) ? $consultations : [];
     }
 
     /**
@@ -36,16 +55,16 @@ class ConsultationController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_CONSULTATION_CREATE")
      */
-    public function create(Request $request): Consultation    {
+    public function create(Request $request): Consultation {
         $consultation = new Consultation();
         $form = $this->createForm(ConsultationType::class, $consultation);
         $form->submit(Utils::serializeRequestContent($request));
         $requestData = Utils::getObjectFromRequest($request);
-        if(!$requestData->date) {
+        if (!$requestData->date) {
             throw $this->createNotFoundException("La date est obligatoire !!!");
         }
         $consultation->setDate(new \DateTime($requestData->date));
-        
+
         $consultation->setUserEmail($this->getUser());
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -60,17 +79,16 @@ class ConsultationController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_CONSULTATION_SHOW")
      */
-    public function show(Consultation $consultation): Consultation    {
+    public function show(Consultation $consultation): Consultation {
         return $consultation;
     }
 
-    
     /**
      * @Rest\Put(path="/{id}/edit", name="consultation_edit",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_CONSULTATION_EDIT")
      */
-    public function edit(Request $request, Consultation $consultation): Consultation    {
+    public function edit(Request $request, Consultation $consultation): Consultation {
         $form = $this->createForm(ConsultationType::class, $consultation);
         $form->submit(Utils::serializeRequestContent($request));
 
@@ -78,15 +96,15 @@ class ConsultationController extends AbstractController
 
         return $consultation;
     }
-    
+
     /**
      * @Rest\Put(path="/{id}/clone", name="consultation_clone",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_CONSULTATION_CLONE")
      */
-    public function cloner(Request $request, Consultation $consultation):  Consultation {
-        $em=$this->getDoctrine()->getManager();
-        $consultationNew=new Consultation();
+    public function cloner(Request $request, Consultation $consultation): Consultation {
+        $em = $this->getDoctrine()->getManager();
+        $consultationNew = new Consultation();
         $form = $this->createForm(ConsultationType::class, $consultationNew);
         $form->submit(Utils::serializeRequestContent($request));
         $em->persist($consultationNew);
@@ -101,14 +119,14 @@ class ConsultationController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_CONSULTATION_EDIT")
      */
-    public function delete(Consultation $consultation): Consultation    {
+    public function delete(Consultation $consultation): Consultation {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($consultation);
         $entityManager->flush();
 
         return $consultation;
     }
-    
+
     /**
      * @Rest\Post("/delete-selection/", name="consultation_selection_delete")
      * @Rest\View(StatusCode=200)
@@ -128,4 +146,5 @@ class ConsultationController extends AbstractController
 
         return $consultations;
     }
+
 }

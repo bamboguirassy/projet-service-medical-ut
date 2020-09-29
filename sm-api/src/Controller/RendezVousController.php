@@ -32,6 +32,26 @@ class RendezVousController extends AbstractController
     }
 
     /**
+     * @Rest\Post(path="/filter-by-date/", name="rendezvous_filter_date")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_RENDEZVOUS_INDEX")
+     */
+    public function findByDate(Request $request): array {
+        $reqData = Utils::getObjectFromRequest($request);
+        if (!(isset($reqData->startDate) || isset($reqData->endDate))) {
+            throw $this->createNotFoundException("Il faut un interval de date pour filtrer...");
+        }
+        $em = $this->getDoctrine()->getManager();
+        $rendezVouses = $em->createQuery('select rv from App\Entity\RendezVous rv '
+                        . 'where rv.dateRendezVous>=?1 and rv.dateRendezVous<=?2')
+                ->setParameter(1, $reqData->startDate)
+                ->setParameter(2, $reqData->endDate)
+                ->getResult();
+
+        return count($rendezVouses) ? $rendezVouses : [];
+    }
+
+    /**
      * @Rest\Post(Path="/create", name="rendez_vous_new")
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_RENDEZVOUS_CREATE")

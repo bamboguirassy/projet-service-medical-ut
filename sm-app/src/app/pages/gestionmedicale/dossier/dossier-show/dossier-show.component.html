@@ -19,17 +19,21 @@
                                     *ngIf="entity?.typePatient=='famille'">{{entity?.lienParente+' de '+entity?.prenomTravailleur+' '+entity?.nomTravailleur}}</span>
                                 - {{entity?.typePatient}} </p>
                             <footer class="blockquote-footer"> <cite title="Source Title">Depuis le
-                                    {{entity?.dateCreation|date:'dd/MM/yyyy'}} par {{ entity?.userEmail }}</cite></footer>
+                                    {{entity?.dateCreation|date:'dd/MM/yyyy'}} par {{ entity?.userEmail }}</cite>
+                            </footer>
                         </blockquote>
                     </div>
                     <div class="col-12 col-md-6">
                         <app-consultation-new class="mr-1" [dossier]="entity"></app-consultation-new>
-                        <app-rendezvous-new class="mr-1" [dossier]="entity"  (creation)="findEntity(activatedRoute.snapshot.params.id)"></app-rendezvous-new>
-                        <app-reposmedical-new class="mr-1" [dossier]="entity" (creation)="findEntity(activatedRoute.snapshot.params.id)"></app-reposmedical-new>
-                        <app-inputation-new [dossier]="entity" (creation)="findEntity(activatedRoute.snapshot.params.id)"></app-inputation-new>
+                        <app-rendezvous-new class="mr-1" [dossier]="entity"
+                            (creation)="findEntity(activatedRoute.snapshot.params.id)"></app-rendezvous-new>
+                        <app-reposmedical-new class="mr-1" [dossier]="entity"
+                            (creation)="findEntity(activatedRoute.snapshot.params.id)"></app-reposmedical-new>
+                        <app-inputation-new [dossier]="entity"
+                            (creation)="findEntity(activatedRoute.snapshot.params.id)"></app-inputation-new>
                     </div>
                 </div>
-                
+
             </tc-card>
         </div>
         <div class="col-12 col-md-4">
@@ -49,7 +53,9 @@
                     <tr>
                         <th>Téléphone</th>
                         <td>
-                            <span *ngIf="entity?.telephone">{{ entity?.telephone }}</span>
+                            <span *ngIf="entity?.telephone">
+                                <a href="tel:{{ entity?.telephone }}">{{ entity?.telephone }}</a>
+                            </span>
                             <tc-badge view="error" *ngIf="!entity?.telephone">Indéfinie</tc-badge>
                         </td>
                     </tr>

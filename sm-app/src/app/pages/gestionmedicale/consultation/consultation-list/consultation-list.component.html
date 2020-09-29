@@ -1,8 +1,16 @@
 <tc-card *ngIf="consultationSrv.resourceName|listable" [tcGradient]="lightGradient">
   <tc-card [view]="secondViewBorder" [outline]="true">
     <div class="row">
-      <div class="col-12">
-        <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findAll()">Rafraichir</button>
+      <div class="col-12 col-md-7">
+        <tc-form-group>
+          <nz-range-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="dates" [nzSize]="'default'"></nz-range-picker>
+        </tc-form-group>
+      </div>
+      <div class="col-12 col-md-2">
+        <button [disabled]="!dates" tc-button afterIcon="icofont-filter" (click)="filter()" view="accent">Filtrer</button>
+      </div>
+      <div class="col-12 col-md-3">
+        <button tc-button afterIcon="icofont-refresh" (click)="findAll()">Rafraichir</button>
       </div>
     </div>
   </tc-card>
@@ -10,7 +18,7 @@
     <tc-table-col [columnTitle]="'Date'" [columnName]="'date'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value let-row="row">
         <span class="nowrap">
-          <a [routerLink]="[row.id]" routerLinkActive="router-link-active" >{{value|date:'dd/MM/yyyy'}}</a>
+          <a [routerLink]="[row.id]" routerLinkActive="router-link-active">{{value|date:'dd/MM/yyyy'}}</a>
         </span>
       </ng-template>
     </tc-table-col>
@@ -36,7 +44,8 @@
         <span class="nowrap">{{ value?.nom }}</span>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Pathologie Diagnostiquée'" [columnName]="'pathologieDiagnostiquee'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Pathologie Diagnostiquée'" [columnName]="'pathologieDiagnostiquee'"
+      [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <tc-badge *ngIf="!value" view="error"><span class="nowrap">Non précisée</span></tc-badge>
         <tc-badge *ngIf="value" view="info"><span class="nowrap">{{value?.nom}}</span></tc-badge>

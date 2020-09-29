@@ -32,6 +32,26 @@ class ReposMedicalController extends AbstractController
     }
 
     /**
+     * @Rest\Post(path="/filter-by-date/", name="reposmedical_filter_date")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_REPOSMEDICAL_INDEX")
+     */
+    public function findByDate(Request $request): array {
+        $reqData = Utils::getObjectFromRequest($request);
+        if (!(isset($reqData->startDate) || isset($reqData->endDate))) {
+            throw $this->createNotFoundException("Il faut un interval de date pour filtrer...");
+        }
+        $em = $this->getDoctrine()->getManager();
+        $reposMedicals = $em->createQuery('select rm from App\Entity\ReposMedical rm '
+                        . 'where rm.date>=?1 and rm.date<=?2')
+                ->setParameter(1, $reqData->startDate)
+                ->setParameter(2, $reqData->endDate)
+                ->getResult();
+
+        return count($reposMedicals) ? $reposMedicals : [];
+    }
+
+    /**
      * @Rest\Post(Path="/create", name="repos_medical_new")
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_REPOSMEDICAL_CREATE")

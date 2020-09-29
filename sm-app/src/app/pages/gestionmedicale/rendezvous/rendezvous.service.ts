@@ -13,5 +13,9 @@ export class RendezVousService extends BamboAbstractService {
     this.routePrefix = 'rendezvous/';
     this.resourceName = 'RENDEZVOUS';
   }
+
+  findByDate(dateInterval: any) {
+    return this.httpSrv.post(this.routePrefix + 'filter-by-date/', dateInterval);
+  }
   
 }

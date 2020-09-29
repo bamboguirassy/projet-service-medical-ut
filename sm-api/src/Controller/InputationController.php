@@ -31,6 +31,26 @@ class InputationController extends AbstractController {
     }
 
     /**
+     * @Rest\Post(path="/filter-by-date/", name="inputation_filter_date")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_INPUTATION_INDEX")
+     */
+    public function findByDate(Request $request): array {
+        $reqData = Utils::getObjectFromRequest($request);
+        if (!(isset($reqData->startDate) || isset($reqData->endDate))) {
+            throw $this->createNotFoundException("Il faut un interval de date pour filtrer...");
+        }
+        $em = $this->getDoctrine()->getManager();
+        $inputations = $em->createQuery('select i from App\Entity\Inputation i '
+                        . 'where i.date>=?1 and i.date<=?2')
+                ->setParameter(1, $reqData->startDate)
+                ->setParameter(2, $reqData->endDate)
+                ->getResult();
+
+        return count($inputations) ? $inputations : [];
+    }
+
+    /**
      * @Rest\Post(Path="/create", name="inputation_new")
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_INPUTATION_CREATE")

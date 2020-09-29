@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { BasePageComponent } from '../../../base-page/base-page.component';
 import { IAppState } from './../../../../interfaces/app-state';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -12,8 +13,11 @@ import { Inputation } from '../inputation';
 })
 export class InputationListComponent extends BasePageComponent<Inputation> implements OnInit, OnDestroy {
 
+  dates: any;
+
   constructor(store: Store<IAppState>,
-              public inputationSrv: InputationService) {
+    public inputationSrv: InputationService,
+    public datePipe: DatePipe) {
     super(store, inputationSrv);
 
     this.pageData = {
@@ -43,6 +47,18 @@ export class InputationListComponent extends BasePageComponent<Inputation> imple
     this.findAll();
   }
 
-  handlePostLoad(){}
+  handlePostLoad() {
+    this.dates = null;
+  }
+
+  filter() {
+    var formattedDate = { startDate: null, endDate: null };
+    formattedDate.startDate = this.datePipe.transform(this.dates[0], 'yyyy-MM-dd');
+    formattedDate.endDate = this.datePipe.transform(this.dates[1], 'yyyy-MM-dd');
+    this.inputationSrv.findByDate(formattedDate)
+      .subscribe((data: any) => {
+        this.items = data;
+      }, err => this.inputationSrv.httpSrv.catchError(err));
+  }
 
 }

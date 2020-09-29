@@ -1,15 +1,24 @@
 <tc-card *ngIf="reposMedicalSrv.resourceName|listable" [tcGradient]="lightGradient">
   <tc-card [view]="secondViewBorder" [outline]="true">
     <div class="row">
-      <div class="col-12">
-        <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findAll()">Rafraichir</button>
+      <div class="col-12 col-md-7">
+        <tc-form-group>
+          <nz-range-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="dates" [nzSize]="'default'"></nz-range-picker>
+        </tc-form-group>
+      </div>
+      <div class="col-12 col-md-2">
+        <button [disabled]="!dates" tc-button afterIcon="icofont-filter" (click)="filter()"
+          view="accent">Filtrer</button>
+      </div>
+      <div class="col-12 col-md-3">
+        <button tc-button afterIcon="icofont-refresh" (click)="findAll()">Rafraichir</button>
       </div>
     </div>
   </tc-card>
   <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
     <tc-table-col [columnTitle]="'Date'" [columnName]="'date'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
-        <span class="nowrap">{{ value|date:'dd/MM/yyyy' }}</span>
+        <span class="nowrap"><b style="color: red;">{{ value|date:'dd/MM/yyyy' }}</b></span>
       </ng-template>
     </tc-table-col>
     <tc-table-col [columnTitle]="'Matricule'" [columnName]="'dossier'" [enableSorting]="true">

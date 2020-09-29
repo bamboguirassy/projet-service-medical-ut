@@ -13,5 +13,9 @@ export class InputationService extends BamboAbstractService {
     this.routePrefix = 'inputation/';
     this.resourceName = 'INPUTATION';
   }
+
+  findByDate(dateInterval: any) {
+    return this.httpSrv.post(this.routePrefix + 'filter-by-date/', dateInterval);
+  }
   
 }

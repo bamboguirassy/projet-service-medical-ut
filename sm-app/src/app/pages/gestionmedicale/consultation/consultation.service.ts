@@ -13,5 +13,9 @@ export class ConsultationService extends BamboAbstractService {
     this.routePrefix = 'consultation/';
     this.resourceName = 'CONSULTATION';
   }
-  
+
+  findByDate(dateInterval: any) {
+    return this.httpSrv.post(this.routePrefix + 'filter-by-date/', dateInterval);
+  }
+
 }
