@@ -34,6 +34,7 @@ export class ConsultationNewComponent implements OnInit {
     public pathologieSrv: PathologieService,
     public datePipe: DatePipe) {
     this.entity = new Consultation();
+    this.entity.date = new Date();
   }
 
   ngOnInit(): void {
@@ -52,6 +53,7 @@ export class ConsultationNewComponent implements OnInit {
       .subscribe((data: any) => {
         this.closeModal();
         this.entity = new Consultation();
+        this.entity.date = new Date();
         this.consultationSrv.httpSrv.router.navigate(['/horizontal',this.consultationSrv.getRoutePrefixWithoutSlash(),data.id])
       }, error => this.consultationSrv.httpSrv.catchError(error));
   }

@@ -17,14 +17,14 @@ export class InputationListComponent extends BasePageComponent<Inputation> imple
     super(store, inputationSrv);
 
     this.pageData = {
-      title: 'Inputation',
+      title: 'Imputations',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des inputations'
+          title: 'Liste des imputations'
         }
       ]
     };

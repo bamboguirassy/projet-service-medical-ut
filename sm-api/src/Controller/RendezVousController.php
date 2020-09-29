@@ -41,12 +41,12 @@ class RendezVousController extends AbstractController
         $form = $this->createForm(RendezVousType::class, $rendezVous);
         $form->submit(Utils::serializeRequestContent($request));
         $requestData = Utils::getObjectFromRequest($request);
-        if(!$requestData->dateRendezVous || !$requestData->dateCreation) {
-            throw $this->createNotFoundException("La date est obligatoire !!!");
+        if(!$requestData->dateRendezVous) {
+            throw $this->createNotFoundException("La date de rendez-vous est obligatoire !!!");
         }
         $rendezVous->setDateRendezVous(new \DateTime($requestData->dateRendezVous));
-        $rendezVous->setDateCreation(new \DateTime($requestData->dateCreation));
-        
+        $rendezVous->setDateCreation(new \DateTime());
+        $rendezVous->setPresence(false);
         $rendezVous->setUserEmail($this->getUser());
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($rendezVous);

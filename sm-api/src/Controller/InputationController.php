@@ -15,20 +15,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 /**
  * @Route("/api/inputation")
  */
-class InputationController extends AbstractController
-{
+class InputationController extends AbstractController {
+
     /**
      * @Rest\Get(path="/", name="inputation_index")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_INPUTATION_INDEX")
      */
-    public function index(): array
-    {
+    public function index(): array {
         $inputations = $this->getDoctrine()
-            ->getRepository(Inputation::class)
-            ->findAll();
+                ->getRepository(Inputation::class)
+                ->findAll();
 
-        return count($inputations)?$inputations:[];
+        return count($inputations) ? $inputations : [];
     }
 
     /**
@@ -36,10 +35,16 @@ class InputationController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_INPUTATION_CREATE")
      */
-    public function create(Request $request): Inputation    {
+    public function create(Request $request): Inputation {
         $inputation = new Inputation();
         $form = $this->createForm(InputationType::class, $inputation);
         $form->submit(Utils::serializeRequestContent($request));
+        $reqData = Utils::getObjectFromRequest($request);
+        if (!isset($reqData->date)) {
+            throw $this->createNotFoundException("La date de préscription de l'imputation est obligatoire");
+        }
+        $inputation->setDate(new \DateTime($reqData->date));
+        $inputation->setUserEmail($this->getUser());
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($inputation);
@@ -53,17 +58,16 @@ class InputationController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_INPUTATION_SHOW")
      */
-    public function show(Inputation $inputation): Inputation    {
+    public function show(Inputation $inputation): Inputation {
         return $inputation;
     }
 
-    
     /**
      * @Rest\Put(path="/{id}/edit", name="inputation_edit",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_INPUTATION_EDIT")
      */
-    public function edit(Request $request, Inputation $inputation): Inputation    {
+    public function edit(Request $request, Inputation $inputation): Inputation {
         $form = $this->createForm(InputationType::class, $inputation);
         $form->submit(Utils::serializeRequestContent($request));
 
@@ -71,15 +75,15 @@ class InputationController extends AbstractController
 
         return $inputation;
     }
-    
+
     /**
      * @Rest\Put(path="/{id}/clone", name="inputation_clone",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_INPUTATION_CLONE")
      */
-    public function cloner(Request $request, Inputation $inputation):  Inputation {
-        $em=$this->getDoctrine()->getManager();
-        $inputationNew=new Inputation();
+    public function cloner(Request $request, Inputation $inputation): Inputation {
+        $em = $this->getDoctrine()->getManager();
+        $inputationNew = new Inputation();
         $form = $this->createForm(InputationType::class, $inputationNew);
         $form->submit(Utils::serializeRequestContent($request));
         $em->persist($inputationNew);
@@ -94,14 +98,14 @@ class InputationController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_INPUTATION_EDIT")
      */
-    public function delete(Inputation $inputation): Inputation    {
+    public function delete(Inputation $inputation): Inputation {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($inputation);
         $entityManager->flush();
 
         return $inputation;
     }
-    
+
     /**
      * @Rest\Post("/delete-selection/", name="inputation_selection_delete")
      * @Rest\View(StatusCode=200)
@@ -121,4 +125,5 @@ class InputationController extends AbstractController
 
         return $inputations;
     }
+
 }

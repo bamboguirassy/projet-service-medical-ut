@@ -55,24 +55,24 @@ class Inputation
      */
     private $structureHospitaliere;
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate()
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate($date): self
     {
         $this->date = $date;
 
         return $this;
     }
 
-    public function getUserEmail(): ?string
+    public function getUserEmail()
     {
         return $this->userEmail;
     }
@@ -84,24 +84,24 @@ class Inputation
         return $this;
     }
 
-    public function getDossier(): ?Dossier
+    public function getDossier()
     {
         return $this->dossier;
     }
 
-    public function setDossier(?Dossier $dossier): self
+    public function setDossier($dossier): self
     {
         $this->dossier = $dossier;
 
         return $this;
     }
 
-    public function getStructureHospitaliere(): ?StructurePartenaire
+    public function getStructureHospitaliere()
     {
         return $this->structureHospitaliere;
     }
 
-    public function setStructureHospitaliere(?StructurePartenaire $structureHospitaliere): self
+    public function setStructureHospitaliere($structureHospitaliere): self
     {
         $this->structureHospitaliere = $structureHospitaliere;
 

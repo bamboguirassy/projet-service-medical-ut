@@ -1,0 +1,46 @@
+<tc-card *ngIf="rendezVousSrv.resourceName|listable" [tcGradient]="lightGradient">
+    <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
+        <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+            <ng-template #tableTDTemplate let-row="row">
+                <div class="actions nowrap">
+                    <button *ngIf="rendezVousSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
+                        [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"
+                        [routerLink]="[row.id,'edit']"></button>
+                    <button class="ml-1" *ngIf="rendezVousSrv.resourceName|deletable" (click)="remove(row)" tc-button
+                        [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
+                        [size]="'sm'"></button>
+                </div>
+            </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Date Ajout'" [columnName]="'dateCreation'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+                <span class="nowrap">{{ value|date:'dd/MM/yyyy HH:mm' }}</span>
+            </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Date RV'" [columnName]="'dateRendezVous'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+                <tc-badge view="info">{{ value|date:'dd/MM/yyyy' }}</tc-badge>
+            </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Présence'" [columnName]="'presence'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+                <tc-badge view="{{value ? 'success' : 'error'}}">
+                    <span class="nowrap">{{ value ? 'Oui' : 'Pas encore' }} </span>
+                </tc-badge>
+            </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Description'" [columnName]="'description'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+                <span class="nowrap" *ngIf="value">{{ value }}</span>
+                <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+            </ng-template>
+        </tc-table-col>
+        <tc-table-col [columnTitle]="'Ajouté par'" [columnName]="'userEmail'" [enableSorting]="true">
+            <ng-template #tableTDTemplate let-value>
+                <span class="nowrap">{{ value }}</span>
+            </ng-template>
+        </tc-table-col>
+    </tc-table>
+    <app-empty-table-message *ngIf="!items?.length"></app-empty-table-message>
+</tc-card>
+<app-access-denied *ngIf="!(rendezVousSrv.resourceName|listable)"></app-access-denied>

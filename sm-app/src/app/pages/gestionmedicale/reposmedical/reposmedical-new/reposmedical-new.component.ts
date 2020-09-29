@@ -24,8 +24,9 @@ export class ReposMedicalNewComponent implements OnInit {
   selectedDocteur: Docteur;
 
   constructor(public reposMedicalSrv: ReposMedicalService, public datePipe: DatePipe,
-     public docteurSrv: DocteurService) {
+    public docteurSrv: DocteurService) {
     this.entity = new ReposMedical();
+    this.entity.date = new Date();
   }
 
   ngOnInit(): void {
@@ -41,6 +42,7 @@ export class ReposMedicalNewComponent implements OnInit {
         this.closeModal();
         this.creation.emit(data);
         this.entity = new ReposMedical();
+        this.entity.date = new Date();
       }, error => this.reposMedicalSrv.httpSrv.catchError(error));
   }
 
@@ -57,7 +59,7 @@ export class ReposMedicalNewComponent implements OnInit {
   findDocteurs() {
     this.docteurSrv.findAll()
       .subscribe((data: any) => { this.docteurs = data },
-       err => this.docteurSrv.httpSrv.catchError(err));
+        err => this.docteurSrv.httpSrv.catchError(err));
   }
 
 }

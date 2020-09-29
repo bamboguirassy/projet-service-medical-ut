@@ -1,3 +1,4 @@
+import { inputationRoutes } from './../pages/gestionmedicale/inputation/inputation.routes';
 import { reposMedicalRoutes } from './../pages/gestionmedicale/reposmedical/reposmedical.routes';
 import { consultationRoutes } from './../pages/gestionmedicale/consultation/consultation.routes';
 import { rendezVousRoutes } from './../pages/gestionmedicale/rendezvous/rendezvous.routes';
@@ -42,6 +43,7 @@ const VERTICAL_ROUTES: Routes = [
   consultationRoutes,
   rendezVousRoutes,
   reposMedicalRoutes,
+  inputationRoutes
 
 ];
 

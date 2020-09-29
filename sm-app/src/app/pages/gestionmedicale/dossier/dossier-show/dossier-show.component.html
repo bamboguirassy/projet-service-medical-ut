@@ -1,7 +1,7 @@
 <tc-card *ngIf="dossierSrv.resourceName|showable" [tcGradient]="lightGradient">
     <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
         <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-mail-reply">Retour</button>
-        <button [outline]="true" (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
+        <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
             beforeIcon="icofont-refresh">Rafraichir</button>
         <button (click)="remove(entity)" *ngIf="dossierSrv.resourceName|deletable" [outline]="true" tc-button
             view="error" beforeIcon="icofont-trash" class="ml-1">Supprimer</button>
@@ -23,9 +23,10 @@
                         </blockquote>
                     </div>
                     <div class="col-12 col-md-6">
-                        <app-consultation-new class="mr-3" [dossier]="entity"></app-consultation-new>
-                        <app-rendezvous-new class="mr-3" [dossier]="entity"></app-rendezvous-new>
-                        <app-reposmedical-new [dossier]="entity" (creation)="findEntity(activatedRoute.snapshot.params.id)"></app-reposmedical-new>
+                        <app-consultation-new class="mr-1" [dossier]="entity"></app-consultation-new>
+                        <app-rendezvous-new class="mr-1" [dossier]="entity"  (creation)="findEntity(activatedRoute.snapshot.params.id)"></app-rendezvous-new>
+                        <app-reposmedical-new class="mr-1" [dossier]="entity" (creation)="findEntity(activatedRoute.snapshot.params.id)"></app-reposmedical-new>
+                        <app-inputation-new [dossier]="entity" (creation)="findEntity(activatedRoute.snapshot.params.id)"></app-inputation-new>
                     </div>
                 </div>
                 
@@ -73,11 +74,11 @@
                     <nz-collapse-panel nzHeader="Consultations" [nzActive]="true">
                         <app-consultation-dossier [consultations]="entity?.consultations"></app-consultation-dossier>
                     </nz-collapse-panel>
-                    <nz-collapse-panel nzHeader="Inputations">
-                        <p>PN content</p>
+                    <nz-collapse-panel nzHeader="Imputations">
+                        <app-imputation-dossier [imputations]="entity?.inputations"></app-imputation-dossier>
                     </nz-collapse-panel>
                     <nz-collapse-panel nzHeader="Rendez-vous">
-                        <app-rendezvous-list></app-rendezvous-list>
+                        <app-rendez-vous-dossier [items]="entity?.rendezVous"></app-rendez-vous-dossier>
                     </nz-collapse-panel>
                     <nz-collapse-panel nzHeader="Repos Médicaux">
                         <app-repos-medical-dossier [reposMedicals]="entity?.reposMedicals"></app-repos-medical-dossier>

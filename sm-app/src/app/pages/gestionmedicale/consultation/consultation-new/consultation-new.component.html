@@ -3,12 +3,12 @@
 <app-access-denied *ngIf="!(consultationSrv.resourceName|creable)"></app-access-denied>
 
 <!-- Modal window -->
-<nz-modal nzWidth="80%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
+<nz-modal nzWidth="50%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
   [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
   <ng-template #modalBody>
     <form #form="ngForm" ngNativeValidate>
       <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12">
           <tc-form-group>
             <tc-form-label>Date</tc-form-label>
             <nz-date-picker required="required" [(ngModel)]="entity.date" name="date" id="date" #date="ngModel"
@@ -18,13 +18,23 @@
             </tc-form-description>
           </tc-form-group>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12">
           <tc-form-group>
             <tc-form-label>Docteur</tc-form-label>
-            <nz-select name="docteur" id="docteur"
-            #docteur="ngModel" required="required" nzPlaceHolder="Selectionner le docteur" nzAllowClear nzShowSearch [(ngModel)]="selectedDocteur">
+            <nz-select name="docteur" id="docteur" #docteur="ngModel" required="required"
+              nzPlaceHolder="Selectionner le docteur" nzAllowClear nzShowSearch [(ngModel)]="selectedDocteur">
               <ng-container *ngFor="let docteur of docteurs">
-                <nz-option nzCustomContent [nzValue]="docteur" [nzLabel]="docteur.prenoms+' '+docteur.nom"><span class="nowrap"><tc-avatar [src]="docteur.filepath"></tc-avatar> {{docteur.prenoms+' '+docteur.nom}}</span>  </nz-option>
+                <nz-option nzCustomContent [nzValue]="docteur" [nzLabel]="docteur.prenoms+' '+docteur.nom">
+                  <div class="row">
+                    <div class="col-2">
+                      <i *ngIf="!docteur.filepath" class="icofont-doctor-alt icofont-3x"></i>
+                      <tc-avatar *ngIf="docteur.filepath" [src]="docteur.filepath"></tc-avatar>
+                    </div>
+                    <div class="col-10">
+                      <span class="nowrap h6">{{docteur.prenoms+' '+docteur.nom}}</span>
+                    </div>
+                  </div>
+                </nz-option>
               </ng-container>
             </nz-select>
             <tc-form-description>
@@ -32,11 +42,11 @@
             </tc-form-description>
           </tc-form-group>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12">
           <tc-form-group>
             <tc-form-label>Pathologie diagnostiquée</tc-form-label>
-            <nz-select name="pathologie" id="pathologie"
-            #pathologie="ngModel" nzPlaceHolder="Selectionner la pathologie" nzAllowClear nzShowSearch [(ngModel)]="selectedPathologie">
+            <nz-select name="pathologie" id="pathologie" #pathologie="ngModel"
+              nzPlaceHolder="Selectionner la pathologie" nzAllowClear nzShowSearch [(ngModel)]="selectedPathologie">
               <ng-container *ngFor="let pathologie of pathologies">
                 <nz-option [nzValue]="pathologie" [nzLabel]="pathologie.nom"></nz-option>
               </ng-container>

@@ -30,7 +30,6 @@ export class SymptomeNewComponent implements OnInit {
     this.entity.consultation = this.consultation.id;
     this.symptomeSrv.create(this.entity)
       .subscribe((data: any) => {
-        this.closeModal();
         this.creation.emit(data);
         this.entity = new Symptome();
       }, error => this.symptomeSrv.httpSrv.catchError(error));

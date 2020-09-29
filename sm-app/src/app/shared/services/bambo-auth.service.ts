@@ -132,6 +132,11 @@ export class BamboAuthService {
             "title": "Pathologies",
             "routing": "pathologie",
             enabled: this.checkListAccess('pathologie')
+          },
+          {
+            "title": "Structures Partenaires",
+            "routing": "structurepartenaire",
+            enabled: this.checkListAccess('structurepartenaire')
           }
         ],
         enabled: false
@@ -172,7 +177,7 @@ export class BamboAuthService {
             enabled: this.checkListAccess('consultation')
           },
           {
-            "title": "Inputations",
+            "title": "Imputations",
             "routing": "inputation",
             enabled: this.checkListAccess('inputation')
           },
@@ -180,6 +185,11 @@ export class BamboAuthService {
             "title": "Repos Médicaux",
             "routing": "reposmedical",
             enabled: this.checkListAccess('reposmedical')
+          },
+          {
+            "title": "Rendez Vous",
+            "routing": "rendezvous",
+            enabled: this.checkListAccess('rendezvous')
           }
         ],
         enabled: false

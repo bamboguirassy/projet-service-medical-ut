@@ -5,7 +5,7 @@ import { Pathologie } from '../../parametrage/pathologie/pathologie';
 import { BamboAbstractObject } from './../../../shared/classes/bambo-abstract-object';
 
 export class Consultation extends BamboAbstractObject {
-    date: string;
+    date: any;
     userEmail: string;
     docteur: Docteur;
     pathologieDiagnostiquee?: Pathologie;

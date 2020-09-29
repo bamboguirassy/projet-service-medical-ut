@@ -10,7 +10,7 @@
             class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit">Modifier</button>
     </tc-card>
     <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-7">
             <tc-card [outline]="true" [view]="secondViewBorder" [title]="'Dossier Médical - '+entity?.dossier?.numero"
                 [tcGradient]="secondGradient">
                 <blockquote class="blockquote">
@@ -23,7 +23,7 @@
                 </blockquote>
             </tc-card>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-5">
             <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
                 <blockquote class="blockquote">
                     <p class="mb-0">Date: {{ entity?.date|date:'dd/MM/yyyy' }}</p>
@@ -34,15 +34,22 @@
             </tc-card>
         </div>
         <div class="col-12 col-md-6">
-            <tc-card [outline]="true" [view]="secondViewBorder" title="Pathologie diagnostiquée"
-                [tcGradient]="secondGradient">
-                <button *ngIf="!entity?.pathologieDiagnostiquee && (consultationSrv.resourceName|editable)" tc-button
-                    [afterIcon]="'icofont-plus'" [view]="'accent'" size='sm' [square]="true"
-                    (click)="isPathologieModalVisible=true">Indiquer résultat diagnostic</button>
-                <tc-badge *ngIf="entity?.pathologieDiagnostiquee" view="error">
-                    <span class="nowrap">{{entity?.pathologieDiagnostiquee?.nom}}</span>
-                </tc-badge>
-            </tc-card>
+            <div class="row">
+                <div class="col-12">
+                    <tc-card [outline]="true" [view]="secondViewBorder" title="Pathologie diagnostiquée"
+                        [tcGradient]="secondGradient">
+                        <button *ngIf="!entity?.pathologieDiagnostiquee && (consultationSrv.resourceName|editable)"
+                            tc-button [afterIcon]="'icofont-plus'" [view]="'accent'" size='sm' [square]="true"
+                            (click)="isPathologieModalVisible=true">Indiquer résultat diagnostic</button>
+                        <tc-badge *ngIf="entity?.pathologieDiagnostiquee" view="error">
+                            <span class="nowrap">{{entity?.pathologieDiagnostiquee?.nom}}</span>
+                        </tc-badge>
+                    </tc-card>
+                </div>
+                <div class="col-12">
+                    Médicaments préscrits
+                </div>
+            </div>
         </div>
         <div class="col-12 col-md-6">
             <app-symptome-list [consultation]="entity"></app-symptome-list>

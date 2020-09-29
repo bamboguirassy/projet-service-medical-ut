@@ -3,7 +3,7 @@
 <app-access-denied *ngIf="!(symptomeSrv.resourceName|creable)"></app-access-denied>
 
 <!-- Modal window -->
-<nz-modal nzWidth="50%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
+<nz-modal nzWidth="50%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau Symptôme'"
   [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
   <ng-template #modalBody>
     <form #form="ngForm" ngNativeValidate>
@@ -11,7 +11,7 @@
         <div class="col-12">
           <tc-form-group>
             <tc-form-label>Nom</tc-form-label>
-            <tc-input required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
+            <tc-input (enter)="save()" required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
             </tc-input>
             <tc-form-description>
               <app-form-field-validation-message [formField]="nom"></app-form-field-validation-message>

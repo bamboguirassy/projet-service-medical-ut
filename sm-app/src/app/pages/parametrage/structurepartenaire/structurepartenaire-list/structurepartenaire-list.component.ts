@@ -17,14 +17,14 @@ export class StructurePartenaireListComponent extends BasePageComponent<Structur
     super(store, structurePartenaireSrv);
 
     this.pageData = {
-      title: 'StructurePartenaire',
+      title: 'Structures Partenaires',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des structurepartenaires'
+          title: 'Liste des structures partenaires'
         }
       ]
     };

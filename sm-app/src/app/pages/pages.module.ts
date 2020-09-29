@@ -1,3 +1,8 @@
+import { InputationShowComponent } from './gestionmedicale/inputation/inputation-show/inputation-show.component';
+import { InputationNewComponent } from './gestionmedicale/inputation/inputation-new/inputation-new.component';
+import { InputationListComponent } from './gestionmedicale/inputation/inputation-list/inputation-list.component';
+import { InputationEditComponent } from './gestionmedicale/inputation/inputation-edit/inputation-edit.component';
+import { InputationCloneComponent } from './gestionmedicale/inputation/inputation-clone/inputation-clone.component';
 import { SymptomeNewComponent } from './gestionmedicale/symptome/symptome-new/symptome-new.component';
 import { SymptomeListComponent } from './gestionmedicale/symptome/symptome-list/symptome-list.component';
 import { ReposMedicalNewComponent } from './gestionmedicale/reposmedical/reposmedical-new/reposmedical-new.component';
@@ -87,6 +92,8 @@ import { ReposMedicalListComponent } from './gestionmedicale/reposmedical/reposm
 import { ReposMedicalShowComponent } from './gestionmedicale/reposmedical/reposmedical-show/reposmedical-show.component';
 import { ReposMedicalCloneComponent } from './gestionmedicale/reposmedical/reposmedical-clone/reposmedical-clone.component';
 import { ReposMedicalDossierComponent } from './gestionmedicale/reposmedical/repos-medical-dossier/repos-medical-dossier.component';
+import { ImputationDossierComponent } from './gestionmedicale/inputation/imputation-dossier/imputation-dossier.component';
+import { RendezVousDossierComponent } from './gestionmedicale/rendezvous/rendez-vous-dossier/rendez-vous-dossier.component';
 
 @NgModule({
   imports: [
@@ -206,7 +213,14 @@ import { ReposMedicalDossierComponent } from './gestionmedicale/reposmedical/rep
     ReposMedicalNewComponent,
     ReposMedicalDossierComponent,
     SymptomeListComponent,
-    SymptomeNewComponent
+    SymptomeNewComponent,
+    InputationCloneComponent,
+    InputationEditComponent,
+    InputationListComponent,
+    InputationNewComponent,
+    InputationShowComponent,
+    ImputationDossierComponent,
+    RendezVousDossierComponent
   ],
   exports: [ ],
   entryComponents: [ ],

@@ -25,7 +25,7 @@
           <div class="actions nowrap">
             <button *ngIf="reposMedicalSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
               [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
-            <button *ngIf="reposMedicalSrv.resourceName|deletable" (click)="remove(row)" tc-button
+            <button class="ml-1" *ngIf="reposMedicalSrv.resourceName|deletable" (click)="remove(row)" tc-button
               [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
             </div>
         </ng-template>

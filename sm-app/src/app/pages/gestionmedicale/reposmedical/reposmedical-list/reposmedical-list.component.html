@@ -19,7 +19,9 @@
     </tc-table-col>
     <tc-table-col [columnTitle]="'Dossier'" [columnName]="'dossier'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
-        <span class="nowrap">{{ value?.numero }}</span>
+        <span class="nowrap">
+          <a [routerLink]="['/horizontal/dossier',value?.id]">{{ value?.numero }}</a>
+        </span>
       </ng-template>
     </tc-table-col>
     <tc-table-col [columnTitle]="'Prénoms'" [columnName]="'dossier'" [enableSorting]="true">

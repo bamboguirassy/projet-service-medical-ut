@@ -10,7 +10,6 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./rendezvous-new.component.scss']
 })
 export class RendezVousNewComponent implements OnInit {
-  Non
   @ViewChild('modalBody', { static: true }) modalBody: ElementRef<any>;
   @ViewChild('modalFooter', { static: true }) modalFooter: ElementRef<any>;
   @ViewChildren('form') form;
@@ -18,8 +17,6 @@ export class RendezVousNewComponent implements OnInit {
   @Output() creation: EventEmitter<RendezVous> = new EventEmitter();
   isModalVisible = false;
   @Input() dossier:Dossier;
-  
-  selectedOpt: string;
  
   // @Input() dossier: Dossier;
   constructor(public rendezVousSrv: RendezVousService,
@@ -31,11 +28,7 @@ export class RendezVousNewComponent implements OnInit {
 
   save() {
     this.entity.dossier = this.dossier.id;
-    if(this.selectedOpt) {
-      this.entity.presence = this.selectedOpt;
-    }
     this.entity.dateRendezVous = this.datePipe.transform(this.entity.dateRendezVous,'yyyy-MM-dd');
-    this.entity.dateCreation = this.datePipe.transform(new Date(),'yyyy-MM-dd');
     this.rendezVousSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();

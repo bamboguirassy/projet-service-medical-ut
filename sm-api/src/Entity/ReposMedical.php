@@ -62,36 +62,36 @@ class ReposMedical
      */
     private $dossier;
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate()
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate($date): self
     {
         $this->date = $date;
 
         return $this;
     }
 
-    public function getNombreJour(): ?int
+    public function getNombreJour()
     {
         return $this->nombreJour;
     }
 
-    public function setNombreJour(?int $nombreJour): self
+    public function setNombreJour($nombreJour): self
     {
         $this->nombreJour = $nombreJour;
 
         return $this;
     }
 
-    public function getUserEmail(): ?string
+    public function getUserEmail()
     {
         return $this->userEmail;
     }
@@ -103,24 +103,24 @@ class ReposMedical
         return $this;
     }
 
-    public function getDocteur(): ?Docteur
+    public function getDocteur()
     {
         return $this->docteur;
     }
 
-    public function setDocteur(?Docteur $docteur): self
+    public function setDocteur($docteur): self
     {
         $this->docteur = $docteur;
 
         return $this;
     }
 
-    public function getDossier(): ?Dossier
+    public function getDossier()
     {
         return $this->dossier;
     }
 
-    public function setDossier(?Dossier $dossier): self
+    public function setDossier($dossier): self
     {
         $this->dossier = $dossier;
 

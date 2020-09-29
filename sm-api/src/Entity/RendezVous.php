@@ -66,24 +66,24 @@ class RendezVous
      */
     private $dossier;
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getDateCreation(): ?\DateTimeInterface
+    public function getDateCreation()
     {
         return $this->dateCreation;
     }
 
-    public function setDateCreation(\DateTimeInterface $dateCreation): self
+    public function setDateCreation($dateCreation): self
     {
         $this->dateCreation = $dateCreation;
 
         return $this;
     }
 
-    public function getUserEmail(): ?string
+    public function getUserEmail()
     {
         return $this->userEmail;
     }
@@ -95,36 +95,36 @@ class RendezVous
         return $this;
     }
 
-    public function getDateRendezVous(): ?\DateTimeInterface
+    public function getDateRendezVous()
     {
         return $this->dateRendezVous;
     }
 
-    public function setDateRendezVous(\DateTimeInterface $dateRendezVous): self
+    public function setDateRendezVous($dateRendezVous): self
     {
         $this->dateRendezVous = $dateRendezVous;
 
         return $this;
     }
 
-    public function getPresence(): ?bool
+    public function getPresence()
     {
         return $this->presence;
     }
 
-    public function setPresence(?bool $presence): self
+    public function setPresence($presence): self
     {
         $this->presence = $presence;
 
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getDescription()
     {
         return $this->description;
     }
 
-    public function setDescription(?string $description): self
+    public function setDescription($description): self
     {
         $this->description = $description;
 
@@ -136,7 +136,7 @@ class RendezVous
         return $this->dossier;
     }
 
-    public function setDossier(?Dossier $dossier): self
+    public function setDossier($dossier): self
     {
         $this->dossier = $dossier;
 

@@ -17,14 +17,14 @@ export class RendezVousListComponent extends BasePageComponent<RendezVous> imple
     super(store, rendezVousSrv);
 
     this.pageData = {
-      title: 'RendezVous',
+      title: 'Rendez-Vous prescrits',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des rendezvouss'
+          title: 'Liste des rendez-vouss'
         }
       ]
     };
