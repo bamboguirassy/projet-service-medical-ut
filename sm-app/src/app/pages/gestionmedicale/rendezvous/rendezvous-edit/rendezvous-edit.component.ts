@@ -1,61 +1,43 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ElementRef, EventEmitter, Output, ViewChild, ViewChildren } from '@angular/core';
 import { RendezVous } from '../rendezvous';
 import { RendezVousService } from '../rendezvous.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { first } from 'rxjs/operators';
-import { Store } from '@ngrx/store';
-import { IAppState } from 'src/app/interfaces/app-state';
-import { BasePageComponent } from 'src/app/pages/base-page';
-import { Location } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-rendezvous-edit',
   templateUrl: './rendezvous-edit.component.html',
   styleUrls: ['./rendezvous-edit.component.scss']
 })
-export class RendezVousEditComponent extends BasePageComponent<RendezVous> implements OnInit, OnDestroy {
+export class RendezVousEditComponent implements OnInit {
 
-  constructor(store: Store<IAppState>,
-              public rendezVousSrv: RendezVousService,
-              public router: Router,
-              private activatedRoute: ActivatedRoute,
-              public location: Location) {
-    super(store, rendezVousSrv);
-    this.pageData = {
-      title: 'Modification - RendezVous',
-      breadcrumbs: [
-        {
-          title: 'Accueil',
-          route: ''
-        },
-        {
-          title: 'RendezVouss',
-          route: '/'+this.orientation+'/rendezvous'
-        },
-        {
-          title: 'Modification'
-        }
-      ]
-    };
+  @Input() visible = false;
+  @Input() entity: RendezVous;
+
+  @ViewChild('modalBody', { static: true }) modalBody: ElementRef<any>;
+  @ViewChild('modalFooter', { static: true }) modalFooter: ElementRef<any>;
+  @ViewChildren('form') form;
+  @Output() update: EventEmitter<RendezVous> = new EventEmitter();
+  @Output() close: EventEmitter<any> = new EventEmitter();
+
+
+  // @Input() dossier: Dossier;
+  constructor(public rendezVousSrv: RendezVousService,
+    public datePipe: DatePipe) {
   }
 
-  ngOnInit(): void {
-    super.ngOnInit();
-    this.findEntity(this.activatedRoute.snapshot.params.id);
+  ngOnInit(): void { }
+
+  updateItem() {
+    this.entity.dateRendezVous = this.datePipe.transform(this.entity.dateRendezVous, 'yyyy-MM-dd');
+    this.rendezVousSrv.update(this.entity)
+      .subscribe((data: any) => {
+        this.update.emit(data);
+      });
   }
 
-  ngOnDestroy() {
-    super.ngOnDestroy();
-  }
-
-  handlePostLoad() {
-  }
-
-  prepareUpdate() {
-  }
-
-  handlePostUpdate() {
-    this.location.back();
+  // close modal window
+  closeModal() {
+    this.close.emit();
   }
 
 }

@@ -1,3 +1,4 @@
+import { Dossier } from './../dossier/dossier';
 import { BamboAbstractService } from '../../../shared/services/bambo-abstract.service';
 import { BamboHttpService } from './../../../shared/services/bambo-http.service';
 import { Injectable } from '@angular/core';
@@ -16,6 +17,10 @@ export class ReposMedicalService extends BamboAbstractService {
 
   findByDate(dateInterval: any) {
     return this.httpSrv.post(this.routePrefix + 'filter-by-date/', dateInterval);
+  }
+
+  findByDossier(dossier: Dossier) {
+    return this.httpSrv.get(this.routePrefix + dossier.id+'/dossier');
   }
   
 }

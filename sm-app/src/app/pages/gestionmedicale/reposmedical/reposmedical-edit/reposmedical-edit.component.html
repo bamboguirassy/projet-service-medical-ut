@@ -1,59 +1,68 @@
-<tc-card *ngIf="entity && reposMedicalSrv.resourceName|editable" [tcGradient]="lightGradient">
-    <form #form="ngForm" novalidate>
-        <tc-card [view]="secondViewBorder" [outline]="true">
-            <div class="actions justify-content-between">
-                <button [outline]="true" type="button" (click)="location.back()" tc-button
-                    beforeIcon="icofont-reply">Retour</button>
-                <button (click)="findEntity(entity.id)" afterIcon="icofont-refresh" tc-button type="button"
-                    view="accent" class="float-right">Rafraichir</button>
-            </div>
-        </tc-card>
-        <tc-card title="Détails" [outline]="true" [view]="secondViewBorder" [tcGradient]="secondGradient">
-            <div class="row">
-                                                                                                <div class="col-12 col-md-6">
-                            <tc-form-group>
-                                <tc-form-label>Date</tc-form-label>
-                                <tc-input required="required" [(ngModel)]="entity.date" name="date" id="date" #date="ngModel">
-                                </tc-input>
-                                <tc-form-description>
-                                    <app-form-field-validation-message [formField]="date"></app-form-field-validation-message>
-                                </tc-form-description>
-                            </tc-form-group>
-                        </div>
-                                                                                <div class="col-12 col-md-6">
-                            <tc-form-group>
-                                <tc-form-label>NombreJour</tc-form-label>
-                                <tc-input required="required" [(ngModel)]="entity.nombreJour" name="nombreJour" id="nombreJour" #nombreJour="ngModel">
-                                </tc-input>
-                                <tc-form-description>
-                                    <app-form-field-validation-message [formField]="nombreJour"></app-form-field-validation-message>
-                                </tc-form-description>
-                            </tc-form-group>
-                        </div>
-                                                                                <div class="col-12 col-md-6">
-                            <tc-form-group>
-                                <tc-form-label>UserEmail</tc-form-label>
-                                <tc-input required="required" [(ngModel)]="entity.userEmail" name="userEmail" id="userEmail" #userEmail="ngModel">
-                                </tc-input>
-                                <tc-form-description>
-                                    <app-form-field-validation-message [formField]="userEmail"></app-form-field-validation-message>
-                                </tc-form-description>
-                            </tc-form-group>
-                        </div>
-                                                </div>
-        </tc-card>
-        <tc-card [view]="secondViewBorder" [outline]="true">
-            <div class="actions">
-                <button [outline]="true" type="button" (click)="location.back()" tc-button view="error"
-                    beforeIcon="icofont-close">Annuler</button>
-                <button type="button" [disabled]="form.invalid" class="float-right" (click)="update()"
-                    beforeIcon="icofont-save" tc-button view="warning">
-                    Mettre à jour
-                </button>
-                <button class="float-right mr-1" (click)="findEntity(entity.id)" afterIcon="icofont-refresh"
-                    tc-button type="button" view="success">Rafraichir</button>
-            </div>
-        </tc-card>
+<!-- Modal window -->
+<nz-modal nzWidth="50%" [(nzVisible)]="visible" [nzClosable]="false"
+  [nzTitle]="'Formulaire - Modification Repos Médical'" [nzContent]="modalBody" [nzFooter]="modalFooter"
+  (nzOnCancel)="closeModal()">
+  <ng-template #modalBody>
+    <form #form="ngForm" ngNativeValidate>
+      <div class="row">
+        <div class="col-12">
+          <tc-form-group>
+            <tc-form-label>Date</tc-form-label>
+            <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required="required" [(ngModel)]="entity.date" name="date"
+              id="date" #date="ngModel"></nz-date-picker>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="date"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+        <div class="col-12">
+          <tc-form-group>
+            <tc-form-label>Docteur</tc-form-label>
+            <nz-select name="docteur" id="docteur" #docteur="ngModel" required="required"
+              nzPlaceHolder="Selectionner le docteur" nzAllowClear nzShowSearch [(ngModel)]="selectedDocteurId">
+              <ng-container *ngFor="let docteur of docteurs">
+                <nz-option nzCustomContent [nzValue]="docteur.id" [nzLabel]="docteur.prenoms+' '+docteur.nom">
+                  <div class="row">
+                    <div class="col-2">
+                      <i *ngIf="!docteur.filepath" class="icofont-doctor-alt icofont-3x"></i>
+                      <tc-avatar *ngIf="docteur.filepath" [src]="docteur.filepath"></tc-avatar>
+                    </div>
+                    <div class="col-10">
+                      <span class="nowrap h6">{{docteur.prenoms+' '+docteur.nom}}</span>
+                    </div>
+                  </div>
+                </nz-option>
+              </ng-container>
+            </nz-select>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="docteur"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+        <div class="col-12">
+          <tc-form-group>
+            <tc-form-label>Nbre jours prescrits</tc-form-label>
+            <tc-input type="number" required="required" [(ngModel)]="entity.nombreJour" name="nombreJour"
+              id="nombreJour" #nombreJour="ngModel">
+            </tc-input>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="nombreJour"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+      </div>
     </form>
-</tc-card>
-<app-access-denied *ngIf="!(reposMedicalSrv.resourceName|editable)"></app-access-denied>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+        (click)="closeModal()">Fermer</button>
+      <button (click)="updateItem()" [afterIcon]="'icofont-pencil'"
+        tc-button [view]="'warning'">
+        Mettre à jour
+      </button>
+    </div>
+  </ng-template>
+</nz-modal>
+<!-- end Modal window -->

@@ -5,7 +5,7 @@
                 <div class="actions nowrap">
                     <button *ngIf="rendezVousSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
                         [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"
-                        [routerLink]="[row.id,'edit']"></button>
+                        (click)="setEditItem(row)"></button>
                     <button class="ml-1" *ngIf="rendezVousSrv.resourceName|deletable" (click)="remove(row)" tc-button
                         [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
                         [size]="'sm'"></button>
@@ -44,3 +44,4 @@
     <app-empty-table-message *ngIf="!items?.length"></app-empty-table-message>
 </tc-card>
 <app-access-denied *ngIf="!(rendezVousSrv.resourceName|listable)"></app-access-denied>
+<app-rendezvous-edit (update)="findByDossier()" [entity]="selectedItem" [visible]="isEditModalVisible" (close)="closeEditModal()"></app-rendezvous-edit>

@@ -7,6 +7,16 @@
       </div>
     </tc-card> -->
   <tc-table [itemsPerPage]="10" [rows]="consultations" [hovered]="true" [pagination]="true" [search]="true">
+    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+      <ng-template #tableTDTemplate let-row="row">
+        <div class="actions nowrap">
+          <button *ngIf="consultationSrv.resourceName|deletable" (click)="remove(row)" tc-button
+            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+            <button *ngIf="consultationSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'"
+            [view]="'accent'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="['/horizontal',consultationSrv.getRoutePrefixWithoutSlash(),row.id]" class="ml-1"></button>
+        </div>
+      </ng-template>
+    </tc-table-col>
     <tc-table-col [columnTitle]="'Date'" [columnName]="'date'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value let-row="row">
         <span class="nowrap">
@@ -25,14 +35,6 @@
     <tc-table-col [columnTitle]="'Prescrite par'" [columnName]="'docteur'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <span class="nowrap">{{ value?.prenoms+' '+value?.nom }}</span>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
-      <ng-template #tableTDTemplate let-row="row">
-        <div class="actions nowrap">
-          <button *ngIf="consultationSrv.resourceName|deletable" (click)="remove(row)" tc-button
-            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
-        </div>
       </ng-template>
     </tc-table-col>
   </tc-table>

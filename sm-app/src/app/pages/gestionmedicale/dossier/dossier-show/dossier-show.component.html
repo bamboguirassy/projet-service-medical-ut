@@ -1,6 +1,6 @@
 <tc-card *ngIf="dossierSrv.resourceName|showable" [tcGradient]="lightGradient">
     <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
-        <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-mail-reply">Retour</button>
+        <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-reply">Retour</button>
         <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
             beforeIcon="icofont-refresh">Rafraichir</button>
         <button (click)="remove(entity)" *ngIf="dossierSrv.resourceName|deletable" [outline]="true" tc-button
@@ -15,8 +15,8 @@
                 <div class="row">
                     <div class="col-12 col-md-6">
                         <blockquote class="blockquote">
-                            <p class="mb-0">Patient: {{entity?.prenoms+' '+entity?.nom}} <span
-                                    *ngIf="entity?.typePatient=='famille'">{{entity?.lienParente+' de '+entity?.prenomTravailleur+' '+entity?.nomTravailleur}}</span>
+                            <p class="mb-0">{{entity?.prenoms+' '+entity?.nom}} <span
+                                    *ngIf="entity?.typePatient=='FAMILLE'">{{entity?.lienParente+' de '+entity?.prenomTravailleur+' '+entity?.nomTravailleur}}</span>
                                 - {{entity?.typePatient}} </p>
                             <footer class="blockquote-footer"> <cite title="Source Title">Depuis le
                                     {{entity?.dateCreation|date:'dd/MM/yyyy'}} par {{ entity?.userEmail }}</cite>
@@ -84,10 +84,10 @@
                         <app-imputation-dossier [imputations]="entity?.inputations"></app-imputation-dossier>
                     </nz-collapse-panel>
                     <nz-collapse-panel nzHeader="Rendez-vous">
-                        <app-rendez-vous-dossier [items]="entity?.rendezVous"></app-rendez-vous-dossier>
+                        <app-rendez-vous-dossier *ngIf="entity" [dossier]="entity"></app-rendez-vous-dossier>
                     </nz-collapse-panel>
                     <nz-collapse-panel nzHeader="Repos Médicaux">
-                        <app-repos-medical-dossier [reposMedicals]="entity?.reposMedicals"></app-repos-medical-dossier>
+                        <app-repos-medical-dossier *ngIf="entity" [dossier]="entity"></app-repos-medical-dossier>
                     </nz-collapse-panel>
                 </nz-collapse>
             </tc-card>

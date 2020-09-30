@@ -30,6 +30,20 @@ class ReposMedicalController extends AbstractController
 
         return count($reposMedicals)?$reposMedicals:[];
     }
+    
+    /**
+     * @Rest\Get(path="/{id}/dossier", name="repos_medical_dossier")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_REPOSMEDICAL_INDEX")
+     */
+    public function findByDossier(\App\Entity\Dossier $dossier): array
+    {
+        $reposMedicals = $this->getDoctrine()
+            ->getRepository(ReposMedical::class)
+            ->findByDossier($dossier);
+
+        return count($reposMedicals)?$reposMedicals:[];
+    }
 
     /**
      * @Rest\Post(path="/filter-by-date/", name="reposmedical_filter_date")
@@ -92,6 +106,11 @@ class ReposMedicalController extends AbstractController
     public function edit(Request $request, ReposMedical $reposMedical): ReposMedical    {
         $form = $this->createForm(ReposMedicalType::class, $reposMedical);
         $form->submit(Utils::serializeRequestContent($request));
+        $reqData = Utils::getObjectFromRequest($request);
+        if(!isset($reqData->date)) {
+            throw $this->createNotFoundException("La date de prescription est obligatoire !");
+        }
+        $reposMedical->setDate(new \DateTime($reqData->date));
 
         $this->getDoctrine()->getManager()->flush();
 

@@ -30,6 +30,20 @@ class RendezVousController extends AbstractController
 
         return count($rendezVouses)?$rendezVouses:[];
     }
+    
+    /**
+     * @Rest\Get(path="/{id}/dossier", name="rendez_vous_dossier")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_RENDEZVOUS_INDEX")
+     */
+    public function findByDossier(\App\Entity\Dossier $dossier): array
+    {
+        $rendezVouses = $this->getDoctrine()
+            ->getRepository(RendezVous::class)
+            ->findByDossier($dossier);
+
+        return count($rendezVouses)?$rendezVouses:[];
+    }
 
     /**
      * @Rest\Post(path="/filter-by-date/", name="rendezvous_filter_date")
@@ -93,6 +107,11 @@ class RendezVousController extends AbstractController
     public function edit(Request $request, RendezVous $rendezVous): RendezVous    {
         $form = $this->createForm(RendezVousType::class, $rendezVous);
         $form->submit(Utils::serializeRequestContent($request));
+        $requestData = Utils::getObjectFromRequest($request);
+        if(!$requestData->dateRendezVous) {
+            throw $this->createNotFoundException("La date de rendez-vous est obligatoire !!!");
+        }
+        $rendezVous->setDateRendezVous(new \DateTime($requestData->dateRendezVous));
 
         $this->getDoctrine()->getManager()->flush();
 

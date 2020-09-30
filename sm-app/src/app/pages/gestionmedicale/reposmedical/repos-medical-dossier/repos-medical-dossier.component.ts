@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
+import { Dossier } from '../../dossier/dossier';
 import { ReposMedical } from '../reposmedical';
 import { ReposMedicalService } from '../reposmedical.service';
 
@@ -13,7 +14,15 @@ export class ReposMedicalDossierComponent implements OnInit {
   lightGradient = ['#fff', '#f79992'];
   deepGradient = ['#fff', '#d3e5d8'];
   secondViewBorder = 'error';
-  @Input() reposMedicals: ReposMedical[];
+  isEditModalVisible = false;
+  selectedItem: ReposMedical;
+  items: ReposMedical[];
+  _dossier: Dossier;
+
+  @Input() set dossier(val) {
+    this._dossier= val;
+    this.findByDossier();
+  }
 
   constructor(public reposMedicalSrv: ReposMedicalService) { }
 
@@ -34,6 +43,7 @@ export class ReposMedicalDossierComponent implements OnInit {
         this.reposMedicalSrv.remove(entity)
           .subscribe(() => {
             Swal.close();
+            this.findByDossier();
             this.reposMedicalSrv.toastr.success("Suppression reussie");
           });
         // For more information about handling dismissals please visit
@@ -44,5 +54,23 @@ export class ReposMedicalDossierComponent implements OnInit {
       }
     });
   }
+
+  setEditItem(item: ReposMedical) {
+    this.selectedItem = item;
+    this.isEditModalVisible = true;
+  }
+
+  findByDossier() {
+    this.closeEditModal();
+      this.reposMedicalSrv.findByDossier(this._dossier)
+      .subscribe((data: any)=>{
+        this.items = data;
+      },err=>this.reposMedicalSrv.httpSrv.catchError(err));
+  }
+
+  closeEditModal() {
+    this.isEditModalVisible = false;
+  }
+
 
 }

@@ -23,6 +23,7 @@ export class DossierNewComponent implements OnInit {
   constructor(public dossierSrv: DossierService,
     public router: Router, public datePipe: DatePipe) {
     this.entity = new Dossier();
+    this.entity.etat = true;
   }
 
   ngOnInit(): void {

@@ -6,7 +6,7 @@ import { first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
 import { BasePageComponent } from 'src/app/pages/base-page';
-import { Location } from '@angular/common';
+import { Location, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-dossier-edit',
@@ -15,11 +15,14 @@ import { Location } from '@angular/common';
 })
 export class DossierEditComponent extends BasePageComponent<Dossier> implements OnInit, OnDestroy {
 
+  
+  structures: string[] = [];
+
   constructor(store: Store<IAppState>,
               public dossierSrv: DossierService,
               public router: Router,
               private activatedRoute: ActivatedRoute,
-              public location: Location) {
+              public location: Location, public datePipe: DatePipe) {
     super(store, dossierSrv);
     this.pageData = {
       title: 'Modification - Dossier',
@@ -41,6 +44,7 @@ export class DossierEditComponent extends BasePageComponent<Dossier> implements 
 
   ngOnInit(): void {
     super.ngOnInit();
+    this.getStructures();
     this.findEntity(this.activatedRoute.snapshot.params.id);
   }
 
@@ -52,10 +56,19 @@ export class DossierEditComponent extends BasePageComponent<Dossier> implements 
   }
 
   prepareUpdate() {
+    this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance,'yyyy-MM-dd');
   }
 
   handlePostUpdate() {
     this.location.back();
+  }
+
+  getStructures() {
+    this.dossierSrv.httpSrv.http.get('assets/data/structures.json')
+    .pipe(first())
+    .subscribe((data: any)=>{
+      this.structures = data;
+    })
   }
 
 }
