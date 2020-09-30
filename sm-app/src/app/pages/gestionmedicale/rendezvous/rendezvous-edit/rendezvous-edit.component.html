@@ -25,6 +25,16 @@
             </tc-form-description>
           </tc-form-group>
         </div>
+        <div class="col-12 col-md-6">
+          <tc-form-group>
+            <tc-form-label>Présence Patient ?</tc-form-label>
+            <tc-switcher [(ngModel)]="entity.presence" name="presence" id="presence" #presence="ngModel">
+            </tc-switcher>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="presence"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
       </div>
     </form>
   </ng-template>
@@ -33,8 +43,8 @@
     <div class="actions justify-content-between">
       <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
         (click)="closeModal()">Fermer</button>
-      <button [disabled]="!entity.dateRendezVous" [disabled]="form.invalid" (click)="updateItem()" [afterIcon]="'icofont-save'"
-        tc-button [view]="'accent'">
+      <button [disabled]="!entity.dateRendezVous" [disabled]="form.invalid" (click)="updateItem()"
+        [afterIcon]="'icofont-save'" tc-button [view]="'accent'">
         Enregistrer
       </button>
     </div>
