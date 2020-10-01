@@ -1,1 +1,16 @@
-<p>surveillance-pathologique-generale works!</p>
+<table class="table table-responsive table-bordered table-hovered">
+    <thead>
+        <tr>
+            <th></th>
+            <th *ngFor="let pathologie of data?.header">{{pathologie.nom}}</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of data?.content">
+            <td scope="row">{{item.month}}</td>
+            <td *ngFor="let val of item.pathTab">{{val.nombre}}</td>
+            <td>{{item.total}}</td>
+        </tr>
+    </tbody>
+</table>

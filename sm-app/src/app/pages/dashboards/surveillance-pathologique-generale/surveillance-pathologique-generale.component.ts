@@ -42,7 +42,7 @@ export class SurveillancePathologiqueGeneraleComponent extends BasePageComponent
   }
 
   getData() {
-    this.pathologieSrv.getMensualStatistic(this.selectedAnnee)
+    this.pathologieSrv.getGenericStatistic(this.selectedAnnee)
       .subscribe((data: any) => {
         this.data = data;
       }, err => this.pathologieSrv.httpSrv.catchError(err));
