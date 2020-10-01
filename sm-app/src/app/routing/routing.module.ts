@@ -1,3 +1,5 @@
+import { ConsultationJournaliereComponent } from './../pages/dashboards/consultation-journaliere/consultation-journaliere.component';
+import { SurveillancePathologiqueGeneraleComponent } from './../pages/dashboards/surveillance-pathologique-generale/surveillance-pathologique-generale.component';
 import { inputationRoutes } from './../pages/gestionmedicale/inputation/inputation.routes';
 import { reposMedicalRoutes } from './../pages/gestionmedicale/reposmedical/reposmedical.routes';
 import { consultationRoutes } from './../pages/gestionmedicale/consultation/consultation.routes';
@@ -25,9 +27,17 @@ import { docteurRoutes } from '../pages/parametrage/docteur/docteur.routes';
 import { pathologieRoutes } from '../pages/parametrage/pathologie/pathologie.routes';
 import { structurePartenaireRoutes } from '../pages/parametrage/structurepartenaire/structurepartenaire.routes';
 import { PageEditAccountComponent } from '../pages/apps/service-pages/edit-account/edit-account.component';
+import { SurveillancePathologiqueJournaliereComponent } from '../pages/dashboards/surveillance-pathologique-journaliere/surveillance-pathologique-journaliere.component';
+import { SurveillancePathologiqueMensuelleComponent } from '../pages/dashboards/surveillance-pathologique-mensuelle/surveillance-pathologique-mensuelle.component';
+import { ConsultationMensuelleComponent } from '../pages/dashboards/consultation-mensuelle/consultation-mensuelle.component';
 
 const VERTICAL_ROUTES: Routes = [
   { path: 'default-dashboard', component: PageDashboardComponent },
+  { path: 'surv-path-gen', component: SurveillancePathologiqueGeneraleComponent },
+  { path: 'surv-path-journ', component: SurveillancePathologiqueJournaliereComponent },
+  { path: 'surv-path-mens', component: SurveillancePathologiqueMensuelleComponent },
+  { path: 'cons-mens', component: ConsultationMensuelleComponent },
+  { path: 'cons-jour', component: ConsultationJournaliereComponent },
 
   { path: 'edit-account', component: PageEditAccountComponent },
   { path: 'user-profile', component: PageUserProfileComponent },

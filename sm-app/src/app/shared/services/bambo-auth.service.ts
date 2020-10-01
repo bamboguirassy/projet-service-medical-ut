@@ -100,11 +100,38 @@ export class BamboAuthService {
     // define menu
     this.menuItems = [
       {
-        "title": "Tableau de bord",
+        "title": "Statistiques",
         "icon": {
           "class": "icofont-dashboard-web"
         },
-        "routing": "default-dashboard",
+        "routing": "",
+        "sub": [
+          {
+            "title": "Surv. Path. Générale",
+            "routing": "surv-path-gen",
+            enabled: this.checkListAccess('pathologie')
+          },
+          {
+            "title": "Surv. Path. Journalière",
+            "routing": "surv-path-journ",
+            enabled: this.checkListAccess('pathologie')
+          },
+          {
+            "title": "Surv. Path. Mensuelle",
+            "routing": "surv-path-mens",
+            enabled: this.checkListAccess('pathologie')
+          },
+          {
+            "title": "Consultation Journalière",
+            "routing": "cons-jour",
+            enabled: this.checkListAccess('consultation')
+          },
+          {
+            "title": "Consultation Mensuelle",
+            "routing": "cons-mens",
+            enabled: this.checkListAccess('consultation')
+          }
+        ],
         enabled: true
       },
       {

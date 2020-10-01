@@ -37,6 +37,7 @@ export class DossierNewComponent implements OnInit {
         this.closeModal();
         this.creation.emit(data);
         this.entity = new Dossier();
+        this.entity.etat = true;
       }, error => this.dossierSrv.httpSrv.catchError(error));
   }
 

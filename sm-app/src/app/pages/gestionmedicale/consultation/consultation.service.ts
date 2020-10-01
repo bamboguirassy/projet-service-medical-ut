@@ -18,4 +18,8 @@ export class ConsultationService extends BamboAbstractService {
     return this.httpSrv.post(this.routePrefix + 'filter-by-date/', dateInterval);
   }
 
+  getAnnualStatistic(annee: number) {
+    return this.httpSrv.get(this.routePrefix + annee + '/statistique/');
+  }
+
 }

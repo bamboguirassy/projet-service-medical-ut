@@ -125,7 +125,7 @@
                 </div>
                 <div class="col-12 col-md-6" *ngIf="entity?.typePatient=='FAMILLE'">
                     <tc-form-group>
-                        <tc-form-label>Prenom du Travailleur</tc-form-label>
+                        <tc-form-label>Prenoms & Nom du Travailleur</tc-form-label>
                         <tc-input required="required" [(ngModel)]="entity.prenomTravailleur" name="prenomTravailleur"
                             id="prenomTravailleur" #prenomTravailleur="ngModel">
                         </tc-input>
@@ -137,10 +137,12 @@
                 </div>
                 <div class="col-12 col-md-6" *ngIf="entity?.typePatient=='FAMILLE'">
                     <tc-form-group>
-                        <tc-form-label>Nom du Travailleur</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.nomTravailleur" name="nomTravailleur"
-                            id="nomTravailleur" #nomTravailleur="ngModel">
-                        </tc-input>
+                        <tc-form-label>PER ou PATS ?</tc-form-label>
+                        <tc-radio [direction]="'horizontal'" required="required" [(ngModel)]="entity.nomTravailleur"
+                            name="nomTravailleur" id="nomTravailleur" #nomTravailleur="ngModel">
+                            <tc-radio-option [value]="'PER'">PER</tc-radio-option>
+                            <tc-radio-option [value]="'PATS'">PATS</tc-radio-option>
+                        </tc-radio>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="nomTravailleur">
                             </app-form-field-validation-message>

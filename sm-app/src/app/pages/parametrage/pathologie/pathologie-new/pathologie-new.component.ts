@@ -27,7 +27,6 @@ export class PathologieNewComponent implements OnInit {
   save() {
     this.pathologieSrv.create(this.entity)
       .subscribe((data: any) => {
-        this.closeModal();
         this.creation.emit(data);
         this.entity = new Pathologie();
       }, error => this.pathologieSrv.httpSrv.catchError(error));

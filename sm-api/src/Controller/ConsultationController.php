@@ -31,6 +31,58 @@ class ConsultationController extends AbstractController {
     }
 
     /**
+     * @Rest\Get(path="/{annee}/statistique/", name="consultation_statistique")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_CONSULTATION_INDEX")
+     */
+    public function getAnnualStatistic($annee): array {
+        $tab_stats = [];
+        $em = $this->getDoctrine()->getManager();
+        foreach (Utils::$calendarParams as $calendarElt) {
+            $dayTab = [];
+            for ($i = 1; $i <= $calendarElt['endTo']; $i++) {
+                $nbreJr = $em->createQuery('select count(c) from App\Entity\Consultation c '
+                                . 'where c.date=?1')
+                        ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-' . $i)
+                        ->getSingleScalarResult();
+                $nbrPatsJr = $em->createQuery('select count(c) from App\Entity\Consultation c '
+                                . 'JOIN c.dossier d '
+                                . 'where c.date=?1 and d.typePatient=?2')
+                        ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-' . $i)
+                        ->setParameter(2, 'PATS')
+                        ->getSingleScalarResult();
+                $nbrPerJr = $em->createQuery('select count(c) from App\Entity\Consultation c '
+                                . 'JOIN c.dossier d '
+                                . 'where c.date=?1 and d.typePatient=?2')
+                        ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-' . $i)
+                        ->setParameter(2, 'PER')
+                        ->getSingleScalarResult();
+                $nbrFamilleJr = $em->createQuery('select count(c) from App\Entity\Consultation c '
+                                . 'JOIN c.dossier d '
+                                . 'where c.date=?1 and d.typePatient=?2')
+                        ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-' . $i)
+                        ->setParameter(2, 'FAMILLE')
+                        ->getSingleScalarResult();
+                $nbrEtudiantJr = $em->createQuery('select count(c) from App\Entity\Consultation c '
+                                . 'JOIN c.dossier d '
+                                . 'where c.date=?1 and d.typePatient=?2')
+                        ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-' . $i)
+                        ->setParameter(2, 'ETUDIANT')
+                        ->getSingleScalarResult();
+                $dayTab[] = ['day' => $i, 'total' => $nbreJr, 'pats' => $nbrPatsJr, 'per' => $nbrPerJr, 'famille' => $nbrFamilleJr, 'etudiant' => $nbrEtudiantJr];
+            }
+            $monthNombre = $em->createQuery('select count(c) from App\Entity\Consultation c '
+                            . 'where c.date>=?1 and c.date<=?2')
+                    ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
+                    ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
+                    ->getSingleScalarResult();
+            $tab_stats[] = ['month' => $calendarElt['month'], 'dayTab' => $dayTab, 'monthNombre' => $monthNombre];
+        }
+
+        return $tab_stats;
+    }
+
+    /**
      * @Rest\Post(path="/filter-by-date/", name="consultation_filter_date")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_CONSULTATION_INDEX")

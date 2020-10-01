@@ -38,12 +38,13 @@
                 <div class="col-12">
                     <tc-card [outline]="true" [view]="secondViewBorder" title="Pathologie diagnostiquée"
                         [tcGradient]="secondGradient">
-                        <button *ngIf="!entity?.pathologieDiagnostiquee && (consultationSrv.resourceName|editable)"
-                            tc-button [afterIcon]="'icofont-plus'" [view]="'accent'" size='sm' [square]="true"
-                            (click)="isPathologieModalVisible=true">Indiquer résultat diagnostic</button>
+                        <a href="javascript:void(0)" (click)="isPathologieModalVisible=true"
+                            *ngIf="!entity?.pathologieDiagnostiquee && (consultationSrv.resourceName|editable)">Préciser
+                            le résultat du diagnostic</a>
                         <tc-badge *ngIf="entity?.pathologieDiagnostiquee" view="error">
                             <span class="nowrap">{{entity?.pathologieDiagnostiquee?.nom}}</span>
-                        </tc-badge>
+                        </tc-badge> &nbsp; <a href="javascript:void(0)" (click)="isPathologieModalVisible=true"
+                        *ngIf="entity?.pathologieDiagnostiquee && (consultationSrv.resourceName|editable)">Changer résultat diagnostic</a>
                     </tc-card>
                 </div>
                 <div class="col-12">

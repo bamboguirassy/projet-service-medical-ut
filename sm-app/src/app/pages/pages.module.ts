@@ -97,6 +97,12 @@ import { ReposMedicalCloneComponent } from './gestionmedicale/reposmedical/repos
 import { ReposMedicalDossierComponent } from './gestionmedicale/reposmedical/repos-medical-dossier/repos-medical-dossier.component';
 import { ImputationDossierComponent } from './gestionmedicale/inputation/imputation-dossier/imputation-dossier.component';
 import { RendezVousDossierComponent } from './gestionmedicale/rendezvous/rendez-vous-dossier/rendez-vous-dossier.component';
+import { SurveillancePathologiqueGeneraleComponent } from './dashboards/surveillance-pathologique-generale/surveillance-pathologique-generale.component';
+import { SurveillancePathologiqueJournaliereComponent } from './dashboards/surveillance-pathologique-journaliere/surveillance-pathologique-journaliere.component';
+import { SurveillancePathologiqueMensuelleComponent } from './dashboards/surveillance-pathologique-mensuelle/surveillance-pathologique-mensuelle.component';
+import { ConsultationMensuelleComponent } from './dashboards/consultation-mensuelle/consultation-mensuelle.component';
+import { ConsultationAnnuelleComponent } from './dashboards/consultation-annuelle/consultation-annuelle.component';
+import { ConsultationJournaliereComponent } from './dashboards/consultation-journaliere/consultation-journaliere.component';
 
 @NgModule({
   imports: [
@@ -227,6 +233,12 @@ import { RendezVousDossierComponent } from './gestionmedicale/rendezvous/rendez-
     MedicamentRemisListComponent,
     MedicamentRemisNewComponent,
     MedicamentRemisEditComponent,
+    SurveillancePathologiqueGeneraleComponent,
+    SurveillancePathologiqueJournaliereComponent,
+    SurveillancePathologiqueMensuelleComponent,
+    ConsultationMensuelleComponent,
+    ConsultationAnnuelleComponent,
+    ConsultationJournaliereComponent,
   ],
   exports: [ ],
   entryComponents: [ ],
