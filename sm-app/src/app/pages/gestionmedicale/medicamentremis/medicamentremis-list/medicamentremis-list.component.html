@@ -1,5 +1,5 @@
 <tc-card *ngIf="medicamentRemiSrv.resourceName|listable" [tcGradient]="secondGradient" title="Médicaments Prescrits">
-  <tc-table [itemsPerPage]="10" [rows]="consultation?.medicamentPrescrits" [hovered]="true" [pagination]="true"
+  <tc-table [itemsPerPage]="10" [rows]="consultation?.medicamentRemis" [hovered]="true" [pagination]="true"
     [search]="true">
     <tc-table-col [columnTitle]="'Médicament'" [columnName]="'medicament'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>

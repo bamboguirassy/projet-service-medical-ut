@@ -31,11 +31,11 @@ class ConsultationController extends AbstractController {
     }
 
     /**
-     * @Rest\Get(path="/{annee}/statistique/", name="consultation_statistique")
+     * @Rest\Get(path="/{annee}/statistique-journaliere/", name="consultation_statistique_journaliere")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_CONSULTATION_INDEX")
      */
-    public function getAnnualStatistic($annee): array {
+    public function getDaylyStatistic($annee): array {
         $tab_stats = [];
         $em = $this->getDoctrine()->getManager();
         foreach (Utils::$calendarParams as $calendarElt) {
@@ -77,6 +77,55 @@ class ConsultationController extends AbstractController {
                     ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
                     ->getSingleScalarResult();
             $tab_stats[] = ['month' => $calendarElt['month'], 'dayTab' => $dayTab, 'monthNombre' => $monthNombre];
+        }
+
+        return $tab_stats;
+    }
+
+    /**
+     * @Rest\Get(path="/{annee}/statistique-mensuelle/", name="consultation_statistique_mensuelle")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_CONSULTATION_INDEX")
+     */
+    public function getMensualStatistic($annee): array {
+        $tab_stats = [];
+        $em = $this->getDoctrine()->getManager();
+        foreach (Utils::$calendarParams as $calendarElt) {
+            $nbreMensuel = $em->createQuery('select count(c) from App\Entity\Consultation c '
+                            . 'where c.date>=?1 and c.date<=?2')
+                    ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
+                    ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
+                    ->getSingleScalarResult();
+            $nbrPats = $em->createQuery('select count(c) from App\Entity\Consultation c '
+                            . 'JOIN c.dossier d '
+                            . 'where c.date>=?1 and c.date<=?2 and d.typePatient=?3')
+                    ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
+                    ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
+                    ->setParameter(3, 'PATS')
+                    ->getSingleScalarResult();
+            $nbrPer = $em->createQuery('select count(c) from App\Entity\Consultation c '
+                            . 'JOIN c.dossier d '
+                            . 'where c.date>=?1 and c.date<=?2 and d.typePatient=?3')
+                    ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
+                    ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
+                    ->setParameter(3, 'PER')
+                    ->getSingleScalarResult();
+            $nbrFamille = $em->createQuery('select count(c) from App\Entity\Consultation c '
+                            . 'JOIN c.dossier d '
+                            . 'where c.date>=?1 and c.date<=?2 and d.typePatient=?3')
+                    ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
+                    ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
+                    ->setParameter(3, 'FAMILLE')
+                    ->getSingleScalarResult();
+            $nbrEtudiant = $em->createQuery('select count(c) from App\Entity\Consultation c '
+                            . 'JOIN c.dossier d '
+                            . 'where c.date>=?1 and c.date<=?2 and d.typePatient=?3')
+                    ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
+                    ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
+                    ->setParameter(3, 'ETUDIANT')
+                    ->getSingleScalarResult();
+
+            $tab_stats[] = ['month' => $calendarElt['month'], 'total' => $nbreMensuel, 'pats' => $nbrPats, 'per' => $nbrPer, 'famille' => $nbrFamille, 'etudiant' => $nbrEtudiant];
         }
 
         return $tab_stats;

@@ -101,7 +101,6 @@ import { SurveillancePathologiqueGeneraleComponent } from './dashboards/surveill
 import { SurveillancePathologiqueJournaliereComponent } from './dashboards/surveillance-pathologique-journaliere/surveillance-pathologique-journaliere.component';
 import { SurveillancePathologiqueMensuelleComponent } from './dashboards/surveillance-pathologique-mensuelle/surveillance-pathologique-mensuelle.component';
 import { ConsultationMensuelleComponent } from './dashboards/consultation-mensuelle/consultation-mensuelle.component';
-import { ConsultationAnnuelleComponent } from './dashboards/consultation-annuelle/consultation-annuelle.component';
 import { ConsultationJournaliereComponent } from './dashboards/consultation-journaliere/consultation-journaliere.component';
 
 @NgModule({
@@ -237,7 +236,6 @@ import { ConsultationJournaliereComponent } from './dashboards/consultation-jour
     SurveillancePathologiqueJournaliereComponent,
     SurveillancePathologiqueMensuelleComponent,
     ConsultationMensuelleComponent,
-    ConsultationAnnuelleComponent,
     ConsultationJournaliereComponent,
   ],
   exports: [ ],

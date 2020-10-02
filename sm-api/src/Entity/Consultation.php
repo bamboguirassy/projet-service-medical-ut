@@ -75,12 +75,12 @@ class Consultation
     /**
      * @ORM\OneToMany(targetEntity=MedicamentRemis::class, mappedBy="consultation")
      */
-    private $medicamentPrescrits;
+    private $medicamentRemis;
 
     public function __construct()
     {
         $this->symptomes = new ArrayCollection();
-        $this->medicamentPrescrits = new ArrayCollection();
+        $this->medicamentRemis = new ArrayCollection();
     }
 
     public function getId()
@@ -160,7 +160,7 @@ class Consultation
     {
         if (!$this->symptomes->contains($symptome)) {
             $this->symptomes[] = $symptome;
-            $symptome->setConsultation1($this);
+            $symptome->setConsultation($this);
         }
 
         return $this;
@@ -171,8 +171,8 @@ class Consultation
         if ($this->symptomes->contains($symptome)) {
             $this->symptomes->removeElement($symptome);
             // set the owning side to null (unless already changed)
-            if ($symptome->getConsultation1() === $this) {
-                $symptome->setConsultation1(null);
+            if ($symptome->getConsultation() === $this) {
+                $symptome->setConsultation(null);
             }
         }
 
@@ -182,28 +182,28 @@ class Consultation
     /**
      * @return Collection|MedicamentRemis[]
      */
-    public function getMedicamentPrescrits(): Collection
+    public function getMedicamentRemiss(): Collection
     {
-        return $this->medicamentPrescrits;
+        return $this->medicamentRemis;
     }
 
-    public function addMedicamentPrescrit(MedicamentRemis $medicamentPrescrit): self
+    public function addMedicamentRemis(MedicamentRemis $medicamentRemis): self
     {
-        if (!$this->medicamentPrescrits->contains($medicamentPrescrit)) {
-            $this->medicamentPrescrits[] = $medicamentPrescrit;
-            $medicamentPrescrit->setConsultation1($this);
+        if (!$this->medicamentRemis->contains($medicamentRemis)) {
+            $this->medicamentRemis[] = $medicamentRemis;
+            $medicamentRemis->setConsultation($this);
         }
 
         return $this;
     }
 
-    public function removeMedicamentPrescrit(MedicamentRemis $medicamentPrescrit): self
+    public function removeMedicamentRemis(MedicamentRemis $medicamentRemis): self
     {
-        if ($this->medicamentPrescrits->contains($medicamentPrescrit)) {
-            $this->medicamentPrescrits->removeElement($medicamentPrescrit);
+        if ($this->medicamentRemis->contains($medicamentRemis)) {
+            $this->medicamentRemis->removeElement($medicamentRemis);
             // set the owning side to null (unless already changed)
-            if ($medicamentPrescrit->getConsultation1() === $this) {
-                $medicamentPrescrit->setConsultation1(null);
+            if ($medicamentRemis->getConsultation() === $this) {
+                $medicamentRemis->setConsultation(null);
             }
         }
 

@@ -26,6 +26,7 @@ export class BasePageComponent<T extends BamboAbstractObject> implements OnInit,
   lightGradient = ['#fff', '#f79992'];
   deepGradient = ['#fff', '#d3e5d8'];
   secondGradient = ['#fff', '#F5F6F1'];
+  statisticGradient = ['#fff', '#d8a99e'];
   secondViewBorder = 'error';
 
   constructor(

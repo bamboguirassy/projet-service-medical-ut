@@ -12,5 +12,5 @@ export class Consultation extends BamboAbstractObject {
     pathologieDiagnostiquee?: Pathologie;
     dossier: Dossier;
     symptomes?: Symptome[];
-    medicamentPrescrits?: MedicamentRemis[];
+    medicamentRemis?: MedicamentRemis[];
 }

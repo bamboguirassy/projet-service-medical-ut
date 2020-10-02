@@ -1,1 +1,27 @@
-<p>consultation-mensuelle works!</p>
+<tc-card *ngIf="consultationSrv.resourceName|listable" [tcGradient]="statisticGradient">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th rowspan="2"></th>
+                <th colspan="3" style="text-align: center;">Permanent</th>
+                <th rowspan="2">ETUDIANTS</th>
+                <th rowspan="2">TOTAL</th>
+            </tr>
+            <tr>
+                <th>PERS</th>
+                <th>PATS</th>
+                <th>FAMILLE</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of data">
+                <td scope="row">{{item?.month}}</td>
+                <td>{{item?.per}}</td>
+                <td>{{item?.pats}}</td>
+                <td>{{item?.famille}}</td>
+                <td>{{item?.etudiant}}</td>
+                <td>{{item?.total}}</td>
+            </tr>
+        </tbody>
+    </table>
+</tc-card>

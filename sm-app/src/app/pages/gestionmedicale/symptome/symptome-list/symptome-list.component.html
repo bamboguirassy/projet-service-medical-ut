@@ -1,4 +1,4 @@
-<tc-card *ngIf="symptomeSrv.resourceName|listable" [tcGradient]="secondGradient" title="Symptômes">
+<tc-card *ngIf="symptomeSrv.resourceName|listable" [tcGradient]="secondGradient" title="Symptômes (Motifs de consultation)">
   <tc-table [itemsPerPage]="10" [rows]="consultation?.symptomes" [hovered]="true" [pagination]="true" [search]="true">
     <tc-table-col [columnTitle]="'Nom'" [columnName]="'nom'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>

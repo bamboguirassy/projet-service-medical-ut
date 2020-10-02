@@ -1,1 +1,36 @@
-<p>consultation-journaliere works!</p>
+<tc-card *ngIf="consultationSrv.resourceName|listable" [tcGradient]="deepGradient">
+    <nz-tabset nzTabPosition="bottom">
+        <nz-tab *ngFor="let tab of data" [nzTitle]="tab?.month">
+            <tc-card [tcGradient]="statisticGradient">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th rowspan="2"></th>
+                            <th colspan="3" style="text-align: center;">Permanent</th>
+                            <th rowspan="2">ETUDIANTS</th>
+                            <th rowspan="2">TOTAL</th>
+                        </tr>
+                        <tr>
+                            <th>PERS</th>
+                            <th>PATS</th>
+                            <th>FAMILLE</th>
+                        </tr>
+                        <tr *ngFor="let dayData of tab?.dayTab">
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of tab?.dayTab">
+                            <td scope="row">J{{item?.day}}</td>
+                            <td>{{item?.per}}</td>
+                            <td>{{item?.pats}}</td>
+                            <td>{{item?.famille}}</td>
+                            <td>{{item?.etudiant}}</td>
+                            <td>{{item?.total}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </tc-card>
+        </nz-tab>
+    </nz-tabset>
+</tc-card>
