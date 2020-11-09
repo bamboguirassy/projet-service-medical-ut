@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  sam. 12 sep. 2020 à 15:57
+-- Généré le :  lun. 09 nov. 2020 à 16:15
 -- Version du serveur :  5.7.23
 -- Version de PHP :  7.2.10
 
@@ -57,16 +57,35 @@ INSERT INTO `bon_reception` (`id`, `date`, `user_email`, `nom`, `numero`) VALUES
 DROP TABLE IF EXISTS `consultation`;
 CREATE TABLE IF NOT EXISTS `consultation` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `dossier` int(11) NOT NULL,
-  `pathologie_diagnostiquee` int(11) DEFAULT NULL COMMENT 'qui ne sera obligatoire dans le formulaire de creation mais avec ajout d''une section pour ajouter la pathologie au cas ou c''est pas définie',
+  `dossier` int(11) DEFAULT NULL,
+  `pathologie_diagnostiquee` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL,
-  `docteur` int(11) NOT NULL COMMENT 'docteur ayant consulté',
+  `docteur` int(11) DEFAULT NULL,
   `user_email` varchar(45) NOT NULL COMMENT 'mail de l''utilisateur ayant opéré l''action',
   PRIMARY KEY (`id`),
   KEY `fk_consultation_dossier_idx` (`dossier`),
   KEY `fk_consultation_pathologie1_idx` (`pathologie_diagnostiquee`),
   KEY `fk_consultation_docteur1_idx` (`docteur`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `consultation`
+--
+
+INSERT INTO `consultation` (`id`, `dossier`, `pathologie_diagnostiquee`, `date`, `docteur`, `user_email`) VALUES
+(1, 1, 13, '2020-01-01', 4, 'bamboguirassy'),
+(2, 1, 12, '2020-05-21', 1, 'bamboguirassy'),
+(3, 1, 7, '2020-08-12', 3, 'bamboguirassy'),
+(4, 1, 4, '2020-10-01', 1, 'bamboguirassy'),
+(5, 2, 14, '2020-06-17', 4, 'bamboguirassy'),
+(6, 2, 9, '2020-09-22', 1, 'bamboguirassy'),
+(7, 3, 11, '2020-04-14', 1, 'bamboguirassy'),
+(8, 3, 5, '2020-10-01', 3, 'bamboguirassy'),
+(9, 4, 2, '2020-09-24', 4, 'bamboguirassy'),
+(10, 4, 1, '2020-10-01', 4, 'bamboguirassy'),
+(11, 5, 8, '2020-05-20', 1, 'bamboguirassy'),
+(12, 5, 4, '2020-08-11', 4, 'bamboguirassy'),
+(13, 1, 1, '2020-10-02', 4, 'bamboguirassy');
 
 -- --------------------------------------------------------
 
@@ -127,11 +146,11 @@ CREATE TABLE IF NOT EXISTS `dossier` (
 --
 
 INSERT INTO `dossier` (`id`, `numero`, `prenoms`, `nom`, `date_naissance`, `cni`, `telephone`, `type_patient`, `lien_parente`, `matricule`, `prenom_travailleur`, `nom_travailleur`, `genre`, `date_creation`, `user_email`, `etat`, `structure`) VALUES
-(1, '5F5CC9DE3BDEB', 'Pr Mouhamadou', 'Thiam', '1980-09-03', NULL, '77 258 65 89', 'per', NULL, '110258/B', NULL, NULL, 'Homme', '2020-09-12', 'bamboguirassy', 1, 'UFR SET'),
-(2, '5F5CCA47CD268', 'Pr Moussa Déthié', 'Sarr', '1986-09-10', NULL, '77 698 54 25', 'per', NULL, '110847/C', NULL, NULL, 'Homme', '2020-09-12', 'bamboguirassy', 1, 'UFR SET'),
-(3, '5F5CCA8EB077C', 'M. Moussa', 'FOFANA', '1993-07-03', '1 916 2002 00225', '78 016 50 26', 'pats', NULL, '120254/B', NULL, NULL, 'Homme', '2020-09-12', 'bamboguirassy', 1, 'RECTORAT'),
-(4, '5F5CCD15A6F11', 'Aminata', 'SAMB', '2000-09-01', NULL, '77 350 93 13', 'famille', 'épouse', '120254/B', 'Moussa', 'FOFANA', 'Femme', '2020-09-12', 'bamboguirassy', 1, 'RECTORAT'),
-(5, '5F5CCD90EFE59', 'Hawa', 'FOFANA', '2019-07-01', NULL, '77 350 93 13', 'famille', 'fille', '120254/B', 'Moussa', 'FOFAN', 'Femme', '2020-09-12', 'bamboguirassy', 1, 'RECTORAT');
+(1, '5F75B28C220B8', 'Professeur Mouhmadou', 'THIAM', '1963-10-16', NULL, '772859658', 'PER', NULL, '110285/J', NULL, NULL, 'Homme', '2020-10-01', 'bamboguirassy', 1, 'UFR SET'),
+(2, '5F75B2C57B636', 'Monsieur Moussa', 'FOFANA', '1991-10-01', '1916200200225', '+221780165026', 'PATS', NULL, '120254/B', NULL, NULL, 'Homme', '2020-10-01', 'bamboguirassy', 1, 'RECTORAT'),
+(3, '5F75B34661BCA', 'Madame Aminata', 'SAMB', '1991-12-27', NULL, '773509313', 'FAMILLE', 'épouse', '120254/B', 'Moussa', 'FOFANA', 'Femme', '2020-10-01', 'bamboguirassy', 1, 'RECTORAT'),
+(4, '5F75B3AA52854', 'Hawa', 'FOFANA', '2019-10-01', NULL, '773509313', 'FAMILLE', 'fille', '120254/B', 'Moussa FOFANA', 'PATS', 'Femme', '2020-10-01', 'bamboguirassy', 1, 'RECTORAT'),
+(5, '5F75B47064770', 'El Hadji Ahmadou', 'GUEYE', '1995-05-04', NULL, '779856851', 'ETUDIANT', NULL, '16030106465', NULL, NULL, 'Homme', '2020-10-01', 'bamboguirassy', 1, 'UFR SET');
 
 -- --------------------------------------------------------
 
@@ -154,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `fos_group` (
 --
 
 INSERT INTO `fos_group` (`id`, `name`, `roles`, `code`) VALUES
-(1, 'Super Admin', 'a:42:{i:0;s:17:\"ROLE_GROUP_CREATE\";i:1;s:16:\"ROLE_GROUP_INDEX\";i:2;s:15:\"ROLE_GROUP_SHOW\";i:3;s:16:\"ROLE_GROUP_CLONE\";i:4;s:17:\"ROLE_GROUP_DELETE\";i:5;s:15:\"ROLE_GROUP_EDIT\";i:6;s:16:\"ROLE_USER_CREATE\";i:7;s:15:\"ROLE_USER_INDEX\";i:8;s:14:\"ROLE_USER_SHOW\";i:9;s:15:\"ROLE_USER_CLONE\";i:10;s:16:\"ROLE_USER_DELETE\";i:11;s:14:\"ROLE_USER_EDIT\";i:12;s:19:\"ROLE_DOCTEUR_CREATE\";i:13;s:18:\"ROLE_DOCTEUR_INDEX\";i:14;s:17:\"ROLE_DOCTEUR_SHOW\";i:15;s:18:\"ROLE_DOCTEUR_CLONE\";i:16;s:19:\"ROLE_DOCTEUR_DELETE\";i:17;s:17:\"ROLE_DOCTEUR_EDIT\";i:18;s:22:\"ROLE_PATHOLOGIE_CREATE\";i:19;s:21:\"ROLE_PATHOLOGIE_INDEX\";i:20;s:20:\"ROLE_PATHOLOGIE_SHOW\";i:21;s:21:\"ROLE_PATHOLOGIE_CLONE\";i:22;s:22:\"ROLE_PATHOLOGIE_DELETE\";i:23;s:20:\"ROLE_PATHOLOGIE_EDIT\";i:24;s:19:\"ROLE_DOSSIER_CREATE\";i:25;s:18:\"ROLE_DOSSIER_INDEX\";i:26;s:17:\"ROLE_DOSSIER_SHOW\";i:27;s:18:\"ROLE_DOSSIER_CLONE\";i:28;s:19:\"ROLE_DOSSIER_DELETE\";i:29;s:17:\"ROLE_DOSSIER_EDIT\";i:30;s:24:\"ROLE_BONRECEPTION_CREATE\";i:31;s:23:\"ROLE_BONRECEPTION_INDEX\";i:32;s:22:\"ROLE_BONRECEPTION_SHOW\";i:33;s:23:\"ROLE_BONRECEPTION_CLONE\";i:34;s:24:\"ROLE_BONRECEPTION_DELETE\";i:35;s:22:\"ROLE_BONRECEPTION_EDIT\";i:36;s:22:\"ROLE_MEDICAMENT_CREATE\";i:37;s:21:\"ROLE_MEDICAMENT_INDEX\";i:38;s:20:\"ROLE_MEDICAMENT_SHOW\";i:39;s:21:\"ROLE_MEDICAMENT_CLONE\";i:40;s:22:\"ROLE_MEDICAMENT_DELETE\";i:41;s:20:\"ROLE_MEDICAMENT_EDIT\";}', 'SA'),
+(1, 'Super Admin', 'a:90:{i:0;s:17:\"ROLE_GROUP_CREATE\";i:1;s:16:\"ROLE_GROUP_INDEX\";i:2;s:15:\"ROLE_GROUP_SHOW\";i:3;s:16:\"ROLE_GROUP_CLONE\";i:4;s:17:\"ROLE_GROUP_DELETE\";i:5;s:15:\"ROLE_GROUP_EDIT\";i:6;s:16:\"ROLE_USER_CREATE\";i:7;s:15:\"ROLE_USER_INDEX\";i:8;s:14:\"ROLE_USER_SHOW\";i:9;s:15:\"ROLE_USER_CLONE\";i:10;s:16:\"ROLE_USER_DELETE\";i:11;s:14:\"ROLE_USER_EDIT\";i:12;s:19:\"ROLE_DOCTEUR_CREATE\";i:13;s:18:\"ROLE_DOCTEUR_INDEX\";i:14;s:17:\"ROLE_DOCTEUR_SHOW\";i:15;s:18:\"ROLE_DOCTEUR_CLONE\";i:16;s:19:\"ROLE_DOCTEUR_DELETE\";i:17;s:17:\"ROLE_DOCTEUR_EDIT\";i:18;s:22:\"ROLE_PATHOLOGIE_CREATE\";i:19;s:21:\"ROLE_PATHOLOGIE_INDEX\";i:20;s:20:\"ROLE_PATHOLOGIE_SHOW\";i:21;s:21:\"ROLE_PATHOLOGIE_CLONE\";i:22;s:22:\"ROLE_PATHOLOGIE_DELETE\";i:23;s:20:\"ROLE_PATHOLOGIE_EDIT\";i:24;s:31:\"ROLE_STRUCTUREPARTENAIRE_CREATE\";i:25;s:30:\"ROLE_STRUCTUREPARTENAIRE_INDEX\";i:26;s:29:\"ROLE_STRUCTUREPARTENAIRE_SHOW\";i:27;s:30:\"ROLE_STRUCTUREPARTENAIRE_CLONE\";i:28;s:31:\"ROLE_STRUCTUREPARTENAIRE_DELETE\";i:29;s:29:\"ROLE_STRUCTUREPARTENAIRE_EDIT\";i:30;s:19:\"ROLE_DOSSIER_CREATE\";i:31;s:18:\"ROLE_DOSSIER_INDEX\";i:32;s:17:\"ROLE_DOSSIER_SHOW\";i:33;s:18:\"ROLE_DOSSIER_CLONE\";i:34;s:19:\"ROLE_DOSSIER_DELETE\";i:35;s:17:\"ROLE_DOSSIER_EDIT\";i:36;s:24:\"ROLE_CONSULTATION_CREATE\";i:37;s:23:\"ROLE_CONSULTATION_INDEX\";i:38;s:22:\"ROLE_CONSULTATION_SHOW\";i:39;s:23:\"ROLE_CONSULTATION_CLONE\";i:40;s:24:\"ROLE_CONSULTATION_DELETE\";i:41;s:22:\"ROLE_CONSULTATION_EDIT\";i:42;s:22:\"ROLE_INPUTATION_CREATE\";i:43;s:21:\"ROLE_INPUTATION_INDEX\";i:44;s:20:\"ROLE_INPUTATION_SHOW\";i:45;s:21:\"ROLE_INPUTATION_CLONE\";i:46;s:22:\"ROLE_INPUTATION_DELETE\";i:47;s:20:\"ROLE_INPUTATION_EDIT\";i:48;s:22:\"ROLE_RENDEZVOUS_CREATE\";i:49;s:21:\"ROLE_RENDEZVOUS_INDEX\";i:50;s:20:\"ROLE_RENDEZVOUS_SHOW\";i:51;s:21:\"ROLE_RENDEZVOUS_CLONE\";i:52;s:22:\"ROLE_RENDEZVOUS_DELETE\";i:53;s:20:\"ROLE_RENDEZVOUS_EDIT\";i:54;s:24:\"ROLE_REPOSMEDICAL_CREATE\";i:55;s:23:\"ROLE_REPOSMEDICAL_INDEX\";i:56;s:22:\"ROLE_REPOSMEDICAL_SHOW\";i:57;s:23:\"ROLE_REPOSMEDICAL_CLONE\";i:58;s:24:\"ROLE_REPOSMEDICAL_DELETE\";i:59;s:22:\"ROLE_REPOSMEDICAL_EDIT\";i:60;s:20:\"ROLE_SYMPTOME_CREATE\";i:61;s:19:\"ROLE_SYMPTOME_INDEX\";i:62;s:18:\"ROLE_SYMPTOME_SHOW\";i:63;s:19:\"ROLE_SYMPTOME_CLONE\";i:64;s:20:\"ROLE_SYMPTOME_DELETE\";i:65;s:18:\"ROLE_SYMPTOME_EDIT\";i:66;s:27:\"ROLE_MEDICAMENTREMIS_CREATE\";i:67;s:26:\"ROLE_MEDICAMENTREMIS_INDEX\";i:68;s:25:\"ROLE_MEDICAMENTREMIS_SHOW\";i:69;s:26:\"ROLE_MEDICAMENTREMIS_CLONE\";i:70;s:27:\"ROLE_MEDICAMENTREMIS_DELETE\";i:71;s:25:\"ROLE_MEDICAMENTREMIS_EDIT\";i:72;s:24:\"ROLE_BONRECEPTION_CREATE\";i:73;s:23:\"ROLE_BONRECEPTION_INDEX\";i:74;s:22:\"ROLE_BONRECEPTION_SHOW\";i:75;s:23:\"ROLE_BONRECEPTION_CLONE\";i:76;s:24:\"ROLE_BONRECEPTION_DELETE\";i:77;s:22:\"ROLE_BONRECEPTION_EDIT\";i:78;s:22:\"ROLE_MEDICAMENT_CREATE\";i:79;s:21:\"ROLE_MEDICAMENT_INDEX\";i:80;s:20:\"ROLE_MEDICAMENT_SHOW\";i:81;s:21:\"ROLE_MEDICAMENT_CLONE\";i:82;s:22:\"ROLE_MEDICAMENT_DELETE\";i:83;s:20:\"ROLE_MEDICAMENT_EDIT\";i:84;s:31:\"ROLE_MEDICAMENTRECEPTION_CREATE\";i:85;s:30:\"ROLE_MEDICAMENTRECEPTION_INDEX\";i:86;s:29:\"ROLE_MEDICAMENTRECEPTION_SHOW\";i:87;s:30:\"ROLE_MEDICAMENTRECEPTION_CLONE\";i:88;s:31:\"ROLE_MEDICAMENTRECEPTION_DELETE\";i:89;s:29:\"ROLE_MEDICAMENTRECEPTION_EDIT\";}', 'SA'),
 (4, 'Administrateur', 'a:12:{i:0;s:17:\"ROLE_GROUP_CREATE\";i:1;s:16:\"ROLE_GROUP_INDEX\";i:2;s:15:\"ROLE_GROUP_SHOW\";i:3;s:16:\"ROLE_GROUP_CLONE\";i:4;s:17:\"ROLE_GROUP_DELETE\";i:5;s:15:\"ROLE_GROUP_EDIT\";i:6;s:16:\"ROLE_USER_CREATE\";i:7;s:15:\"ROLE_USER_INDEX\";i:8;s:14:\"ROLE_USER_SHOW\";i:9;s:15:\"ROLE_USER_CLONE\";i:10;s:16:\"ROLE_USER_DELETE\";i:11;s:14:\"ROLE_USER_EDIT\";}', 'ADMIN'),
 (5, 'Assistante', 'a:8:{i:0;s:16:\"ROLE_GROUP_INDEX\";i:1;s:15:\"ROLE_GROUP_SHOW\";i:2;s:16:\"ROLE_GROUP_CLONE\";i:3;s:16:\"ROLE_USER_CREATE\";i:4;s:15:\"ROLE_USER_INDEX\";i:5;s:14:\"ROLE_USER_SHOW\";i:6;s:15:\"ROLE_USER_CLONE\";i:7;s:14:\"ROLE_USER_EDIT\";}', 'ASSIST'),
 (7, 'Patient', 'a:12:{i:0;s:17:\"ROLE_GROUP_CREATE\";i:1;s:16:\"ROLE_GROUP_INDEX\";i:2;s:15:\"ROLE_GROUP_SHOW\";i:3;s:16:\"ROLE_GROUP_CLONE\";i:4;s:17:\"ROLE_GROUP_DELETE\";i:5;s:15:\"ROLE_GROUP_EDIT\";i:6;s:16:\"ROLE_USER_CREATE\";i:7;s:15:\"ROLE_USER_INDEX\";i:8;s:14:\"ROLE_USER_SHOW\";i:9;s:15:\"ROLE_USER_CLONE\";i:10;s:16:\"ROLE_USER_DELETE\";i:11;s:14:\"ROLE_USER_EDIT\";}', 'PATIENT'),
@@ -199,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `fos_user` (
 --
 
 INSERT INTO `fos_user` (`id`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `confirmation_token`, `password_requested_at`, `roles`, `prenom`, `nom`, `telephone`, `source`, `path_image`, `file_name`, `fonction`) VALUES
-(1, 'bamboguirassy', 'bamboguirassy', 'didegassama@gmail.com', 'didegassama@gmail.com', 1, 'T9kVKHjmHQPyPVoHd4fTQ9FB/NbS7AYqS8cru7RMs9s', '$2y$13$nNQoWq1fW9J/Hl9Z.ZCIz.oh9HeFzPAQnem4b15bihcvAA5.WRdk2', '2020-09-12 15:56:33', NULL, NULL, 'a:0:{}', 'Bambo', 'Guirassy', '+221780165026', 'sm', 'http://127.0.0.1:8000/uploads/user/profil/5f5ace2f88366.jpeg', '5f5ace2f88366.jpeg', 'Super Administrateur'),
+(1, 'bamboguirassy', 'bamboguirassy', 'didegassama@gmail.com', 'didegassama@gmail.com', 1, 'T9kVKHjmHQPyPVoHd4fTQ9FB/NbS7AYqS8cru7RMs9s', '$2y$13$nNQoWq1fW9J/Hl9Z.ZCIz.oh9HeFzPAQnem4b15bihcvAA5.WRdk2', '2020-10-09 09:15:53', NULL, NULL, 'a:0:{}', 'Bambo', 'Guirassy', '+221780165026', 'sm', 'http://127.0.0.1:8000/uploads/user/profil/5f5ace2f88366.jpeg', '5f5ace2f88366.jpeg', 'Super Administrateur'),
 (3, 'charles.tessier@georges.org', 'charles.tessier@georges.org', 'charles.tessier@georges.org', 'charles.tessier@georges.org', 0, NULL, 'uguqpLfnIHx', NULL, NULL, NULL, 'a:0:{}', 'Michelle', 'Jeanne Grondin', NULL, 'sm', NULL, NULL, NULL),
 (4, 'nathalie.charpentier@laposte.net', 'nathalie.charpentier@laposte.net', 'nathalie.charpentier@laposte.net', 'nathalie.charpentier@laposte.net', 0, NULL, 'FE596QG->qwJ', NULL, NULL, NULL, 'a:0:{}', 'Isaac', 'Nath-Sophie Merle', NULL, 'sm', NULL, NULL, NULL),
 (5, 'vfaivre@parent.fr', 'vfaivre@parent.fr', 'vfaivre@parent.fr', 'vfaivre@parent.fr', 1, NULL, '5lBMg=A[=QeSbVcj3f', NULL, NULL, NULL, 'a:0:{}', 'Anastasie', 'Luc-Thierry Roger', NULL, 'sm', NULL, NULL, NULL),
@@ -627,14 +646,21 @@ INSERT INTO `fos_user_group` (`user_id`, `group_id`) VALUES
 DROP TABLE IF EXISTS `inputation`;
 CREATE TABLE IF NOT EXISTS `inputation` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `dossier` int(11) NOT NULL,
+  `dossier` int(11) DEFAULT NULL,
   `date` date NOT NULL,
-  `structure_hospitaliere` int(11) NOT NULL,
+  `structure_hospitaliere` int(11) DEFAULT NULL,
   `user_email` varchar(45) NOT NULL COMMENT 'mail de l''utilisateur ayant opéré l''action',
   PRIMARY KEY (`id`),
   KEY `fk_inputation_dossier1_idx` (`dossier`),
   KEY `fk_inputation_structure_hospitaliere1_idx` (`structure_hospitaliere`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `inputation`
+--
+
+INSERT INTO `inputation` (`id`, `dossier`, `date`, `structure_hospitaliere`, `user_email`) VALUES
+(1, 1, '2020-10-02', 8, 'bamboguirassy');
 
 -- --------------------------------------------------------
 
@@ -657,17 +683,17 @@ CREATE TABLE IF NOT EXISTS `medicament` (
 --
 
 INSERT INTO `medicament` (`id`, `nom`, `filename`, `filepath`, `quantite_stock`) VALUES
-(1, 'DOLIPRANE', NULL, NULL, 100),
-(2, 'EFFERALGAN', NULL, NULL, 100),
-(3, 'DAFALGAN', NULL, NULL, 100),
-(4, 'LEVOTHYROX', NULL, NULL, 100),
-(5, 'IMODIUM', NULL, NULL, 100),
+(1, 'DOLIPRANE', NULL, NULL, 94),
+(2, 'EFFERALGAN', NULL, NULL, 99),
+(3, 'DAFALGAN', NULL, NULL, 98),
+(4, 'LEVOTHYROX', NULL, NULL, 98),
+(5, 'IMODIUM', NULL, NULL, 99),
 (6, 'KARDEGIC', NULL, NULL, 100),
 (7, 'SPASFON', NULL, NULL, 100),
-(8, 'SPEDIFEN', NULL, NULL, 100),
+(8, 'SPEDIFEN', NULL, NULL, 97),
 (9, 'FORLAX', NULL, NULL, 100),
 (10, 'GAVISCON', NULL, NULL, 100),
-(11, 'DAFLON', NULL, NULL, 100),
+(11, 'DAFLON', NULL, NULL, 98),
 (12, 'RHINOFLUIMUCIL', NULL, NULL, 100),
 (13, 'INEXIUM', NULL, NULL, 100),
 (14, 'AUGMENTIN', NULL, NULL, 100),
@@ -682,8 +708,8 @@ INSERT INTO `medicament` (`id`, `nom`, `filename`, `filepath`, `quantite_stock`)
 DROP TABLE IF EXISTS `medicament_reception`;
 CREATE TABLE IF NOT EXISTS `medicament_reception` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `medicament` int(11) NOT NULL,
-  `bon_reception` int(11) NOT NULL,
+  `medicament` int(11) DEFAULT NULL,
+  `bon_reception` int(11) DEFAULT NULL,
   `quantite` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_medicament_has_bon_reception_bon_reception1_idx` (`bon_reception`),
@@ -699,8 +725,8 @@ CREATE TABLE IF NOT EXISTS `medicament_reception` (
 DROP TABLE IF EXISTS `medicament_remis`;
 CREATE TABLE IF NOT EXISTS `medicament_remis` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `consultation` int(11) NOT NULL,
-  `medicament` int(11) NOT NULL,
+  `consultation` int(11) DEFAULT NULL,
+  `medicament` int(11) DEFAULT NULL,
   `quantite` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_medicament_consultation_consultation1_idx` (`consultation`),
@@ -741,77 +767,43 @@ CREATE TABLE IF NOT EXISTS `pathologie` (
   `nom` varchar(45) NOT NULL,
   `description` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `pathologie`
 --
 
 INSERT INTO `pathologie` (`id`, `nom`, `description`) VALUES
-(1, 'Cécité', NULL),
-(2, 'Cataracte', NULL),
-(3, 'Calculs rénaux', NULL),
-(4, 'Coxarthrose', NULL),
-(5, 'Coronavirus Covid-19', NULL),
-(6, 'Candidose', NULL),
-(7, 'Dacryocystite', NULL),
-(8, 'Dysthymie', NULL),
-(9, 'Ebola', NULL),
-(10, 'Emphysème pulmonaire', NULL),
-(11, 'Épuisement professionnel', NULL),
-(12, 'Fente palatine', NULL),
-(13, 'Fissure anale', NULL),
-(14, 'Glaucome', NULL),
-(15, 'Grossesse (les symptômes)', NULL),
-(16, 'Gynécomastie', NULL),
-(17, 'Hirsutisme', NULL),
-(18, 'Hémangiome', NULL),
-(19, 'Hypocondrie', NULL),
-(20, 'Hypothyroïdie', NULL),
-(21, 'Insuffisance hypophysaire', NULL),
-(22, 'Insomnie (troubles du sommeil)', NULL),
-(23, 'Infarctus du myocarde', NULL),
-(24, 'Jaunisse', NULL),
-(25, 'Kératose actinique', NULL),
-(26, 'L\'œdème maculaire', NULL),
-(27, 'Lombalgie', NULL),
-(28, 'Lèpre', NULL),
-(29, 'Macrocytose', 'Leucopénie'),
-(30, 'Maladie de Scheuermann', NULL),
-(31, 'Maladie d\'Alzheimer', NULL),
-(32, 'Maladie de Verneuil', NULL),
-(33, 'MST', NULL),
-(34, 'Mycoses', NULL),
-(35, 'Méningiome', NULL),
-(36, 'Narcolepsie', NULL),
-(37, 'Nystagmus', NULL),
-(38, 'Ostéophytose', NULL),
-(39, 'Ostéomalacie', NULL),
-(40, 'Ongles incarnés', NULL),
-(41, 'Otite externe', NULL),
-(42, 'Ostéomalacie', NULL),
-(43, 'Orthorexie', NULL),
-(44, 'Paludisme', NULL),
-(45, 'Progéria', NULL),
-(46, 'Psoriasis', NULL),
-(47, 'Pneumonie', NULL),
-(48, 'Purpura', NULL),
-(49, 'Rétinoblastome', NULL);
+(1, 'Paludisme', NULL),
+(2, 'Grippe', NULL),
+(3, 'BPP', NULL),
+(4, 'Path Digest', NULL),
+(5, 'Path ORL', NULL),
+(6, 'HTA', NULL),
+(7, 'cardio', NULL),
+(8, 'dermato', NULL),
+(9, 'ophta', NULL),
+(10, 'ortho', NULL),
+(11, 'GINECO', NULL),
+(12, 'URO', NULL),
+(13, 'DIABETE', NULL),
+(14, 'STOMATO', NULL),
+(15, 'AUTRES', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `rendez-vous`
+-- Structure de la table `rendez_vous`
 --
 
-DROP TABLE IF EXISTS `rendez-vous`;
-CREATE TABLE IF NOT EXISTS `rendez-vous` (
+DROP TABLE IF EXISTS `rendez_vous`;
+CREATE TABLE IF NOT EXISTS `rendez_vous` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `date_creation` datetime NOT NULL,
   `user_email` varchar(45) NOT NULL,
   `date_rendez_vous` datetime NOT NULL,
   `presence` tinyint(1) DEFAULT NULL COMMENT 'false par défaut, on le met à true si le patient se présente.',
-  `dossier` int(11) NOT NULL,
+  `dossier` int(11) DEFAULT NULL,
   `description` text,
   PRIMARY KEY (`id`),
   KEY `fk_rendez-vous_dossier1_idx` (`dossier`)
@@ -834,7 +826,14 @@ CREATE TABLE IF NOT EXISTS `repos_medical` (
   PRIMARY KEY (`id`),
   KEY `fk_repos_medical_dossier1_idx` (`dossier`),
   KEY `fk_repos_medical_docteur1_idx` (`docteur`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `repos_medical`
+--
+
+INSERT INTO `repos_medical` (`id`, `dossier`, `date`, `nombre_jour`, `docteur`, `user_email`) VALUES
+(1, 1, '2020-10-02', 5, 4, 'bamboguirassy');
 
 -- --------------------------------------------------------
 
@@ -849,16 +848,17 @@ CREATE TABLE IF NOT EXISTS `structure_partenaire` (
   `adresse` text,
   `telephone` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `structure_partenaire`
 --
 
 INSERT INTO `structure_partenaire` (`id`, `nom`, `adresse`, `telephone`) VALUES
-(4, '1', '1', '12'),
-(6, 'Hopital regional', 'Cité Sebgjkguh', '78778676'),
-(7, '5', '5', '+221780165026');
+(8, 'Clinique Visio-Médical Coumba', 'Mbour 3, prés de la rte Thiès-Sindia', '339810001'),
+(9, 'Hopital Régional de Thiès', NULL, NULL),
+(10, 'Hopital Principal de Dakar', NULL, '338541258'),
+(11, 'Hopital Saint Jean de Dieu de Thiès', 'HLM Thialy', NULL);
 
 -- --------------------------------------------------------
 
@@ -873,7 +873,15 @@ CREATE TABLE IF NOT EXISTS `symptome` (
   `nom` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_symptome_consultation1_idx` (`consultation`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `symptome`
+--
+
+INSERT INTO `symptome` (`id`, `consultation`, `nom`) VALUES
+(1, 13, 'Toux'),
+(2, 13, 'Mal de tête');
 
 --
 -- Contraintes pour les tables déchargées
@@ -916,9 +924,9 @@ ALTER TABLE `medicament_remis`
   ADD CONSTRAINT `fk_medicament_consultation_medicament1` FOREIGN KEY (`medicament`) REFERENCES `medicament` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Contraintes pour la table `rendez-vous`
+-- Contraintes pour la table `rendez_vous`
 --
-ALTER TABLE `rendez-vous`
+ALTER TABLE `rendez_vous`
   ADD CONSTRAINT `fk_rendez-vous_dossier1` FOREIGN KEY (`dossier`) REFERENCES `dossier` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
