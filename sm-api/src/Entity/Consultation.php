@@ -182,7 +182,7 @@ class Consultation
     /**
      * @return Collection|MedicamentRemis[]
      */
-    public function getMedicamentRemiss(): Collection
+    public function getMedicamentRemis(): Collection
     {
         return $this->medicamentRemis;
     }
