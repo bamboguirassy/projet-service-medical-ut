@@ -17,7 +17,7 @@ export class SymptomeListComponent extends BasePageComponent<Symptome> implement
   @Input() consultation: Consultation;
 
   constructor(store: Store<IAppState>,
-    public symptomeSrv: SymptomeService) {
+              public symptomeSrv: SymptomeService) {
     super(store, symptomeSrv);
   }
 
@@ -42,7 +42,7 @@ export class SymptomeListComponent extends BasePageComponent<Symptome> implement
       }, err => this.symptomeSrv.httpSrv.catchError(err));
   }
 
-  
+
 
   onCreate(item: Symptome) {
     this.findByConsultation(this.consultation);

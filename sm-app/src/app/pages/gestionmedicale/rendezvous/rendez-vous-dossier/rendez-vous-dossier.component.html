@@ -1,4 +1,4 @@
-<tc-card *ngIf="rendezVousSrv.resourceName|listable" [tcGradient]="lightGradient">
+<tc-card *ngIf="rendezVousSrv.resourceName|listable" [tcGradient]="lightGradient" title="Rendez-vous">
     <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
         <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
             <ng-template #tableTDTemplate let-row="row">
@@ -12,11 +12,11 @@
                 </div>
             </ng-template>
         </tc-table-col>
-        <tc-table-col [columnTitle]="'Date Ajout'" [columnName]="'dateCreation'" [enableSorting]="true">
+        <!-- <tc-table-col [columnTitle]="'Date Ajout'" [columnName]="'dateCreation'" [enableSorting]="true">
             <ng-template #tableTDTemplate let-value>
                 <span class="nowrap">{{ value|date:'dd/MM/yyyy HH:mm' }}</span>
             </ng-template>
-        </tc-table-col>
+        </tc-table-col> -->
         <tc-table-col [columnTitle]="'Date RV'" [columnName]="'dateRendezVous'" [enableSorting]="true">
             <ng-template #tableTDTemplate let-value>
                 <tc-badge view="info">{{ value|date:'dd/MM/yyyy' }}</tc-badge>
@@ -35,13 +35,13 @@
                 <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
             </ng-template>
         </tc-table-col>
-        <tc-table-col [columnTitle]="'Ajouté par'" [columnName]="'userEmail'" [enableSorting]="true">
+        <!-- <tc-table-col [columnTitle]="'Ajouté par'" [columnName]="'userEmail'" [enableSorting]="true">
             <ng-template #tableTDTemplate let-value>
                 <span class="nowrap">{{ value }}</span>
             </ng-template>
-        </tc-table-col>
+        </tc-table-col> -->
     </tc-table>
     <app-empty-table-message *ngIf="!items?.length"></app-empty-table-message>
 </tc-card>
 <app-access-denied *ngIf="!(rendezVousSrv.resourceName|listable)"></app-access-denied>
-<app-rendezvous-edit (update)="findByDossier()" [entity]="selectedItem" [visible]="isEditModalVisible" (close)="closeEditModal()"></app-rendezvous-edit>
+<app-rendezvous-edit (update)="findByConsultation()" [entity]="selectedItem" [visible]="isEditModalVisible" (close)="closeEditModal()"></app-rendezvous-edit>

@@ -19,9 +19,34 @@ export class DossierNewComponent implements OnInit {
   @Output() creation: EventEmitter<Dossier> = new EventEmitter();
   isModalVisible = false;
   structures: string[] = [];
+  situationMatrimoniales = [
+    { value: 'mariee', label: 'Mariée' },
+    { value: 'celibataire', label: 'Célibataire' },
+    { value: 'veuve', label: 'Veuve' },
+    { value: 'divorcee', label: 'Divorcée' },
+    { value: 'separee', label: 'Séparée' },
+  ];
+  genreVies = [
+    { value: 'tabac', label: 'Tabac' },
+    { value: 'alcool', label: 'Alcool' },
+    { value: 'autres', label: 'Autres' },
+  ];
+  niveauInstructions = [
+    { value: 'non scolarisee', label: 'Non Scolarisée' },
+    { value: 'primaire', label: 'Primaire' },
+    { value: 'secondaire', label: 'Secondaire' },
+    { value: 'superieur', label: 'Supérieur' },
+  ];
+  professionMaris = [
+    { value: 'sans', label: 'Sans' },
+    { value: 'cultivateur', label: 'Cultivateur' },
+    { value: 'salarie', label: 'Salarié' },
+    { value: 'compte propre', label: 'Travail à son compte propre' },
+    { value: 'autres', label: 'Autres' },
+  ];
 
   constructor(public dossierSrv: DossierService,
-    public router: Router, public datePipe: DatePipe) {
+              public router: Router, public datePipe: DatePipe) {
     this.entity = new Dossier();
     this.entity.etat = true;
   }
@@ -31,7 +56,7 @@ export class DossierNewComponent implements OnInit {
   }
 
   save() {
-    this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance,'yyyy-MM-dd');
+    this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
     this.dossierSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
@@ -43,10 +68,10 @@ export class DossierNewComponent implements OnInit {
 
   getStructures() {
     this.dossierSrv.httpSrv.http.get('assets/data/structures.json')
-    .pipe(first())
-    .subscribe((data: any)=>{
-      this.structures = data;
-    })
+      .pipe(first())
+      .subscribe((data: any) => {
+        this.structures = data;
+      });
   }
 
   // open modal window

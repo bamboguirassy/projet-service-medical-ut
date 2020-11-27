@@ -16,8 +16,8 @@ export class RendezVousListComponent extends BasePageComponent<RendezVous> imple
   dates: any;
 
   constructor(store: Store<IAppState>,
-    public rendezVousSrv: RendezVousService,
-    public datePipe: DatePipe) {
+              public rendezVousSrv: RendezVousService,
+              public datePipe: DatePipe) {
     super(store, rendezVousSrv);
 
     this.pageData = {
@@ -52,7 +52,7 @@ export class RendezVousListComponent extends BasePageComponent<RendezVous> imple
   }
 
   filter() {
-    var formattedDate = { startDate: null, endDate: null };
+    let formattedDate = { startDate: null, endDate: null };
     formattedDate.startDate = this.datePipe.transform(this.dates[0], 'yyyy-MM-dd');
     formattedDate.endDate = this.datePipe.transform(this.dates[1], 'yyyy-MM-dd');
     this.rendezVousSrv.findByDate(formattedDate)

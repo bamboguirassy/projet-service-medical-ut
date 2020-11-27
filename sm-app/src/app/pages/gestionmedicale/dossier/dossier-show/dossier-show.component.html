@@ -1,5 +1,5 @@
 <tc-card *ngIf="dossierSrv.resourceName|showable" [tcGradient]="lightGradient">
-    <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
+    <tc-card class="mb-1" [view]="secondViewBorder" [outline]="true" [padding]="0.5">
         <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-reply">Retour</button>
         <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
             beforeIcon="icofont-refresh">Rafraichir</button>
@@ -11,7 +11,7 @@
     </tc-card>
     <div class="row">
         <div class="col-12">
-            <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
+            <tc-card class="mb-1" [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
                 <div class="row">
                     <div class="col-12 col-md-6">
                         <blockquote class="blockquote">
@@ -25,8 +25,6 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <app-consultation-new class="mr-1" [dossier]="entity"></app-consultation-new>
-                        <app-rendezvous-new class="mr-1" [dossier]="entity"
-                            (creation)="findEntity(activatedRoute.snapshot.params.id)"></app-rendezvous-new>
                         <app-reposmedical-new class="mr-1" [dossier]="entity"
                             (creation)="findEntity(activatedRoute.snapshot.params.id)"></app-reposmedical-new>
                         <app-inputation-new [dossier]="entity"
@@ -36,8 +34,23 @@
 
             </tc-card>
         </div>
+        <div class="col-12">
+            <tc-card class="mb-1" [outline]="true" [view]="secondViewBorder" [title]="'Infos Sup.'" [tcGradient]="secondGradient">
+                <nz-descriptions nzTitle="">
+                    <nz-descriptions-item nzTitle="Historiques Maladie">{{entity?.historiqueMaladies}}</nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Niveau Instruction">{{entity?.niveauInstruction}}</nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Situation Matrimoniale">{{entity?.situationMatrimoniale}}</nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Genre Vie">{{entity?.genreVie}}</nz-descriptions-item>
+                    <nz-descriptions-item *ngIf="entity?.situationMatrimoniale=='mariee' && entity?.genre=='Femme'" nzTitle="Profession Mari">{{entity?.professionMari}}</nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Antecedents Medicaux">{{entity?.antecedentMedicaux}}</nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Antecedents Churirgicaux">{{entity?.antecedentChurirgicaux}}</nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Antecedents Familiaux">{{entity?.antecedentFamiliaux}}</nz-descriptions-item>
+                    <nz-descriptions-item *ngIf="entity?.situationMatrimoniale=='mariee'" nzTitle="Date Mariage">{{entity?.dateMariage}}</nz-descriptions-item>
+                  </nz-descriptions>
+            </tc-card>
+        </div>
         <div class="col-12 col-md-4">
-            <tc-card [outline]="true" [view]="secondViewBorder" [title]="'Détails'" [tcGradient]="secondGradient">
+            <tc-card class="mb-1 pr-0" [outline]="true" [view]="secondViewBorder" [title]="'Détails'" [tcGradient]="secondGradient">
                 <table class="table">
                     <tr>
                         <th>Date Naissance</th>
@@ -75,16 +88,13 @@
             </tc-card>
         </div>
         <div class="col-12 col-md-8">
-            <tc-card [outline]="true" [view]="secondViewBorder" [title]="'Infos sup.'" [tcGradient]="secondGradient">
+            <tc-card class="mb-1 pl-0" [outline]="true" [view]="secondViewBorder" [title]="'Eléments dossier'" [tcGradient]="secondGradient">
                 <nz-collapse nzAccordion>
                     <nz-collapse-panel nzHeader="Consultations" [nzActive]="true">
                         <app-consultation-dossier [consultations]="entity?.consultations"></app-consultation-dossier>
                     </nz-collapse-panel>
                     <nz-collapse-panel nzHeader="Imputations">
                         <app-imputation-dossier [imputations]="entity?.inputations"></app-imputation-dossier>
-                    </nz-collapse-panel>
-                    <nz-collapse-panel nzHeader="Rendez-vous">
-                        <app-rendez-vous-dossier *ngIf="entity" [dossier]="entity"></app-rendez-vous-dossier>
                     </nz-collapse-panel>
                     <nz-collapse-panel nzHeader="Repos Médicaux">
                         <app-repos-medical-dossier *ngIf="entity" [dossier]="entity"></app-repos-medical-dossier>

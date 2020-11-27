@@ -22,17 +22,17 @@ export class ConsultationNewComponent implements OnInit {
   entity: Consultation;
   isModalVisible = false;
   @Input() dossier: Dossier;
-  
+
   docteurs: Docteur[] = [];
   pathologies: Pathologie[] = [];
   selectedDocteur: Docteur;
   selectedPathologie: Pathologie;
 
   constructor(public consultationSrv: ConsultationService,
-    public router: Router,
-    public docteurSrv: DocteurService,
-    public pathologieSrv: PathologieService,
-    public datePipe: DatePipe) {
+              public router: Router,
+              public docteurSrv: DocteurService,
+              public pathologieSrv: PathologieService,
+              public datePipe: DatePipe) {
     this.entity = new Consultation();
     this.entity.date = new Date();
   }
@@ -45,16 +45,16 @@ export class ConsultationNewComponent implements OnInit {
   save() {
     this.entity.dossier = this.dossier.id;
     this.entity.docteur = this.selectedDocteur.id;
-    if(this.selectedPathologie) {
+    if (this.selectedPathologie) {
       this.entity.pathologieDiagnostiquee = this.selectedPathologie.id;
     }
-    this.entity.date = this.datePipe.transform(this.entity.date,'yyyy-MM-dd');
+    this.entity.date = this.datePipe.transform(this.entity.date, 'yyyy-MM-dd');
     this.consultationSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
         this.entity = new Consultation();
         this.entity.date = new Date();
-        this.consultationSrv.httpSrv.router.navigate(['/horizontal',this.consultationSrv.getRoutePrefixWithoutSlash(),data.id])
+        this.consultationSrv.httpSrv.router.navigate(['/horizontal', this.consultationSrv.getRoutePrefixWithoutSlash(), data.id]);
       }, error => this.consultationSrv.httpSrv.catchError(error));
   }
 
@@ -70,14 +70,14 @@ export class ConsultationNewComponent implements OnInit {
 
   findDocteurs() {
     this.docteurSrv.findAll()
-      .subscribe((data: any) => { this.docteurs = data },
+      .subscribe((data: any) => { this.docteurs = data; },
        err => this.docteurSrv.httpSrv.catchError(err));
 
   }
 
   findPathologies() {
     this.pathologieSrv.findAll()
-    .subscribe((data: any) => { this.pathologies = data },
+    .subscribe((data: any) => { this.pathologies = data; },
      err => this.pathologieSrv.httpSrv.catchError(err));
   }
 

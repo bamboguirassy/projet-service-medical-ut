@@ -13,4 +13,14 @@ export class Consultation extends BamboAbstractObject {
     dossier: Dossier;
     symptomes?: Symptome[];
     medicamentRemis?: MedicamentRemis[];
+    medicamentPrescrits?: string;
+    motifConsultations?: string;
+    examenCliniques?: string;
+    examenParacliniques?: string;
+    tensionArterielle: string;
+    temperature: string;
+    pouls: string;
+    frequenceRespiratoire: string;
+    poids: string;
+    glycemie: string;
 }

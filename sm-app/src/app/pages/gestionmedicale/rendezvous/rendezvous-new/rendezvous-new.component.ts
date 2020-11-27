@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChi
 import { RendezVousService } from '../rendezvous.service';
 import { RendezVous } from '../rendezvous';
 import { Router } from '@angular/router';
-import { Dossier } from '../../dossier/dossier';
 import { DatePipe } from '@angular/common';
+import { Consultation } from '../../consultation/consultation';
 @Component({
   selector: 'app-rendezvous-new',
   templateUrl: './rendezvous-new.component.html',
@@ -16,19 +16,19 @@ export class RendezVousNewComponent implements OnInit {
   entity: RendezVous;
   @Output() creation: EventEmitter<RendezVous> = new EventEmitter();
   isModalVisible = false;
-  @Input() dossier:Dossier;
- 
+  @Input() consultation: Consultation;
+
   // @Input() dossier: Dossier;
   constructor(public rendezVousSrv: RendezVousService,
-    public router: Router, public datePipe:DatePipe) {
+              public router: Router, public datePipe: DatePipe) {
     this.entity = new RendezVous();
   }
 
   ngOnInit(): void {}
 
   save() {
-    this.entity.dossier = this.dossier.id;
-    this.entity.dateRendezVous = this.datePipe.transform(this.entity.dateRendezVous,'yyyy-MM-dd');
+    this.entity.consultation = this.consultation.id;
+    this.entity.dateRendezVous = this.datePipe.transform(this.entity.dateRendezVous, 'yyyy-MM-dd');
     this.rendezVousSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();

@@ -1,5 +1,5 @@
 <tc-card *ngIf="consultationSrv.resourceName|showable" [tcGradient]="lightGradient">
-    <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
+    <tc-card class="mb-1" [view]="secondViewBorder" [outline]="true" [padding]="0.5">
         <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-reply">Retour</button>
         <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
             beforeIcon="icofont-refresh">Rafraichir</button>
@@ -8,11 +8,14 @@
         <button *ngIf="consultationSrv.resourceName|editable"
             [routerLink]="['/'+orientation,consultationSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
             class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit">Modifier</button>
+        <app-rendezvous-new *ngIf="entity" class="ml-1" [consultation]="entity"
+            (creation)="findEntity(activatedRoute.snapshot.params.id)">
+        </app-rendezvous-new>
     </tc-card>
     <div class="row">
         <div class="col-12 col-md-7">
-            <tc-card [outline]="true" [view]="secondViewBorder" [title]="'Dossier Médical - '+entity?.dossier?.numero"
-                [tcGradient]="secondGradient">
+            <tc-card class="mb-1" [outline]="true" [view]="secondViewBorder"
+                [title]="'Dossier Médical - '+entity?.dossier?.numero" [tcGradient]="secondGradient">
                 <blockquote class="blockquote">
                     <p class="mb-0">Patient: {{entity?.dossier?.prenoms+' '+entity?.dossier?.nom}} <span
                             *ngIf="entity?.dossier?.typePatient=='famille'">{{entity?.dossier?.lienParente+' de '+entity?.dossier?.prenomTravailleur+' '+entity?.dossier?.nomTravailleur}}</span>
@@ -24,7 +27,8 @@
             </tc-card>
         </div>
         <div class="col-12 col-md-5">
-            <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
+            <tc-card class="mb-1" [outline]="true" [view]="secondViewBorder" [title]="title"
+                [tcGradient]="secondGradient">
                 <blockquote class="blockquote">
                     <p class="mb-0">Date: {{ entity?.date|date:'dd/MM/yyyy' }}</p>
                     <footer class="blockquote-footer"> <cite title="Docteur ayant fait la consultation">Par
@@ -33,10 +37,31 @@
                 </blockquote>
             </tc-card>
         </div>
+        <div class="col-12">
+            <tc-card class="mb-1" [view]="secondViewBorder" [outline]="true" [tcGradient]="secondGradient">
+                <nz-descriptions nzTitle="Détails consultation">
+                    <nz-descriptions-item nzTitle="Médicaments Préscrits">{{entity?.medicamentPrescrits}}
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Motifs Consultation">{{entity?.motifConsultations}}
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Tension Arterielle">{{entity?.tensionArterielle}}
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Temperature">{{entity?.temperature}}</nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Pouls">{{entity?.pouls}}</nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Frequence Respiratoire">{{entity?.frequenceRespiratoire}}
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Poids">{{entity?.poids}}</nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Glycemie">{{entity?.glycemie}}</nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Examen Cliniques">{{entity?.examenCliniques}}</nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Examen Paracliniques">{{entity?.examenParacliniques}}
+                    </nz-descriptions-item>
+                </nz-descriptions>
+            </tc-card>
+        </div>
         <div class="col-12 col-md-6">
             <div class="row">
                 <div class="col-12">
-                    <tc-card [outline]="true" [view]="secondViewBorder" title="Pathologie diagnostiquée"
+                    <tc-card class="mb-1" [outline]="true" [view]="secondViewBorder" title="Pathologie diagnostiquée"
                         [tcGradient]="secondGradient">
                         <a href="javascript:void(0)" (click)="isPathologieModalVisible=true"
                             *ngIf="!entity?.pathologieDiagnostiquee && (consultationSrv.resourceName|editable)">Préciser
@@ -44,7 +69,8 @@
                         <tc-badge *ngIf="entity?.pathologieDiagnostiquee" view="error">
                             <span class="nowrap">{{entity?.pathologieDiagnostiquee?.nom}}</span>
                         </tc-badge> &nbsp; <a href="javascript:void(0)" (click)="isPathologieModalVisible=true"
-                        *ngIf="entity?.pathologieDiagnostiquee && (consultationSrv.resourceName|editable)">Changer résultat diagnostic</a>
+                            *ngIf="entity?.pathologieDiagnostiquee && (consultationSrv.resourceName|editable)">Changer
+                            résultat diagnostic</a>
                     </tc-card>
                 </div>
                 <div class="col-12">
@@ -53,7 +79,12 @@
             </div>
         </div>
         <div class="col-12 col-md-6">
-            <app-symptome-list [consultation]="entity"></app-symptome-list>
+            <div class="col-12">
+                <app-symptome-list [consultation]="entity"></app-symptome-list>
+            </div>
+            <div class="col-12">
+                <app-rendez-vous-dossier *ngIf="entity" [dossier]="entity"></app-rendez-vous-dossier>
+            </div>
         </div>
     </div>
 </tc-card>

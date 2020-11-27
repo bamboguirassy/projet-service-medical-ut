@@ -16,7 +16,7 @@ export class MedicamentRemisListComponent extends BasePageComponent<MedicamentRe
   @Input() consultation: Consultation;
 
   constructor(store: Store<IAppState>,
-    public medicamentRemiSrv: MedicamentRemisService) {
+              public medicamentRemiSrv: MedicamentRemisService) {
     super(store, medicamentRemiSrv);
   }
 
@@ -41,8 +41,8 @@ export class MedicamentRemisListComponent extends BasePageComponent<MedicamentRe
   findMedicamentPrescrits() {
     this.medicamentRemiSrv.findByConsultation(this.consultation)
       .subscribe((data: any) => {
-        this.consultation.medicamentPrescrits = data;
-      },err=>this.medicamentRemiSrv.httpSrv.catchError(err));
+        this.consultation.medicamentRemis = data;
+      }, err => this.medicamentRemiSrv.httpSrv.catchError(err));
   }
 
 }

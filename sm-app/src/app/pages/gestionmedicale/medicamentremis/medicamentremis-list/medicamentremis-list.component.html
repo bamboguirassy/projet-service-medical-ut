@@ -1,4 +1,4 @@
-<tc-card *ngIf="medicamentRemiSrv.resourceName|listable" [tcGradient]="secondGradient" title="Médicaments Prescrits">
+<tc-card *ngIf="medicamentRemiSrv.resourceName|listable" [tcGradient]="secondGradient" title="Médicaments Remis">
   <tc-table [itemsPerPage]="10" [rows]="consultation?.medicamentRemis" [hovered]="true" [pagination]="true"
     [search]="true">
     <tc-table-col [columnTitle]="'Médicament'" [columnName]="'medicament'" [enableSorting]="true">
@@ -26,7 +26,7 @@
       </ng-template>
     </tc-table-col>
   </tc-table>
-  <app-empty-table-message *ngIf="!consultation?.medicamentPrescrits?.length"></app-empty-table-message>
+  <app-empty-table-message *ngIf="!consultation?.medicamentRemis?.length"></app-empty-table-message>
   <br>
   <app-medicamentremis-new [consultation]="consultation" (creation)="onCreate($event)"></app-medicamentremis-new>
 </tc-card>

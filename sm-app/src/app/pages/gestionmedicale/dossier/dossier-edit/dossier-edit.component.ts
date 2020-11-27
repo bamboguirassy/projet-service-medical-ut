@@ -15,8 +15,32 @@ import { Location, DatePipe } from '@angular/common';
 })
 export class DossierEditComponent extends BasePageComponent<Dossier> implements OnInit, OnDestroy {
 
-  
   structures: string[] = [];
+  situationMatrimoniales = [
+    { value: 'mariee', label: 'Mariée' },
+    { value: 'celibataire', label: 'Célibataire' },
+    { value: 'veuve', label: 'Veuve' },
+    { value: 'divorcee', label: 'Divorcée' },
+    { value: 'separee', label: 'Séparée' },
+  ];
+  genreVies = [
+    { value: 'tabac', label: 'Tabac' },
+    { value: 'alcool', label: 'Alcool' },
+    { value: 'autres', label: 'Autres' },
+  ];
+  niveauInstructions = [
+    { value: 'non scolarisee', label: 'Non Scolarisée' },
+    { value: 'primaire', label: 'Primaire' },
+    { value: 'secondaire', label: 'Secondaire' },
+    { value: 'superieur', label: 'Supérieur' },
+  ];
+  professionMaris = [
+    { value: 'sans', label: 'Sans' },
+    { value: 'cultivateur', label: 'Cultivateur' },
+    { value: 'salarie', label: 'Salarié' },
+    { value: 'compte propre', label: 'Travail à son compte propre' },
+    { value: 'autres', label: 'Autres' },
+  ];
 
   constructor(store: Store<IAppState>,
               public dossierSrv: DossierService,
@@ -33,7 +57,7 @@ export class DossierEditComponent extends BasePageComponent<Dossier> implements 
         },
         {
           title: 'Dossiers',
-          route: '/'+this.orientation+'/dossier'
+          route: '/' + this.orientation + '/dossier'
         },
         {
           title: 'Modification'
@@ -56,7 +80,7 @@ export class DossierEditComponent extends BasePageComponent<Dossier> implements 
   }
 
   prepareUpdate() {
-    this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance,'yyyy-MM-dd');
+    this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
   }
 
   handlePostUpdate() {
@@ -66,9 +90,9 @@ export class DossierEditComponent extends BasePageComponent<Dossier> implements 
   getStructures() {
     this.dossierSrv.httpSrv.http.get('assets/data/structures.json')
     .pipe(first())
-    .subscribe((data: any)=>{
+    .subscribe((data: any) => {
       this.structures = data;
-    })
+    });
   }
 
 }

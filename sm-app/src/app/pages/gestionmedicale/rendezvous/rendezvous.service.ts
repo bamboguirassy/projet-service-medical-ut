@@ -3,6 +3,7 @@ import { BamboHttpService } from './../../../shared/services/bambo-http.service'
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Dossier } from '../dossier/dossier';
+import { Consultation } from '../consultation/consultation';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,8 @@ export class RendezVousService extends BamboAbstractService {
     return this.httpSrv.post(this.routePrefix + 'filter-by-date/', dateInterval);
   }
 
-  findByDossier(dossier: Dossier) {
-    return this.httpSrv.get(this.routePrefix + dossier.id+'/dossier');
+  findByConsultation(consultation: Consultation) {
+    return this.httpSrv.get(this.routePrefix + consultation.id + '/consultation');
   }
-  
+
 }

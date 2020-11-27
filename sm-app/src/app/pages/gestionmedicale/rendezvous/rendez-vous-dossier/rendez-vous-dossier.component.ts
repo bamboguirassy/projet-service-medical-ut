@@ -1,8 +1,8 @@
-import { Dossier } from './../../dossier/dossier';
 import { Component, Input, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { RendezVous } from '../rendezvous';
 import { RendezVousService } from '../rendezvous.service';
+import { Consultation } from '../../consultation/consultation';
 
 @Component({
   selector: 'app-rendez-vous-dossier',
@@ -17,11 +17,11 @@ export class RendezVousDossierComponent implements OnInit {
   isEditModalVisible = false;
   selectedItem: RendezVous;
   items: RendezVous[] = [];
-  _dossier: Dossier;
+  _consultation: Consultation;
 
   @Input() set dossier(val) {
-    this._dossier= val;
-    this.findByDossier();
+    this._consultation = val;
+    this.findByConsultation();
   }
 
   constructor(public rendezVousSrv: RendezVousService) { }
@@ -42,14 +42,14 @@ export class RendezVousDossierComponent implements OnInit {
         this.rendezVousSrv.remove(entity)
           .subscribe(() => {
             Swal.close();
-            this.findByDossier();
-            this.rendezVousSrv.toastr.success("Suppression reussie");
+            this.findByConsultation();
+            this.rendezVousSrv.toastr.success('Suppression reussie');
           });
         // For more information about handling dismissals please visit
         // https://sweetalert2.github.io/#handling-dismissals
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.close();
-        this.rendezVousSrv.toastr.warning("Suppression annulée !");
+        this.rendezVousSrv.toastr.warning('Suppression annulée !');
       }
     });
   }
@@ -59,12 +59,12 @@ export class RendezVousDossierComponent implements OnInit {
     this.isEditModalVisible = true;
   }
 
-  findByDossier() {
+  findByConsultation() {
     this.closeEditModal();
-      this.rendezVousSrv.findByDossier(this._dossier)
-      .subscribe((data: any)=>{
+    this.rendezVousSrv.findByConsultation(this._consultation)
+      .subscribe((data: any) => {
         this.items = data;
-      },err=>this.rendezVousSrv.httpSrv.catchError(err));
+      }, err => this.rendezVousSrv.httpSrv.catchError(err));
   }
 
   closeEditModal() {

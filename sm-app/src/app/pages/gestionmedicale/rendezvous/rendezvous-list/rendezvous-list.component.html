@@ -26,10 +26,10 @@
         <b class="nowrap" style="color: #BD3B19;">{{ value?.matricule }}</b>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Dossier'" [columnName]="'dossier'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Consultation'" [columnName]="'consultation'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <span class="nowrap">
-          <a [routerLink]="['/horizontal/dossier',value?.id]">{{ value?.numero }}</a>
+          <a [routerLink]="['/horizontal/dossier',value?.dossier?.id]">{{ value?.dossier?.numero }}</a>
         </span>
       </ng-template>
     </tc-table-col>

@@ -11,11 +11,19 @@
         <div class="col-12">
           <tc-form-group>
             <tc-form-label>Nom</tc-form-label>
-            <tc-input (enter)="save()" required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
-            </tc-input>
-            <tc-form-description>
-              <app-form-field-validation-message [formField]="nom"></app-form-field-validation-message>
-            </tc-form-description>
+            <nz-tag *ngFor="let symptome of symptomes; let i = index" [nzMode]="'closeable'" (nzAfterClose)="handleClose(symptome)">
+              {{ symptome }}
+            </nz-tag>
+            <input
+              #inputElement
+              nz-input
+              nzSize="small"
+              type="text" name='inputEl'
+              [(ngModel)]="inputValue"
+              style="width: 150px;"
+              (blur)="handleInputConfirm()"
+              (keydown.enter)="handleInputConfirm()"
+            />
           </tc-form-group>
         </div>
       </div>

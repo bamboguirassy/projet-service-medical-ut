@@ -25,4 +25,13 @@ export class Dossier extends BamboAbstractObject {
     reposMedicals: ReposMedical[];
     rendezVous: RendezVous[];
     inputations: Inputation[];
+    historiqueMaladies: string;
+    niveauInstruction: string;
+    situationMatrimoniale: string;
+    genreVie: string;
+    professionMari: string;
+    antecedentMedicaux: string;
+    antecedentChurirgicaux: string;
+    antecedentFamiliaux: string;
+    dateMariage: string;
 }
