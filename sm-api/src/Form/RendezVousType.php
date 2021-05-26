@@ -17,7 +17,7 @@ class RendezVousType extends AbstractType
             ->add('dateRendezVous')
             ->add('presence')
             ->add('description')
-            ->add('dossier')
+            ->add('consultation')
         ;
     }
 

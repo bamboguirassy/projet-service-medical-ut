@@ -21,7 +21,7 @@
         <span class="nowrap">{{ value|date:'dd/MM/yyyy' }}</span>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Matricule'" [columnName]="'dossier'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Matricule'" [columnName]="'consultation'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <b class="nowrap" style="color: #BD3B19;">{{ value?.matricule }}</b>
       </ng-template>
@@ -33,14 +33,14 @@
         </span>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Prénoms'" [columnName]="'dossier'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Prénoms'" [columnName]="'consultation'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
-        <span class="nowrap">{{ value?.prenoms }}</span>
+        <span class="nowrap">{{ value?.dossier?.prenoms }}</span>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Nom'" [columnName]="'dossier'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Nom'" [columnName]="'consultation'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
-        <span class="nowrap">{{ value?.nom }}</span>
+        <span class="nowrap">{{ value?.dossier?.nom }}</span>
       </ng-template>
     </tc-table-col>
     <tc-table-col [columnTitle]="'Date RV'" [columnName]="'dateRendezVous'" [enableSorting]="true">

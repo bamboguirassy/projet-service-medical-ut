@@ -77,6 +77,61 @@ class Consultation
      */
     private $medicamentRemis;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $medicamentPrescrits;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $motifConsultations;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $tensionArterielle;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $temperature;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $pouls;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $frequenceRespiratoire;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $poids;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $glycemie;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $examenCliniques;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $examenParacliniques;
+
+    /**
+     * @ORM\OneToOne(targetEntity=RendezVous::class, mappedBy="consultation", cascade={"persist", "remove"})
+     */
+    private $rendezVous;
+
     public function __construct()
     {
         $this->symptomes = new ArrayCollection();
@@ -205,6 +260,143 @@ class Consultation
             if ($medicamentRemis->getConsultation() === $this) {
                 $medicamentRemis->setConsultation(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getMedicamentPrescrits()
+    {
+        return $this->medicamentPrescrits;
+    }
+
+    public function setMedicamentPrescrits($medicamentPrescrits): self
+    {
+        $this->medicamentPrescrits = $medicamentPrescrits;
+
+        return $this;
+    }
+
+    public function getMotifConsultations()
+    {
+        return $this->motifConsultations;
+    }
+
+    public function setMotifConsultations($motifConsultations): self
+    {
+        $this->motifConsultations = $motifConsultations;
+
+        return $this;
+    }
+
+    public function getTensionArterielle()
+    {
+        return $this->tensionArterielle;
+    }
+
+    public function setTensionArterielle($tensionArterielle): self
+    {
+        $this->tensionArterielle = $tensionArterielle;
+
+        return $this;
+    }
+
+    public function getTemperature()
+    {
+        return $this->temperature;
+    }
+
+    public function setTemperature($temperature): self
+    {
+        $this->temperature = $temperature;
+
+        return $this;
+    }
+
+    public function getPouls()
+    {
+        return $this->pouls;
+    }
+
+    public function setPouls($pouls): self
+    {
+        $this->pouls = $pouls;
+
+        return $this;
+    }
+
+    public function getFrequenceRespiratoire()
+    {
+        return $this->frequenceRespiratoire;
+    }
+
+    public function setFrequenceRespiratoire($frequenceRespiratoire): self
+    {
+        $this->frequenceRespiratoire = $frequenceRespiratoire;
+
+        return $this;
+    }
+
+    public function getPoids()
+    {
+        return $this->poids;
+    }
+
+    public function setPoids($poids): self
+    {
+        $this->poids = $poids;
+
+        return $this;
+    }
+
+    public function getGlycemie()
+    {
+        return $this->glycemie;
+    }
+
+    public function setGlycemie($glycemie): self
+    {
+        $this->glycemie = $glycemie;
+
+        return $this;
+    }
+
+    public function getExamenCliniques()
+    {
+        return $this->examenCliniques;
+    }
+
+    public function setExamenCliniques($examenCliniques): self
+    {
+        $this->examenCliniques = $examenCliniques;
+
+        return $this;
+    }
+
+    public function getExamenParacliniques()
+    {
+        return $this->examenParacliniques;
+    }
+
+    public function setExamenParacliniques($examenParacliniques): self
+    {
+        $this->examenParacliniques = $examenParacliniques;
+
+        return $this;
+    }
+
+    public function getRendezVous(): ?RendezVous
+    {
+        return $this->rendezVous;
+    }
+
+    public function setRendezVous(RendezVous $rendezVous): self
+    {
+        $this->rendezVous = $rendezVous;
+
+        // set the owning side of the relation if necessary
+        if ($rendezVous->getConsultation() !== $this) {
+            $rendezVous->setConsultation($this);
         }
 
         return $this;

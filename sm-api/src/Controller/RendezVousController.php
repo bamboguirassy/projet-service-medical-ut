@@ -32,15 +32,15 @@ class RendezVousController extends AbstractController
     }
     
     /**
-     * @Rest\Get(path="/{id}/dossier", name="rendez_vous_dossier")
+     * @Rest\Get(path="/{id}/consultation", name="rendez_vous_consultation")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_RENDEZVOUS_INDEX")
      */
-    public function findByDossier(\App\Entity\Dossier $dossier): array
+    public function findByConsultation(\App\Entity\Consultation $consultation): array
     {
         $rendezVouses = $this->getDoctrine()
             ->getRepository(RendezVous::class)
-            ->findByDossier($dossier);
+            ->findByConsultation($consultation);
 
         return count($rendezVouses)?$rendezVouses:[];
     }

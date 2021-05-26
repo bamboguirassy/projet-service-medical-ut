@@ -28,7 +28,7 @@
     <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
       <ng-template #tableTDTemplate let-row="row">
         <div class="actions">
-          <button *ngIf="medicamentSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
+          <button *ngIf="medicamentSrv.resourceName|editable" tc-button afterIcon="icofont-ui-edit"
             [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
           <button *ngIf="medicamentSrv.resourceName|clonable" [outline]="true" tc-button [afterIcon]="'icofont-copy'"
             [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'clone']"></button>

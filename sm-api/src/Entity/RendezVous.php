@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * RendezVous
  *
- * @ORM\Table(name="rendez_vous", indexes={@ORM\Index(name="fk_rendezVous_dossier1_idx", columns={"dossier"})})
+ * @ORM\Table(name="rendez_vous")
  * @ORM\Entity
  */
 class RendezVous
@@ -57,14 +57,10 @@ class RendezVous
     private $description;
 
     /**
-     * @var \Dossier
-     *
-     * @ORM\ManyToOne(targetEntity="Dossier")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="dossier", referencedColumnName="id")
-     * })
+     * @ORM\OneToOne(targetEntity=Consultation::class, inversedBy="rendezVous", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false,name="consultation")
      */
-    private $dossier;
+    private $consultation;
 
     public function getId()
     {
@@ -131,17 +127,16 @@ class RendezVous
         return $this;
     }
 
-    public function getDossier()
+    public function getConsultation(): ?Consultation
     {
-        return $this->dossier;
+        return $this->consultation;
     }
 
-    public function setDossier($dossier): self
+    public function setConsultation(Consultation $consultation): self
     {
-        $this->dossier = $dossier;
+        $this->consultation = $consultation;
 
         return $this;
     }
-
 
 }
