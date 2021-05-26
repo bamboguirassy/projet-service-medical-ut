@@ -1,3 +1,4 @@
+import { GRHServiceService } from './../../../../shared/services/grhservice.service';
 import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChildren } from '@angular/core';
 import { DossierService } from '../dossier.service';
 import { Dossier } from '../dossier';
@@ -44,9 +45,14 @@ export class DossierNewComponent implements OnInit {
     { value: 'compte propre', label: 'Travail à son compte propre' },
     { value: 'autres', label: 'Autres' },
   ];
+  item: any;
+  selected = false;
+  selectedTypePatient: String;
+  selectedFamille: any;
 
   constructor(public dossierSrv: DossierService,
-              public router: Router, public datePipe: DatePipe) {
+              public router: Router, public datePipe: DatePipe,
+              public grhSrv: GRHServiceService) {
     this.entity = new Dossier();
     this.entity.etat = true;
   }
@@ -56,7 +62,36 @@ export class DossierNewComponent implements OnInit {
   }
 
   save() {
-    this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
+    if(this.selectedTypePatient == "TRAVAILLEUR"){
+      this.entity.prenoms = this.item?.employe.prenoms;
+      this.entity.nom = this.item?.employe.nom;
+      this.entity.dateNaissance = this.item?.employe.dateNaissance;
+      this.entity.genre = this.item?.employe.genre;
+      this.entity.cni = this.item?.employe.cni;
+      this.entity.matricule = this.item?.employe.matricule;
+      this.entity.nomTravailleur = this.item?.employe.nomTravailleur;
+      this.entity.structure = this.item?.employe.structure.code;
+      this.entity.situationMatrimoniale = this.item?.employe.situtationMatrimoniale;
+      this.entity.telephone = this.item?.employe.telephonePrimaire;
+      this.entity.typePatient = this.item?.employe.typeEmploye.code;
+    }
+    if(this.entity.typePatient == "FAMILLE"){
+      this.entity.prenoms = this.selectedFamille?.prenoms;
+      this.entity.nom = this.selectedFamille?.nom;
+      this.entity.dateNaissance = this.selectedFamille?.dateNaissance;
+      this.entity.genre = this.selectedFamille?.genre;
+      this.entity.cni = this.selectedFamille?.cni;
+      this.entity.lienParente = this.selectedFamille?.lienParente;
+      this.entity.prenomTravailleur = this.selectedFamille?.employe.prenoms;
+      this.entity.nomTravailleur = this.selectedFamille?.employe.nom;
+      this.entity.matricule = this.selectedFamille?.employe.matricule;
+      this.entity.situationMatrimoniale = this.selectedFamille?.employe.situtationMatrimoniale;
+      this.entity.telephone = this.selectedFamille?.telephone;
+
+    }
+    if(this.entity.typePatient == "ETUDIANT"){
+      this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
+    }
     this.dossierSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
@@ -82,6 +117,27 @@ export class DossierNewComponent implements OnInit {
   // close modal window
   closeModal() {
     this.isModalVisible = false;
+    this.selectedFamille = null;
+    this.selected = false;
+    this.selectedTypePatient = null;
+    this.item =  null;
+  }
+
+  findEmploye(matricule) {
+    this.grhSrv.findWithMemberFamily(matricule,this.grhSrv.grhPassword)
+    .subscribe((data: any)=>{
+      this.item = data;
+    },err=>this.dossierSrv.httpSrv.catchError(err));
+  }
+
+  createDossierTravailleur(){
+    this.selectedTypePatient = "TRAVAILLEUR";
+    this.selected = true;
+  }
+  createDossierFamille(item){
+    this.selectedFamille = item;
+    this.entity.typePatient = "FAMILLE";
+    this.selected = true;
   }
 
 }
