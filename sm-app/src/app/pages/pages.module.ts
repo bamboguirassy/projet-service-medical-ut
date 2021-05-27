@@ -1,3 +1,19 @@
+import { MedicamentRemisEditComponent } from './gestionmedicale/medicamentremis/medicamentremis-edit/medicamentremis-edit.component';
+import { MedicamentRemisNewComponent } from './gestionmedicale/medicamentremis/medicamentremis-new/medicamentremis-new.component';
+import { MedicamentRemisListComponent } from './gestionmedicale/medicamentremis/medicamentremis-list/medicamentremis-list.component';
+import { InputationShowComponent } from './gestionmedicale/inputation/inputation-show/inputation-show.component';
+import { InputationNewComponent } from './gestionmedicale/inputation/inputation-new/inputation-new.component';
+import { InputationListComponent } from './gestionmedicale/inputation/inputation-list/inputation-list.component';
+import { InputationEditComponent } from './gestionmedicale/inputation/inputation-edit/inputation-edit.component';
+import { InputationCloneComponent } from './gestionmedicale/inputation/inputation-clone/inputation-clone.component';
+import { SymptomeNewComponent } from './gestionmedicale/symptome/symptome-new/symptome-new.component';
+import { SymptomeListComponent } from './gestionmedicale/symptome/symptome-list/symptome-list.component';
+import { ReposMedicalNewComponent } from './gestionmedicale/reposmedical/reposmedical-new/reposmedical-new.component';
+import { ConsultationShowComponent } from './gestionmedicale/consultation/consultation-show/consultation-show.component';
+import { ConsultationNewComponent } from './gestionmedicale/consultation/consultation-new/consultation-new.component';
+import { ConsultationListComponent } from './gestionmedicale/consultation/consultation-list/consultation-list.component';
+import { ConsultationEditComponent } from './gestionmedicale/consultation/consultation-edit/consultation-edit.component';
+import { ConsultationCloneComponent } from './gestionmedicale/consultation/consultation-clone/consultation-clone.component';
 import { DossierShowComponent } from './gestionmedicale/dossier/dossier-show/dossier-show.component';
 import { DossierNewComponent } from './gestionmedicale/dossier/dossier-new/dossier-new.component';
 import { DossierListComponent } from './gestionmedicale/dossier/dossier-list/dossier-list.component';
@@ -40,6 +56,7 @@ import { AgmCoreModule } from '@agm/core';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { NzDatePickerModule, NzDividerModule, NzTableModule, NzAvatarModule, NzButtonModule, NzCardModule, NzCarouselModule, NzCollapseModule, NzDescriptionsModule, NzDropDownModule, NzEmptyModule, NzFormModule, NzGridModule, NzIconModule, NzInputModule, NzListModule, NzModalModule, NzPopconfirmModule, NzSelectModule, NzSpinModule, NzStatisticModule, NzTabsModule, NzTypographyModule, NzUploadModule } from 'ng-zorro-antd';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 
 import { environment } from '../../environments/environment';
 import { UIModule } from '../ui/ui.module';
@@ -68,6 +85,24 @@ import { PathologieEditComponent } from './parametrage/pathologie/pathologie-edi
 import { PathologieListComponent } from './parametrage/pathologie/pathologie-list/pathologie-list.component';
 import { PathologieNewComponent } from './parametrage/pathologie/pathologie-new/pathologie-new.component';
 import { PathologieShowComponent } from './parametrage/pathologie/pathologie-show/pathologie-show.component';
+import { ConsultationDossierComponent } from './gestionmedicale/consultation/consultation-dossier/consultation-dossier.component';
+import { RendezVousCloneComponent } from './gestionmedicale/rendezvous/rendezvous-clone/rendezvous-clone.component';
+import { RendezVousEditComponent } from './gestionmedicale/rendezvous/rendezvous-edit/rendezvous-edit.component';
+import { RendezVousListComponent } from './gestionmedicale/rendezvous/rendezvous-list/rendezvous-list.component';
+import { RendezVousShowComponent } from './gestionmedicale/rendezvous/rendezvous-show/rendezvous-show.component';
+import { RendezVousNewComponent } from './gestionmedicale/rendezvous/rendezvous-new/rendezvous-new.component';
+import { ReposMedicalEditComponent } from './gestionmedicale/reposmedical/reposmedical-edit/reposmedical-edit.component';
+import { ReposMedicalListComponent } from './gestionmedicale/reposmedical/reposmedical-list/reposmedical-list.component';
+import { ReposMedicalShowComponent } from './gestionmedicale/reposmedical/reposmedical-show/reposmedical-show.component';
+import { ReposMedicalCloneComponent } from './gestionmedicale/reposmedical/reposmedical-clone/reposmedical-clone.component';
+import { ReposMedicalDossierComponent } from './gestionmedicale/reposmedical/repos-medical-dossier/repos-medical-dossier.component';
+import { ImputationDossierComponent } from './gestionmedicale/inputation/imputation-dossier/imputation-dossier.component';
+import { RendezVousDossierComponent } from './gestionmedicale/rendezvous/rendez-vous-dossier/rendez-vous-dossier.component';
+import { SurveillancePathologiqueGeneraleComponent } from './dashboards/surveillance-pathologique-generale/surveillance-pathologique-generale.component';
+import { SurveillancePathologiqueJournaliereComponent } from './dashboards/surveillance-pathologique-journaliere/surveillance-pathologique-journaliere.component';
+import { SurveillancePathologiqueMensuelleComponent } from './dashboards/surveillance-pathologique-mensuelle/surveillance-pathologique-mensuelle.component';
+import { ConsultationMensuelleComponent } from './dashboards/consultation-mensuelle/consultation-mensuelle.component';
+import { ConsultationJournaliereComponent } from './dashboards/consultation-journaliere/consultation-journaliere.component';
 
 @NgModule({
   imports: [
@@ -114,6 +149,7 @@ import { PathologieShowComponent } from './parametrage/pathologie/pathologie-sho
     NzTabsModule,
     NzTypographyModule,
     NzUploadModule,
+    NzTagModule,
     UIModule,
     LayoutModule,
     
@@ -168,7 +204,41 @@ import { PathologieShowComponent } from './parametrage/pathologie/pathologie-sho
     DossierEditComponent,
     DossierListComponent,
     DossierNewComponent,
-    DossierShowComponent
+    DossierShowComponent,
+    ConsultationCloneComponent,
+    ConsultationEditComponent,
+    ConsultationListComponent,
+    ConsultationNewComponent,
+    ConsultationShowComponent,
+    ConsultationDossierComponent,
+    RendezVousCloneComponent,
+    RendezVousEditComponent,
+    RendezVousListComponent,
+    RendezVousShowComponent,
+    RendezVousNewComponent,
+    ReposMedicalEditComponent,
+    ReposMedicalListComponent,
+    ReposMedicalShowComponent,
+    ReposMedicalCloneComponent,
+    ReposMedicalNewComponent,
+    ReposMedicalDossierComponent,
+    SymptomeListComponent,
+    SymptomeNewComponent,
+    InputationCloneComponent,
+    InputationEditComponent,
+    InputationListComponent,
+    InputationNewComponent,
+    InputationShowComponent,
+    ImputationDossierComponent,
+    RendezVousDossierComponent,
+    MedicamentRemisListComponent,
+    MedicamentRemisNewComponent,
+    MedicamentRemisEditComponent,
+    SurveillancePathologiqueGeneraleComponent,
+    SurveillancePathologiqueJournaliereComponent,
+    SurveillancePathologiqueMensuelleComponent,
+    ConsultationMensuelleComponent,
+    ConsultationJournaliereComponent,
   ],
   exports: [ ],
   entryComponents: [ ],

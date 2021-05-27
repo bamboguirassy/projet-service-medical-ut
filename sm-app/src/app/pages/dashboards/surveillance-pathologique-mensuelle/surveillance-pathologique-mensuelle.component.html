@@ -1,0 +1,30 @@
+<tc-card *ngIf="pathologieSrv.resourceName|listable" [tcGradient]="statisticGradient">
+    <table class="table table-responsive table-bordered table-hover">
+        <thead>
+            <tr>
+                <th rowspan="2"></th>
+                <th colspan="2" *ngFor="let pathologie of data?.header">{{pathologie.nom}}</th>
+                <th colspan="2">Total</th>
+            </tr>
+            <tr>
+                <ng-container *ngFor="let pathologie of data?.header">
+                    <th>T</th>
+                    <th>NT</th>
+                </ng-container>
+                <th>T</th>
+                <th>NT</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of data?.content">
+                <td scope="row">{{item?.month}}</td>
+                <ng-container *ngFor="let val of item?.pathTab">
+                    <td>{{val?.travailleur}}</td>
+                    <td>{{val?.nt}}</td>
+                </ng-container>
+                <td>{{item?.nombre}}</td>
+                <td>{{item?.nombre}}</td>
+            </tr>
+        </tbody>
+    </table>
+</tc-card>

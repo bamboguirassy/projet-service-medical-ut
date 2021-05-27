@@ -1,0 +1,82 @@
+<tc-card *ngIf="rendezVousSrv.resourceName|listable" [tcGradient]="lightGradient">
+  <tc-card [view]="secondViewBorder" [outline]="true">
+    <div class="row">
+      <div class="col-12 col-md-7">
+        <tc-form-group>
+          <nz-range-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="dates" [nzSize]="'default'"></nz-range-picker>
+        </tc-form-group>
+      </div>
+      <div class="col-12 col-md-2">
+        <button [disabled]="!dates" tc-button afterIcon="icofont-filter" (click)="filter()"
+          view="accent">Filtrer</button>
+      </div>
+      <div class="col-12 col-md-3">
+        <button tc-button afterIcon="icofont-refresh" (click)="findAll()">Rafraichir</button>
+      </div>
+    </div>
+  </tc-card>
+  <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
+    <tc-table-col [columnTitle]="'Date Prescription'" [columnName]="'dateCreation'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap">{{ value|date:'dd/MM/yyyy' }}</span>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Matricule'" [columnName]="'consultation'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <b class="nowrap" style="color: #BD3B19;">{{ value?.matricule }}</b>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Consultation'" [columnName]="'consultation'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap">
+          <a [routerLink]="['/horizontal/dossier',value?.dossier?.id]">{{ value?.dossier?.numero }}</a>
+        </span>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Prénoms'" [columnName]="'consultation'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap">{{ value?.dossier?.prenoms }}</span>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Nom'" [columnName]="'consultation'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap">{{ value?.dossier?.nom }}</span>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Date RV'" [columnName]="'dateRendezVous'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <tc-badge view="info">{{ value|date:'dd/MM/yyyy' }}</tc-badge>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Présence'" [columnName]="'presence'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <tc-badge view="{{value ? 'success' : 'error'}}">
+          <span class="nowrap">{{ value ? 'Oui' : 'Pas encore' }} </span>
+        </tc-badge>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Description'" [columnName]="'description'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap" *ngIf="value">{{ value }}</span>
+        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Ajouté par'" [columnName]="'userEmail'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap">{{ value }}</span>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+      <ng-template #tableTDTemplate let-row="row">
+        <div class="actions">
+          <button *ngIf="rendezVousSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
+            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
+          <button *ngIf="rendezVousSrv.resourceName|deletable" (click)="remove(row)" tc-button
+            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+        </div>
+      </ng-template>
+    </tc-table-col>
+  </tc-table>
+  <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
+</tc-card>
+<app-access-denied *ngIf="!(rendezVousSrv.resourceName|listable)"></app-access-denied>

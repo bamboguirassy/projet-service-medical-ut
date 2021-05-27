@@ -5,42 +5,43 @@
 <app-access-denied *ngIf="!(structurePartenaireSrv.resourceName|creable)"></app-access-denied>
 
 <!-- Modal window -->
-<nz-modal nzWidth="80%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
+<nz-modal nzWidth="50%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
   [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
   <ng-template #modalBody>
     <form #form="ngForm" ngNativeValidate>
       <div class="row">
-                                                                            <div class="col-12 col-md-6">
-                        <tc-form-group>
-                            <tc-form-label>Nom</tc-form-label>
-                            <tc-input required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
-                            </tc-input>
-                            <tc-form-description>
-                                <app-form-field-validation-message [formField]="nom"></app-form-field-validation-message>
-                            </tc-form-description>
-                        </tc-form-group>
-                    </div>
-                                                                <div class="col-12 col-md-6">
-                        <tc-form-group>
-                            <tc-form-label>Adresse</tc-form-label>
-                            <tc-input required="required" [(ngModel)]="entity.adresse" name="adresse" id="adresse" #adresse="ngModel">
-                            </tc-input>
-                            <tc-form-description>
-                                <app-form-field-validation-message [formField]="adresse"></app-form-field-validation-message>
-                            </tc-form-description>
-                        </tc-form-group>
-                    </div>
-                                                                <div class="col-12 col-md-6">
-                        <tc-form-group>
-                            <tc-form-label>Telephone</tc-form-label>
-                            <tc-input required="required" [(ngModel)]="entity.telephone" name="telephone" id="telephone" #telephone="ngModel">
-                            </tc-input>
-                            <tc-form-description>
-                                <app-form-field-validation-message [formField]="telephone"></app-form-field-validation-message>
-                            </tc-form-description>
-                        </tc-form-group>
-                    </div>
-                                    </div>
+        <div class="col-12">
+          <tc-form-group>
+            <tc-form-label>Nom</tc-form-label>
+            <tc-input required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
+            </tc-input>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="nom"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+        <div class="col-12">
+          <tc-form-group>
+            <tc-form-label>Téléphone</tc-form-label>
+            <tc-input type="tel" [prefixIcon]="'icofont-phone'" [(ngModel)]="entity.telephone" name="telephone" id="telephone"
+              #telephone="ngModel">
+            </tc-input>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="telephone"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+        <div class="col-12">
+          <tc-form-group>
+            <tc-form-label>Adresse</tc-form-label>
+            <tc-textarea [(ngModel)]="entity.adresse" name="adresse" id="adresse" #adresse="ngModel">
+            </tc-textarea>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="adresse"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+      </div>
     </form>
   </ng-template>
 
@@ -48,7 +49,8 @@
     <div class="actions justify-content-between">
       <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
         (click)="closeModal()">Fermer</button>
-      <button [disabled]="form.invalid" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'" tc-button [view]="'accent'">
+      <button [disabled]="!entity?.nom" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'"
+        tc-button [view]="'accent'">
         Enregistrer
       </button>
     </div>

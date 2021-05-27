@@ -11,6 +11,9 @@ import { BamboHttpService } from 'src/app/shared/services/bambo-http.service';
   providedIn: 'root',
 })
 export class HttpService extends BamboAbstractService {
+  post(arg0: string, arg1: { dateDebut: any; dateFin: any; }) {
+    throw new Error('Method not implemented.');
+  }
   constructor(public httpSrv: BamboHttpService, public toastrSrv: ToastrService) {
     super(httpSrv,toastrSrv)
   }

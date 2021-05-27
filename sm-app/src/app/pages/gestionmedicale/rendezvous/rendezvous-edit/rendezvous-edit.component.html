@@ -1,0 +1,53 @@
+<!-- Modal window -->
+<nz-modal nzWidth="50%" [(nzVisible)]="visible" [nzClosable]="false" [nzTitle]="'Formulaire - Mise à jour RV'"
+  [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+  <ng-template #modalBody>
+    <form #form="ngForm" ngNativeValidate>
+      <div class="row">
+        <div class="col-12">
+          <tc-form-group>
+            <tc-form-label>Date Rendez Vous</tc-form-label>
+            <nz-date-picker required="required" [(ngModel)]="entity.dateRendezVous" name="dateRendezVous"
+              id="dateRendezVous" #dateRendezVous="ngModel" [nzFormat]="'dd/MM/yyyy'">
+            </nz-date-picker>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="dateRendezVous"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+        <div class="col-12">
+          <tc-form-group>
+            <tc-form-label>Description</tc-form-label>
+            <tc-textarea [(ngModel)]="entity.description" name="description" id="description" #description="ngModel">
+            </tc-textarea>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="description"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+        <div class="col-12 col-md-6">
+          <tc-form-group>
+            <tc-form-label>Présence Patient ?</tc-form-label>
+            <tc-switcher [(ngModel)]="entity.presence" name="presence" id="presence" #presence="ngModel">
+            </tc-switcher>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="presence"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+        (click)="closeModal()">Fermer</button>
+      <button [disabled]="!entity.dateRendezVous" [disabled]="form.invalid" (click)="updateItem()"
+        [afterIcon]="'icofont-save'" tc-button [view]="'accent'">
+        Enregistrer
+      </button>
+    </div>
+  </ng-template>
+</nz-modal>
+<!-- end Modal window -->

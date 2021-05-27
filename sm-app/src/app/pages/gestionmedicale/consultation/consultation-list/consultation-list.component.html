@@ -1,0 +1,74 @@
+<tc-card *ngIf="consultationSrv.resourceName|listable" [tcGradient]="lightGradient">
+  <tc-card [view]="secondViewBorder" [outline]="true">
+    <div class="row">
+      <div class="col-12 col-md-7">
+        <tc-form-group>
+          <nz-range-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="dates" [nzSize]="'default'"></nz-range-picker>
+        </tc-form-group>
+      </div>
+      <div class="col-12 col-md-2">
+        <button [disabled]="!dates" tc-button afterIcon="icofont-filter" (click)="filter()" view="accent">Filtrer</button>
+      </div>
+      <div class="col-12 col-md-3">
+        <button tc-button afterIcon="icofont-refresh" (click)="findAll()">Rafraichir</button>
+      </div>
+    </div>
+  </tc-card>
+  <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
+    <tc-table-col [columnTitle]="'Date'" [columnName]="'date'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value let-row="row">
+        <span class="nowrap">
+          <a [routerLink]="[row.id]" routerLinkActive="router-link-active">{{value|date:'dd/MM/yyyy'}}</a>
+        </span>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Matricule'" [columnName]="'dossier'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap">{{ value?.matricule }}</span>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Dossier'" [columnName]="'dossier'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap">
+          <a [routerLink]="['/horizontal/dossier',value?.id]">{{ value?.numero }}</a>
+        </span>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Prénoms'" [columnName]="'dossier'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap">{{ value?.prenoms }}</span>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Nom'" [columnName]="'dossier'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap">{{ value?.nom }}</span>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Pathologie Diagnostiquée'" [columnName]="'pathologieDiagnostiquee'"
+      [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <tc-badge *ngIf="!value" view="error"><span class="nowrap">Non précisée</span></tc-badge>
+        <tc-badge *ngIf="value" view="info"><span class="nowrap">{{value?.nom}}</span></tc-badge>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Prescrite par'" [columnName]="'docteur'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap">{{ value?.prenoms+' '+value?.nom }}</span>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+      <ng-template #tableTDTemplate let-row="row">
+        <div class="actions">
+          <button *ngIf="consultationSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
+            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
+          <button *ngIf="consultationSrv.resourceName|deletable" (click)="remove(row)" tc-button
+            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+          <button *ngIf="consultationSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'"
+            [view]="'accent'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id]"></button>
+        </div>
+      </ng-template>
+    </tc-table-col>
+  </tc-table>
+  <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
+</tc-card>
+<app-access-denied *ngIf="!(consultationSrv.resourceName|listable)"></app-access-denied>

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -129,6 +131,74 @@ epoux ou enfant"})
      * @ORM\Column(type="string", length=145)
      */
     private $structure;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Consultation::class, mappedBy="dossier")
+     */
+    private $consultations;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ReposMedical::class, mappedBy="dossier")
+     */
+    private $reposMedicals;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Inputation::class, mappedBy="dossier")
+     */
+    private $inputations;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $historiqueMaladies;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $niveauInstruction;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $situationMatrimoniale;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $genreVie;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $professionMari;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $antecedentMedicaux;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $antecedentChurirgicaux;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $antecedentFamiliaux;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $dateMariage;
+
+    public function __construct()
+    {
+        $this->consultations = new ArrayCollection();
+        $this->reposMedicals = new ArrayCollection();
+        $this->rendezVous = new ArrayCollection();
+        $this->inputations = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -323,6 +393,207 @@ epoux ou enfant"})
     public function setStructure(string $structure): self
     {
         $this->structure = $structure;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Consultation[]
+     */
+    public function getConsultations(): Collection
+    {
+        return $this->consultations;
+    }
+
+    public function addConsultation(Consultation $consultation): self
+    {
+        if (!$this->consultations->contains($consultation)) {
+            $this->consultations[] = $consultation;
+            $consultation->setDossier1($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConsultation(Consultation $consultation): self
+    {
+        if ($this->consultations->contains($consultation)) {
+            $this->consultations->removeElement($consultation);
+            // set the owning side to null (unless already changed)
+            if ($consultation->getDossier1() === $this) {
+                $consultation->setDossier1(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ReposMedical[]
+     */
+    public function getReposMedicals(): Collection
+    {
+        return $this->reposMedicals;
+    }
+
+    public function addReposMedical(ReposMedical $reposMedical): self
+    {
+        if (!$this->reposMedicals->contains($reposMedical)) {
+            $this->reposMedicals[] = $reposMedical;
+            $reposMedical->setDossier1($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReposMedical(ReposMedical $reposMedical): self
+    {
+        if ($this->reposMedicals->contains($reposMedical)) {
+            $this->reposMedicals->removeElement($reposMedical);
+            // set the owning side to null (unless already changed)
+            if ($reposMedical->getDossier1() === $this) {
+                $reposMedical->setDossier1(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Inputation[]
+     */
+    public function getInputations(): Collection
+    {
+        return $this->inputations;
+    }
+
+    public function addInputation(Inputation $inputation): self
+    {
+        if (!$this->inputations->contains($inputation)) {
+            $this->inputations[] = $inputation;
+            $inputation->setDossier1($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInputation(Inputation $inputation): self
+    {
+        if ($this->inputations->contains($inputation)) {
+            $this->inputations->removeElement($inputation);
+            // set the owning side to null (unless already changed)
+            if ($inputation->getDossier1() === $this) {
+                $inputation->setDossier1(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getHistoriqueMaladies(): ?string
+    {
+        return $this->historiqueMaladies;
+    }
+
+    public function setHistoriqueMaladies(?string $historiqueMaladies): self
+    {
+        $this->historiqueMaladies = $historiqueMaladies;
+
+        return $this;
+    }
+
+    public function getNiveauInstruction(): ?string
+    {
+        return $this->niveauInstruction;
+    }
+
+    public function setNiveauInstruction(?string $niveauInstruction): self
+    {
+        $this->niveauInstruction = $niveauInstruction;
+
+        return $this;
+    }
+
+    public function getSituationMatrimoniale(): ?string
+    {
+        return $this->situationMatrimoniale;
+    }
+
+    public function setSituationMatrimoniale(?string $situationMatrimoniale): self
+    {
+        $this->situationMatrimoniale = $situationMatrimoniale;
+
+        return $this;
+    }
+
+    public function getGenreVie(): ?string
+    {
+        return $this->genreVie;
+    }
+
+    public function setGenreVie(?string $genreVie): self
+    {
+        $this->genreVie = $genreVie;
+
+        return $this;
+    }
+
+    public function getProfessionMari(): ?string
+    {
+        return $this->professionMari;
+    }
+
+    public function setProfessionMari(?string $professionMari): self
+    {
+        $this->professionMari = $professionMari;
+
+        return $this;
+    }
+
+    public function getAntecedentMedicaux(): ?string
+    {
+        return $this->antecedentMedicaux;
+    }
+
+    public function setAntecedentMedicaux(?string $antecedentMedicaux): self
+    {
+        $this->antecedentMedicaux = $antecedentMedicaux;
+
+        return $this;
+    }
+
+    public function getAntecedentChurirgicaux(): ?string
+    {
+        return $this->antecedentChurirgicaux;
+    }
+
+    public function setAntecedentChurirgicaux(?string $antecedentChurirgicaux): self
+    {
+        $this->antecedentChurirgicaux = $antecedentChurirgicaux;
+
+        return $this;
+    }
+
+    public function getAntecedentFamiliaux(): ?string
+    {
+        return $this->antecedentFamiliaux;
+    }
+
+    public function setAntecedentFamiliaux(?string $antecedentFamiliaux): self
+    {
+        $this->antecedentFamiliaux = $antecedentFamiliaux;
+
+        return $this;
+    }
+
+    public function getDateMariage(): ?string
+    {
+        return $this->dateMariage;
+    }
+
+    public function setDateMariage(?string $dateMariage): self
+    {
+        $this->dateMariage = $dateMariage;
 
         return $this;
     }

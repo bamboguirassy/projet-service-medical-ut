@@ -13,5 +13,17 @@ export class PathologieService extends BamboAbstractService {
     this.routePrefix = 'pathologie/';
     this.resourceName = 'PATHOLOGIE';
   }
+
+  getMensualTravailleurStatistic(annee: number) {
+    return this.httpSrv.get(this.routePrefix + annee + '/statistique-mensuelle-travailleur/');
+  }
+
+  getDaylyTravailleurStatistic(annee: number) {
+    return this.httpSrv.get(this.routePrefix + annee + '/statistique-journaliere-travailleur/');
+  }
+  
+  getGenericStatistic(annee: number) {
+    return this.httpSrv.get(this.routePrefix + annee + '/statistique-generale/');
+  }
   
 }

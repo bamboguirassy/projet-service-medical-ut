@@ -115,6 +115,6 @@
     </tc-table-col>
   </tc-table>
   <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
-  <app-dossier-new (creation)="onCreate($event)"></app-dossier-new>
+  <app-dossier-new (creation)="onCreate()"></app-dossier-new>
 </tc-card>
 <app-access-denied *ngIf="!(dossierSrv.resourceName|listable)"></app-access-denied>

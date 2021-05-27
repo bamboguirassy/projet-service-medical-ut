@@ -100,11 +100,38 @@ export class BamboAuthService {
     // define menu
     this.menuItems = [
       {
-        "title": "Tableau de bord",
+        "title": "Statistiques",
         "icon": {
           "class": "icofont-dashboard-web"
         },
-        "routing": "default-dashboard",
+        "routing": "",
+        "sub": [
+          {
+            "title": "Surv. Path. Générale",
+            "routing": "surv-path-gen",
+            enabled: this.checkListAccess('pathologie')
+          },
+          {
+            "title": "Surv. Path. Journalière",
+            "routing": "surv-path-journ",
+            enabled: this.checkListAccess('pathologie')
+          },
+          {
+            "title": "Surv. Path. Mensuelle",
+            "routing": "surv-path-mens",
+            enabled: this.checkListAccess('pathologie')
+          },
+          {
+            "title": "Consultation Journalière",
+            "routing": "cons-jour",
+            enabled: this.checkListAccess('consultation')
+          },
+          {
+            "title": "Consultation Mensuelle",
+            "routing": "cons-mens",
+            enabled: this.checkListAccess('consultation')
+          }
+        ],
         enabled: true
       },
       {
@@ -132,6 +159,11 @@ export class BamboAuthService {
             "title": "Pathologies",
             "routing": "pathologie",
             enabled: this.checkListAccess('pathologie')
+          },
+          {
+            "title": "Structures Partenaires",
+            "routing": "structurepartenaire",
+            enabled: this.checkListAccess('structurepartenaire')
           }
         ],
         enabled: false
@@ -172,7 +204,7 @@ export class BamboAuthService {
             enabled: this.checkListAccess('consultation')
           },
           {
-            "title": "Inputations",
+            "title": "Imputations",
             "routing": "inputation",
             enabled: this.checkListAccess('inputation')
           },
@@ -180,6 +212,11 @@ export class BamboAuthService {
             "title": "Repos Médicaux",
             "routing": "reposmedical",
             enabled: this.checkListAccess('reposmedical')
+          },
+          {
+            "title": "Rendez Vous",
+            "routing": "rendezvous",
+            enabled: this.checkListAccess('rendezvous')
           }
         ],
         enabled: false

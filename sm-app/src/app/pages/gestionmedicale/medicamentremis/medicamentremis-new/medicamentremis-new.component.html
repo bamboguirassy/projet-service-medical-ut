@@ -1,0 +1,65 @@
+<button *ngIf="medicamentRemiSrv.resourceName|creable" tc-button [afterIcon]="'icofont-plus'" [view]="'info'"
+   (click)="openModal()"></button>
+   <button class="ml-2" *ngIf="medicamentRemiSrv.resourceName|creable" tc-button [afterIcon]="'icofont-refresh'" [view]="'accent'"
+   (click)="findMedicaments()"></button>
+<app-access-denied *ngIf="!(medicamentRemiSrv.resourceName|creable)"></app-access-denied>
+
+<!-- Modal window -->
+<nz-modal nzWidth="50%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
+  [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+  <ng-template #modalBody>
+    <form #form="ngForm" ngNativeValidate>
+      <div class="row">
+        <div class="col-12">
+          <tc-form-group>
+            <tc-form-label>Médicament</tc-form-label>
+            <nz-select name="medicament" id="medicament" #medicament="ngModel" required="required"
+              nzPlaceHolder="Selectionner un médicament" nzAllowClear nzShowSearch [(ngModel)]="selectedMedicament">
+              <ng-container *ngFor="let medicament of medicaments">
+                <nz-option [nzDisabled]="!medicament.quantiteStock" nzCustomContent [nzValue]="medicament" [nzLabel]="medicament.nom">
+                  <div class="row">
+                    <div class="col-2">
+                      <i *ngIf="!medicament.filepath" class="icofont-drug-pack icofont-3x"></i>
+                      <tc-avatar *ngIf="medicament.filepath" [src]="medicament.filepath"></tc-avatar>
+                    </div>
+                    <div class="col-10">
+                      <span class="nowrap h6">{{medicament.nom}} 
+                        <span style="color: red;" *ngIf="!medicament.quantiteStock"><br> Stock épuisé</span>
+                      </span>
+                    </div>
+                  </div>
+                </nz-option>
+              </ng-container>
+            </nz-select>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="medicament"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+        <div class="col-12">
+          <tc-form-group>
+            <tc-form-label>Quantité <span *ngIf="selectedMedicament" style="color: red;">{{selectedMedicament?.quantiteStock}} unité(s) disponible(s)</span></tc-form-label>
+            <tc-input type="number" required="required" [(ngModel)]="entity.quantite" name="quantite" id="quantite"
+              #quantite="ngModel">
+            </tc-input>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="quantite"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+        (click)="closeModal()">Fermer</button>
+      <button [disabled]="form.invalid" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'"
+        tc-button [view]="'accent'">
+        Enregistrer
+      </button>
+    </div>
+  </ng-template>
+</nz-modal>
+<!-- end Modal window -->

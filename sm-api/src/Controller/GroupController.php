@@ -140,14 +140,22 @@ class GroupController extends AbstractController {
                 new AccessModel('GROUP', "Groupe d'utilisateur"),
                 new AccessModel('USER', "Utilisateur"),
                 new AccessModel('DOCTEUR', "Docteur"),
-                new AccessModel('PATHOLOGIE', "Pathologie")
+                new AccessModel('PATHOLOGIE', "Pathologie"),
+                new AccessModel('STRUCTUREPARTENAIRE', "Structure Partenaire")
                     ]),
             new AccessGroup("Gestion médicale", [
-                new AccessModel('DOSSIER', "Dossier Médical")
+                new AccessModel('DOSSIER', "Dossier Médical"),
+                new AccessModel('CONSULTATION', "Consultation"),
+                new AccessModel('INPUTATION', "Inputation"),
+                new AccessModel('RENDEZVOUS', "Rendez-vous"),
+                new AccessModel('REPOSMEDICAL', "Repos-Medical"),
+                new AccessModel('SYMPTOME', "Symptome"),
+                new AccessModel('MEDICAMENTREMIS', "Médicament Rémis"),
                     ]),
             new AccessGroup("Gestion Stock médicament", [
                 new AccessModel('BONRECEPTION', "Bon Réception"),
                 new AccessModel('MEDICAMENT', "Médicament"),
+                new AccessModel('MEDICAMENTRECEPTION', "Médicament Réceptionné"),
                     ])
         ];
 

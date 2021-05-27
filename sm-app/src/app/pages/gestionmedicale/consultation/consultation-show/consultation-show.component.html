@@ -1,0 +1,130 @@
+<tc-card *ngIf="consultationSrv.resourceName|showable" [tcGradient]="lightGradient">
+    <tc-card class="mb-1" [view]="secondViewBorder" [outline]="true" [padding]="0.5">
+        <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-reply">Retour</button>
+        <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
+            beforeIcon="icofont-refresh">Rafraichir</button>
+        <button (click)="remove(entity)" *ngIf="consultationSrv.resourceName|deletable" [outline]="true" tc-button
+            view="error" beforeIcon="icofont-trash" class="ml-1">Supprimer</button>
+        <button *ngIf="consultationSrv.resourceName|editable"
+            [routerLink]="['/'+orientation,consultationSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+            class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit">Modifier</button>
+        <app-rendezvous-new *ngIf="entity" class="ml-1" [consultation]="entity"
+            (creation)="findEntity(activatedRoute.snapshot.params.id)">
+        </app-rendezvous-new>
+    </tc-card>
+    <div class="row">
+        <div class="col-12 col-md-7">
+            <tc-card class="mb-1" [outline]="true" [view]="secondViewBorder"
+                [title]="'Dossier Médical - '+entity?.dossier?.numero" [tcGradient]="secondGradient">
+                <blockquote class="blockquote">
+                    <p class="mb-0">Patient: {{entity?.dossier?.prenoms+' '+entity?.dossier?.nom}} <span
+                            *ngIf="entity?.dossier?.typePatient=='famille'">{{entity?.dossier?.lienParente+' de '+entity?.dossier?.prenomTravailleur+' '+entity?.dossier?.nomTravailleur}}</span>
+                        - {{entity?.dossier?.typePatient}} </p>
+                    <footer class="blockquote-footer"> <cite title="Source Title">Depuis le
+                            {{entity?.dossier?.dateCreation|date:'dd/MM/yyyy'}} par {{ entity?.userEmail }}</cite>
+                    </footer>
+                </blockquote>
+            </tc-card>
+        </div>
+        <div class="col-12 col-md-5">
+            <tc-card class="mb-1" [outline]="true" [view]="secondViewBorder" [title]="title"
+                [tcGradient]="secondGradient">
+                <blockquote class="blockquote">
+                    <p class="mb-0">Date: {{ entity?.date|date:'dd/MM/yyyy' }}</p>
+                    <footer class="blockquote-footer"> <cite title="Docteur ayant fait la consultation">Par
+                            {{entity?.docteur?.prenoms+' '+entity?.docteur?.nom}}</cite>
+                    </footer>
+                </blockquote>
+            </tc-card>
+        </div>
+        <div class="col-12">
+            <tc-card class="mb-1" [view]="secondViewBorder" [outline]="true" [tcGradient]="secondGradient">
+                <nz-descriptions nzTitle="Détails consultation">
+                    <nz-descriptions-item nzTitle="Médicaments Préscrits">{{entity?.medicamentPrescrits}}
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Motifs Consultation">{{entity?.motifConsultations}}
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Tension Arterielle">{{entity?.tensionArterielle}}
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Temperature">{{entity?.temperature}}</nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Pouls">{{entity?.pouls}}</nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Frequence Respiratoire">{{entity?.frequenceRespiratoire}}
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Poids">{{entity?.poids}}</nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Glycemie">{{entity?.glycemie}}</nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Examen Cliniques">{{entity?.examenCliniques}}</nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="Examen Paracliniques">{{entity?.examenParacliniques}}
+                    </nz-descriptions-item>
+                </nz-descriptions>
+            </tc-card>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="row">
+                <div class="col-12">
+                    <tc-card class="mb-1" [outline]="true" [view]="secondViewBorder" title="Pathologie diagnostiquée"
+                        [tcGradient]="secondGradient">
+                        <a href="javascript:void(0)" (click)="isPathologieModalVisible=true"
+                            *ngIf="!entity?.pathologieDiagnostiquee && (consultationSrv.resourceName|editable)">Préciser
+                            le résultat du diagnostic</a>
+                        <tc-badge *ngIf="entity?.pathologieDiagnostiquee" view="error">
+                            <span class="nowrap">{{entity?.pathologieDiagnostiquee?.nom}}</span>
+                        </tc-badge> &nbsp; <a href="javascript:void(0)" (click)="isPathologieModalVisible=true"
+                            *ngIf="entity?.pathologieDiagnostiquee && (consultationSrv.resourceName|editable)">Changer
+                            résultat diagnostic</a>
+                    </tc-card>
+                </div>
+                <div class="col-12">
+                    <app-medicamentremis-list [consultation]="entity"></app-medicamentremis-list>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="col-12">
+                <app-symptome-list [consultation]="entity"></app-symptome-list>
+            </div>
+            <div class="col-12">
+                <app-rendez-vous-dossier *ngIf="entity" [dossier]="entity"></app-rendez-vous-dossier>
+            </div>
+        </div>
+    </div>
+</tc-card>
+<app-access-denied *ngIf="!(consultationSrv.resourceName|showable)"></app-access-denied>
+
+<!-- Pathologie Dignostiquée Modal window -->
+<nz-modal nzWidth="50%" [(nzVisible)]="isPathologieModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
+    [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closePathologieModal()">
+    <ng-template #modalBody>
+        <form #form="ngForm" ngNativeValidate>
+            <div class="row">
+                <div class="col-12">
+                    <tc-form-group>
+                        <tc-form-label>Pathologie</tc-form-label>
+                        <nz-select name="pathologie" id="pathologie" #pathologie="ngModel" required="required"
+                            nzPlaceHolder="Selectionner la pathologie" nzAllowClear nzShowSearch
+                            [(ngModel)]="selectedPathologie">
+                            <ng-container *ngFor="let pathologie of pathologies">
+                                <nz-option [nzValue]="pathologie" [nzLabel]="pathologie?.nom"></nz-option>
+                            </ng-container>
+                        </nz-select>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="pathologie">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="actions justify-content-between">
+            <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+                (click)="closePathologieModal()">Fermer</button>
+            <button [disabled]="!selectedPathologie" [disabled]="form.invalid" (click)="setPathologieDiagnostiquee()"
+                [afterIcon]="'icofont-save'" tc-button [view]="'accent'">
+                Enregistrer
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>
+<!-- end pathologie diagnostiquée Modal window -->

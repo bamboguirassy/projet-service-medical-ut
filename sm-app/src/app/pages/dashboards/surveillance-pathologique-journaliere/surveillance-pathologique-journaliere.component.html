@@ -1,0 +1,36 @@
+<tc-card *ngIf="pathologieSrv.resourceName|listable" [tcGradient]="deepGradient">
+    <nz-tabset nzTabPosition="bottom">
+        <nz-tab *ngFor="let tab of data?.content" [nzTitle]="tab?.month">
+            <tc-card *ngIf="pathologieSrv.resourceName|listable" [tcGradient]="statisticGradient">
+                <table class="table table-responsive table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th rowspan="2"></th>
+                            <th colspan="2" *ngFor="let pathologie of data?.header">{{pathologie.nom}}</th>
+                            <th colspan="2">Total</th>
+                        </tr>
+                        <tr>
+                            <ng-container *ngFor="let pathologie of data?.header">
+                                <th>T</th>
+                                <th>NT</th>
+                            </ng-container>
+                            <th>T</th>
+                            <th>NT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of tab?.dayTab">
+                            <td scope="row">J{{item?.day}}</td>
+                            <ng-container *ngFor="let val of item?.pathTab">
+                                <td>{{(val?.travailleur>0)?val?.travailleur:'-'}}</td>
+                                <td>{{(val?.nt>0)?val?.nt:'-'}}</td>
+                            </ng-container>
+                            <td>{{item?.totalT}}</td>
+                            <td>{{item?.totalNT}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </tc-card>
+        </nz-tab>
+    </nz-tabset>
+</tc-card>

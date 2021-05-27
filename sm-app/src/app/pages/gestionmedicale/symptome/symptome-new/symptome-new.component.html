@@ -1,0 +1,44 @@
+<button *ngIf="symptomeSrv.resourceName|creable" tc-button [afterIcon]="'icofont-plus'" [view]="'accent'"
+   (click)="openModal()"></button>
+<app-access-denied *ngIf="!(symptomeSrv.resourceName|creable)"></app-access-denied>
+
+<!-- Modal window -->
+<nz-modal nzWidth="50%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau Symptôme'"
+  [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+  <ng-template #modalBody>
+    <form #form="ngForm" ngNativeValidate>
+      <div class="row">
+        <div class="col-12">
+          <tc-form-group>
+            <tc-form-label>Nom</tc-form-label>
+            <nz-tag *ngFor="let symptome of symptomes; let i = index" [nzMode]="'closeable'" (nzAfterClose)="handleClose(symptome)">
+              {{ symptome }}
+            </nz-tag>
+            <input
+              #inputElement
+              nz-input
+              nzSize="small"
+              type="text" name='inputEl'
+              [(ngModel)]="inputValue"
+              style="width: 150px;"
+              (blur)="handleInputConfirm()"
+              (keydown.enter)="handleInputConfirm()"
+            />
+          </tc-form-group>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+        (click)="closeModal()">Fermer</button>
+      <button [disabled]="form.invalid" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'"
+        tc-button [view]="'accent'">
+        Enregistrer
+      </button>
+    </div>
+  </ng-template>
+</nz-modal>
+<!-- end Modal window -->

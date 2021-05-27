@@ -1,0 +1,49 @@
+  <button *ngIf="inputationSrv.resourceName|creable" tc-button [afterIcon]="'icofont-plus'" [view]="'info'"
+    (click)="openModal()">Imput.</button>
+<app-access-denied *ngIf="!(inputationSrv.resourceName|creable)"></app-access-denied>
+
+<!-- Modal window -->
+<nz-modal nzWidth="50%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouvelle Imputation'"
+  [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+  <ng-template #modalBody>
+    <form #form="ngForm" ngNativeValidate>
+      <div class="row">
+        <div class="col-12">
+          <tc-form-group>
+            <tc-form-label>Date</tc-form-label>
+            <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required="required" [(ngModel)]="entity.date" name="date" id="date" #date="ngModel"></nz-date-picker>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="date"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+        <div class="col-12">
+          <tc-form-group>
+            <tc-form-label>Structure Hospitalière</tc-form-label>
+            <nz-select name="structureHospitaliere" id="structureHospitaliere"
+            #docteurModel="ngModel" required="required" nzPlaceHolder="Selectionner la structure" nzAllowClear nzShowSearch [(ngModel)]="selectedStructurePartenaire">
+              <ng-container *ngFor="let structureHospitaliere of structurePartenaires">
+                <nz-option [nzValue]="structureHospitaliere" [nzLabel]="structureHospitaliere.nom"></nz-option>
+              </ng-container>
+            </nz-select>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="docteurModel"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+        (click)="closeModal()">Fermer</button>
+      <button [disabled]="form.invalid" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'"
+        tc-button [view]="'accent'">
+        Enregistrer
+      </button>
+    </div>
+  </ng-template>
+</nz-modal>
+<!-- end Modal window -->

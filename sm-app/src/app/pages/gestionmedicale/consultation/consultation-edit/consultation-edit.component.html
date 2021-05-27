@@ -1,0 +1,146 @@
+<tc-card *ngIf="entity && consultationSrv.resourceName|editable" [tcGradient]="lightGradient">
+    <form #form="ngForm" novalidate>
+        <tc-card [view]="secondViewBorder" [outline]="true">
+            <div class="actions justify-content-between">
+                <button [outline]="true" type="button" (click)="location.back()" tc-button
+                    beforeIcon="icofont-reply">Retour</button>
+                <button (click)="findEntity(entity.id)" afterIcon="icofont-refresh" tc-button type="button"
+                    view="accent" class="float-right">Rafraichir</button>
+            </div>
+        </tc-card>
+        <tc-card title="Détails" [outline]="true" [view]="secondViewBorder" [tcGradient]="secondGradient">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
+                        <tc-form-label>Tension Arterielle (TA)</tc-form-label>
+                        <tc-input [(ngModel)]="entity.tensionArterielle" name="tensionArterielle" id="tensionArterielle"
+                            #tensionArterielle="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="tensionArterielle">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
+                        <tc-form-label>Temperature</tc-form-label>
+                        <tc-input [(ngModel)]="entity.temperature" name="temperature" id="temperature"
+                            #temperature="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="temperature">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
+                        <tc-form-label>Pouls</tc-form-label>
+                        <tc-input [(ngModel)]="entity.pouls" name="pouls" id="pouls" #pouls="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="pouls">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
+                        <tc-form-label>Frequence Respiratoire</tc-form-label>
+                        <tc-input [(ngModel)]="entity.frequenceRespiratoire" name="frequenceRespiratoire"
+                            id="frequenceRespiratoire" #frequenceRespiratoire="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="frequenceRespiratoire">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
+                        <tc-form-label>Poids</tc-form-label>
+                        <tc-input [(ngModel)]="entity.poids" name="poids" id="poids" #poids="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="poids">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
+                        <tc-form-label>Glycemie</tc-form-label>
+                        <tc-input [(ngModel)]="entity.glycemie" name="glycemie" id="glycemie" #glycemie="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="glycemie">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
+                        <tc-form-label>Motifs Consultation</tc-form-label>
+                        <tc-textarea [(ngModel)]="entity.motifConsultations" name="motifConsultations"
+                            id="motifConsultations" #motifConsultations="ngModel">
+                        </tc-textarea>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="motifConsultations">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
+                        <tc-form-label>Examens Cliniques</tc-form-label>
+                        <tc-textarea [(ngModel)]="entity.examenCliniques" name="examenCliniques" id="examenCliniques"
+                            #examenCliniques="ngModel">
+                        </tc-textarea>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="examenCliniques">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
+                        <tc-form-label>Examen Paracliniques</tc-form-label>
+                        <tc-textarea [(ngModel)]="entity.examenParacliniques" name="examenParacliniques"
+                            id="examenParacliniques" #examenParacliniques="ngModel">
+                        </tc-textarea>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="examenParacliniques">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
+                        <tc-form-label>Médicaments Préscrits</tc-form-label>
+                        <tc-textarea [(ngModel)]="entity.medicamentPrescrits" name="medicamentPrescrits"
+                            id="medicamentPrescrits" #medicamentPrescrits="ngModel">
+                        </tc-textarea>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="medicamentPrescrits">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+            </div>
+        </tc-card>
+        <tc-card [view]="secondViewBorder" [outline]="true">
+            <div class="actions">
+                <button [outline]="true" type="button" (click)="location.back()" tc-button view="error"
+                    beforeIcon="icofont-close">Annuler</button>
+                <button type="button" [disabled]="form.invalid" class="float-right" (click)="update()"
+                    beforeIcon="icofont-save" tc-button view="warning">
+                    Mettre à jour
+                </button>
+                <button class="float-right mr-1" (click)="findEntity(entity.id)" afterIcon="icofont-refresh" tc-button
+                    type="button" view="success">Rafraichir</button>
+            </div>
+        </tc-card>
+    </form>
+</tc-card>
+<app-access-denied *ngIf="!(consultationSrv.resourceName|editable)"></app-access-denied>

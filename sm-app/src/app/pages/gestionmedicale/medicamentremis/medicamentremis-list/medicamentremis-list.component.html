@@ -1,0 +1,33 @@
+<tc-card *ngIf="medicamentRemiSrv.resourceName|listable" [tcGradient]="secondGradient" title="Médicaments Remis">
+  <tc-table [itemsPerPage]="10" [rows]="consultation?.medicamentRemis" [hovered]="true" [pagination]="true"
+    [search]="true">
+    <tc-table-col [columnTitle]="'Médicament'" [columnName]="'medicament'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <tc-badge view="info">
+          <span class="nowrap">{{ value?.nom }}</span>
+        </tc-badge>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Quantité'" [columnName]="'quantite'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <tc-badge view="warning">
+          <span class="nowrap">{{ value }}</span>
+        </tc-badge>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+      <ng-template #tableTDTemplate let-row="row">
+        <div class="actions">
+          <button *ngIf="medicamentRemiSrv.resourceName|deletable" (click)="remove(row)" tc-button
+            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+          <button *ngIf="medicamentRemiSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
+            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
+        </div>
+      </ng-template>
+    </tc-table-col>
+  </tc-table>
+  <app-empty-table-message *ngIf="!consultation?.medicamentRemis?.length"></app-empty-table-message>
+  <br>
+  <app-medicamentremis-new *ngIf="consultation" [consultation]="consultation" (creation)="onCreate()"></app-medicamentremis-new>
+</tc-card>
+<app-access-denied *ngIf="!(medicamentRemiSrv.resourceName|listable)"></app-access-denied>
