@@ -12,7 +12,6 @@ import { Dossier } from '../dossier';
   styleUrls: ['./dossier-list.component.scss']
 })
 export class DossierListComponent extends BasePageComponent<Dossier> implements OnInit, OnDestroy {
-  matricule = '120254/B';
   item: any;
   constructor(store: Store<IAppState>,
               public dossierSrv: DossierService, public grhSrv: GRHServiceService) {
@@ -47,13 +46,9 @@ export class DossierListComponent extends BasePageComponent<Dossier> implements 
 
   handlePostLoad(){}
 
-  findEmploye() {
-    this.grhSrv.findWithMemberFamily(this.matricule,this.grhSrv.grhPassword)
-    .subscribe((data: any)=>{
-      this.item = data;
-      console.log("Employe=> "+this.item);
-      
-    },err=>this.dossierSrv.httpSrv.catchError(err));
+  onCreate(){
+    this.findAll();
   }
+
 
 }

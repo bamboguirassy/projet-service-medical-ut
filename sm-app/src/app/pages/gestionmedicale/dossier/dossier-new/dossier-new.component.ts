@@ -49,6 +49,7 @@ export class DossierNewComponent implements OnInit {
   selected = false;
   selectedTypePatient: String;
   selectedFamille: any;
+  selectedEmploye: any;
 
   constructor(public dossierSrv: DossierService,
               public router: Router, public datePipe: DatePipe,
@@ -69,28 +70,29 @@ export class DossierNewComponent implements OnInit {
       this.entity.genre = this.item?.employe.genre;
       this.entity.cni = this.item?.employe.cni;
       this.entity.matricule = this.item?.employe.matricule;
-      this.entity.nomTravailleur = this.item?.employe.nomTravailleur;
       this.entity.structure = this.item?.employe.structure.code;
       this.entity.situationMatrimoniale = this.item?.employe.situtationMatrimoniale;
       this.entity.telephone = this.item?.employe.telephonePrimaire;
       this.entity.typePatient = this.item?.employe.typeEmploye.code;
     }
-    if(this.entity.typePatient == "FAMILLE"){
+    if(this.selectedTypePatient == "FAMILLE"){
       this.entity.prenoms = this.selectedFamille?.prenoms;
       this.entity.nom = this.selectedFamille?.nom;
       this.entity.dateNaissance = this.selectedFamille?.dateNaissance;
       this.entity.genre = this.selectedFamille?.genre;
-      this.entity.cni = this.selectedFamille?.cni;
       this.entity.lienParente = this.selectedFamille?.lienParente;
+      this.entity.structure = this.selectedFamille?.employe.structure.code;
       this.entity.prenomTravailleur = this.selectedFamille?.employe.prenoms;
       this.entity.nomTravailleur = this.selectedFamille?.employe.nom;
       this.entity.matricule = this.selectedFamille?.employe.matricule;
-      this.entity.situationMatrimoniale = this.selectedFamille?.employe.situtationMatrimoniale;
       this.entity.telephone = this.selectedFamille?.telephone;
 
     }
     if(this.entity.typePatient == "ETUDIANT"){
       this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
+    }
+    if(this.entity.dateMariage){
+      this.entity.dateMariage = this.datePipe.transform(this.entity.dateMariage, 'yyyy-MM-dd');
     }
     this.dossierSrv.create(this.entity)
       .subscribe((data: any) => {
@@ -121,6 +123,9 @@ export class DossierNewComponent implements OnInit {
     this.selected = false;
     this.selectedTypePatient = null;
     this.item =  null;
+    this.entity.typePatient = null;
+    this.entity.matricule = null;
+
   }
 
   findEmploye(matricule) {
@@ -130,14 +135,18 @@ export class DossierNewComponent implements OnInit {
     },err=>this.dossierSrv.httpSrv.catchError(err));
   }
 
-  createDossierTravailleur(){
+  createDossierTravailleur(item){
     this.selectedTypePatient = "TRAVAILLEUR";
+    this.selectedEmploye = item;
     this.selected = true;
+    this.selectedFamille = null;
   }
   createDossierFamille(item){
     this.selectedFamille = item;
+    this.selectedTypePatient = "FAMILLE";
     this.entity.typePatient = "FAMILLE";
     this.selected = true;
+    this.selectedEmploye = null;
   }
 
 }
