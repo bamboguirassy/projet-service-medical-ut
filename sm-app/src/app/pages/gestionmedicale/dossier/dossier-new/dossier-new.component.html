@@ -77,33 +77,7 @@
                     <span style="font-size: large; color: blue;" *ngIf="selectedFamille">{{selectedFamille?.prenoms}} {{selectedFamille?.nom}}</span>
                     <span style="font-size: large; color: blue;" *ngIf="selectedEmploye">{{selectedEmploye?.prenoms}} {{selectedEmploye?.nom}}</span>
                 </div>
-                <br>
-                <!-- <div class="col-12" *ngIf="item">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Type</th>
-                                <th>Prénom</th>
-                                <th>Nom</th>
-                                <th style="text-align: center">#</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td scope="row">Employé</td>
-                                <td>{{item?.employe.prenoms}}</td>
-                                <td>{{item?.employe.nom}}</td>
-                                <td style="text-align: center"><button size="sm" (click)="createDossierTravailleur()" tc-button>Créer dossier</button></td>
-                            </tr>
-                            <tr *ngFor="let item of item?.membreFamilles">
-                                <td scope="row">{{item.lienParente}}</td>
-                                <td>{{item?.prenoms}}</td>
-                                <td>{{item?.nom}}</td>
-                                <td style="text-align: center"><button size="sm" (click)="createDossierFamille(item)" tc-button>Créer dossier</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div> -->
+                <br>                
                 <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.typePatient=='ETUDIANT'">
                     <tc-form-group>
                         <tc-form-label>Prénoms</tc-form-label>
