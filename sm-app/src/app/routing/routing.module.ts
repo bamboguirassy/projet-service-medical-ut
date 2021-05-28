@@ -68,7 +68,7 @@ const PUBLIC_ROUTES: Routes = [
 export const ROUTES: Routes = [
   {
     path: '',
-    redirectTo: '/horizontal/default-dashboard',
+    redirectTo: '/horizontal/cons-jour',
     pathMatch: 'full'
   },
   {
