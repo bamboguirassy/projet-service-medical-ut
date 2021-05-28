@@ -22,7 +22,7 @@
         min-height: calc(100% - #{$module-rem * 4});
         margin: 0 auto;
         opacity: 0;
-        padding: ($module-rem * 3) ($module-rem * 2) ($module-rem * 4);
+        padding: ($module-rem) ($module-rem * 2) ($module-rem * 4);
         transition: .2s opacity 0s $animation;
 
         &.full-filled {

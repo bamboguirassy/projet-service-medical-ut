@@ -1,107 +1,154 @@
-<tc-card *ngIf="dossierSrv.resourceName|showable" [tcGradient]="lightGradient">
-    <tc-card class="mb-1" [view]="secondViewBorder" [outline]="true" [padding]="0.5">
-        <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-reply">Retour</button>
-        <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
-            beforeIcon="icofont-refresh">Rafraichir</button>
-        <button (click)="remove(entity)" *ngIf="dossierSrv.resourceName|deletable" [outline]="true" tc-button
-            view="error" beforeIcon="icofont-trash" class="ml-1">Supprimer</button>
-        <button *ngIf="dossierSrv.resourceName|editable"
-            [routerLink]="['/'+orientation,dossierSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
-            class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit">Modifier</button>
-    </tc-card>
-    <div class="row">
-        <div class="col-12">
-            <tc-card class="mb-1" [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
-                <div class="row">
-                    <div class="col-12 col-md-6">
-                        <blockquote class="blockquote">
-                            <p class="mb-0">{{entity?.prenoms+' '+entity?.nom}} <span
-                                    *ngIf="entity?.typePatient=='FAMILLE'">{{entity?.lienParente+' de '+entity?.prenomTravailleur+' '+entity?.nomTravailleur}}</span>
-                                - {{entity?.typePatient}} </p>
-                            <footer class="blockquote-footer"> <cite title="Source Title">Depuis le
-                                    {{entity?.dateCreation|date:'dd/MM/yyyy'}} par {{ entity?.userEmail }}</cite>
-                            </footer>
-                        </blockquote>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <app-consultation-new class="mr-1" [dossier]="entity"></app-consultation-new>
-                        <app-reposmedical-new class="mr-1" [dossier]="entity"
-                            (creation)="findEntity(activatedRoute.snapshot.params.id)"></app-reposmedical-new>
-                        <app-inputation-new [dossier]="entity"
-                            (creation)="findEntity(activatedRoute.snapshot.params.id)"></app-inputation-new>
-                    </div>
-                </div>
-
-            </tc-card>
-        </div>
-        <div class="col-12">
-            <tc-card class="mb-1" [outline]="true" [view]="secondViewBorder" [title]="'Infos Sup.'" [tcGradient]="secondGradient">
-                <nz-descriptions nzTitle="">
-                    <nz-descriptions-item nzTitle="Historiques Maladie">{{entity?.historiqueMaladies}}</nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="Niveau Instruction">{{entity?.niveauInstruction}}</nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="Situation Matrimoniale">{{entity?.situationMatrimoniale}}</nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="Genre Vie">{{entity?.genreVie}}</nz-descriptions-item>
-                    <nz-descriptions-item *ngIf="entity?.situationMatrimoniale=='mariee' && entity?.genre=='Femme'" nzTitle="Profession Mari">{{entity?.professionMari}}</nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="Antecedents Medicaux">{{entity?.antecedentMedicaux}}</nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="Antecedents Churirgicaux">{{entity?.antecedentChurirgicaux}}</nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="Antecedents Familiaux">{{entity?.antecedentFamiliaux}}</nz-descriptions-item>
-                    <nz-descriptions-item *ngIf="entity?.situationMatrimoniale=='mariee'" nzTitle="Date Mariage">{{entity?.dateMariage}}</nz-descriptions-item>
-                  </nz-descriptions>
-            </tc-card>
-        </div>
-        <div class="col-12 col-md-4">
-            <tc-card class="mb-1 pr-0" [outline]="true" [view]="secondViewBorder" [title]="'Détails'" [tcGradient]="secondGradient">
-                <table class="table">
-                    <tr>
-                        <th>Date Naissance</th>
-                        <td>{{ entity?.dateNaissance|date:'dd/MM/yyyy' }}</td>
-                    </tr>
-                    <tr>
-                        <th>CNI</th>
-                        <td>
-                            <span *ngIf="entity?.cni">{{ entity?.cni }}</span>
-                            <tc-badge view="error" *ngIf="!entity?.cni">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Téléphone</th>
-                        <td>
-                            <span *ngIf="entity?.telephone">
-                                <a href="tel:{{ entity?.telephone }}">{{ entity?.telephone }}</a>
-                            </span>
-                            <tc-badge view="error" *ngIf="!entity?.telephone">Indéfinie</tc-badge>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Matricule</th>
-                        <td>{{ entity?.matricule }}</td>
-                    </tr>
-                    <tr>
-                        <th>Genre</th>
-                        <td>{{ entity?.genre }}</td>
-                    </tr>
-                    <tr>
-                        <th>Structure</th>
-                        <td>{{ entity?.structure }}</td>
-                    </tr>
-                </table>
-            </tc-card>
-        </div>
-        <div class="col-12 col-md-8">
-            <tc-card class="mb-1 pl-0" [outline]="true" [view]="secondViewBorder" [title]="'Eléments dossier'" [tcGradient]="secondGradient">
-                <nz-collapse nzAccordion>
-                    <nz-collapse-panel nzHeader="Consultations" [nzActive]="true">
-                        <app-consultation-dossier [consultations]="entity?.consultations"></app-consultation-dossier>
-                    </nz-collapse-panel>
-                    <nz-collapse-panel nzHeader="Imputations">
-                        <app-imputation-dossier [imputations]="entity?.inputations"></app-imputation-dossier>
-                    </nz-collapse-panel>
-                    <nz-collapse-panel nzHeader="Repos Médicaux">
-                        <app-repos-medical-dossier *ngIf="entity" [dossier]="entity"></app-repos-medical-dossier>
-                    </nz-collapse-panel>
-                </nz-collapse>
-            </tc-card>
+<div class="row" *ngIf="dossierSrv.resourceName|showable">
+    <div class="col-12 mb-1">
+        <div class="row">
+            <div class="col-12 col-md-8" [ngStyle]="{'border-right': '3px dashed '+sidebarBg}">
+                <h5 [ngStyle]="{'color': sidebarBg}" class="m-0">Dossier médical n° {{entity?.numero}}</h5>
+                <h4 [ngStyle]="{'color': sidebarBg}" class="m-0">{{entity?.prenoms+' '+entity?.nom}} <span
+                        *ngIf="entity?.matricule">-
+                        {{entity?.matricule}}</span></h4>
+                <h6 class="m-0">{{entity?.typePatient}} - {{entity?.structure}}</h6>
+            </div>
+            <div class="col-12 col-md-4">
+                <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-reply"></button>
+                <button [outline]="true" (click)="findEntity(entity.id)" class="mr-1 ml-1" tc-button view="success"
+                    beforeIcon="icofont-refresh"></button>
+                <button (click)="remove(entity)" *ngIf="dossierSrv.resourceName|deletable" [outline]="true" tc-button
+                    view="error" beforeIcon="icofont-trash" class="mr-1"></button>
+                <button *ngIf="dossierSrv.resourceName|editable"
+                    [routerLink]="['/'+orientation,dossierSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+                    class="mr-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
+            </div>
         </div>
     </div>
-</tc-card>
+    <div class="col-12">
+        <hr>
+    </div>
+    <div class="col-12">
+        <div class="row">
+            <div class="col-12 col-md-4" [ngStyle]="{'border-right': '2px solid '+sidebarBg}">
+                <ul class="info-section">
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-6 col-md-5 info-title">Prénoms :</div>
+                            <div class="col-6 col-md-7 info-content">{{entity?.prenoms}}</div>
+                        </div>
+                    </li>
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-6 col-md-5 info-title">Nom :</div>
+                            <div class="col-6 col-md-7 info-content">{{entity?.nom}}</div>
+                        </div>
+                    </li>
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-6 col-md-5 info-title">Date Naissance :</div>
+                            <div class="col-6 col-md-7 info-content">{{entity?.dateNaissance|date:'dd/MM/yyyy'}}
+                            </div>
+                        </div>
+                    </li>
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-6 col-md-5 info-title">Sexe :</div>
+                            <div class="col-6 col-md-7 info-content">{{entity?.genre}}</div>
+                        </div>
+                    </li>
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-6 info-title">Situation Matrimoniale  :</div>
+                            <div class="col-6 info-content">{{entity?.situationMatrimoniale}}</div>
+                        </div>
+                    </li>
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-5 info-title">Date Mariage :</div>
+                            <div class="col-sm-6 col-md-7 info-content">{{entity?.dateMariage}}</div>
+                        </div>
+                    </li>
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-6 col-md-5 info-title">CNI :</div>
+                            <div class="col-6 col-md-7 info-content">{{entity?.cni}}</div>
+                        </div>
+                    </li>
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-6 col-md-5 info-title">Téléphone :</div>
+                            <div class="col-6 col-md-7 info-content"><a href="tel:{{entity?.telephone}}">{{entity?.telephone}}</a></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-12 col-md-8">
+                <ul class="info-section">
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-5 info-title">Historiques Maladie  :</div>
+                            <div class="col-sm-6 col-md-7 info-content">{{entity?.historiqueMaladies}}</div>
+                        </div>
+                    </li>
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-5 info-title">Niveau Instruction :</div>
+                            <div class="col-sm-6 col-md-7 info-content">{{entity?.niveauInstruction}}</div>
+                        </div>
+                    </li>
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-5 info-title">Genre Vie :</div>
+                            <div class="col-sm-6 col-md-7 info-content">{{entity?.genreVie}}</div>
+                        </div>
+                    </li>
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-5 info-title">Antecedents Medicaux  :</div>
+                            <div class="col-sm-6 col-md-7 info-content">{{entity?.antecedentMedicaux}}</div>
+                        </div>
+                    </li>
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-5 info-title">Antecedents Churirgicaux  :</div>
+                            <div class="col-sm-6 col-md-7 info-content">{{entity?.antecedentChurirgicaux}}</div>
+                        </div>
+                    </li>
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-5 info-title">Antecedents Familiaux  :</div>
+                            <div class="col-sm-6 col-md-7 info-content">{{entity?.antecedentFamiliaux}}</div>
+                        </div>
+                    </li>
+                    <li>
+                        <hr>
+                    </li>
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-end">
+                                <app-consultation-new class="mr-1" [dossier]="entity"></app-consultation-new>
+                                <app-reposmedical-new class="mr-1" [dossier]="entity"
+                                    (creation)="findEntity(activatedRoute.snapshot.params.id)"></app-reposmedical-new>
+                                <app-inputation-new [dossier]="entity"
+                                    (creation)="findEntity(activatedRoute.snapshot.params.id)"></app-inputation-new>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <hr>
+    </div>
+    <div class="col-12">
+        <nz-tabset nzSize="small">
+            <nz-tab nzTitle="Consultations">
+                <app-consultation-dossier [consultations]="entity?.consultations"></app-consultation-dossier>
+            </nz-tab>
+            <nz-tab nzTitle="Imputations">
+                <app-imputation-dossier [imputations]="entity?.inputations"></app-imputation-dossier>
+            </nz-tab>
+            <nz-tab nzTitle="Repos médicaux">
+                <app-repos-medical-dossier *ngIf="entity" [dossier]="entity"></app-repos-medical-dossier>
+            </nz-tab>
+          </nz-tabset>
+    </div>
+</div>
 <app-access-denied *ngIf="!(dossierSrv.resourceName|showable)"></app-access-denied>

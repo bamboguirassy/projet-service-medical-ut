@@ -7,9 +7,23 @@
     </div>
   </tc-card>
   <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
-    <tc-table-col [columnTitle]="'#'" [columnName]="'#'">
+    <!-- <tc-table-col [columnTitle]="'#'" [columnName]="'#'">
       <ng-template #tableTDTemplate let-row="row">
         <i class="icofont-patient-file icofont-2x"></i>
+      </ng-template>
+    </tc-table-col> -->
+    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+      <ng-template #tableTDTemplate let-row="row">
+        <div class="actions">
+          <button *ngIf="dossierSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'" [view]="'warning'"
+            [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
+          <!-- <button *ngIf="dossierSrv.resourceName|clonable" [outline]="true" tc-button [afterIcon]="'icofont-copy'"
+            [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'clone']"></button> -->
+          <button *ngIf="dossierSrv.resourceName|deletable" (click)="remove(row)" tc-button
+            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+          <button *ngIf="dossierSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'" [view]="'accent'"
+            [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id]"></button>
+        </div>
       </ng-template>
     </tc-table-col>
     <tc-table-col [columnTitle]="'Numero Dossier'" [columnName]="'numero'" [enableSorting]="true">
@@ -97,20 +111,6 @@
     <tc-table-col [columnTitle]="'Créé par'" [columnName]="'userEmail'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <span class="nowrap">{{ value }}</span>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
-      <ng-template #tableTDTemplate let-row="row">
-        <div class="actions">
-          <button *ngIf="dossierSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'" [view]="'warning'"
-            [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
-          <button *ngIf="dossierSrv.resourceName|clonable" [outline]="true" tc-button [afterIcon]="'icofont-copy'"
-            [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'clone']"></button>
-          <button *ngIf="dossierSrv.resourceName|deletable" (click)="remove(row)" tc-button
-            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
-          <button *ngIf="dossierSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'" [view]="'accent'"
-            [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id]"></button>
-        </div>
       </ng-template>
     </tc-table-col>
   </tc-table>

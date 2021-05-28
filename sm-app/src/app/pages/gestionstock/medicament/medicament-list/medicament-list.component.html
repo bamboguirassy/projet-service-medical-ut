@@ -20,7 +20,7 @@
     </tc-table-col>
     <tc-table-col [columnTitle]="'Quantite en Stock'" [columnName]="'quantiteStock'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
-        <tc-badge view="info">
+        <tc-badge view="error" [outline]="true">
           <span class="nowrap">{{ value }}</span>
         </tc-badge>
       </ng-template>
@@ -35,7 +35,7 @@
           <button *ngIf="medicamentSrv.resourceName|deletable" (click)="remove(row)" tc-button
             [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
           <button *ngIf="medicamentSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'"
-            [view]="'accent'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id]"></button>
+            [view]="'success'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id]"></button>
         </div>
       </ng-template>
     </tc-table-col>

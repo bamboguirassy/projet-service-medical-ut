@@ -1,93 +1,134 @@
-<tc-card *ngIf="consultationSrv.resourceName|showable" [tcGradient]="lightGradient">
-    <tc-card class="mb-1" [view]="secondViewBorder" [outline]="true" [padding]="0.5">
-        <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-reply">Retour</button>
-        <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
-            beforeIcon="icofont-refresh">Rafraichir</button>
-        <button (click)="remove(entity)" *ngIf="consultationSrv.resourceName|deletable" [outline]="true" tc-button
-            view="error" beforeIcon="icofont-trash" class="ml-1">Supprimer</button>
-        <button *ngIf="consultationSrv.resourceName|editable"
-            [routerLink]="['/'+orientation,consultationSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
-            class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit">Modifier</button>
-        <app-rendezvous-new *ngIf="entity" class="ml-1" [consultation]="entity"
-            (creation)="findEntity(activatedRoute.snapshot.params.id)">
-        </app-rendezvous-new>
-    </tc-card>
-    <div class="row">
-        <div class="col-12 col-md-7">
-            <tc-card class="mb-1" [outline]="true" [view]="secondViewBorder"
-                [title]="'Dossier Médical - '+entity?.dossier?.numero" [tcGradient]="secondGradient">
-                <blockquote class="blockquote">
-                    <p class="mb-0">Patient: {{entity?.dossier?.prenoms+' '+entity?.dossier?.nom}} <span
-                            *ngIf="entity?.dossier?.typePatient=='famille'">{{entity?.dossier?.lienParente+' de '+entity?.dossier?.prenomTravailleur+' '+entity?.dossier?.nomTravailleur}}</span>
-                        - {{entity?.dossier?.typePatient}} </p>
-                    <footer class="blockquote-footer"> <cite title="Source Title">Depuis le
-                            {{entity?.dossier?.dateCreation|date:'dd/MM/yyyy'}} par {{ entity?.userEmail }}</cite>
-                    </footer>
-                </blockquote>
-            </tc-card>
-        </div>
-        <div class="col-12 col-md-5">
-            <tc-card class="mb-1" [outline]="true" [view]="secondViewBorder" [title]="title"
-                [tcGradient]="secondGradient">
-                <blockquote class="blockquote">
-                    <p class="mb-0">Date: {{ entity?.date|date:'dd/MM/yyyy' }}</p>
-                    <footer class="blockquote-footer"> <cite title="Docteur ayant fait la consultation">Par
-                            {{entity?.docteur?.prenoms+' '+entity?.docteur?.nom}}</cite>
-                    </footer>
-                </blockquote>
-            </tc-card>
-        </div>
-        <div class="col-12">
-            <tc-card class="mb-1" [view]="secondViewBorder" [outline]="true" [tcGradient]="secondGradient">
-                <nz-descriptions nzTitle="Détails consultation">
-                    <nz-descriptions-item nzTitle="Médicaments Préscrits">{{entity?.medicamentPrescrits}}
-                    </nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="Motifs Consultation">{{entity?.motifConsultations}}
-                    </nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="Tension Arterielle">{{entity?.tensionArterielle}}
-                    </nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="Temperature">{{entity?.temperature}}</nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="Pouls">{{entity?.pouls}}</nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="Frequence Respiratoire">{{entity?.frequenceRespiratoire}}
-                    </nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="Poids">{{entity?.poids}}</nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="Glycemie">{{entity?.glycemie}}</nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="Examen Cliniques">{{entity?.examenCliniques}}</nz-descriptions-item>
-                    <nz-descriptions-item nzTitle="Examen Paracliniques">{{entity?.examenParacliniques}}
-                    </nz-descriptions-item>
-                </nz-descriptions>
-            </tc-card>
-        </div>
-        <div class="col-12 col-md-6">
-            <div class="row">
-                <div class="col-12">
-                    <tc-card class="mb-1" [outline]="true" [view]="secondViewBorder" title="Pathologie diagnostiquée"
-                        [tcGradient]="secondGradient">
-                        <a href="javascript:void(0)" (click)="isPathologieModalVisible=true"
-                            *ngIf="!entity?.pathologieDiagnostiquee && (consultationSrv.resourceName|editable)">Préciser
-                            le résultat du diagnostic</a>
-                        <tc-badge *ngIf="entity?.pathologieDiagnostiquee" view="error">
-                            <span class="nowrap">{{entity?.pathologieDiagnostiquee?.nom}}</span>
-                        </tc-badge> &nbsp; <a href="javascript:void(0)" (click)="isPathologieModalVisible=true"
-                            *ngIf="entity?.pathologieDiagnostiquee && (consultationSrv.resourceName|editable)">Changer
-                            résultat diagnostic</a>
-                    </tc-card>
-                </div>
-                <div class="col-12">
-                    <app-medicamentremis-list [consultation]="entity"></app-medicamentremis-list>
-                </div>
+<div class="row" *ngIf="consultationSrv.resourceName|showable">
+    <div class="col-12 mb-1">
+        <div class="row">
+            <div class="col-12 col-md-8" [ngStyle]="{'border-right': '3px dashed '+sidebarBg}">
+                <h5 [ngStyle]="{'color': sidebarBg}" class="m-0">Dossier médical n° {{entity?.dossier?.numero}}</h5>
+                <h4 [ngStyle]="{'color': sidebarBg}" class="m-0">{{entity?.dossier?.prenoms+' '+entity?.dossier?.nom}}
+                    <span *ngIf="entity?.matricule">-
+                        {{entity?.matricule}}</span>
+                </h4>
+                <h6 class="m-0">{{entity?.typePatient}} - {{entity?.dossier?.structure}}</h6>
             </div>
-        </div>
-        <div class="col-12 col-md-6">
-            <div class="col-12">
-                <app-symptome-list [consultation]="entity"></app-symptome-list>
-            </div>
-            <div class="col-12">
-                <app-rendez-vous-dossier *ngIf="entity" [dossier]="entity"></app-rendez-vous-dossier>
+            <div class="col-12 col-md-4">
+                <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-reply"></button>
+                <button [outline]="true" (click)="findEntity(entity.id)" class="mr-1 ml-1" tc-button view="success"
+                    beforeIcon="icofont-refresh"></button>
+                <button (click)="remove(entity)" *ngIf="consultationSrv.resourceName|deletable" [outline]="true"
+                    tc-button view="error" beforeIcon="icofont-trash" class="mr-1"></button>
+                <button *ngIf="consultationSrv.resourceName|editable"
+                    [routerLink]="['/'+orientation,consultationSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+                    class="mr-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
             </div>
         </div>
     </div>
-</tc-card>
+    <div class="col-12">
+        <hr>
+    </div>
+    <div class="col-12">
+        <div class="row">
+            <div class="col-12 col-md-4" [ngStyle]="{'border-right': '2px solid '+sidebarBg}">
+                <ul class="info-section">
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-6 col-md-8 info-title">Tension Arterielle :</div>
+                            <div class="col-6 col-md-4 info-content">{{entity?.tensionArterielle}}</div>
+                        </div>
+                    </li>
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-6 col-md-8 info-title">Temperature :</div>
+                            <div class="col-6 col-md-4 info-content">{{entity?.temperature}}</div>
+                        </div>
+                    </li>
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-6 col-md-8 info-title">Poids :</div>
+                            <div class="col-6 col-md-4 info-content">{{entity?.poids}}
+                            </div>
+                        </div>
+                    </li>
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-6 col-md-8 info-title">Glycemie :</div>
+                            <div class="col-6 col-md-4 info-content">{{entity?.glycemie}}</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-12 col-md-8">
+                <ul class="info-section">
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-5 info-title">Médicaments Préscrits :</div>
+                            <div class="col-sm-6 col-md-7 info-content">{{entity?.medicamentPrescrits}}</div>
+                        </div>
+                    </li>
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-5 info-title">Motifs Consultation :</div>
+                            <div class="col-sm-6 col-md-7 info-content">{{entity?.motifConsultations}}</div>
+                        </div>
+                    </li>
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-5 info-title">Examen Cliniques :</div>
+                            <div class="col-sm-6 col-md-7 info-content">{{entity?.examenCliniques}}</div>
+                        </div>
+                    </li>
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-5 info-title">Examen Paracliniques :</div>
+                            <div class="col-sm-6 col-md-7 info-content">{{entity?.examenParacliniques}}</div>
+                        </div>
+                    </li>
+                    <li>
+                        <hr>
+                    </li>
+                    <li class="info-line">
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-end">
+                                <app-rendezvous-new *ngIf="entity" class="mr-1" [consultation]="entity"
+                                    (creation)="findEntity(activatedRoute.snapshot.params.id)">
+                                </app-rendezvous-new>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <hr>
+    </div>
+    <div class="col-12">
+        <tc-card class="mb-1" title="Pathologie diagnostiquée">
+            <a href="javascript:void(0)" (click)="isPathologieModalVisible=true"
+                *ngIf="!entity?.pathologieDiagnostiquee && (consultationSrv.resourceName|editable)">Préciser
+                le résultat du diagnostic</a>
+            <tc-badge *ngIf="entity?.pathologieDiagnostiquee" view="error">
+                <span class="nowrap">{{entity?.pathologieDiagnostiquee?.nom}}</span>
+            </tc-badge> &nbsp; <a href="javascript:void(0)" (click)="isPathologieModalVisible=true"
+                *ngIf="entity?.pathologieDiagnostiquee && (consultationSrv.resourceName|editable)">Changer
+                résultat diagnostic</a>
+        </tc-card>
+    </div>
+    <div class="col-12">
+        <hr>
+    </div>
+    <div class="col-12">
+        <nz-tabset nzSize="small">
+            <nz-tab nzTitle="Symptômes">
+                <app-symptome-list [consultation]="entity"></app-symptome-list>
+            </nz-tab>
+            <nz-tab nzTitle="Médicaments Remis">
+                <app-medicamentremis-list [consultation]="entity"></app-medicamentremis-list>
+            </nz-tab>
+            <nz-tab nzTitle="Rendez-vous">
+                <app-rendez-vous-dossier *ngIf="entity" [dossier]="entity"></app-rendez-vous-dossier>
+            </nz-tab>
+        </nz-tabset>
+    </div>
+</div>
 <app-access-denied *ngIf="!(consultationSrv.resourceName|showable)"></app-access-denied>
 
 <!-- Pathologie Dignostiquée Modal window -->

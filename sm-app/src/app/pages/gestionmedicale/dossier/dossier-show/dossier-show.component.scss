@@ -1,0 +1,13 @@
+.info-section {
+    list-style-type: none;
+    .info-line {
+        margin: 2px;
+        .info-title {
+            font-size: 17px;
+            font-weight: bold;
+        }
+        .info-content {
+            font-size: 15px;
+        }
+    }
+}

@@ -27,7 +27,7 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
               public pathologieSrv: PathologieService) {
     super(store, consultationSrv);
     this.pageData = {
-      title: 'Détails - Consultation',
+      title: '',
       breadcrumbs: [
         {
           title: 'Accueil',

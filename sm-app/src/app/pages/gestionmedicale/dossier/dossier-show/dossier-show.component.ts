@@ -21,7 +21,7 @@ export class DossierShowComponent extends BasePageComponent<Dossier> implements 
     public location: Location) {
     super(store, dossierSrv);
     this.pageData = {
-      title: 'Détails - Dossier Médical',
+      title: '',
       breadcrumbs: [
         {
           title: 'Accueil',

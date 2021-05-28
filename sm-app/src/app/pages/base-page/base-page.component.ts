@@ -8,6 +8,7 @@ import { BamboAbstractService } from 'src/app/shared/services/bambo-abstract.ser
 import { BamboAbstractObject } from 'src/app/shared/classes/bambo-abstract-object';
 import Swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
+import { SETTINGS } from 'src/environments/settings';
 
 @Component({
   selector: 'base-page',
@@ -23,11 +24,12 @@ export class BasePageComponent<T extends BamboAbstractObject> implements OnInit,
   orientation = 'horizontal';
   subscriptions: Subscription[] = [];
 
-  lightGradient = ['#fff', '#f79992'];
+  lightGradient = ['#fff', SETTINGS.topbarBg];
   deepGradient = ['#fff', '#d3e5d8'];
   secondGradient = ['#fff', '#F5F6F1'];
-  statisticGradient = ['#fff', '#d8a99e'];
-  secondViewBorder = 'error';
+  statisticGradient = ['#fff', SETTINGS.topbarBg];
+  secondViewBorder = 'success';
+  sidebarBg = SETTINGS.sidebarBg;
 
   constructor(
     public store: Store<IAppState>,
