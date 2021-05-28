@@ -13,6 +13,7 @@ export class ConsultationJournaliereComponent extends BasePageComponent<any> imp
 
   data: any;
   selectedAnnee: number;
+  annees = [];
 
   constructor(
     store: Store<IAppState>,
@@ -39,6 +40,7 @@ export class ConsultationJournaliereComponent extends BasePageComponent<any> imp
   ngOnInit(): void {
     super.ngOnInit();
     this.getData();
+    this.rangeAnnee();
   }
 
   getData() {
@@ -49,5 +51,15 @@ export class ConsultationJournaliereComponent extends BasePageComponent<any> imp
   }
 
   handlePostLoad() { }
+
+  rangeAnnee() {
+    const anneeCourante = new Date().getFullYear();
+    const anneeStart = 2020;
+     for (let i = anneeCourante; i >= anneeStart; i--) {
+      this.annees.push(i);
+     }
+     return this.annees;
+  }
+ 
 
 }

@@ -22,7 +22,7 @@ class Utils {
     public static $passwordResetLink = 'http://localhost:4200/#/public/new-password/';
     public static $calendarParams = [
         "01"=>['code'=>'01','month'=>'Janv','endTo'=>31],
-        "02"=>['code'=>'02','month'=>'Fév','endTo'=>29],
+        "02"=>['code'=>'02','month'=>'Fév','endTo'=>28],
         "03"=>['code'=>'03','month'=>'Mar','endTo'=>31],
         "04"=>['code'=>'04','month'=>'Avr','endTo'=>30],
         "05"=>['code'=>'05','month'=>'Mai','endTo'=>31],
