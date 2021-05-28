@@ -5,9 +5,9 @@
                 <h5 [ngStyle]="{'color': sidebarBg}" class="m-0">Dossier médical n° {{entity?.dossier?.numero}}</h5>
                 <h4 [ngStyle]="{'color': sidebarBg}" class="m-0">{{entity?.dossier?.prenoms+' '+entity?.dossier?.nom}}
                     <span *ngIf="entity?.matricule">-
-                        {{entity?.matricule}}</span>
+                        {{entity?.dossier?.matricule}}</span>
                 </h4>
-                <h6 class="m-0">{{entity?.typePatient}} - {{entity?.dossier?.structure}}</h6>
+                <h6 class="m-0">{{entity?.dossier?.typePatient}} - {{entity?.dossier?.structure}}</h6>
             </div>
             <div class="col-12 col-md-4">
                 <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-reply"></button>
