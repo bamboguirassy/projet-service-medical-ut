@@ -41,7 +41,7 @@ export class SurveillancePathologiqueJournaliereComponent extends BasePageCompon
     super.ngOnInit();
     this.getData();
     this.rangeAnnee();
-  }
+  } 
 
   getData() {
     this.pathologieSrv.getDaylyTravailleurStatistic(this.selectedAnnee)
