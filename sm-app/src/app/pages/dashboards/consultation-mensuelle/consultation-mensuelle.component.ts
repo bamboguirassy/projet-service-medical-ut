@@ -13,6 +13,9 @@ export class ConsultationMensuelleComponent extends BasePageComponent<any> imple
 
   data: any;
   selectedAnnee: number;
+  annees = [];
+  annee: any;
+  
 
   constructor(
     store: Store<IAppState>,
@@ -39,6 +42,7 @@ export class ConsultationMensuelleComponent extends BasePageComponent<any> imple
   ngOnInit(): void {
     super.ngOnInit();
     this.getData();
+    this.rangeAnnee();
   }
 
   getData() {
@@ -49,5 +53,14 @@ export class ConsultationMensuelleComponent extends BasePageComponent<any> imple
   }
 
   handlePostLoad() { }
+
+  rangeAnnee() {
+   const anneeCourante = new Date().getFullYear();
+   const anneeStart = 2020;
+    for (let i = anneeCourante; i >= anneeStart; i--) {
+     this.annees.push(i);
+    }
+    return this.annees;
+}
 
 }
