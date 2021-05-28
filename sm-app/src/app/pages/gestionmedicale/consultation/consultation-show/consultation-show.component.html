@@ -100,12 +100,12 @@
     <div class="col-12">
         <hr>
     </div>
-    <div class="col-12">
+    <div class="col-12 d-flex justify-contend-end">
         <tc-card class="mb-1" title="Pathologie diagnostiquée">
             <a href="javascript:void(0)" (click)="isPathologieModalVisible=true"
                 *ngIf="!entity?.pathologieDiagnostiquee && (consultationSrv.resourceName|editable)">Préciser
                 le résultat du diagnostic</a>
-            <tc-badge *ngIf="entity?.pathologieDiagnostiquee" view="error">
+            <tc-badge *ngIf="entity?.pathologieDiagnostiquee" view="error" [outline]="true">
                 <span class="nowrap">{{entity?.pathologieDiagnostiquee?.nom}}</span>
             </tc-badge> &nbsp; <a href="javascript:void(0)" (click)="isPathologieModalVisible=true"
                 *ngIf="entity?.pathologieDiagnostiquee && (consultationSrv.resourceName|editable)">Changer
