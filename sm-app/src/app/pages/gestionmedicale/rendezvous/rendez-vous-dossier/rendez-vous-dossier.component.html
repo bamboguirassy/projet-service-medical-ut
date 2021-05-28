@@ -1,4 +1,4 @@
-<tc-card *ngIf="rendezVousSrv.resourceName|listable" [tcGradient]="lightGradient" title="Rendez-vous">
+<tc-card *ngIf="rendezVousSrv.resourceName|listable"  title="Rendez-vous">
     <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
         <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
             <ng-template #tableTDTemplate let-row="row">

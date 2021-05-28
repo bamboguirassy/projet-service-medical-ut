@@ -103,6 +103,7 @@ import { SurveillancePathologiqueJournaliereComponent } from './dashboards/surve
 import { SurveillancePathologiqueMensuelleComponent } from './dashboards/surveillance-pathologique-mensuelle/surveillance-pathologique-mensuelle.component';
 import { ConsultationMensuelleComponent } from './dashboards/consultation-mensuelle/consultation-mensuelle.component';
 import { ConsultationJournaliereComponent } from './dashboards/consultation-journaliere/consultation-journaliere.component';
+import { NgPipesModule } from 'ng-pipes';
 
 @NgModule({
   imports: [
@@ -152,6 +153,7 @@ import { ConsultationJournaliereComponent } from './dashboards/consultation-jour
     NzTagModule,
     UIModule,
     LayoutModule,
+    NgPipesModule,
     
     SharedModule
   ],

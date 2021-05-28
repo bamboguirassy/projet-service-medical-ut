@@ -10,9 +10,7 @@ import Swal from 'sweetalert2';
 })
 export class ConsultationDossierComponent implements OnInit {
 
-  lightGradient = ['#fff', '#f79992'];
-  deepGradient = ['#fff', '#d3e5d8'];
-  secondViewBorder = 'error';
+  secondViewBorder = 'success';
   @Input() consultations: Consultation[];
 
   constructor(public consultationSrv: ConsultationService) { }

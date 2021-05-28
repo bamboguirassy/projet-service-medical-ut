@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class GRHServiceService {
-  public grhUrl = 'http://127.0.0.1:8000/api/';
+  public grhUrl = 'https://grh-ws.uidt.sn/index.php/api/';
   public grhPassword = 'AsjfV4*QdGmZ12Z';
   constructor(public httpSrv: HttpClient) { }
 
