@@ -104,6 +104,7 @@ import { SurveillancePathologiqueMensuelleComponent } from './dashboards/surveil
 import { ConsultationMensuelleComponent } from './dashboards/consultation-mensuelle/consultation-mensuelle.component';
 import { ConsultationJournaliereComponent } from './dashboards/consultation-journaliere/consultation-journaliere.component';
 import { NgPipesModule } from 'ng-pipes';
+import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 
 @NgModule({
   imports: [
@@ -154,6 +155,7 @@ import { NgPipesModule } from 'ng-pipes';
     UIModule,
     LayoutModule,
     NgPipesModule,
+    NzAutocompleteModule,
     
     SharedModule
   ],

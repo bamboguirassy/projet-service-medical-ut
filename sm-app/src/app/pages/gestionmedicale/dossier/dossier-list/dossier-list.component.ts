@@ -1,10 +1,12 @@
+import { Router } from '@angular/router';
 import { GRHServiceService } from './../../../../shared/services/grhservice.service';
 import { BasePageComponent } from '../../../base-page/base-page.component';
 import { IAppState } from './../../../../interfaces/app-state';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { DossierService } from '../dossier.service';
 import { Dossier } from '../dossier';
+
 
 @Component({
   selector: 'app-dossier-list',
@@ -13,7 +15,10 @@ import { Dossier } from '../dossier';
 })
 export class DossierListComponent extends BasePageComponent<Dossier> implements OnInit, OnDestroy {
   item: any;
-  constructor(store: Store<IAppState>,
+  searchTerm: any;
+  datas: any;
+  @Input() layout = 'horizontal';
+  constructor(store: Store<IAppState>, public router: Router,
               public dossierSrv: DossierService, public grhSrv: GRHServiceService) {
     super(store, dossierSrv);
 
@@ -34,6 +39,7 @@ export class DossierListComponent extends BasePageComponent<Dossier> implements 
   ngOnInit(): void {
     super.ngOnInit();
     this.findAll();
+    this.getDossiers();
   }
 
   ngOnDestroy() {
@@ -49,6 +55,23 @@ export class DossierListComponent extends BasePageComponent<Dossier> implements 
   onCreate(){
     this.findAll();
   }
+
+  selectEvent(item) {
+    // do something with selected item
+    this.router.navigate(['/'+this.layout+'/' + this.dossierSrv.getRoutePrefix() + item.id]);
+    item = null;
+  }
+
+  getDossiers() {
+    if(this.searchTerm.length>0 && this.searchTerm.length >= 3){
+      this.dossierSrv.getDossierSearch(this.searchTerm)
+        .subscribe((data: any) => {
+          this.datas = data;
+          
+        }, err => this.dossierSrv.httpSrv.catchError(err));
+    }
+  }
+
 
 
 }

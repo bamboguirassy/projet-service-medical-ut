@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class BamboHttpService {
 
-  public baseUrl = 'http://127.0.1:8000/api/';
+  public baseUrl = 'http://127.0.1:8001/api/';
   //public baseUrl = 'https://admission-ws.univ-thies.sn/api/';
   private httpOptions: any = null;
 

@@ -1,3 +1,28 @@
+<div class="col-4">
+  <div class="example-input">
+    <input style="width: 100%;" placeholder="Rechercher un dossier" nz-input [(ngModel)]="searchTerm" (input)="getDossiers($event)" [nzAutocomplete]="auto" />
+    <nz-autocomplete nzBackfill #auto>
+      <nz-auto-option *ngFor="let item of datas">
+        <a (click)="selectEvent(item)" href="javascript:void(0)">
+            <div class="row">
+                <div class="col-3">
+                    <img *ngIf="item.filepath" [src]="item.filepath" class="rounded-circle float-right" />
+                    <i *ngIf="!item.filepath" class="icofont-user-suited float-right"></i>
+                </div>
+                <div class="col-9">
+                    <span [innerHTML]="item?.prenoms" class="thick">{{item?.prenoms}}</span>,
+                    <span [innerHTML]="item?.nom" class="thick">{{item?.nom}}</span>
+                    <br>
+                    <span [innerHTML]="item?.matricule" style="color: blue;">{{item?.matricule}}</span>
+                    
+                </div>
+            </div>
+        </a>
+    </nz-auto-option>
+    </nz-autocomplete>    
+  </div>  
+</div>
+
 <tc-card *ngIf="dossierSrv.resourceName|listable" [tcGradient]="lightGradient">
   <tc-card [view]="secondViewBorder" [outline]="true">
     <div class="row">
