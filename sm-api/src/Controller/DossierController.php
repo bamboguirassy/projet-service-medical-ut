@@ -132,8 +132,9 @@ class DossierController extends AbstractController
     }
     
     /**
-     * @Rest\Post(path="/public/search", name="dossier_search_code")
+     * @Rest\Post(path="/search", name="dossier_search")
      * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_DOSSIER_INDEX")
      */
     public function searchDossier(Request $request) {
         $em = $this->getDoctrine()->getManager();

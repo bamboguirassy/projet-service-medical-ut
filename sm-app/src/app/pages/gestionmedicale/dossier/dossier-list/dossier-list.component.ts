@@ -15,9 +15,7 @@ import { Dossier } from '../dossier';
 })
 export class DossierListComponent extends BasePageComponent<Dossier> implements OnInit, OnDestroy {
   item: any;
-  searchTerm: any;
-  datas: any;
-  @Input() layout = 'horizontal';
+  
   constructor(store: Store<IAppState>, public router: Router,
               public dossierSrv: DossierService, public grhSrv: GRHServiceService) {
     super(store, dossierSrv);
@@ -39,7 +37,6 @@ export class DossierListComponent extends BasePageComponent<Dossier> implements 
   ngOnInit(): void {
     super.ngOnInit();
     this.findAll();
-    this.getDossiers();
   }
 
   ngOnDestroy() {
@@ -55,23 +52,5 @@ export class DossierListComponent extends BasePageComponent<Dossier> implements 
   onCreate(){
     this.findAll();
   }
-
-  selectEvent(item) {
-    // do something with selected item
-    this.router.navigate(['/'+this.layout+'/' + this.dossierSrv.getRoutePrefix() + item.id]);
-    item = null;
-  }
-
-  getDossiers() {
-    if(this.searchTerm.length>0 && this.searchTerm.length >= 3){
-      this.dossierSrv.getDossierSearch(this.searchTerm)
-        .subscribe((data: any) => {
-          this.datas = data;
-          
-        }, err => this.dossierSrv.httpSrv.catchError(err));
-    }
-  }
-
-
 
 }
