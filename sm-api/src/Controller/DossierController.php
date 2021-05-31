@@ -142,13 +142,12 @@ class DossierController extends AbstractController
         //$searchTerm = $redData['searchTerm'];       
        $dossiers = [];
         if(isset($redData['searchTerm'])){
-            $names = explode(' ',$redData['searchTerm']);
+            $names = explode(' ',$redData['searchTerm']);             
             if(count($names)>1){
                 $dossiers = $em->createQuery('SELECT d
                     FROM App\Entity\Dossier d
-                    WHERE d.prenoms LIKE :firstName AND d.nom LIKE :lastName')
-                ->setParameter('firstName', '%'.$names[0].'%')
-                ->setParameter('lastName', '%'.$names[1].'%')
+                    WHERE CONCAT(d.prenoms,\' \',d.nom) LIKE :term')
+                ->setParameter('term', '%'.$redData['searchTerm'].'%')
                 ->getResult();
             }else{
                 $dossiers = $em->createQuery('SELECT d
