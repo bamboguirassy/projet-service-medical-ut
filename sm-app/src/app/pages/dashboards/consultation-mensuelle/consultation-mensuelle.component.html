@@ -1,7 +1,7 @@
 
 <tc-card *ngIf="consultationSrv.resourceName|listable" [tcGradient]="statisticGradient">  
     <div class="row">
-        <div class="col-6">
+        <div class="col-12 col-md-6 col-lg-6">
             <h5>Choisir une année pour filtrer</h5>                       
             <nz-select [(ngModel)]="selectedAnnee" (ngModelChange)="getData()" style="width: 100%;">
                 <nz-option *ngFor="let annee of annees" [nzValue]="annee" [nzLabel]="annee"></nz-option>
