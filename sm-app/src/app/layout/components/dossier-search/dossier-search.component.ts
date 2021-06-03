@@ -23,7 +23,7 @@ export class DossierSearchComponent implements OnInit {
   }
 
   getDossiers() {
-    if(this.searchTerm.length>0 && this.searchTerm.length >= 3){
+    if(this.searchTerm.length > 2){
       this.dossierSrv.getDossierSearch(this.searchTerm)
         .subscribe((data: any) => {
           this.datas = data;          

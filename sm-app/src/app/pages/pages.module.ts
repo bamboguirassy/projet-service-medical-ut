@@ -48,7 +48,6 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { ChartsModule } from 'ng2-charts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxEchartsModule } from 'ngx-echarts';
 import * as echarts from 'echarts';
@@ -104,13 +103,13 @@ import { SurveillancePathologiqueMensuelleComponent } from './dashboards/surveil
 import { ConsultationMensuelleComponent } from './dashboards/consultation-mensuelle/consultation-mensuelle.component';
 import { ConsultationJournaliereComponent } from './dashboards/consultation-journaliere/consultation-journaliere.component';
 import { NgPipesModule } from 'ng-pipes';
+import { ChartsModule } from 'ng2-charts';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-
     ChartsModule,
     NgxChartsModule,
     NgxEchartsModule.forRoot({

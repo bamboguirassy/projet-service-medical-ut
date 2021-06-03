@@ -1,8 +1,13 @@
+import {Color} from 'ng2-charts/ng2-charts';
 import { PathologieService } from 'src/app/pages/parametrage/pathologie/pathologie.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
 import { BasePageComponent } from '../../base-page';
+import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
+import { Label } from 'ng2-charts';
+import { finalize } from 'rxjs/operators';
+import { BamboAbstractChartModel } from 'src/app/shared/classes/bambo-abstract-chart-model';
 
 @Component({
   selector: 'app-surveillance-pathologique-generale',
@@ -10,10 +15,35 @@ import { BasePageComponent } from '../../base-page';
   styleUrls: ['./surveillance-pathologique-generale.component.scss']
 })
 export class SurveillancePathologiqueGeneraleComponent extends BasePageComponent<any> implements OnInit, OnDestroy {
-
+  @Input() canSwitchDiagramType: boolean = true;
+  typeDiagrams: { value: string, title: string }[] = [
+    { value: 'bar', title: 'Barre verticale' },
+    { value: 'line', title: 'Courbe' },
+  ];
+  isLoad = false;
   data: any;
   selectedAnnee: number;
   annees = [];
+  dataDiagram: any;
+  //chart  
+  rawChartData: BamboAbstractChartModel[]|any;
+  chartLabels: Label[] = [];
+  chartType: ChartType = 'bar';
+  chartLegend = true;
+  chartPlugins = [];
+  chartData: ChartDataSets[] = [];
+  methodName: string;
+  loading = false;
+  chartOptions: ChartOptions = {
+    responsive: true,
+  };
+  selectedTypeDiagram: ChartType = 'line';
+  public lineChartColors: Color[] = [
+    {
+      borderColor: 'black',
+      backgroundColor: '#fff',
+    },
+  ];
 
   constructor(
     store: Store<IAppState>,
@@ -41,6 +71,7 @@ export class SurveillancePathologiqueGeneraleComponent extends BasePageComponent
     super.ngOnInit();
     this.getData();
     this.rangeAnnee();
+    this.buildDiagram();
   }
 
   getData() {
@@ -60,5 +91,49 @@ export class SurveillancePathologiqueGeneraleComponent extends BasePageComponent
      }
      return this.annees;
   }
+
+
+  setDataChart() {
+    const chartData: ChartDataSets[] = [];
+    this.rawChartData.dataTab.forEach((chartDataItem) => {
+      const arr: number[] = chartDataItem.pathTab;
+      chartData.push({ data: arr, label: chartDataItem.pathologie.nom });
+    });
+    this.chartOptions = {
+      responsive: true 
+    };
+    
+    this.chartLabels = this.rawChartData.month;
+    this.chartType = 'line';
+    this.chartLegend = true;
+    this.chartPlugins = [];
+    this.chartData = chartData;
+
+  }
+
+
+  buildDiagram() {
+    if(this.selectedAnnee){
+      this.loading = true;
+      this.pathologieSrv.getGenericStatisticDiagram(this.selectedAnnee)
+        .pipe(finalize(() => this.loading = false))
+        .subscribe((data: any) => {
+          this.dataDiagram = data;
+          this.isLoad = true;
+          
+          this.handlePostFetch(this.dataDiagram as []);
+        }, err => {
+          this.pathologieSrv.httpSrv.handleError(err);
+        });
+    }
+  }
+
+  handlePostFetch(data: any[]) {
+    this.rawChartData = data;    
+    this.setDataChart();
+  }
+
+
+  
 
 }
