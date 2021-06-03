@@ -38,7 +38,7 @@
     "ng-http-loader": "^8.0.0",
     "ng-pipes": "^0.1.5",
     "ng-zorro-antd": "9.3.0",
-    "ng2-charts": "2.4.0",
+    "ng2-charts": "^2.4.2",
     "ng2-dragula": "2.1.1",
     "ngx-echarts": "5.1.2",
     "ngx-malihu-scrollbar": "9.0.0",

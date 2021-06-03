@@ -77,26 +77,73 @@ class PathologieController extends AbstractController {
 
         return ['header' => $pathologies, 'content' => $monthTab];
     }
-
+    
     /**
-     * @Rest\Get(path="/{annee}/statistique-journaliere-travailleur/", name="pathologie_statistique_journaliere_travailleur")
+     * @Rest\Get(path="/{id}/{annee}/diagram-statistique-mensuelle-travailleur/", name="pathologie_diagram_statistique_mensuelle_travailleur")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_PATHOLOGIE_INDEX")
      */
-    public function getDaylyTravailleurStatistic($annee): array {
+    public function getMensualTravailleurStatisticDiagram(Pathologie $pathologie,$annee): array {
+        $em = $this->getDoctrine()->getManager();
+//        $pathologies = $this->getDoctrine()
+//                ->getRepository(Pathologie::class)
+//                ->findAll();
+        $monthTab = [];
+        foreach (Utils::$calendarParams as $calendarElt) {
+            $tab_path = [];
+            $total_travailleur = 0;
+            $total_nonTravailleur = 0;
+            //foreach ($pathologies as $pathologie) {
+                $monthNombreT = $em->createQuery('select count(c) from App\Entity\Consultation c '
+                                . 'JOIN c.dossier d '
+                                . 'where c.date>=?1 and c.date<=?2 and c.pathologieDiagnostiquee=?3 and d.typePatient in (?4)')
+                        ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
+                        ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
+                        ->setParameter(3, $pathologie)
+                        ->setParameter(4, ["PATS", "PER"])
+                        ->getSingleScalarResult();
+                $total_travailleur += $monthNombreT;
+                $monthNombreNT = $em->createQuery('select count(c) from App\Entity\Consultation c '
+                                . 'JOIN c.dossier d '
+                                . 'where c.date>=?1 and c.date<=?2 and c.pathologieDiagnostiquee=?3 and d.typePatient not in (?4)')
+                        ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
+                        ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
+                        ->setParameter(3, $pathologie)
+                        ->setParameter(4, ["PATS", "PER"])
+                        ->getSingleScalarResult();
+                $total_nonTravailleur += $monthNombreNT;
+                //$tab_path[] = ["travailleur" => $monthNombreT, 'ntravailleur' => $monthNombreNT];
+            //}
+//            $monthNombre = $em->createQuery('select count(c) from App\Entity\Consultation c '
+//                            . 'where c.date>=?1 and c.date<=?2')
+//                    ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
+//                    ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
+//                    ->getSingleScalarResult();
+            $monthTab[] = ['month' => $calendarElt['month'],"travailleur" => $monthNombreT, 'ntravailleur' => $monthNombreNT];
+        }
+
+        return $monthTab;
+    }
+
+    /**
+     * @Rest\Get(path="/{mois}/{annee}/statistique-journaliere-travailleur/", name="pathologie_statistique_journaliere_travailleur")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_PATHOLOGIE_INDEX")
+     */
+    public function getDaylyTravailleurStatistic($mois, $annee): array {
         $em = $this->getDoctrine()->getManager();
         $pathologies = $this->getDoctrine()
                 ->getRepository(Pathologie::class)
                 ->findAll();
+        $calendarElt = Utils::$calendarParams[$mois];
         $monthTab = [];
-        foreach (Utils::$calendarParams as $calendarElt) {
-            $dayTab = [];
-            for ($i = 1; $i <= $calendarElt['endTo']; $i++) {
-                $pathTab = [];
-                $totalT = 0;
-                $totalNT = 0;
-                foreach ($pathologies as $pathologie) {
-                    $nbrTravailleurJr = $em->createQuery('select count(c) from App\Entity\Consultation c '
+        $dayTab = [];
+        for ($i = 1; $i <= $calendarElt['endTo']; $i++) {
+            $pathTab = [];
+            $totalT = 0;
+            $totalNT = 0;
+            foreach ($pathologies as $pathologie) {
+                $nbrTravailleurJr = $em->createQuery('select count(c) from App\Entity\Consultation c '
                                     . 'JOIN c.dossier d '
                                     . 'where c.date=?1 and d.typePatient in (?2)'
                                     . ' and c.pathologieDiagnostiquee=?3')
@@ -104,8 +151,8 @@ class PathologieController extends AbstractController {
                             ->setParameter(2, ['PATS', 'PER'])
                             ->setParameter(3, $pathologie)
                             ->getSingleScalarResult();
-                    $totalT += $nbrTravailleurJr;
-                    $nbrNTJr = $em->createQuery('select count(c) from App\Entity\Consultation c '
+                $totalT += $nbrTravailleurJr;
+                $nbrNTJr = $em->createQuery('select count(c) from App\Entity\Consultation c '
                                     . 'JOIN c.dossier d '
                                     . 'where c.date=?1 and d.typePatient not in (?2)'
                                     . ' and c.pathologieDiagnostiquee=?3')
@@ -113,20 +160,58 @@ class PathologieController extends AbstractController {
                             ->setParameter(2, ['PATS', 'PER'])
                             ->setParameter(3, $pathologie)
                             ->getSingleScalarResult();
-                    $totalNT += $nbrNTJr;
-                    $pathTab[] = ['travailleur' => $nbrTravailleurJr, 'nt' => $nbrNTJr];
-                }
-                $dayTab[] = ['day' => $i, 'pathTab' => $pathTab, 'totalT' => $totalT, 'totalNT' => $totalNT];
+                $totalNT += $nbrNTJr;
+                $pathTab[] = ['travailleur' => $nbrTravailleurJr, 'nt' => $nbrNTJr];
             }
-            $monthNombre = $em->createQuery('select count(c) from App\Entity\Consultation c '
+            $dayTab[] = ['day' => $i, 'pathTab' => $pathTab, 'totalT' => $totalT, 'totalNT' => $totalNT];
+        }
+        $monthNombre = $em->createQuery('select count(c) from App\Entity\Consultation c '
                             . 'where c.date>=?1 and c.date<=?2')
                     ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
                     ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
                     ->getSingleScalarResult();
-            $monthTab[] = ['month' => $calendarElt['month'],
+        $monthTab[] = ['month' => $calendarElt['month'],
                 'nombre' => $monthNombre, 'dayTab' => $dayTab];
-        }
+            
         return ['header' => $pathologies, 'content' => $monthTab];
+    }
+    
+    /**
+     * @Rest\Get(path="/{id}/{mois}/{annee}/diagram-statistique-journaliere-travailleur/", name="pathologie_diagram_statistique_journaliere_travailleur")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_PATHOLOGIE_INDEX")
+     */
+    public function getDaylyTravailleurStatisticDiagram(Pathologie $pathologie, $mois, $annee): array {
+        $em = $this->getDoctrine()->getManager();
+
+        $calendarElt = Utils::$calendarParams[$mois];
+        $dayTab = [];
+        for ($i = 1; $i <= $calendarElt['endTo']; $i++) {            
+            //$totalT = 0;
+           // $totalNT = 0;
+            $nbrTravailleurJr = $em->createQuery('select count(c) from App\Entity\Consultation c '
+                                    . 'JOIN c.dossier d '
+                                    . 'where c.date=?1 and d.typePatient in (?2)'
+                                    . ' and c.pathologieDiagnostiquee=?3')
+                            ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-' . $i)
+                            ->setParameter(2, ['PATS', 'PER'])
+                            ->setParameter(3, $pathologie)
+                            ->getSingleScalarResult();
+            //$totalT += $nbrTravailleurJr;
+            $nbrNTJr = $em->createQuery('select count(c) from App\Entity\Consultation c '
+                                    . 'JOIN c.dossier d '
+                                    . 'where c.date=?1 and d.typePatient not in (?2)'
+                                    . ' and c.pathologieDiagnostiquee=?3')
+                            ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-' . $i)
+                            ->setParameter(2, ['PATS', 'PER'])
+                            ->setParameter(3, $pathologie)
+                            ->getSingleScalarResult();
+            //$totalNT += $nbrNTJr;
+            $dayTab[] = ['day' => $i, 'nbrTravailleurJr' => $nbrTravailleurJr, 'nbrNTJr' => $nbrNTJr];
+        }
+
+            
+        return $dayTab;
     }
 
     /**
@@ -159,6 +244,37 @@ class PathologieController extends AbstractController {
             $monthTab[] = ['month' => $calendarElt['month'], 'pathTab' => $pathTab, 'total' => $totalMonth];
         }
         return ['header' => $pathologies, 'content' => $monthTab];
+    }
+    
+    /**
+     * @Rest\Get(path="/{annee}/diagram-statistique-generale/", name="pathologie_diagram_statistique_generale")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_PATHOLOGIE_INDEX")
+     */
+    public function getGeneralStatisticDiagram($annee): array {
+        $em = $this->getDoctrine()->getManager();
+        $pathologies = $this->getDoctrine()
+                ->getRepository(Pathologie::class)
+                ->findAll();
+        $dataTab=[];
+        $month = [];
+        foreach (Utils::$calendarParams as $calendarElt) {
+            $month[]=$calendarElt['month'];
+        }
+        foreach ($pathologies as $pathologie) {
+            $pathTab = [];
+            foreach (Utils::$calendarParams as $calendarElt) {
+                $monthNombre = $em->createQuery('select count(c) from App\Entity\Consultation c '
+                                . 'where c.date>=?1 and c.date<=?2 and c.pathologieDiagnostiquee=?3')
+                        ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
+                        ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
+                        ->setParameter(3, $pathologie)
+                        ->getSingleScalarResult();
+                $pathTab[] = $monthNombre;
+            }
+            $dataTab[] = ['pathologie' => $pathologie, 'pathTab' => $pathTab];
+        }
+        return ['month' => $month , 'dataTab' =>$dataTab];
     }
 
     /**

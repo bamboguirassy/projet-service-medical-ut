@@ -43,4 +43,5 @@ export class ConsultationDossierComponent implements OnInit {
     });
   }
 
+  
 }

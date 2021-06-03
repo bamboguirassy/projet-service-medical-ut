@@ -11,6 +11,7 @@ import { ShowablePipe } from './pipes/showable.pipe';
 import { DeletablePipe } from './pipes/deletable.pipe';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { DashboardBaseComponent } from './components/dashboard-base/dashboard-base.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
     SafeUrlPipe,
     AccessDeniedComponent,
     EmptyTableMessageComponent,
-    FormFieldValidationMessageComponent
+    FormFieldValidationMessageComponent,
+    DashboardBaseComponent
   ],
   imports: [
     CommonModule,

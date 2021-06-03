@@ -130,4 +130,38 @@ class DossierController extends AbstractController
 
         return $dossiers;
     }
+    
+    /**
+     * @Rest\Post(path="/search", name="dossier_search")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_DOSSIER_INDEX")
+     */
+    public function searchDossier(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $redData = Utils::serializeRequestContent($request);
+        //$searchTerm = $redData['searchTerm'];       
+       $dossiers = [];
+        if(isset($redData['searchTerm'])){
+            $names = explode(' ',$redData['searchTerm']);             
+            if(count($names)>1){
+                $dossiers = $em->createQuery('SELECT d
+                    FROM App\Entity\Dossier d
+                    WHERE CONCAT(d.prenoms,\' \',d.nom) LIKE :term')
+                ->setParameter('term', '%'.$redData['searchTerm'].'%')
+                ->getResult();
+            }else{
+                $dossiers = $em->createQuery('SELECT d
+                    FROM App\Entity\Dossier d
+                    WHERE d.prenoms LIKE :term OR
+                    d.nom LIKE :term OR 
+                    d.matricule LIKE :term OR 
+                    d.cni LIKE :term')
+                ->setParameter('term', '%'.$redData['searchTerm'].'%')
+                ->getResult();
+            }
+        }
+        
+        return $dossiers;
+    }
+    
 }
