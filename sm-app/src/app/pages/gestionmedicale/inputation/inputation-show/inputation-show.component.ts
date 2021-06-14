@@ -21,14 +21,14 @@ export class InputationShowComponent extends BasePageComponent<Inputation> imple
     public location: Location) {
     super(store, inputationSrv);
     this.pageData = {
-      title: 'Détails - Inputation',
+      title: 'Détails - Imputation',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Inputations',
+          title: 'Liste des imputations',
           route: '/'+this.orientation+'/inputation'
         },
         {

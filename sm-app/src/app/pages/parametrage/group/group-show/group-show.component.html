@@ -1,15 +1,13 @@
 <tc-card *ngIf="groupSrv.resourceName|showable" [tcGradient]="lightGradient">
     <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
         <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-reply">Retour</button>
-        <button *ngIf="groupSrv.resourceName|clonable" [outline]="true" view="info"
-            [routerLink]="['/'+orientation,groupSrv.getRoutePrefixWithoutSlash(), entity?.id,'clone']" tc-button beforeIcon="icofont-copy"
-            class="ml-1">Cloner</button>
         <button [outline]="true" (click)="findEntity(entity.id)" tc-button view="accent" beforeIcon="icofont-refresh"
             class="ml-1">Rafraichir</button>
         <button (click)="remove(entity)" *ngIf="groupSrv.resourceName|deletable" tc-button view="error"
             beforeIcon="icofont-trash" class="ml-1 float-right">Supprimer</button>
-        <button *ngIf="groupSrv.resourceName|editable" [routerLink]="['/'+orientation,groupSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
-            tc-button view="warning" beforeIcon="icofont-edit" class="ml-1 float-right">Modifier</button>
+        <button *ngIf="groupSrv.resourceName|editable"
+            [routerLink]="['/'+orientation,groupSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']" tc-button
+            view="warning" beforeIcon="icofont-edit" class="ml-1 float-right">Modifier</button>
     </tc-card>
     <div class="row">
         <div class="col-12">
@@ -27,7 +25,8 @@
             </tc-card>
         </div>
         <div class="col-12">
-            <tc-card [title]="'Liste des accès'" [view]="secondViewBorder" [outline]="true" [tcGradient]="secondGradient">
+            <tc-card [title]="'Liste des accès'" [view]="secondViewBorder" [outline]="true"
+                [tcGradient]="secondGradient">
                 <div class="row">
                     <div class="col-lg-6" *ngFor="let accessGroup of accessGroups">
                         <table class="table table-bordered">

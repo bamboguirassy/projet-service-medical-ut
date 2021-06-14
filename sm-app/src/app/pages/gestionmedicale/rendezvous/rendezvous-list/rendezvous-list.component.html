@@ -16,7 +16,7 @@
     </div>
   </tc-card>
   <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
-    <tc-table-col [columnTitle]="'Date Prescription'" [columnName]="'dateCreation'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Date prescription'" [columnName]="'dateCreation'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <span class="nowrap">{{ value|date:'dd/MM/yyyy' }}</span>
       </ng-template>

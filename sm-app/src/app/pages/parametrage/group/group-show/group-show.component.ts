@@ -18,9 +18,9 @@ export class GroupShowComponent extends BasePageComponent<Group> implements OnIn
   accessGroups: AccessGroup[] = [];
 
   constructor(store: Store<IAppState>,
-              public groupSrv: GroupService,
-              private activatedRoute: ActivatedRoute,
-              public location: Location) {
+    public groupSrv: GroupService,
+    private activatedRoute: ActivatedRoute,
+    public location: Location) {
     super(store, groupSrv);
     this.pageData = {
       title: 'Détails - Groupe d\'utilisateurs ',
@@ -33,7 +33,7 @@ export class GroupShowComponent extends BasePageComponent<Group> implements OnIn
           title: 'Paramètrage',
         },
         {
-          title: 'Groupes',
+          title: 'Liste des groupes d\'utilisateurs',
           route: '/group'
         },
         {

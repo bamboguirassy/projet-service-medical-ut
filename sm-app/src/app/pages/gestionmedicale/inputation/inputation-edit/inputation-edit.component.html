@@ -10,27 +10,29 @@
         </tc-card>
         <tc-card title="Détails" [outline]="true" [view]="secondViewBorder" [tcGradient]="secondGradient">
             <div class="row">
-                                                                                                <div class="col-12 col-md-6">
-                            <tc-form-group>
-                                <tc-form-label>Date</tc-form-label>
-                                <tc-input required="required" [(ngModel)]="entity.date" name="date" id="date" #date="ngModel">
-                                </tc-input>
-                                <tc-form-description>
-                                    <app-form-field-validation-message [formField]="date"></app-form-field-validation-message>
-                                </tc-form-description>
-                            </tc-form-group>
-                        </div>
-                                                                                <div class="col-12 col-md-6">
-                            <tc-form-group>
-                                <tc-form-label>UserEmail</tc-form-label>
-                                <tc-input required="required" [(ngModel)]="entity.userEmail" name="userEmail" id="userEmail" #userEmail="ngModel">
-                                </tc-input>
-                                <tc-form-description>
-                                    <app-form-field-validation-message [formField]="userEmail"></app-form-field-validation-message>
-                                </tc-form-description>
-                            </tc-form-group>
-                        </div>
-                                                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Date</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.date" name="date" id="date" #date="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="date"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Email utilisateur</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.userEmail" name="userEmail" id="userEmail"
+                            #userEmail="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="userEmail">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+            </div>
         </tc-card>
         <tc-card [view]="secondViewBorder" [outline]="true">
             <div class="actions">
@@ -40,8 +42,8 @@
                     beforeIcon="icofont-save" tc-button view="warning">
                     Mettre à jour
                 </button>
-                <button class="float-right mr-1" (click)="findEntity(entity.id)" afterIcon="icofont-refresh"
-                    tc-button type="button" view="success">Rafraichir</button>
+                <button class="float-right mr-1" (click)="findEntity(entity.id)" afterIcon="icofont-refresh" tc-button
+                    type="button" view="success">Rafraichir</button>
             </div>
         </tc-card>
     </form>

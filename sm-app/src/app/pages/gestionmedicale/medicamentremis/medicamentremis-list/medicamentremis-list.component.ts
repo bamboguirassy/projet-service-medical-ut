@@ -16,7 +16,7 @@ export class MedicamentRemisListComponent extends BasePageComponent<MedicamentRe
   @Input() consultation: Consultation;
 
   constructor(store: Store<IAppState>,
-              public medicamentRemiSrv: MedicamentRemisService) {
+    public medicamentRemiSrv: MedicamentRemisService) {
     super(store, medicamentRemiSrv);
   }
 

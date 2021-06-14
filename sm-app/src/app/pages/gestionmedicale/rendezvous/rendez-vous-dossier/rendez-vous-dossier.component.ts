@@ -26,7 +26,7 @@ export class RendezVousDossierComponent implements OnInit {
 
   constructor(public rendezVousSrv: RendezVousService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   remove(entity: RendezVous) {
     Swal.fire({

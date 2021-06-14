@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BasePageComponent } from 'src/app/pages/base-page';
+import { BasePageComponent } from '../../../base-page/base-page.component';
 import { MedicamentReceptionService } from '../medicamentreception.service';
 import { Store } from '@ngrx/store';
-import { IAppState } from 'src/app/interfaces/app-state';
+import { IAppState } from './../../../../interfaces/app-state';
 import { MedicamentReception } from '../medicamentreception';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -29,7 +29,7 @@ export class MedicamentReceptionShowComponent extends BasePageComponent<Medicame
         },
         {
           title: 'MedicamentReceptions',
-          route: '/'+this.orientation+'/medicamentreception'
+          route: '/' + this.orientation + '/medicamentreception'
         },
         {
           title: 'Affichage'

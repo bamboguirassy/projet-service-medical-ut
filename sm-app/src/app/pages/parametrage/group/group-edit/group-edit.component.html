@@ -32,7 +32,7 @@
                 </div>
             </div>
         </tc-card>
-        <tc-card title="Droits d'accès"  [view]="secondViewBorder" [outline]="true" [tcGradient]="secondGradient">
+        <tc-card title="Droits d'accès" [view]="secondViewBorder" [outline]="true" [tcGradient]="secondGradient">
             <div class="row">
                 <div class="col-12">
                     <div class="row">
@@ -151,7 +151,7 @@
                 </div>
             </div>
         </tc-card>
-        <tc-card view="Default"  [view]="secondViewBorder" [outline]="true">
+        <tc-card view="Default" [view]="secondViewBorder" [outline]="true">
             <div class="actions">
                 <button [outline]="true" type="button" (click)="location.back()" tc-button view="error"
                     beforeIcon="icofont-close">Annuler</button>
@@ -159,8 +159,8 @@
                     [beforeIcon]="'icofont-save'" tc-button [view]="'warning'">
                     Mettre à jour
                 </button>
-                <button class="float-right mr-1" (click)="findEntity(entity.id)" afterIcon="icofont-refresh"
-                    tc-button type="button" view="success">Rafraichir</button>
+                <button class="float-right mr-1" (click)="findEntity(entity.id)" afterIcon="icofont-refresh" tc-button
+                    type="button" view="success">Rafraichir</button>
             </div>
         </tc-card>
     </form>

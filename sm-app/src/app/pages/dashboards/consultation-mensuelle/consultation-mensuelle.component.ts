@@ -22,7 +22,7 @@ export class ConsultationMensuelleComponent extends BasePageComponent<any> imple
   isLoad = false;
   data: any;
   selectedAnnee: number;
-  annees = [];  
+  annees = [];
 
   //chart  
   rawChartData: ConsJourStats[];
@@ -38,7 +38,7 @@ export class ConsultationMensuelleComponent extends BasePageComponent<any> imple
   };
   selectedTypeDiagram: ChartType = 'bar';
   tableData: any;
-  
+
 
   constructor(
     store: Store<IAppState>,
@@ -47,7 +47,7 @@ export class ConsultationMensuelleComponent extends BasePageComponent<any> imple
     super(store, consultationSrv);
 
     this.pageData = {
-      title: 'Statistique Consultation Mensuelle',
+      title: 'Statistique consultation mensuelle',
       loaded: true,
       breadcrumbs: [
         {
@@ -55,7 +55,7 @@ export class ConsultationMensuelleComponent extends BasePageComponent<any> imple
           route: 'default-dashboard'
         },
         {
-          title: 'Statistique Consultation Mensuelle'
+          title: 'Statistique consultation mensuelle'
         }
       ]
     };
@@ -79,10 +79,10 @@ export class ConsultationMensuelleComponent extends BasePageComponent<any> imple
   handlePostLoad() { }
 
   rangeAnnee() {
-   const anneeCourante = new Date().getFullYear();
-   const anneeStart = 2020;
+    const anneeCourante = new Date().getFullYear();
+    const anneeStart = 2020;
     for (let i = anneeCourante; i >= anneeStart; i--) {
-     this.annees.push(i);
+      this.annees.push(i);
     }
     return this.annees;
   }

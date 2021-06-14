@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-12 col-md-6">
                     <tc-form-group>
-                        <tc-form-label>Prenom</tc-form-label>
+                        <tc-form-label>Prénom</tc-form-label>
                         <tc-input required="required" [(ngModel)]="entity.prenom" name="prenom" id="prenom"
                             #prenom="ngModel">
                         </tc-input>
@@ -34,15 +34,16 @@
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Email</tc-form-label>
-                        <tc-input [disabled]="true" suffixIcon="icofont-envelope" required="required" [value]="entity.email" name="email" id="email">
+                        <tc-input [disabled]="true" suffixIcon="icofont-envelope" required="required"
+                            [value]="entity.email" name="email" id="email">
                         </tc-input>
                     </tc-form-group>
                 </div>
                 <div class="col-12 col-md-6">
                     <tc-form-group>
-                        <tc-form-label>Telephone</tc-form-label>
-                        <tc-input prefixIcon="icofont-phone" required="required" [(ngModel)]="entity.telephone" name="telephone" id="telephone"
-                            #telephone="ngModel">
+                        <tc-form-label>Téléphone</tc-form-label>
+                        <tc-input prefixIcon="icofont-phone" required="required" [(ngModel)]="entity.telephone"
+                            name="telephone" id="telephone" #telephone="ngModel">
                         </tc-input>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="telephone">
@@ -53,16 +54,18 @@
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Fonction</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.fonction" name="fonction" id="fonction" #fonction="ngModel">
+                        <tc-input required="required" [(ngModel)]="entity.fonction" name="fonction" id="fonction"
+                            #fonction="ngModel">
                         </tc-input>
                         <tc-form-description>
-                            <app-form-field-validation-message [formField]="fonction"></app-form-field-validation-message>
+                            <app-form-field-validation-message [formField]="fonction">
+                            </app-form-field-validation-message>
                         </tc-form-description>
                     </tc-form-group>
                 </div>
                 <div class="col-12 col-md-6">
                     <tc-form-group>
-                        <tc-form-label>Etat Compte</tc-form-label>
+                        <tc-form-label>Etat compte</tc-form-label>
                         <tc-switcher [(ngModel)]="entity.enabled" name="enabled" id="enabled"></tc-switcher>
                     </tc-form-group>
                 </div>
@@ -76,8 +79,8 @@
                     beforeIcon="icofont-save" tc-button view="warning">
                     Mettre à jour
                 </button>
-                <button class="float-right mr-1" (click)="findEntity(entity.id)" afterIcon="icofont-refresh"
-                    tc-button type="button" view="success">Rafraichir</button>
+                <button class="float-right mr-1" (click)="findEntity(entity.id)" afterIcon="icofont-refresh" tc-button
+                    type="button" view="success">Rafraichir</button>
             </div>
         </tc-card>
     </form>

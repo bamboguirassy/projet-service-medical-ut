@@ -4,8 +4,8 @@ import { MedicamentReceptionService } from '../medicamentreception.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import { IAppState } from 'src/app/interfaces/app-state';
-import { BasePageComponent } from 'src/app/pages/base-page';
+import { IAppState } from './../../../../interfaces/app-state';
+import { BasePageComponent } from '../../../base-page/base-page.component';
 import { Location } from '@angular/common';
 
 @Component({
@@ -16,21 +16,21 @@ import { Location } from '@angular/common';
 export class MedicamentReceptionEditComponent extends BasePageComponent<MedicamentReception> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public medicamentReceptionSrv: MedicamentReceptionService,
-              public router: Router,
-              private activatedRoute: ActivatedRoute,
-              public location: Location) {
+    public medicamentReceptionSrv: MedicamentReceptionService,
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    public location: Location) {
     super(store, medicamentReceptionSrv);
     this.pageData = {
-      title: 'Modification - MedicamentReception',
+      title: 'Modification - Médicament réceptionnné',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'MedicamentReceptions',
-          route: '/'+this.orientation+'/medicamentreception'
+          title: 'Liste des médicaments réceptionnnés',
+          route: '/' + this.orientation + '/medicamentreception'
         },
         {
           title: 'Modification'

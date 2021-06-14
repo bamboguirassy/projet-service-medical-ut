@@ -16,19 +16,19 @@ export class RendezVousListComponent extends BasePageComponent<RendezVous> imple
   dates: any;
 
   constructor(store: Store<IAppState>,
-              public rendezVousSrv: RendezVousService,
-              public datePipe: DatePipe) {
+    public rendezVousSrv: RendezVousService,
+    public datePipe: DatePipe) {
     super(store, rendezVousSrv);
 
     this.pageData = {
-      title: 'Rendez-Vous prescrits',
+      title: 'liste des rendez-vous',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des rendez-vouss'
+          title: 'Liste des rendez-vous'
         }
       ]
     };

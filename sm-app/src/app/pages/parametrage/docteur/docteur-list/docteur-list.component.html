@@ -13,7 +13,7 @@
         <i *ngIf="!value" class="icofont-doctor icofont-2x"></i>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Prenoms'" [columnName]="'prenoms'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Prénoms'" [columnName]="'prenoms'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <span class="nowrap">{{ value }}</span>
       </ng-template>
@@ -23,7 +23,7 @@
         <span class="nowrap">{{ value }}</span>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Specialite'" [columnName]="'specialite'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Spécialité'" [columnName]="'specialite'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <span class="nowrap">{{ value }}</span>
       </ng-template>
@@ -33,8 +33,6 @@
         <div class="actions">
           <button *ngIf="docteurSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'" [view]="'warning'"
             [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
-          <button *ngIf="docteurSrv.resourceName|clonable" [outline]="true" tc-button [afterIcon]="'icofont-copy'"
-            [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'clone']"></button>
           <button *ngIf="docteurSrv.resourceName|deletable" (click)="remove(row)" tc-button
             [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
           <button *ngIf="docteurSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'" [view]="'accent'"

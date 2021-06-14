@@ -21,14 +21,14 @@ export class ReposMedicalShowComponent extends BasePageComponent<ReposMedical> i
     public location: Location) {
     super(store, reposMedicalSrv);
     this.pageData = {
-      title: 'Détails - ReposMedical',
+      title: 'Détails - Repos médical',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'ReposMedicals',
+          title: 'Liste des repos médicaux prescrits',
           route: '/'+this.orientation+'/reposmedical'
         },
         {
@@ -48,7 +48,7 @@ export class ReposMedicalShowComponent extends BasePageComponent<ReposMedical> i
   }
 
   handlePostLoad() {
-    this.title = 'ReposMedical - ' + this.entity?.id;
+    this.title = 'Repos médical - ' + this.entity?.id;
   }
 
   handlePostDelete() {

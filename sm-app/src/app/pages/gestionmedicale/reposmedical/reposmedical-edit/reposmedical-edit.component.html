@@ -41,7 +41,7 @@
         </div>
         <div class="col-12">
           <tc-form-group>
-            <tc-form-label>Nbre jours prescrits</tc-form-label>
+            <tc-form-label>Nombre jours prescrits</tc-form-label>
             <tc-input type="number" required="required" [(ngModel)]="entity.nombreJour" name="nombreJour"
               id="nombreJour" #nombreJour="ngModel">
             </tc-input>
@@ -58,8 +58,7 @@
     <div class="actions justify-content-between">
       <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
         (click)="closeModal()">Fermer</button>
-      <button (click)="updateItem()" [afterIcon]="'icofont-pencil'"
-        tc-button [view]="'warning'">
+      <button (click)="updateItem()" [afterIcon]="'icofont-pencil'" tc-button [view]="'warning'">
         Mettre à jour
       </button>
     </div>

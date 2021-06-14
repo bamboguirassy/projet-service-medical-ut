@@ -44,7 +44,7 @@
         <span class="nowrap">{{ value?.nom }}</span>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Pathologie Diagnostiquée'" [columnName]="'pathologieDiagnostiquee'"
+    <tc-table-col [columnTitle]="'Pathologie diagnostiquée'" [columnName]="'pathologieDiagnostiquee'"
       [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <tc-badge *ngIf="!value" view="error"><span class="nowrap">Non précisée</span></tc-badge>

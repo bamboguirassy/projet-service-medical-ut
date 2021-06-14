@@ -56,7 +56,7 @@ export class DossierEditComponent extends BasePageComponent<Dossier> implements 
           route: ''
         },
         {
-          title: 'Dossiers',
+          title: 'Liste des dossiers',
           route: '/' + this.orientation + '/dossier'
         },
         {
