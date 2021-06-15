@@ -13,11 +13,11 @@ import { Group } from '../group';
 export class GroupListComponent extends BasePageComponent<Group> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public groupSrv: GroupService) {
+    public groupSrv: GroupService) {
     super(store, groupSrv);
 
     this.pageData = {
-      title: 'Groupes d\'utilisateurs',
+      title: 'Liste des groupes d\'utilisateurs',
       breadcrumbs: [
         {
           title: 'Accueil',
@@ -27,7 +27,7 @@ export class GroupListComponent extends BasePageComponent<Group> implements OnIn
           title: 'Paramètrage',
         },
         {
-          title: 'Liste des groupes'
+          title: 'Liste des groupes d\'utilisateurs'
         }
       ]
     };
@@ -46,6 +46,6 @@ export class GroupListComponent extends BasePageComponent<Group> implements OnIn
     this.findAll();
   }
 
-  handlePostLoad(){}
+  handlePostLoad() { }
 
 }

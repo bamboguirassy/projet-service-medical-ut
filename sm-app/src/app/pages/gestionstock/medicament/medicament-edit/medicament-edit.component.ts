@@ -16,21 +16,21 @@ import { Location } from '@angular/common';
 export class MedicamentEditComponent extends BasePageComponent<Medicament> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public medicamentSrv: MedicamentService,
-              public router: Router,
-              private activatedRoute: ActivatedRoute,
-              public location: Location) {
+    public medicamentSrv: MedicamentService,
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    public location: Location) {
     super(store, medicamentSrv);
     this.pageData = {
-      title: 'Modification - Medicament',
+      title: 'Modification - Médicament',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Medicaments',
-          route: '/'+this.orientation+'/medicament'
+          title: 'Liste des médicaments',
+          route: '/' + this.orientation + '/medicament'
         },
         {
           title: 'Modification'

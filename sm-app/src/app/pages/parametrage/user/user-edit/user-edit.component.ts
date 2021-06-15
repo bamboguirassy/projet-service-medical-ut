@@ -16,24 +16,24 @@ import { Location } from '@angular/common';
 export class UserEditComponent extends BasePageComponent<User> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public userSrv: UserService,
-              public router: Router,
-              private activatedRoute: ActivatedRoute,
-              public location: Location) {
+    public userSrv: UserService,
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    public location: Location) {
     super(store, userSrv);
     this.pageData = {
-      title: 'Modification - User',
+      title: 'Modification - Utilisateur',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Users',
+          title: 'Liste des utilisateurs',
           route: '/user'
         },
         {
-          title: 'Modification de User'
+          title: 'Modification'
         }
       ]
     };

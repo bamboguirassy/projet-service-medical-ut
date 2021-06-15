@@ -28,6 +28,7 @@
   </tc-table>
   <app-empty-table-message *ngIf="!consultation?.medicamentRemis?.length"></app-empty-table-message>
   <br>
-  <app-medicamentremis-new *ngIf="consultation" [consultation]="consultation" (creation)="onCreate()"></app-medicamentremis-new>
+  <app-medicamentremis-new *ngIf="consultation" [consultation]="consultation" (creation)="onCreate()">
+  </app-medicamentremis-new>
 </tc-card>
 <app-access-denied *ngIf="!(medicamentRemiSrv.resourceName|listable)"></app-access-denied>

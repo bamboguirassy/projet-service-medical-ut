@@ -20,7 +20,7 @@ export class ReposMedicalDossierComponent implements OnInit {
   _dossier: Dossier;
 
   @Input() set dossier(val) {
-    this._dossier= val;
+    this._dossier = val;
     this.findByDossier();
   }
 
@@ -62,10 +62,10 @@ export class ReposMedicalDossierComponent implements OnInit {
 
   findByDossier() {
     this.closeEditModal();
-      this.reposMedicalSrv.findByDossier(this._dossier)
-      .subscribe((data: any)=>{
+    this.reposMedicalSrv.findByDossier(this._dossier)
+      .subscribe((data: any) => {
         this.items = data;
-      },err=>this.reposMedicalSrv.httpSrv.catchError(err));
+      }, err => this.reposMedicalSrv.httpSrv.catchError(err));
   }
 
   closeEditModal() {

@@ -16,21 +16,21 @@ import { Location } from '@angular/common';
 export class BonReceptionEditComponent extends BasePageComponent<BonReception> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public bonReceptionSrv: BonReceptionService,
-              public router: Router,
-              private activatedRoute: ActivatedRoute,
-              public location: Location) {
+    public bonReceptionSrv: BonReceptionService,
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    public location: Location) {
     super(store, bonReceptionSrv);
     this.pageData = {
-      title: 'Modification - BonReception',
+      title: 'Modification - Bon de réception',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'BonReceptions',
-          route: '/'+this.orientation+'/bonreception'
+          title: 'Liste des bons de réception',
+          route: '/' + this.orientation + '/bonreception'
         },
         {
           title: 'Modification'

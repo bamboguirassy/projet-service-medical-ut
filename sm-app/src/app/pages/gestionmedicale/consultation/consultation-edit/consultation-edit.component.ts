@@ -16,10 +16,10 @@ import { Location } from '@angular/common';
 export class ConsultationEditComponent extends BasePageComponent<Consultation> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public consultationSrv: ConsultationService,
-              public router: Router,
-              private activatedRoute: ActivatedRoute,
-              public location: Location) {
+    public consultationSrv: ConsultationService,
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    public location: Location) {
     super(store, consultationSrv);
     this.pageData = {
       title: 'Modification - Consultation',
@@ -29,8 +29,8 @@ export class ConsultationEditComponent extends BasePageComponent<Consultation> i
           route: ''
         },
         {
-          title: 'Consultations',
-          route: '/'+this.orientation+'/consultation'
+          title: 'Liste des consultations',
+          route: '/' + this.orientation + '/consultation'
         },
         {
           title: 'Modification'

@@ -23,10 +23,10 @@ export class BonReceptionNewComponent implements OnInit {
     this.entity = new BonReception();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   save() {
-    this.entity.date = this.datePipe.transform(this.entity.date,'yyyy-MM-dd');
+    this.entity.date = this.datePipe.transform(this.entity.date, 'yyyy-MM-dd');
     this.bonReceptionSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();

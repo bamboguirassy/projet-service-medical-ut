@@ -1,11 +1,12 @@
 <tc-card *ngIf="userSrv.resourceName|showable" [tcGradient]="lightGradient">
     <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
-        <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-mail-reply">Retour</button>
+        <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-reply">Retour</button>
         <button [outline]="true" (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
             beforeIcon="icofont-refresh">Rafraichir</button>
         <button (click)="remove(entity)" *ngIf="userSrv.resourceName|deletable" [outline]="true" tc-button view="error"
             beforeIcon="icofont-trash" class="ml-1">Supprimer</button>
-        <button *ngIf="userSrv.resourceName|editable" [routerLink]="['/'+orientation,userSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+        <button *ngIf="userSrv.resourceName|editable"
+            [routerLink]="['/'+orientation,userSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
             class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit">Modifier</button>
     </tc-card>
     <div class="row">
@@ -13,7 +14,7 @@
             <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
                 <table class="table">
                     <tr>
-                        <th>Prenom</th>
+                        <th>Prénom</th>
                         <td>{{ entity?.prenom }}</td>
                     </tr>
                     <tr>
@@ -21,7 +22,7 @@
                         <td>{{ entity?.nom }}</td>
                     </tr>
                     <tr>
-                        <th>Telephone</th>
+                        <th>Téléphone</th>
                         <td>{{ entity?.telephone }}</td>
                     </tr>
                     <tr>
@@ -29,7 +30,7 @@
                         <td>{{ entity?.email }}</td>
                     </tr>
                     <tr>
-                        <th>Etat Compte</th>
+                        <th>Etat compte</th>
                         <td>
                             <tc-badge *ngIf="entity?.enabled" view="success">Activé</tc-badge>
                             <tc-badge *ngIf="!entity?.enabled" view="danger">Désactivé</tc-badge>

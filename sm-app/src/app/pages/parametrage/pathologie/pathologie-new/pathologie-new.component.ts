@@ -22,7 +22,7 @@ export class PathologieNewComponent implements OnInit {
     this.entity = new Pathologie();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   save() {
     this.pathologieSrv.create(this.entity)

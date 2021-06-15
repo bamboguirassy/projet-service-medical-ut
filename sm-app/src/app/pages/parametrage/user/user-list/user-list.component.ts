@@ -34,14 +34,14 @@ export class UserListComponent extends BasePageComponent<User> implements OnInit
     super(store, userSrv);
 
     this.pageData = {
-      title: 'Utilisateurs',
+      title: 'Liste des utilisateurs',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des Users'
+          title: 'Liste des utilisateurs'
         }
       ]
     };

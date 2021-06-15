@@ -26,7 +26,7 @@ export class SymptomeNewComponent implements OnInit {
 
 
   constructor(public symptomeSrv: SymptomeService,
-              public router: Router) {
+    public router: Router) {
     this.entity = new Symptome();
   }
 

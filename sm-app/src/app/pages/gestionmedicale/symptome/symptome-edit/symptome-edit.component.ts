@@ -4,8 +4,8 @@ import { SymptomeService } from '../symptome.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import { IAppState } from 'src/app/interfaces/app-state';
-import { BasePageComponent } from 'src/app/pages/base-page';
+import { IAppState } from './../../../../interfaces/app-state';
+import { BasePageComponent } from '../../../base-page/base-page.component';
 import { Location } from '@angular/common';
 
 @Component({
@@ -16,21 +16,21 @@ import { Location } from '@angular/common';
 export class SymptomeEditComponent extends BasePageComponent<Symptome> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public symptomeSrv: SymptomeService,
-              public router: Router,
-              private activatedRoute: ActivatedRoute,
-              public location: Location) {
+    public symptomeSrv: SymptomeService,
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    public location: Location) {
     super(store, symptomeSrv);
     this.pageData = {
-      title: 'Modification - Symptome',
+      title: 'Modification - Symptôme',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Symptomes',
-          route: '/'+this.orientation+'/symptome'
+          title: 'Liste des symptômes',
+          route: '/' + this.orientation + '/symptome'
         },
         {
           title: 'Modification'

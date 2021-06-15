@@ -17,7 +17,7 @@ export class SymptomeListComponent extends BasePageComponent<Symptome> implement
   @Input() consultation: Consultation;
 
   constructor(store: Store<IAppState>,
-              public symptomeSrv: SymptomeService) {
+    public symptomeSrv: SymptomeService) {
     super(store, symptomeSrv);
   }
 

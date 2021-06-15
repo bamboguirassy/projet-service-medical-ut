@@ -25,7 +25,7 @@ export class DocteurNewComponent implements OnInit {
     this.entity = new Docteur();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   save() {
     this.entity.filename = this.fileModel.fileName;

@@ -1,15 +1,17 @@
-
 <tc-card *ngIf="consultationSrv.resourceName|listable" [tcGradient]="deepGradient">
-    <div class="row">        
+    <div class="row">
         <div class="col-12 col-md-6 col-lg-6">
-            <h5>Choisir un mois</h5>                       
-            <nz-select [(ngModel)]="selectedMois" style="width: 100%; margin-top: -10px;" (ngModelChange)="getData(); buildDiagram()">
-                <nz-option *ngFor="let item of (listOfMonths | keyvalue)" [nzValue]="item.key" [nzLabel]="item.value"></nz-option>
+            <h5>Choisir un mois</h5>
+            <nz-select [(ngModel)]="selectedMois" style="width: 100%; margin-top: -10px;"
+                (ngModelChange)="getData(); buildDiagram()">
+                <nz-option *ngFor="let item of (listOfMonths | keyvalue)" [nzValue]="item.key" [nzLabel]="item.value">
+                </nz-option>
             </nz-select>
-        </div>     
+        </div>
         <div class="col-12 col-md-6 col-lg-6">
-            <h5>Choisir une année</h5>                       
-            <nz-select [(ngModel)]="selectedAnnee" style="width: 100%; margin-top: -10px;" (ngModelChange)="getData(); buildDiagram()">
+            <h5>Choisir une année</h5>
+            <nz-select [(ngModel)]="selectedAnnee" style="width: 100%; margin-top: -10px;"
+                (ngModelChange)="getData(); buildDiagram()">
                 <nz-option *ngFor="let annee of annees" [nzValue]="annee" [nzLabel]="annee"></nz-option>
             </nz-select>
         </div>
@@ -33,7 +35,7 @@
                             <th>FAMILLE</th>
                         </tr>
                         <tr *ngFor="let dayData of data">
-        
+
                         </tr>
                     </thead>
                     <tbody>
@@ -62,8 +64,8 @@
                             </ng-container>
                         </nz-select>
                     </tc-form-group>
-                    <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions" [plugins]="chartPlugins"
-                        [legend]="chartLegend" [chartType]="selectedTypeDiagram">
+                    <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
+                        [plugins]="chartPlugins" [legend]="chartLegend" [chartType]="selectedTypeDiagram">
                     </canvas>
                     <hr class="m-2">
                     <tc-card view="accent" [outline]="true">
@@ -86,7 +88,6 @@
                 </div>
             </tc-card>
         </nz-tab>
-    </nz-tabset>  
-    
-</tc-card> 
+    </nz-tabset>
 
+</tc-card>

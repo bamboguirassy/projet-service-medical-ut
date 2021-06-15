@@ -1,5 +1,5 @@
 <button *ngIf="symptomeSrv.resourceName|creable" tc-button [afterIcon]="'icofont-plus'" [view]="'accent'"
-   (click)="openModal()"></button>
+  (click)="openModal()"></button>
 <app-access-denied *ngIf="!(symptomeSrv.resourceName|creable)"></app-access-denied>
 
 <!-- Modal window -->
@@ -11,19 +11,12 @@
         <div class="col-12">
           <tc-form-group>
             <tc-form-label>Nom</tc-form-label>
-            <nz-tag *ngFor="let symptome of symptomes; let i = index" [nzMode]="'closeable'" (nzAfterClose)="handleClose(symptome)">
+            <nz-tag *ngFor="let symptome of symptomes; let i = index" [nzMode]="'closeable'"
+              (nzAfterClose)="handleClose(symptome)">
               {{ symptome }}
             </nz-tag>
-            <input
-              #inputElement
-              nz-input
-              nzSize="small"
-              type="text" name='inputEl'
-              [(ngModel)]="inputValue"
-              style="width: 150px;"
-              (blur)="handleInputConfirm()"
-              (keydown.enter)="handleInputConfirm()"
-            />
+            <input #inputElement nz-input nzSize="small" type="text" name='inputEl' [(ngModel)]="inputValue"
+              style="width: 150px;" (blur)="handleInputConfirm()" (keydown.enter)="handleInputConfirm()" />
           </tc-form-group>
         </div>
       </div>

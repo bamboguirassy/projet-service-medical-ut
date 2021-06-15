@@ -1,12 +1,12 @@
-
-<tc-card *ngIf="consultationSrv.resourceName|listable" [tcGradient]="statisticGradient">  
-    <div class="row">       
+<tc-card *ngIf="consultationSrv.resourceName|listable" [tcGradient]="statisticGradient">
+    <div class="row">
         <div class="col-12 col-md-6 col-lg-6">
-            <h5>Choisir une année pour filtrer</h5>                       
-            <nz-select [(ngModel)]="selectedAnnee" (ngModelChange)="getData(); buildDiagram()" style="width: 100%; margin-top: -10px;">
+            <h5>Choisir une année pour filtrer</h5>
+            <nz-select [(ngModel)]="selectedAnnee" (ngModelChange)="getData(); buildDiagram()"
+                style="width: 100%; margin-top: -10px;">
                 <nz-option *ngFor="let annee of annees" [nzValue]="annee" [nzLabel]="annee"></nz-option>
             </nz-select>
-        </div>       
+        </div>
     </div>
     <br>
     <hr>
@@ -53,8 +53,8 @@
                             </ng-container>
                         </nz-select>
                     </tc-form-group>
-                    <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions" [plugins]="chartPlugins"
-                        [legend]="chartLegend" [chartType]="selectedTypeDiagram">
+                    <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
+                        [plugins]="chartPlugins" [legend]="chartLegend" [chartType]="selectedTypeDiagram">
                     </canvas>
                     <hr class="m-2">
                     <tc-card view="accent" [outline]="true">

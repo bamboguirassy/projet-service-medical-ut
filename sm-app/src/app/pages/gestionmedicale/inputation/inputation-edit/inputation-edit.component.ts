@@ -16,21 +16,21 @@ import { Location } from '@angular/common';
 export class InputationEditComponent extends BasePageComponent<Inputation> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public inputationSrv: InputationService,
-              public router: Router,
-              private activatedRoute: ActivatedRoute,
-              public location: Location) {
+    public inputationSrv: InputationService,
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    public location: Location) {
     super(store, inputationSrv);
     this.pageData = {
-      title: 'Modification - Inputation',
+      title: 'Modification - Imputation',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Inputations',
-          route: '/'+this.orientation+'/inputation'
+          title: 'Imputations',
+          route: '/' + this.orientation + '/inputation'
         },
         {
           title: 'Modification'
