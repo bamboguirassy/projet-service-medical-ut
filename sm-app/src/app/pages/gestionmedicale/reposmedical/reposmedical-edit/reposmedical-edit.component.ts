@@ -29,7 +29,7 @@ export class ReposMedicalEditComponent implements OnInit {
     public docteurSrv: DocteurService) { }
 
   ngOnInit(): void {
-    this.selectedDocteurId = this.entity.docteur?.id;
+    this.selectedDocteurId = this.entity?.docteur?.id;
     this.findDocteurs();
   }
 
