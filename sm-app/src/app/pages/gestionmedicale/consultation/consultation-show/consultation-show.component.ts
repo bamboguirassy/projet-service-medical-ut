@@ -79,6 +79,7 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
       .subscribe((data: any) => {
         this.entity = data;
         this.closePathologieModal();
+        
       }, err => this.consultationSrv.httpSrv.catchError(err));
   }
 
