@@ -20,8 +20,6 @@
         <div class="actions">
           <button *ngIf="medicamentRemiSrv.resourceName|deletable" (click)="remove(row)" tc-button
             [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
-          <button *ngIf="medicamentRemiSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
-            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
         </div>
       </ng-template>
     </tc-table-col>
