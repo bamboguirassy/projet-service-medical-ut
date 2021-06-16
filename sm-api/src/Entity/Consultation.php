@@ -58,16 +58,6 @@ class Consultation
     private $dossier;
 
     /**
-     * @var \Pathologie
-     *
-     * @ORM\ManyToOne(targetEntity="Pathologie")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="pathologie_diagnostiquee", referencedColumnName="id")
-     * })
-     */
-    private $pathologieDiagnostiquee;
-
-    /**
      * @ORM\OneToMany(targetEntity=Symptome::class, mappedBy="consultation")
      */
     private $symptomes;
@@ -190,19 +180,7 @@ class Consultation
 
         return $this;
     }
-
-    public function getPathologieDiagnostiquee()
-    {
-        return $this->pathologieDiagnostiquee;
-    }
-
-    public function setPathologieDiagnostiquee($pathologieDiagnostiquee): self
-    {
-        $this->pathologieDiagnostiquee = $pathologieDiagnostiquee;
-
-        return $this;
-    }
-
+    
     /**
      * @return Collection|Symptome[]
      */

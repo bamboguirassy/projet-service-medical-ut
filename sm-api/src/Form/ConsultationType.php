@@ -15,7 +15,6 @@ class ConsultationType extends AbstractType {
                 ->add('userEmail')
                 ->add('docteur')
                 ->add('dossier')
-                ->add('pathologieDiagnostiquee')
                 ->add('medicamentPrescrits')
                 ->add('motifConsultations')
                 ->add('tensionArterielle')
