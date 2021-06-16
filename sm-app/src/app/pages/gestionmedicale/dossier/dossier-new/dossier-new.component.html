@@ -215,7 +215,7 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4" *ngIf="selected || entity?.typePatient=='ETUDIANT'">
+                <div class="col-12 col-md-6 col-lg-4" *ngIf="selected">
                     <tc-form-group>
                         <tc-form-label>Niveau d'instruction</tc-form-label>
                         <tc-select [options]="niveauInstructions" [(ngModel)]="entity.niveauInstruction"
@@ -225,6 +225,14 @@
                             <app-form-field-validation-message [formField]="niveauInstruction">
                             </app-form-field-validation-message>
                         </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.typePatient=='ETUDIANT'">
+                    <tc-form-group>
+                        <tc-form-label>Niveau d'instruction</tc-form-label>
+                        <tc-input disabled="true" value="superieur" ngModel="Supérieur" name="niveauInstruction" id="niveauInstruction"
+                            #niveauInstruction="ngModel">
+                        </tc-input>
                     </tc-form-group>
                 </div>
                 <div class="col-12 col-md-6 col-lg-4" *ngIf="selected || entity?.typePatient=='ETUDIANT'">
@@ -238,6 +246,18 @@
                             </app-form-field-validation-message>
                         </tc-form-description>
                     </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.genreVie=='autres'">
+                  <tc-form-group>
+                    <tc-form-label>Description genre vie</tc-form-label>
+                    <tc-textarea [(ngModel)]="entity.descriptionGenreVie" name="descriptionGenreVie" id="descriptionGenreVie"
+                      #descriptionGenreVie="ngModel">
+                    </tc-textarea>
+                    <tc-form-description>
+                      <app-form-field-validation-message [formField]="descriptionGenreVie">
+                      </app-form-field-validation-message>
+                    </tc-form-description>
+                  </tc-form-group>
                 </div>
                 <div class="col-12 col-md-6 col-lg-4 col-lg-4" *ngIf="selected || entity?.typePatient=='ETUDIANT'">
                     <tc-form-group>

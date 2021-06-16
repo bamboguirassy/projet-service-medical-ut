@@ -99,6 +99,12 @@
                             <div class="col-sm-6 col-md-7 info-content">{{entity?.genreVie}}</div>
                         </div>
                     </li>
+                    <li class="info-line" *ngIf="entity?.genreVie=='autres'">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-5 info-title">Description genre vie :</div>
+                            <div class="col-sm-6 col-md-7 info-content">{{entity?.descriptionGenreVie}}</div>
+                        </div>
+                    </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-sm-6 col-md-5 info-title">Antécédents médicaux :</div>
