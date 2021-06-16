@@ -31,6 +31,7 @@ class DossierType extends AbstractType {
                 ->add('niveauInstruction')
                 ->add('situationMatrimoniale')
                 ->add('genreVie')
+                ->add('descriptionGenreVie')
                 ->add('professionMari')
                 ->add('antecedentMedicaux')
                 ->add('antecedentChurirgicaux')

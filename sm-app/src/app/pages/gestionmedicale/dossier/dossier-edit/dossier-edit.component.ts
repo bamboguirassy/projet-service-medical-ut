@@ -43,10 +43,10 @@ export class DossierEditComponent extends BasePageComponent<Dossier> implements 
   ];
 
   constructor(store: Store<IAppState>,
-              public dossierSrv: DossierService,
-              public router: Router,
-              private activatedRoute: ActivatedRoute,
-              public location: Location, public datePipe: DatePipe) {
+    public dossierSrv: DossierService,
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    public location: Location, public datePipe: DatePipe) {
     super(store, dossierSrv);
     this.pageData = {
       title: 'Modification - Dossier',
@@ -89,10 +89,10 @@ export class DossierEditComponent extends BasePageComponent<Dossier> implements 
 
   getStructures() {
     this.dossierSrv.httpSrv.http.get('assets/data/structures.json')
-    .pipe(first())
-    .subscribe((data: any) => {
-      this.structures = data;
-    });
+      .pipe(first())
+      .subscribe((data: any) => {
+        this.structures = data;
+      });
   }
 
 }
