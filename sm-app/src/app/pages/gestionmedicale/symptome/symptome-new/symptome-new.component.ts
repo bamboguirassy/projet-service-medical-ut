@@ -39,7 +39,7 @@ export class SymptomeNewComponent implements OnInit {
       .subscribe((data: any) => {
         this.creation.emit(data);
         this.closeModal();
-        this.symptomes.pop();
+        this.symptomes.length=0;
       }, error => this.symptomeSrv.httpSrv.catchError(error));
   }
 
