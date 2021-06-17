@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Consultation
  *
- * @ORM\Table(name="consultation", indexes={@ORM\Index(name="fk_consultation_pathologie1_idx"), @ORM\Index(name="fk_consultation_dossier_idx", columns={"dossier"}), @ORM\Index(name="fk_consultation_docteur1_idx", columns={"docteur"})})
+ * @ORM\Table(name="consultation", indexes={@ORM\Index(name="fk_consultation_dossier_idx", columns={"dossier"}), @ORM\Index(name="fk_consultation_docteur1_idx", columns={"docteur"})})
  * @ORM\Entity
  */
 class Consultation
@@ -122,10 +122,20 @@ class Consultation
      */
     private $rendezVous;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Pathologie::class)
+     * @ORM\JoinTable(name="pathologie_consultation",
+     *      joinColumns={@ORM\JoinColumn(name="consultation_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="pathologie_id", referencedColumnName="id")}
+     * )
+     */
+    private $pathologies;
+
     public function __construct()
     {
         $this->symptomes = new ArrayCollection();
         $this->medicamentRemis = new ArrayCollection();
+        $this->pathologies = new ArrayCollection();
     }
 
     public function getId()
@@ -181,9 +191,6 @@ class Consultation
         return $this;
     }
     
-    /**
-     * @return Collection|Symptome[]
-     */
     public function getSymptomes(): Collection
     {
         return $this->symptomes;
@@ -375,6 +382,32 @@ class Consultation
         // set the owning side of the relation if necessary
         if ($rendezVous->getConsultation() !== $this) {
             $rendezVous->setConsultation($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Pathologie[]
+     */
+    public function getPathologies(): Collection
+    {
+        return $this->pathologies;
+    }
+
+    public function addPathology(Pathologie $pathology): self
+    {
+        if (!$this->pathologies->contains($pathology)) {
+            $this->pathologies[] = $pathology;
+        }
+
+        return $this;
+    }
+
+    public function removePathology(Pathologie $pathology): self
+    {
+        if ($this->pathologies->contains($pathology)) {
+            $this->pathologies->removeElement($pathology);
         }
 
         return $this;

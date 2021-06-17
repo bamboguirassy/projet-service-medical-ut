@@ -57,7 +57,7 @@ class RendezVous
     private $description;
 
     /**
-     * @ORM\OneToOne(targetEntity=Consultation::class, inversedBy="rendezVous", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Consultation::class, inversedBy="rendezVous")
      * @ORM\JoinColumn(nullable=false,name="consultation")
      */
     private $consultation;
