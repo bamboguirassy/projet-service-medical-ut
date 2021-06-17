@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Consultation
  *
- * @ORM\Table(name="consultation", indexes={@ORM\Index(name="fk_consultation_pathologie1_idx", columns={"pathologie_diagnostiquee"}), @ORM\Index(name="fk_consultation_dossier_idx", columns={"dossier"}), @ORM\Index(name="fk_consultation_docteur1_idx", columns={"docteur"})})
+ * @ORM\Table(name="consultation", indexes={@ORM\Index(name="fk_consultation_pathologie1_idx"), @ORM\Index(name="fk_consultation_dossier_idx", columns={"dossier"}), @ORM\Index(name="fk_consultation_docteur1_idx", columns={"docteur"})})
  * @ORM\Entity
  */
 class Consultation
