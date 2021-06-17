@@ -22,6 +22,7 @@ export class ConsultationJournaliereComponent extends BasePageComponent<any> imp
   ];
   isLoad = false;
   data: any;
+  fileName: string = "Statistique_consultation_journalière_"
   selectedAnnee: number;
   selectedMois: any;
   annees = [];
