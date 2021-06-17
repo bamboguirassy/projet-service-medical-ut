@@ -16,10 +16,10 @@ import { Location } from '@angular/common';
 export class DocteurEditComponent extends BasePageComponent<Docteur> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public docteurSrv: DocteurService,
-              public router: Router,
-              private activatedRoute: ActivatedRoute,
-              public location: Location) {
+    public docteurSrv: DocteurService,
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    public location: Location) {
     super(store, docteurSrv);
     this.pageData = {
       title: 'Modification - Docteur',
@@ -29,8 +29,8 @@ export class DocteurEditComponent extends BasePageComponent<Docteur> implements 
           route: ''
         },
         {
-          title: 'Docteurs',
-          route: '/'+this.orientation+'/docteur'
+          title: 'Liste des docteurs',
+          route: '/' + this.orientation + '/docteur'
         },
         {
           title: 'Modification'
@@ -51,7 +51,7 @@ export class DocteurEditComponent extends BasePageComponent<Docteur> implements 
   handlePostLoad() {
   }
 
-  prepareUpdate() {}
+  prepareUpdate() { }
 
   handlePostUpdate() {
     this.location.back();

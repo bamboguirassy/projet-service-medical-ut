@@ -21,18 +21,18 @@ export class UserShowComponent extends BasePageComponent<User> implements OnInit
     public location: Location) {
     super(store, userSrv);
     this.pageData = {
-      title: 'Détails - User',
+      title: 'Détails - Utilisateur',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Users',
+          title: 'Liste des utilisateurs',
           route: '/user'
         },
         {
-          title: 'Affichage de User'
+          title: 'Affichage d\'utilisateur'
         }
       ]
     };
@@ -48,7 +48,7 @@ export class UserShowComponent extends BasePageComponent<User> implements OnInit
   }
 
   handlePostLoad() {
-    this.title = 'User - ' + this.entity?.email;
+    this.title = 'Utilisateur - ' + this.entity?.email;
   }
 
   handlePostDelete() {

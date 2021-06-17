@@ -1,37 +1,38 @@
-<tc-card *ngIf="reposMedicalSrv.resourceName|listable" [tcGradient]="lightGradient">
-    <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
-      <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
-        <ng-template #tableTDTemplate let-row="row">
-          <div class="actions nowrap">
-            <button *ngIf="reposMedicalSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
-              [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" (click)="setEditItem(row)"></button>
-            <button class="ml-1" *ngIf="reposMedicalSrv.resourceName|deletable" (click)="remove(row)" tc-button
-              [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
-            </div>
-        </ng-template>
-      </tc-table-col>
-      <tc-table-col [columnTitle]="'Date'" [columnName]="'date'" [enableSorting]="true">
-        <ng-template #tableTDTemplate let-value>
-          <span class="nowrap">{{ value|date:'dd/MM/yyyy' }}</span>
-        </ng-template>
-      </tc-table-col>
-      <tc-table-col [columnTitle]="'Nombre Jour'" [columnName]="'nombreJour'" [enableSorting]="true">
-        <ng-template #tableTDTemplate let-value>
-            <tc-badge view="info"><span class="nowrap"><b>{{ value }}</b> jours</span></tc-badge>
-        </ng-template>
-      </tc-table-col>
-      <tc-table-col [columnTitle]="'Utilisateur'" [columnName]="'userEmail'" [enableSorting]="true">
-        <ng-template #tableTDTemplate let-value>
-          <span class="nowrap">{{ value }}</span>
-        </ng-template>
-      </tc-table-col>
-      <tc-table-col [columnTitle]="'Prescrit par'" [columnName]="'docteur'" [enableSorting]="true">
-        <ng-template #tableTDTemplate let-value>
-          <span class="nowrap">{{ value?.prenoms+' '+value?.nom }}</span>
-        </ng-template>
-      </tc-table-col>
-    </tc-table>
-    <app-empty-table-message *ngIf="!items?.length"></app-empty-table-message>
-  </tc-card>
-  <app-access-denied *ngIf="!(reposMedicalSrv.resourceName|listable)"></app-access-denied>
-  <app-reposmedical-edit (update)="findByDossier()" *ngIf="selectedItem" [entity]="selectedItem" [visible]="isEditModalVisible" (close)="closeEditModal()"></app-reposmedical-edit>
+<tc-card *ngIf="reposMedicalSrv.resourceName|listable">
+  <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
+    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+      <ng-template #tableTDTemplate let-row="row">
+        <div class="actions nowrap">
+          <button *ngIf="reposMedicalSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
+            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" (click)="setEditItem(row)"></button>
+          <button class="ml-1" *ngIf="reposMedicalSrv.resourceName|deletable" (click)="remove(row)" tc-button
+            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+        </div>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Date'" [columnName]="'date'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap">{{ value|date:'dd/MM/yyyy' }}</span>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Nombre jours'" [columnName]="'nombreJour'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <tc-badge view="info"><span class="nowrap"><b>{{ value }}</b> jours</span></tc-badge>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Utilisateur'" [columnName]="'userEmail'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap">{{ value }}</span>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Prescrit par'" [columnName]="'docteur'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span class="nowrap">{{ value?.prenoms+' '+value?.nom }}</span>
+      </ng-template>
+    </tc-table-col>
+  </tc-table>
+  <app-empty-table-message *ngIf="!items?.length"></app-empty-table-message>
+</tc-card>
+<app-access-denied *ngIf="!(reposMedicalSrv.resourceName|listable)"></app-access-denied>
+<app-reposmedical-edit (update)="findByDossier()" *ngIf="selectedItem" [entity]="selectedItem"
+  [visible]="isEditModalVisible" (close)="closeEditModal()"></app-reposmedical-edit>

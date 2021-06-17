@@ -14,7 +14,7 @@
                 <i *ngIf="!value" class="icofont-ui-user icofont-2x"></i>
             </ng-template>
         </tc-table-col>
-        <tc-table-col [columnTitle]="'Prenom'" [columnName]="'prenom'" [enableSorting]="true">
+        <tc-table-col [columnTitle]="'Prénom'" [columnName]="'prenom'" [enableSorting]="true">
             <ng-template #tableTDTemplate let-value>
                 <span class="nowrap" *ngIf="value">{{ value }}</span>
                 <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
@@ -26,7 +26,7 @@
                 <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
             </ng-template>
         </tc-table-col>
-        <tc-table-col [columnTitle]="'Telephone'" [columnName]="'telephone'" [enableSorting]="true">
+        <tc-table-col [columnTitle]="'Téléphone'" [columnName]="'telephone'" [enableSorting]="true">
             <ng-template #tableTDTemplate let-value>
                 <a *ngIf="value" href="tel:{{ value }}"><span class="nowrap">{{ value }}</span></a>
                 <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
@@ -44,7 +44,7 @@
                 <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
             </ng-template>
         </tc-table-col>
-        <tc-table-col [columnTitle]="'Etat Compte'" [columnName]="'enabled'" [enableSorting]="true">
+        <tc-table-col [columnTitle]="'Etat compte'" [columnName]="'enabled'" [enableSorting]="true">
             <ng-template #tableTDTemplate let-value let-row="row">
                 <ng-container [ngSwitch]="row?.id !== currentUser?.id && userSrv.resourceName|editable">
                     <tc-switcher *ngSwitchCase="true" (valueChanged)="onChange($event, row)" [value]="value">
@@ -54,7 +54,7 @@
                 </ng-container>
             </ng-template>
         </tc-table-col>
-        <tc-table-col [columnTitle]="'Dernière Connexion'" [columnName]="'lastLogin'" [enableSorting]="true">
+        <tc-table-col [columnTitle]="'Dernière connexion'" [columnName]="'lastLogin'" [enableSorting]="true">
             <ng-template #tableTDTemplate let-value>
                 <span *ngIf="value" class="nowrap">{{ value|date:'dd MMM, yyyy à HH:mm:ss' }}</span>
                 <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>

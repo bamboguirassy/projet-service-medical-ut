@@ -21,10 +21,10 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
   pathologies: Pathologie[] = [];
 
   constructor(store: Store<IAppState>,
-              public consultationSrv: ConsultationService,
-              public activatedRoute: ActivatedRoute,
-              public location: Location,
-              public pathologieSrv: PathologieService) {
+    public consultationSrv: ConsultationService,
+    public activatedRoute: ActivatedRoute,
+    public location: Location,
+    public pathologieSrv: PathologieService) {
     super(store, consultationSrv);
     this.pageData = {
       title: '',
@@ -34,7 +34,7 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
           route: ''
         },
         {
-          title: 'Consultations',
+          title: 'Liste des consultations',
           route: '/' + this.orientation + '/consultation'
         },
         {
@@ -68,18 +68,19 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
 
   findPathologies() {
     this.pathologieSrv.findAll()
-    .subscribe((data: any) => {
-      this.pathologies = data;
-    }, err => this.pathologieSrv.httpSrv.catchError(err));
+      .subscribe((data: any) => {
+        this.pathologies = data;
+      }, err => this.pathologieSrv.httpSrv.catchError(err));
   }
 
   setPathologieDiagnostiquee() {
     this.entity.pathologieDiagnostiquee = this.selectedPathologie.id;
     this.consultationSrv.update(this.entity)
-    .subscribe((data: any) => {
-      this.entity = data;
-      this.closePathologieModal();
-    }, err => this.consultationSrv.httpSrv.catchError(err));
+      .subscribe((data: any) => {
+        this.entity = data;
+        this.closePathologieModal();
+        
+      }, err => this.consultationSrv.httpSrv.catchError(err));
   }
 
 }

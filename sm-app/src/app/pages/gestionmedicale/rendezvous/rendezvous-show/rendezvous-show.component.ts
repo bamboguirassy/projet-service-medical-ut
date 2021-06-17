@@ -21,15 +21,15 @@ export class RendezVousShowComponent extends BasePageComponent<RendezVous> imple
     public location: Location) {
     super(store, rendezVousSrv);
     this.pageData = {
-      title: 'Détails - RendezVous',
+      title: 'Détails - rendez-vous',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'RendezVouss',
-          route: '/'+this.orientation+'/rendezvous'
+          title: 'Liste des rendez-vous',
+          route: '/' + this.orientation + '/rendezvous'
         },
         {
           title: 'Affichage'

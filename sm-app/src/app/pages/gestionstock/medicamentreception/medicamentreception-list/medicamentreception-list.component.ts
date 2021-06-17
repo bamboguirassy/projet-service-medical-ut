@@ -13,18 +13,18 @@ import { MedicamentReception } from '../medicamentreception';
 export class MedicamentReceptionListComponent extends BasePageComponent<MedicamentReception> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public medicamentReceptionSrv: MedicamentReceptionService) {
+    public medicamentReceptionSrv: MedicamentReceptionService) {
     super(store, medicamentReceptionSrv);
 
     this.pageData = {
-      title: 'MedicamentReception',
+      title: 'Liste des médicaments réceptionnés',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des medicamentreceptions'
+          title: 'Liste des médicaments réceptionnés'
         }
       ]
     };
@@ -43,6 +43,6 @@ export class MedicamentReceptionListComponent extends BasePageComponent<Medicame
     this.findAll();
   }
 
-  handlePostLoad(){}
+  handlePostLoad() { }
 
 }

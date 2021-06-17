@@ -28,7 +28,7 @@ export class DossierShowComponent extends BasePageComponent<Dossier> implements 
           route: ''
         },
         {
-          title: 'Dossiers Médicaux',
+          title: 'Liste des dossiers médicaux',
           route: '/'+this.orientation+'/dossier'
         },
         {

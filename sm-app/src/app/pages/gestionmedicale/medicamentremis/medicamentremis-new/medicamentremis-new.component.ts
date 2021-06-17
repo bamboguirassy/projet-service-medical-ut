@@ -56,9 +56,9 @@ export class MedicamentRemisNewComponent implements OnInit {
 
   findMedicaments() {
     this.medicamentSrv.findAll()
-    .subscribe((data: any)=>{
-      this.medicaments = data;
-    },err=>this.medicamentSrv.httpSrv.catchError(err));
+      .subscribe((data: any) => {
+        this.medicaments = data;
+      }, err => this.medicamentSrv.httpSrv.catchError(err));
   }
 
 }

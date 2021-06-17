@@ -32,7 +32,7 @@ export class GroupNewComponent implements OnInit {
 
   getAccessModels() {
     this.groupSrv.getTables()
-      .subscribe((data:any) => {
+      .subscribe((data: any) => {
         this.accessGroups = data;
       }, error => {
         this.groupSrv.httpSrv.catchError(error);

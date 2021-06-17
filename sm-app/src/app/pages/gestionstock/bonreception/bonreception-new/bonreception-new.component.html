@@ -13,7 +13,8 @@
         <div class="col-12">
           <tc-form-group>
             <tc-form-label>Date</tc-form-label>
-            <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.date" name="date" id="date" #date="ngModel"></nz-date-picker>
+            <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.date" name="date" id="date" #date="ngModel">
+            </nz-date-picker>
             <tc-form-description>
               <app-form-field-validation-message [formField]="date"></app-form-field-validation-message>
             </tc-form-description>

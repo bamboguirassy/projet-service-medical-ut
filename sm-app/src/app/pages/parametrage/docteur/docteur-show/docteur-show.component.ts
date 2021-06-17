@@ -28,8 +28,8 @@ export class DocteurShowComponent extends BasePageComponent<Docteur> implements 
           route: ''
         },
         {
-          title: 'Docteurs',
-          route: '/'+this.orientation+'/docteur'
+          title: 'Liste des docteurs',
+          route: '/' + this.orientation + '/docteur'
         },
         {
           title: 'Affichage'

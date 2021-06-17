@@ -29,6 +29,7 @@ export class Dossier extends BamboAbstractObject {
     niveauInstruction: string;
     situationMatrimoniale: string;
     genreVie: string;
+    descriptionGenreVie: string;
     professionMari: string;
     antecedentMedicaux: string;
     antecedentChurirgicaux: string;

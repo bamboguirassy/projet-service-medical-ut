@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BasePageComponent } from 'src/app/pages/base-page';
+import { BasePageComponent } from '../../../base-page/base-page.component';
 import { SymptomeService } from '../symptome.service';
 import { Store } from '@ngrx/store';
-import { IAppState } from 'src/app/interfaces/app-state';
+import { IAppState } from './../../../../interfaces/app-state';
 import { Symptome } from '../symptome';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -21,15 +21,15 @@ export class SymptomeShowComponent extends BasePageComponent<Symptome> implement
     public location: Location) {
     super(store, symptomeSrv);
     this.pageData = {
-      title: 'Détails - Symptome',
+      title: 'Détails - Symptôme',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Symptomes',
-          route: '/'+this.orientation+'/symptome'
+          title: 'Liste des symptômes',
+          route: '/' + this.orientation + '/symptome'
         },
         {
           title: 'Affichage'

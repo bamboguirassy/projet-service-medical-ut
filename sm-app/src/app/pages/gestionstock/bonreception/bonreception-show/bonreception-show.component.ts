@@ -21,15 +21,15 @@ export class BonReceptionShowComponent extends BasePageComponent<BonReception> i
     public location: Location) {
     super(store, bonReceptionSrv);
     this.pageData = {
-      title: 'Détails - Bon de Réception',
+      title: 'Détails - Bon de réception',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Bon de Réceptions',
-          route: '/'+this.orientation+'/bonreception'
+          title: 'Liste des bons de Réceptions',
+          route: '/' + this.orientation + '/bonreception'
         },
         {
           title: 'Affichage'
@@ -48,7 +48,7 @@ export class BonReceptionShowComponent extends BasePageComponent<BonReception> i
   }
 
   handlePostLoad() {
-    this.title = 'Bon de Réception - ' + this.entity?.numero;
+    this.title = 'Bon de réception - ' + this.entity?.numero;
   }
 
   handlePostDelete() {

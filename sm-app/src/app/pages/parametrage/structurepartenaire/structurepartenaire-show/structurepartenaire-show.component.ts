@@ -21,15 +21,15 @@ export class StructurePartenaireShowComponent extends BasePageComponent<Structur
     public location: Location) {
     super(store, structurePartenaireSrv);
     this.pageData = {
-      title: 'Détails - StructurePartenaire',
+      title: 'Détails - Structure partenaire',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'StructurePartenaires',
-          route: '/'+this.orientation+'/structurepartenaire'
+          title: 'Liste des structures partenaires',
+          route: '/' + this.orientation + '/structurepartenaire'
         },
         {
           title: 'Affichage'
@@ -48,7 +48,7 @@ export class StructurePartenaireShowComponent extends BasePageComponent<Structur
   }
 
   handlePostLoad() {
-    this.title = 'StructurePartenaire - ' + this.entity?.id;
+    this.title = 'Structure partenaire - ' + this.entity?.id;
   }
 
   handlePostDelete() {

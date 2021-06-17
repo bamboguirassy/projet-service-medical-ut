@@ -28,8 +28,8 @@ export class PathologieShowComponent extends BasePageComponent<Pathologie> imple
           route: ''
         },
         {
-          title: 'Pathologies',
-          route: '/'+this.orientation+'/pathologie'
+          title: 'Liste des pathologies',
+          route: '/' + this.orientation + '/pathologie'
         },
         {
           title: 'Affichage'

@@ -29,10 +29,10 @@ export class ConsultationNewComponent implements OnInit {
   selectedPathologie: Pathologie;
 
   constructor(public consultationSrv: ConsultationService,
-              public router: Router,
-              public docteurSrv: DocteurService,
-              public pathologieSrv: PathologieService,
-              public datePipe: DatePipe) {
+    public router: Router,
+    public docteurSrv: DocteurService,
+    public pathologieSrv: PathologieService,
+    public datePipe: DatePipe) {
     this.entity = new Consultation();
     this.entity.date = new Date();
   }
@@ -71,14 +71,14 @@ export class ConsultationNewComponent implements OnInit {
   findDocteurs() {
     this.docteurSrv.findAll()
       .subscribe((data: any) => { this.docteurs = data; },
-       err => this.docteurSrv.httpSrv.catchError(err));
+        err => this.docteurSrv.httpSrv.catchError(err));
 
   }
 
   findPathologies() {
     this.pathologieSrv.findAll()
-    .subscribe((data: any) => { this.pathologies = data; },
-     err => this.pathologieSrv.httpSrv.catchError(err));
+      .subscribe((data: any) => { this.pathologies = data; },
+        err => this.pathologieSrv.httpSrv.catchError(err));
   }
 
 }

@@ -122,12 +122,12 @@ export class BamboAuthService {
             enabled: this.checkListAccess('pathologie')
           },
           {
-            "title": "Consultation Journalière",
+            "title": "Consultation journalière",
             "routing": "cons-jour",
             enabled: this.checkListAccess('consultation')
           },
           {
-            "title": "Consultation Mensuelle",
+            "title": "Consultation mensuelle",
             "routing": "cons-mens",
             enabled: this.checkListAccess('consultation')
           }
@@ -161,7 +161,7 @@ export class BamboAuthService {
             enabled: this.checkListAccess('pathologie')
           },
           {
-            "title": "Structures Partenaires",
+            "title": "Structures partenaires",
             "routing": "structurepartenaire",
             enabled: this.checkListAccess('structurepartenaire')
           }
@@ -175,12 +175,12 @@ export class BamboAuthService {
         },
         "sub": [
           {
-            "title": "Stock Médicaments",
+            "title": "Stock médicaments",
             "routing": "medicament",
             enabled: this.checkListAccess('medicament')
           },
           {
-            "title": "Bons de Réception",
+            "title": "Bons de réception",
             "routing": "bonreception",
             enabled: this.checkListAccess('bonreception')
           }
@@ -188,13 +188,13 @@ export class BamboAuthService {
         enabled: false
       },
       {
-        "title": "Gestion Médicale",
+        "title": "Gestion médicale",
         "icon": {
           "class": "icofont-medical-sign"
         },
         "sub": [
           {
-            "title": "Dossiers Médicaux",
+            "title": "Dossiers médicaux",
             "routing": "dossier",
             enabled: this.checkListAccess('dossier')
           },
@@ -209,12 +209,12 @@ export class BamboAuthService {
             enabled: this.checkListAccess('inputation')
           },
           {
-            "title": "Repos Médicaux",
+            "title": "Repos médicaux",
             "routing": "reposmedical",
             enabled: this.checkListAccess('reposmedical')
           },
           {
-            "title": "Rendez Vous",
+            "title": "Rendez-Vous",
             "routing": "rendezvous",
             enabled: this.checkListAccess('rendezvous')
           }
