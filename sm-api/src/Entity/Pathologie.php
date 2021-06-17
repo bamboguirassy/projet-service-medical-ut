@@ -35,6 +35,8 @@ class Pathologie
      */
     private $description;
 
+    
+
     public function getId()
     {
         return $this->id;
@@ -63,6 +65,9 @@ class Pathologie
 
         return $this;
     }
+
+   
+
 
 
 }
