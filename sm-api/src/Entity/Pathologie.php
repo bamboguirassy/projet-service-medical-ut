@@ -35,10 +35,7 @@ class Pathologie
      */
     private $description;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=PathologieConsultation::class, inversedBy="pathologie")
-     */
-    private $pathologieConsultation;
+  
 
     public function getId()
     {
@@ -69,17 +66,7 @@ class Pathologie
         return $this;
     }
 
-    public function getPathologieConsultation(): ?PathologieConsultation
-    {
-        return $this->pathologieConsultation;
-    }
-
-    public function setPathologieConsultation(?PathologieConsultation $pathologieConsultation): self
-    {
-        $this->pathologieConsultation = $pathologieConsultation;
-
-        return $this;
-    }
+    
 
 
 }

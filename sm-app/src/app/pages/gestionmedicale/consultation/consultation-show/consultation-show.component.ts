@@ -17,9 +17,8 @@ import { Pathologie } from 'src/app/pages/parametrage/pathologie/pathologie';
 export class ConsultationShowComponent extends BasePageComponent<Consultation> implements OnInit, OnDestroy {
   entity: Consultation;
   isPathologieModalVisible = false;
-  selectedPathologie: Pathologie;
+  selectedPathologies: Pathologie[]=[];
   pathologies: Pathologie[] = [];
-
   constructor(store: Store<IAppState>,
     public consultationSrv: ConsultationService,
     public activatedRoute: ActivatedRoute,
@@ -73,13 +72,16 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
       }, err => this.pathologieSrv.httpSrv.catchError(err));
   }
 
+
   setPathologieDiagnostiquee() {
-    this.entity.pathologieDiagnostiquee = this.selectedPathologie.id;
+   let pathologiesIds=this.selectedPathologies.map(pathologie => pathologie.id);
+    this.entity.pathologies=pathologiesIds;
+    console.log(this.entity)
     this.consultationSrv.update(this.entity)
-      .subscribe((data: any) => {
+      .subscribe((data: any) => {  
         this.entity = data;
+        this.consultationSrv.httpSrv.toastr.success("Modification réussie")
         this.closePathologieModal();
-        
       }, err => this.consultationSrv.httpSrv.catchError(err));
   }
 
