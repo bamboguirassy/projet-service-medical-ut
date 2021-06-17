@@ -29,7 +29,7 @@ export class DossierEditComponent extends BasePageComponent<Dossier> implements 
     { value: 'autres', label: 'Autres' },
   ];
   niveauInstructions = [
-    { value: 'non scolarisee', label: 'Non Scolarisée' },
+    { value: 'non scolarise', label: 'Non Scolarisé' },
     { value: 'primaire', label: 'Primaire' },
     { value: 'secondaire', label: 'Secondaire' },
     { value: 'superieur', label: 'Supérieur' },
