@@ -125,7 +125,7 @@
         <div class="col-12 col-md-6 col-lg-4">
           <tc-form-group>
             <tc-form-label>Pathologie diagnostiquée</tc-form-label>
-            <nz-select name="pathologie" id="pathologie" #pathologie="ngModel"
+            <nz-select name="pathologie" id="pathologie" #pathologie="ngModel" nzMode="multiple"
               nzPlaceHolder="Selectionner la pathologie" nzAllowClear nzShowSearch [(ngModel)]="selectedPathologie">
               <ng-container *ngFor="let pathologie of pathologies">
                 <nz-option [nzValue]="pathologie" [nzLabel]="pathologie.nom"></nz-option>

@@ -26,7 +26,7 @@ export class ConsultationNewComponent implements OnInit {
   docteurs: Docteur[] = [];
   pathologies: Pathologie[] = [];
   selectedDocteur: Docteur;
-  selectedPathologie: Pathologie;
+  selectedPathologie: Pathologie[]=[];
 
   constructor(public consultationSrv: ConsultationService,
     public router: Router,
@@ -46,7 +46,8 @@ export class ConsultationNewComponent implements OnInit {
     this.entity.dossier = this.dossier.id;
     this.entity.docteur = this.selectedDocteur.id;
     if (this.selectedPathologie) {
-      this.entity.pathologies = this.selectedPathologie.id;
+      let pathologiesIds=this.selectedPathologie.map(pathologie => pathologie.id);
+      this.entity.pathologies = pathologiesIds;
     }
     this.entity.date = this.datePipe.transform(this.entity.date, 'yyyy-MM-dd');
     this.consultationSrv.create(this.entity)
