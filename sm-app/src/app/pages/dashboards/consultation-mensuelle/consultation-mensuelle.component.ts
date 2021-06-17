@@ -23,6 +23,7 @@ export class ConsultationMensuelleComponent extends BasePageComponent<any> imple
   data: any;
   selectedAnnee: number;
   annees = [];
+  fileName:string = "Statistique_consultation_mensuelle_"
 
   //chart  
   rawChartData: ConsJourStats[];
