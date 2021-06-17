@@ -1,5 +1,5 @@
 import { PathologieService } from './../../../parametrage/pathologie/pathologie.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChildren } from '@angular/core';
 import { BasePageComponent } from 'src/app/pages/base-page';
 import { ConsultationService } from '../consultation.service';
 import { Store } from '@ngrx/store';
@@ -19,6 +19,7 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
   isPathologieModalVisible = false;
   selectedPathologie: Pathologie;
   pathologies: Pathologie[] = [];
+  @ViewChildren('form') form;
 
   constructor(store: Store<IAppState>,
     public consultationSrv: ConsultationService,
