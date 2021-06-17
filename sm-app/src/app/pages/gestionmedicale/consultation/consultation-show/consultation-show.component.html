@@ -102,16 +102,17 @@
     <div class="col-12 d-flex justify-contend-end">
         <tc-card class="mb-1" title="Pathologie diagnostiquée">
 
-            <nz-select [nzDisabled]="true" [(ngModel)]="entity.pathologies" [nzSize]="size" nzMode="tags" >
+            <a href="javascript:void(0)" (click)="isPathologieModalVisible=true"
+                *ngIf="!entity?.pathologies && (consultationSrv.resourceName|editable)">Préciser
+                le résultat du diagnostic</a>
+
+            <nz-select *ngIf="entity?.pathologies" [nzDisabled]="true" [(ngModel)]="entity.pathologies" [nzSize]="size" nzMode="tags" >
                 <nz-option *ngFor="let pathologie of entity?.pathologies" [nzLabel]="pathologie?.nom" [nzValue]="pathologie"></nz-option>
               </nz-select>
 
             <a href="javascript:void(0)" (click)="isPathologieModalVisible=true"
-                *ngIf="(consultationSrv.resourceName|editable)">Modifier le resultat du diagnostique</a>
+                *ngIf=" entity?.pathologies && (consultationSrv.resourceName|editable)">Modifier le resultat du diagnostique</a>
    
-            <!-- &nbsp; <a href="javascript:void(0)" (click)="isPathologieModalVisible=true"
-                *ngIf="(consultationSrv.resourceName|editable)">Changer
-                résultat diagnostic</a> -->
         </tc-card>
     </div>
     <div class="col-12">
@@ -142,24 +143,10 @@
                 <div class="col-12">
                     <tc-form-group>
                         <tc-form-label>Pathologie</tc-form-label>
-
-
-                        <nz-select name="pathologie" id="pathologie" #pathologie="ngModel" nzMode="multiple" nzPlaceHolder="Selectionner pathologie(s)" required="required"
+                        <nz-select name="pathologies" id="pathologie" #pathologie="ngModel" nzMode="multiple" nzPlaceHolder="Selectionner pathologie(s)" required="required"
                         [(ngModel)]="selectedPathologies">
                         <nz-option *ngFor="let pathologie of pathologies" [nzLabel]="pathologie?.nom" [nzValue]="pathologie"></nz-option>
                       </nz-select>
-
-
-
-                        <!-- <nz-select name="pathologie" id="pathologie" #pathologie="ngModel" required="required"
-                            nzPlaceHolder="Selectionner la pathologie" nzAllowClear nzShowSearch
-                            [(ngModel)]="selectedPathologie">
-                            <ng-container *ngFor="let pathologie of pathologies">
-                                <nz-option [nzValue]="pathologie" [nzLabel]="pathologie?.nom"></nz-option>
-                            </ng-container>
-                        </nz-select> -->
-
-
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="pathologie">
                             </app-form-field-validation-message>
