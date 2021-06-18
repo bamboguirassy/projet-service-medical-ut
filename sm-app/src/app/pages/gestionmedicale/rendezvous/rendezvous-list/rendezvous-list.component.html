@@ -14,10 +14,8 @@
         <button tc-button afterIcon="icofont-refresh" (click)="findAll()">Rafraichir</button>
       </div>
     </div>
-
     <nz-table class="mt-5 scroll-x" [nzBordered]="'true'" [nzShowPagination]="true" [nzPageSize]="10" [nzData]="items"
       #nestedTable>
-
       <thead>
         <tr>
           <th></th>
@@ -30,10 +28,9 @@
           <th>Date RV</th>
           <th>Déscription</th>
           <th>Ajouté par</th>
+          <th>Actions</th>
         </tr>
       </thead>
-
-
       <tbody>
         <ng-template ngFor let-data [ngForOf]="nestedTable.data">
           <tr>
@@ -57,89 +54,75 @@
               <tc-badge *ngIf="!data.description" view="error"><span>Indéfinie</span></tc-badge>
             </td>
             <td><span class="nowrap">{{ data.userEmail }}</span></td>
+            <td>
+              <div class="actions">
+                <button *ngIf="rendezVousSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
+                  [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" (click)="setEditItem(data)"></button>
+                <button *ngIf="rendezVousSrv.resourceName|deletable" (click)="remove(data)" tc-button
+                  [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
+                  [size]="'sm'"></button>
+              </div>
+            </td>
           </tr>
-          
-            <tr *ngIf="data.mesure" [nzExpand]="data.expand">
-              <nz-table class=" my-2" #innerTable [nzData]="toArray(data.mesure)" nzSize="small" [nzShowPagination]="false">
-                <tbody>
-                  <tr>
-                    <td>Tension artérielle</td>
-                    <td>{{ data.mesure.tensionArterielle }}</td>
-                  </tr>
-                  <tr>
-                    <td>Température</td>
-                    <td>{{ data.mesure.temperature }}</td>
-                  </tr>
-                  <tr>
-                    <td>Pouls</td>
-                    <td>{{ data.mesure.pouls }}</td>
-                  </tr>
-                  <tr>
-                    <td>Fréquence respiratoire</td>
-                    <td>{{ data.mesure.frequenceRespiratoire }}</td>
-                  </tr>
-                  <tr>
-                    <td>Poids</td>
-                    <td>{{ data.mesure.poids }}</td>
-                  </tr>
-                  <tr>
-                    <td>Glycémie</td>
-                    <td>{{ data.mesure.glycemie }}</td>
-                  </tr>
-                  <tr>
-                    <td>Examen paracliniques</td>
-                    <td>{{ data.mesure.examenParacliniques }}</td>
-                  </tr>
-                  <tr>
-                    <td>Examen cliniques</td>
-                    <td>{{ data.mesure.examenCliniques }}</td>
-                  </tr>
-                </tbody>
-                <!-- <tbody>
-                  <tr *ngFor="let data of innerTable.data">
-                    <td>{{ data.date }}</td>
-                    <td>{{ data.name }}</td>
-                    <td>
-                      <nz-badge [nzStatus]="'success'" [nzText]="'Finished'"></nz-badge>
-                    </td>
-                    <td>{{ data.upgradeNum }}</td>
-                    <td>
-                      <span class="table-operation">
-                        <a nz-dropdown class="operation" [nzDropdownMenu]="menu"> Pause <i nz-icon nzType="down"></i> </a>
-                        <nz-dropdown-menu #menu="nzDropdownMenu">
-                          <ul nz-menu>
-                            <li nz-menu-item>
-                              <a>Action 1</a>
-                            </li>
-                            <li nz-menu-item>
-                              <a>Action 2</a>
-                            </li>
-                          </ul>
-                        </nz-dropdown-menu>
-                        <nz-divider nzType="vertical"></nz-divider>
-                        <a class="operation">Stop</a>
-                        <nz-divider nzType="vertical"></nz-divider>
-                        <a>More</a>
-                      </span>
-                    </td>
-                  </tr>
-                </tbody> -->
-              </nz-table>
-            </tr>
-
-        </ng-template>
+          <tr *ngIf="data.mesure" [nzExpand]="data.expand">
+            <nz-table class="my-2 table-striped" #innerTable [nzData]="toArray(data.mesure)" nzSize="small"
+              [nzShowPagination]="false">
+      <tbody>
+        <b>
+          <tr class="col-12">
+            <td class="col-2">Tension artérielle :</td>
+            <td class="col-4"><span *ngIf="data.mesure.tensionArterielle" class="nowrap">{{
+                data.mesure.tensionArterielle }}</span>
+              <tc-badge *ngIf="!data.mesure.tensionArterielle" [outline]="true" view="error"><span>Indéfinie</span>
+              </tc-badge>
+            </td>
+            <td class="col-2">Température :</td>
+            <td class="col-4"><span *ngIf="data.mesure.temperature" class="nowrap">{{ data.mesure.temperature }}</span>
+              <tc-badge *ngIf="!data.mesure.temperature" [outline]="true" view="error"><span>Indéfinie</span></tc-badge>
+            </td>
+          </tr>
+          <tr class="col-12">
+            <td class="col-2">Pouls :</td>
+            <td class="col-4"><span *ngIf="data.mesure.pouls" class="nowrap">{{ data.mesure.pouls }}</span>
+              <tc-badge *ngIf="!data.mesure.pouls" [outline]="true" view="error"><span>Indéfinie</span></tc-badge>
+            </td>
+            <td class="col-2">Fréquence respiratoire :</td>
+            <td class="col-4"><span *ngIf="data.mesure.frequenceRespiratoire" class="nowrap">{{
+                data.mesure.frequenceRespiratoire }}</span>
+              <tc-badge *ngIf="!data.mesure.frequenceRespiratoire" [outline]="true" view="error"><span>Indéfinie</span>
+              </tc-badge>
+            </td>
+          </tr>
+          <tr class="col-12">
+            <td class="col-2">Poids :</td>
+            <td class="col-4"><span *ngIf="data.mesure.poids" class="nowrap">{{ data.mesure.poids }}</span>
+              <tc-badge *ngIf="!data.mesure.poids" [outline]="true" view="error"><span>Indéfinie</span></tc-badge>
+            </td>
+            <td class="col-2">Glycémie :</td>
+            <td class="col-4"><span *ngIf="data.mesure.glycemie" class="nowrap">{{ data.mesure.glycemie }}</span>
+              <tc-badge *ngIf="!data.mesure.glycemie" [outline]="true" view="error"><span>Indéfinie</span></tc-badge>
+            </td>
+          </tr>
+          <tr class="col-12">
+            <td class="col-2">Examen paracliniques :</td>
+            <td class="col-4"><span *ngIf="data.mesure.examenParacliniques" class="nowrap">{{
+                data.mesure.examenParacliniques }}</span>
+              <tc-badge *ngIf="!data.mesure.examenParacliniques" [outline]="true" view="error"><span>Indéfinie</span>
+              </tc-badge>
+            </td>
+            <td class="col-2">Examen cliniques :</td>
+            <td class="col-4"><span *ngIf="data.mesure.examenCliniques" class="nowrap">{{ data.mesure.examenCliniques
+                }}</span>
+              <tc-badge *ngIf="!data.mesure.examenCliniques" [outline]="true" view="error"><span>Indéfinie</span>
+              </tc-badge>
+            </td>
+          </tr>
+        </b>
       </tbody>
-
-      <!-- <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
-        <ng-template #tableTDTemplate let-row="row">
-          <div class="actions">
-            <button *ngIf="rendezVousSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
-              [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" (click)="setEditItem(row)"></button>
-            <button *ngIf="rendezVousSrv.resourceName|deletable" (click)="remove(row)" tc-button
-              [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
-          </div>
-        </ng-template>
-      </tc-table-col> -->
+    </nz-table>
+    </tr>
+    </ng-template>
+    </tbody>
     </nz-table>
     <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
   </tc-card>

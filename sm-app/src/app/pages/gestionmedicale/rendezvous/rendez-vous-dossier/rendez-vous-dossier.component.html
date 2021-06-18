@@ -1,46 +1,102 @@
 <tc-card *ngIf="rendezVousSrv.resourceName|listable" title="Rendez-vous">
-    <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
-        <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
-            <ng-template #tableTDTemplate let-row="row">
-                <div class="actions nowrap">
-                    <button *ngIf="rendezVousSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
-                        [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"
-                        (click)="setEditItem(row)"></button>
-                    <button class="ml-1" *ngIf="rendezVousSrv.resourceName|deletable" (click)="remove(row)" tc-button
-                        [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
-                        [size]="'sm'"></button>
-                </div>
+    <nz-table class="mt-5 scroll-x" [nzBordered]="'true'" [nzShowPagination]="true" [nzPageSize]="10" [nzData]="items"
+        #nestedTable>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Actions</th>
+                <th>Date RV</th>
+                <th>Présence</th>
+                <th>Déscription</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-template ngFor let-data [ngForOf]="nestedTable.data">
+                <tr>
+                    <td [(nzExpand)]="data.expand"></td>
+                    <td>
+                        <div class="actions nowrap">
+                            <button *ngIf="rendezVousSrv.resourceName|editable" tc-button
+                                [afterIcon]="'icofont-ui-edit'" [view]="'warning'" [square]="true" [tcShape]="500"
+                                [size]="'sm'" (click)="setEditItem(data)"></button>
+                            <button class="ml-1" *ngIf="rendezVousSrv.resourceName|deletable" (click)="remove(data)"
+                                tc-button [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true"
+                                [tcShape]="500" [size]="'sm'"></button>
+                        </div>
+                    </td>
+                    <td>
+                        <tc-badge view="info">{{data.dateRendezVous | date: 'dd/MM/yyyy'}}</tc-badge>
+                    </td>
+                    <td>
+                        <tc-badge view="{{ data.presence ? 'success' : 'error' }}"><span class="nowrap">{{ data.presence
+                                ? 'Oui' :
+                                'Pas encore' }}</span></tc-badge>
+                    </td>
+                    <td>
+                        <span *ngIf="data.description" class="nowrap">{{ data.description }}</span>
+                        <tc-badge *ngIf="!data.description" view="error"><span>Indéfinie</span></tc-badge>
+                    </td>
+                </tr>
+                <tr *ngIf="data.mesure" [nzExpand]="data.expand">
+                  <nz-table class="my-2 table-striped" #innerTable [nzData]="toArray(data.mesure)" nzSize="small"
+                    [nzShowPagination]="false">
+            <tbody>
+              <b>
+                <tr class="col-12">
+                  <td class="col-2">Tension artérielle :</td>
+                  <td class="col-4"><span *ngIf="data.mesure.tensionArterielle" class="nowrap">{{
+                      data.mesure.tensionArterielle }}</span>
+                    <tc-badge *ngIf="!data.mesure.tensionArterielle" [outline]="true" view="error"><span>Indéfinie</span>
+                    </tc-badge>
+                  </td>
+                  <td class="col-2">Température :</td>
+                  <td class="col-4"><span *ngIf="data.mesure.temperature" class="nowrap">{{ data.mesure.temperature }}</span>
+                    <tc-badge *ngIf="!data.mesure.temperature" [outline]="true" view="error"><span>Indéfinie</span></tc-badge>
+                  </td>
+                </tr>
+                <tr class="col-12">
+                  <td class="col-2">Pouls :</td>
+                  <td class="col-4"><span *ngIf="data.mesure.pouls" class="nowrap">{{ data.mesure.pouls }}</span>
+                    <tc-badge *ngIf="!data.mesure.pouls" [outline]="true" view="error"><span>Indéfinie</span></tc-badge>
+                  </td>
+                  <td class="col-2">Fréquence respiratoire :</td>
+                  <td class="col-4"><span *ngIf="data.mesure.frequenceRespiratoire" class="nowrap">{{
+                      data.mesure.frequenceRespiratoire }}</span>
+                    <tc-badge *ngIf="!data.mesure.frequenceRespiratoire" [outline]="true" view="error"><span>Indéfinie</span>
+                    </tc-badge>
+                  </td>
+                </tr>
+                <tr class="col-12">
+                  <td class="col-2">Poids :</td>
+                  <td class="col-4"><span *ngIf="data.mesure.poids" class="nowrap">{{ data.mesure.poids }}</span>
+                    <tc-badge *ngIf="!data.mesure.poids" [outline]="true" view="error"><span>Indéfinie</span></tc-badge>
+                  </td>
+                  <td class="col-2">Glycémie :</td>
+                  <td class="col-4"><span *ngIf="data.mesure.glycemie" class="nowrap">{{ data.mesure.glycemie }}</span>
+                    <tc-badge *ngIf="!data.mesure.glycemie" [outline]="true" view="error"><span>Indéfinie</span></tc-badge>
+                  </td>
+                </tr>
+                <tr class="col-12">
+                  <td class="col-2">Examen paracliniques :</td>
+                  <td class="col-4"><span *ngIf="data.mesure.examenParacliniques" class="nowrap">{{
+                      data.mesure.examenParacliniques }}</span>
+                    <tc-badge *ngIf="!data.mesure.examenParacliniques" [outline]="true" view="error"><span>Indéfinie</span>
+                    </tc-badge>
+                  </td>
+                  <td class="col-2">Examen cliniques :</td>
+                  <td class="col-4"><span *ngIf="data.mesure.examenCliniques" class="nowrap">{{ data.mesure.examenCliniques
+                      }}</span>
+                    <tc-badge *ngIf="!data.mesure.examenCliniques" [outline]="true" view="error"><span>Indéfinie</span>
+                    </tc-badge>
+                  </td>
+                </tr>
+              </b>
+            </tbody>
+          </nz-table>
+          </tr>
             </ng-template>
-        </tc-table-col>
-        <!-- <tc-table-col [columnTitle]="'Date Ajout'" [columnName]="'dateCreation'" [enableSorting]="true">
-            <ng-template #tableTDTemplate let-value>
-                <span class="nowrap">{{ value|date:'dd/MM/yyyy HH:mm' }}</span>
-            </ng-template>
-        </tc-table-col> -->
-        <tc-table-col [columnTitle]="'Date RV'" [columnName]="'dateRendezVous'" [enableSorting]="true">
-            <ng-template #tableTDTemplate let-value>
-                <tc-badge view="info">{{ value|date:'dd/MM/yyyy' }}</tc-badge>
-            </ng-template>
-        </tc-table-col>
-        <tc-table-col [columnTitle]="'Présence'" [columnName]="'presence'" [enableSorting]="true">
-            <ng-template #tableTDTemplate let-value>
-                <tc-badge view="{{value ? 'success' : 'error'}}">
-                    <span class="nowrap">{{ value ? 'Oui' : 'Pas encore' }} </span>
-                </tc-badge>
-            </ng-template>
-        </tc-table-col>
-        <tc-table-col [columnTitle]="'Description'" [columnName]="'description'" [enableSorting]="true">
-            <ng-template #tableTDTemplate let-value>
-                <span class="nowrap" *ngIf="value">{{ value }}</span>
-                <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-            </ng-template>
-        </tc-table-col>
-        <!-- <tc-table-col [columnTitle]="'Ajouté par'" [columnName]="'userEmail'" [enableSorting]="true">
-            <ng-template #tableTDTemplate let-value>
-                <span class="nowrap">{{ value }}</span>
-            </ng-template>
-        </tc-table-col> -->
-    </tc-table>
+        </tbody>
+    </nz-table>
     <app-empty-table-message *ngIf="!items?.length"></app-empty-table-message>
 </tc-card>
 <app-access-denied *ngIf="!(rendezVousSrv.resourceName|listable)"></app-access-denied>

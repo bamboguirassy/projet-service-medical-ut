@@ -49,9 +49,7 @@ OnDestroy {
 
   handlePostLoad() {
     this.dates = null;
-    this.items.forEach(item => item.expand = false);
-    console.log("RV;;;;;;", this.items);
-    
+    this.items.forEach(item => item.expand = false);    
   }
 
   filter() {
@@ -96,8 +94,6 @@ OnDestroy {
   }
 
   toArray(mesure: any){
-    console.log("MESURE::::", mesure);
-    
     let a = [];
     a.push(mesure);
     return a;

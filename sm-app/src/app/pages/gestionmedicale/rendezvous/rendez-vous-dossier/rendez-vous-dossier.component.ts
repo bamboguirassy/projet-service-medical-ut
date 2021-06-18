@@ -26,7 +26,9 @@ export class RendezVousDossierComponent implements OnInit {
 
   constructor(public rendezVousSrv: RendezVousService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.handlePostLoad();
+   }
 
   remove(entity: RendezVous) {
     Swal.fire({
@@ -54,6 +56,10 @@ export class RendezVousDossierComponent implements OnInit {
     });
   }
 
+  handlePostLoad() {
+    this.items.forEach(item => item.expand = false);    
+  }
+
   setEditItem(item: RendezVous) {
     this.selectedItem = item;
     this.isEditModalVisible = true;
@@ -71,4 +77,9 @@ export class RendezVousDossierComponent implements OnInit {
     this.isEditModalVisible = false;
   }
 
+  toArray(mesure: any){
+    let a = [];
+    a.push(mesure);
+    return a;
+  }
 }
