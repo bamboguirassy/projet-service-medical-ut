@@ -38,6 +38,7 @@ export class ReposMedicalEditComponent implements OnInit {
     this.entity.date = this.datePipe.transform(this.entity.date, 'yyyy-MM-dd');
     this.reposMedicalSrv.update(this.entity)
       .subscribe((data: any) => {
+        this.closeModal();
         this.update.emit(data);
       });
   }

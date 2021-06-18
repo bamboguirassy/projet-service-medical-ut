@@ -75,5 +75,5 @@
   <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
 </tc-card>
 <app-access-denied *ngIf="!(reposMedicalSrv.resourceName|listable)"></app-access-denied>
-<app-reposmedical-edit (update)="findByDossier()" *ngIf="selectedItem" [entity]="selectedItem"
+<app-reposmedical-edit (update)="findAll()" *ngIf="selectedItem" [entity]="selectedItem"
   [visible]="isEditModalVisible" (close)="closeEditModal()"></app-reposmedical-edit>

@@ -1,0 +1,52 @@
+<tc-card *ngIf="mesureSrv.resourceName|showable" [tcGradient]="lightGradient">
+    <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
+        <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-mail-reply">Retour</button>
+        <button [outline]="true" (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
+            beforeIcon="icofont-refresh">Rafraichir</button>
+        <button (click)="remove(entity)" *ngIf="mesureSrv.resourceName|deletable" [outline]="true" tc-button view="error"
+            beforeIcon="icofont-trash" class="ml-1">Supprimer</button>
+        <button *ngIf="mesureSrv.resourceName|editable" [routerLink]="['/'+orientation,mesureSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+            class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit">Modifier</button>
+    </tc-card>
+    <div class="row">
+        <div class="col-12">
+            <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
+                <table class="table">
+                                                                                                <tr>
+                            <th>TensionArterielle</th>
+                            <td>{{ entity?.tensionArterielle }}</td>
+                        </tr>
+                                                                                <tr>
+                            <th>Temperature</th>
+                            <td>{{ entity?.temperature }}</td>
+                        </tr>
+                                                                                <tr>
+                            <th>Pouls</th>
+                            <td>{{ entity?.pouls }}</td>
+                        </tr>
+                                                                                <tr>
+                            <th>FrequenceRespiratoire</th>
+                            <td>{{ entity?.frequenceRespiratoire }}</td>
+                        </tr>
+                                                                                <tr>
+                            <th>Poids</th>
+                            <td>{{ entity?.poids }}</td>
+                        </tr>
+                                                                                <tr>
+                            <th>Glycemie</th>
+                            <td>{{ entity?.glycemie }}</td>
+                        </tr>
+                                                                                <tr>
+                            <th>ExamenParacliniques</th>
+                            <td>{{ entity?.examenParacliniques }}</td>
+                        </tr>
+                                                                                <tr>
+                            <th>ExamenCliniques</th>
+                            <td>{{ entity?.examenCliniques }}</td>
+                        </tr>
+                                                    </table>
+            </tc-card>
+        </div>
+    </div>
+</tc-card>
+<app-access-denied *ngIf="!(mesureSrv.resourceName|showable)"></app-access-denied>
