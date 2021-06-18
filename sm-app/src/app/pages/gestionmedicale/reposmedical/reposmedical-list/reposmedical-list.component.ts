@@ -52,9 +52,15 @@ export class ReposMedicalListComponent extends BasePageComponent<ReposMedical> i
   handlePostLoad() {
     this.dates = null;
   }
+
   setEditItem(item: ReposMedical) {
     this.selectedItem = item;
     this.isEditModalVisible = true;
+  }
+
+  findAll() {
+    this.closeEditModal();
+    super.findAll();
   }
 
   closeEditModal() {

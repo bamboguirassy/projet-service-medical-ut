@@ -394,7 +394,8 @@ class Consultation
     {
         return $this->pathologies;
     }
-/**
+ 
+/*
     public function addPathology(Pathologie $pathology): self
     {
         if (!$this->pathologies->contains($pathology)) {

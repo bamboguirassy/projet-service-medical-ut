@@ -62,6 +62,11 @@ class RendezVous
      */
     private $consultation;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Mesure::class, mappedBy="rendezVous", cascade={"persist", "remove"})
+     */
+    private $mesure;
+
     public function getId()
     {
         return $this->id;
@@ -135,6 +140,23 @@ class RendezVous
     public function setConsultation(Consultation $consultation): self
     {
         $this->consultation = $consultation;
+
+        return $this;
+    }
+
+    public function getMesure(): ?Mesure
+    {
+        return $this->mesure;
+    }
+
+    public function setMesure(Mesure $mesure): self
+    {
+        $this->mesure = $mesure;
+
+        // set the owning side of the relation if necessary
+        if ($mesure->getRendezVous() !== $this) {
+            $mesure->setRendezVous($this);
+        }
 
         return $this;
     }
