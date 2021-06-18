@@ -1,4 +1,4 @@
-<tc-card *ngIf="rendezVousSrv.resourceName|listable"  title="Rendez-vous">
+<tc-card *ngIf="rendezVousSrv.resourceName|listable" title="Rendez-vous">
     <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
         <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
             <ng-template #tableTDTemplate let-row="row">
@@ -44,4 +44,5 @@
     <app-empty-table-message *ngIf="!items?.length"></app-empty-table-message>
 </tc-card>
 <app-access-denied *ngIf="!(rendezVousSrv.resourceName|listable)"></app-access-denied>
-<app-rendezvous-edit (update)="findByConsultation()" [entity]="selectedItem" [visible]="isEditModalVisible" (close)="closeEditModal()"></app-rendezvous-edit>
+<app-rendezvous-edit (update)="findByConsultation()" [entity]="selectedItem" [visible]="isEditModalVisible"
+    (close)="closeEditModal()"></app-rendezvous-edit>

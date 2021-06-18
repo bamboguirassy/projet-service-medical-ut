@@ -9,7 +9,6 @@ export class Consultation extends BamboAbstractObject {
     date: any;
     userEmail: string;
     docteur: Docteur;
-    pathologieDiagnostiquee?: Pathologie;
     dossier: Dossier;
     symptomes?: Symptome[];
     medicamentRemis?: MedicamentRemis[];
@@ -23,4 +22,5 @@ export class Consultation extends BamboAbstractObject {
     frequenceRespiratoire: string;
     poids: string;
     glycemie: string;
+    pathologies: any[];
 }

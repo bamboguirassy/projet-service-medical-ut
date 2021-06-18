@@ -26,7 +26,7 @@ export class SymptomeNewComponent implements OnInit {
 
 
   constructor(public symptomeSrv: SymptomeService,
-              public router: Router) {
+    public router: Router) {
     this.entity = new Symptome();
   }
 
@@ -39,7 +39,7 @@ export class SymptomeNewComponent implements OnInit {
       .subscribe((data: any) => {
         this.creation.emit(data);
         this.closeModal();
-        this.entity = new Symptome();
+        this.symptomes.length=0;
       }, error => this.symptomeSrv.httpSrv.catchError(error));
   }
 
@@ -51,11 +51,13 @@ export class SymptomeNewComponent implements OnInit {
   // close modal window
   closeModal() {
     this.isModalVisible = false;
+
   }
 
 
   handleClose(removedTag: {}): void {
     this.symptomes = this.symptomes.filter(tag => tag !== removedTag);
+    
   }
 
   sliceTagName(tag: string): string {

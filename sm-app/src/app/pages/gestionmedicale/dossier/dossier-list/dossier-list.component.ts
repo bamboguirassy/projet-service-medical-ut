@@ -15,20 +15,20 @@ import { Dossier } from '../dossier';
 })
 export class DossierListComponent extends BasePageComponent<Dossier> implements OnInit, OnDestroy {
   item: any;
-  
+
   constructor(store: Store<IAppState>, public router: Router,
-              public dossierSrv: DossierService, public grhSrv: GRHServiceService) {
+    public dossierSrv: DossierService, public grhSrv: GRHServiceService) {
     super(store, dossierSrv);
 
     this.pageData = {
-      title: 'Liste des Dossiers Médicaux',
+      title: 'Liste des dossiers médicaux',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des dossiers'
+          title: 'Liste des dossiers médicaux'
         }
       ]
     };
@@ -47,9 +47,9 @@ export class DossierListComponent extends BasePageComponent<Dossier> implements 
     this.findAll();
   }
 
-  handlePostLoad(){}
+  handlePostLoad() { }
 
-  onCreate(){
+  onCreate() {
     this.findAll();
   }
 

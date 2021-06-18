@@ -17,8 +17,6 @@
         <div class="actions">
           <button *ngIf="dossierSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'" [view]="'warning'"
             [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
-          <!-- <button *ngIf="dossierSrv.resourceName|clonable" [outline]="true" tc-button [afterIcon]="'icofont-copy'"
-            [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'clone']"></button> -->
           <button *ngIf="dossierSrv.resourceName|deletable" (click)="remove(row)" tc-button
             [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
           <button *ngIf="dossierSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'" [view]="'accent'"
@@ -26,13 +24,14 @@
         </div>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Numero Dossier'" [columnName]="'numero'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Numéro dossier'" [columnName]="'numero'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value let-row="row">
-        <span class="nowrap" *ngIf="dossierSrv.resourceName|showable"><a [routerLink]="[row.id]" routerLinkActive="router-link-active" >{{ value }}</a></span>
+        <span class="nowrap" *ngIf="dossierSrv.resourceName|showable"><a [routerLink]="[row.id]"
+            routerLinkActive="router-link-active">{{ value }}</a></span>
         <span class="nowrap" *ngIf="!dossierSrv.resourceName|showable">{{ value }}</span>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Prenoms'" [columnName]="'prenoms'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Prénoms'" [columnName]="'prenoms'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <span class="nowrap">{{ value }}</span>
       </ng-template>
@@ -42,14 +41,14 @@
         <span class="nowrap">{{ value }}</span>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Date Naissance'" [columnName]="'dateNaissance'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Date de naissance'" [columnName]="'dateNaissance'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <span class="nowrap">{{ value|date:'dd/MM/yyyy' }}</span>
       </ng-template>
     </tc-table-col>
     <tc-table-col [columnTitle]="'CNI'" [columnName]="'cni'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value" >{{ value }}</span>
+        <span class="nowrap" *ngIf="value">{{ value }}</span>
         <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
       </ng-template>
     </tc-table-col>
@@ -70,14 +69,14 @@
         <span class="nowrap">{{ value }}</span>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Type Patient'" [columnName]="'typePatient'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Type patient'" [columnName]="'typePatient'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <span class="nowrap">{{ value }}</span>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Lien Parenté'" [columnName]="'lienParente'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Lien parenté'" [columnName]="'lienParente'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value" >{{ value }}</span>
+        <span class="nowrap" *ngIf="value">{{ value }}</span>
         <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
       </ng-template>
     </tc-table-col>
@@ -86,15 +85,15 @@
         <span class="nowrap">{{ value }}</span>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Prenom Travailleur'" [columnName]="'prenomTravailleur'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Prénom travailleur'" [columnName]="'prenomTravailleur'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value" >{{ value }}</span>
+        <span class="nowrap" *ngIf="value">{{ value }}</span>
         <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Nom Travailleur'" [columnName]="'nomTravailleur'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Nom travailleur'" [columnName]="'nomTravailleur'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value" >{{ value }}</span>
+        <span class="nowrap" *ngIf="value">{{ value }}</span>
         <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
       </ng-template>
     </tc-table-col>
@@ -103,7 +102,7 @@
         <span class="nowrap">{{ value }}</span>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Date Creation'" [columnName]="'dateCreation'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Date création'" [columnName]="'dateCreation'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <span class="nowrap">{{ value|date:'dd/MM/yyyy' }}</span>
       </ng-template>

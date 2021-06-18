@@ -22,47 +22,48 @@ export class ConsultationJournaliereComponent extends BasePageComponent<any> imp
   ];
   isLoad = false;
   data: any;
+  fileName: string = "Statistique_consultation_journalière_"
   selectedAnnee: number;
   selectedMois: any;
   annees = [];
-  listOfMonths = {'01':'Janvier', '02':'Février', '03':'Mars', '04':'Avril', '05':'Mai', '06':'Juin', '07':'Juillet', '08':'Aout', '09':'Septembre', '10':'Octobre', '11':'Novembre', '12':'Décembre'};
+  listOfMonths = { '01': 'Janvier', '02': 'Février', '03': 'Mars', '04': 'Avril', '05': 'Mai', '06': 'Juin', '07': 'Juillet', '08': 'Aout', '09': 'Septembre', '10': 'Octobre', '11': 'Novembre', '12': 'Décembre' };
 
   //chart  
-   rawChartData: ConsJourStats[];
-   chartLabels: Label[] = [];
-   chartType: ChartType = 'bar';
-   chartLegend = true;
-   chartPlugins = [];
-   chartData: ChartDataSets[] = [];
-   methodName: string;
-   loading = false;
-   chartOptions: ChartOptions = {
-     responsive: true,
-   };
-   selectedTypeDiagram: ChartType = 'bar';
-   tableData: any;
+  rawChartData: ConsJourStats[];
+  chartLabels: Label[] = [];
+  chartType: ChartType = 'bar';
+  chartLegend = true;
+  chartPlugins = [];
+  chartData: ChartDataSets[] = [];
+  methodName: string;
+  loading = false;
+  chartOptions: ChartOptions = {
+    responsive: true,
+  };
+  selectedTypeDiagram: ChartType = 'bar';
+  tableData: any;
 
- constructor(
-     store: Store<IAppState>,
+  constructor(
+    store: Store<IAppState>,
     public consultationSrv: ConsultationService
-   ) {
-     super(store, consultationSrv);
+  ) {
+    super(store, consultationSrv);
 
-     this.pageData = {
-       title: 'Statistique Consultation Journalière',
-       loaded: true,
-       breadcrumbs: [
-         {
-           title: 'Statistique',
-           route: 'default-dashboard'
-         },
-         {
-           title: 'Statistique Consultation Journalière'
-         }
-       ]
-     };
-     this.selectedAnnee = new Date().getFullYear();
-   }
+    this.pageData = {
+      title: 'Statistique consultation journalière',
+      loaded: true,
+      breadcrumbs: [
+        {
+          title: 'Statistique',
+          route: 'default-dashboard'
+        },
+        {
+          title: 'Statistique consultation journalière'
+        }
+      ]
+    };
+    this.selectedAnnee = new Date().getFullYear();
+  }
 
   ngOnInit(): void {
     super.ngOnInit();
@@ -70,8 +71,8 @@ export class ConsultationJournaliereComponent extends BasePageComponent<any> imp
   }
 
   getData() {
-    if(this.selectedMois && this.selectedAnnee){      
-      this.consultationSrv.getDaylyStatistic(this.selectedMois,this.selectedAnnee)
+    if (this.selectedMois && this.selectedAnnee) {
+      this.consultationSrv.getDaylyStatistic(this.selectedMois, this.selectedAnnee)
         .subscribe((data: any) => {
           this.data = data;
         }, err => this.consultationSrv.httpSrv.catchError(err));
@@ -83,33 +84,33 @@ export class ConsultationJournaliereComponent extends BasePageComponent<any> imp
   rangeAnnee() {
     const anneeCourante = new Date().getFullYear();
     const anneeStart = 2020;
-     for (let i = anneeCourante; i >= anneeStart; i--) {
+    for (let i = anneeCourante; i >= anneeStart; i--) {
       this.annees.push(i);
-     }
-     return this.annees;
+    }
+    return this.annees;
   }
   setDataChart() {
-     this.chartOptions = {
-       responsive: true
-     };
-     this.chartLabels = this.rawChartData.map(r => "J"+r.day);
-     this.chartType = 'bar';
-     this.chartLegend = true;
-     this.chartPlugins = [];
+    this.chartOptions = {
+      responsive: true
+    };
+    this.chartLabels = this.rawChartData.map(r => "J" + r.day);
+    this.chartType = 'bar';
+    this.chartLegend = true;
+    this.chartPlugins = [];
 
-     this.chartData = [
-       { data: this.rawChartData.map(r => +r.pats), label: 'Pats' },
-       { data: this.rawChartData.map(r => +r.per), label: 'Per' },
-       { data: this.rawChartData.map(r => +r.famille), label: 'Famille' },
-       { data: this.rawChartData.map(r => +r.etudiant), label: 'Etudiant' }
-     ];
-   }
+    this.chartData = [
+      { data: this.rawChartData.map(r => +r.pats), label: 'Pats' },
+      { data: this.rawChartData.map(r => +r.per), label: 'Per' },
+      { data: this.rawChartData.map(r => +r.famille), label: 'Famille' },
+      { data: this.rawChartData.map(r => +r.etudiant), label: 'Etudiant' }
+    ];
+  }
 
 
-   buildDiagram() {
-    if(this.selectedMois && this.selectedAnnee){
+  buildDiagram() {
+    if (this.selectedMois && this.selectedAnnee) {
       this.loading = true;
-      this.consultationSrv.getDaylyStatistic(this.selectedMois,this.selectedAnnee)
+      this.consultationSrv.getDaylyStatistic(this.selectedMois, this.selectedAnnee)
         .pipe(finalize(() => this.loading = false))
         .subscribe((data: any) => {
           this.isLoad = true;
@@ -117,13 +118,13 @@ export class ConsultationJournaliereComponent extends BasePageComponent<any> imp
         }, err => {
           this.consultationSrv.httpSrv.handleError(err);
         });
-      }
-   }
+    }
+  }
 
-   handlePostFetch(data: []) {
-     this.rawChartData = data;
-     this.setDataChart();
-   }
- 
+  handlePostFetch(data: []) {
+    this.rawChartData = data;
+    this.setDataChart();
+  }
+
 
 }

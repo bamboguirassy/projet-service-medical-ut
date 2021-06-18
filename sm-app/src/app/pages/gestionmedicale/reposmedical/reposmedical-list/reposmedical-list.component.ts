@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { BasePageComponent } from '../../../base-page/base-page.component';
 import { IAppState } from './../../../../interfaces/app-state';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ReposMedicalService } from '../reposmedical.service';
 import { ReposMedical } from '../reposmedical';
@@ -14,21 +14,23 @@ import { ReposMedical } from '../reposmedical';
 export class ReposMedicalListComponent extends BasePageComponent<ReposMedical> implements OnInit, OnDestroy {
 
   dates: any;
-
+  isEditModalVisible = false;
+  selectedItem: ReposMedical;
+  
   constructor(store: Store<IAppState>,
     public reposMedicalSrv: ReposMedicalService,
     public datePipe: DatePipe) {
     super(store, reposMedicalSrv);
 
     this.pageData = {
-      title: 'Repos médicaux préscrits',
+      title: 'Liste des repos médicaux prescrits',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Liste des repos medicaux'
+          title: 'Liste des repos médicaux prescrits'
         }
       ]
     };
@@ -49,6 +51,15 @@ export class ReposMedicalListComponent extends BasePageComponent<ReposMedical> i
 
   handlePostLoad() {
     this.dates = null;
+  }
+
+  setEditItem(item: ReposMedical) {
+    this.selectedItem = item;
+    this.isEditModalVisible = true;
+  }
+
+  closeEditModal() {
+    this.isEditModalVisible = false;
   }
 
   filter() {

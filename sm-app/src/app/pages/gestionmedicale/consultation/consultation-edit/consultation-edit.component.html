@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
-                        <tc-form-label>Tension Arterielle (TA)</tc-form-label>
+                        <tc-form-label>Tension artérielle (TA)</tc-form-label>
                         <tc-input [(ngModel)]="entity.tensionArterielle" name="tensionArterielle" id="tensionArterielle"
                             #tensionArterielle="ngModel">
                         </tc-input>
@@ -24,7 +24,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
-                        <tc-form-label>Temperature</tc-form-label>
+                        <tc-form-label>Température</tc-form-label>
                         <tc-input [(ngModel)]="entity.temperature" name="temperature" id="temperature"
                             #temperature="ngModel">
                         </tc-input>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
-                        <tc-form-label>Frequence Respiratoire</tc-form-label>
+                        <tc-form-label>Fréquence respiratoire</tc-form-label>
                         <tc-input [(ngModel)]="entity.frequenceRespiratoire" name="frequenceRespiratoire"
                             id="frequenceRespiratoire" #frequenceRespiratoire="ngModel">
                         </tc-input>
@@ -70,7 +70,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
-                        <tc-form-label>Glycemie</tc-form-label>
+                        <tc-form-label>Glycémie</tc-form-label>
                         <tc-input [(ngModel)]="entity.glycemie" name="glycemie" id="glycemie" #glycemie="ngModel">
                         </tc-input>
                         <tc-form-description>
@@ -81,7 +81,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
-                        <tc-form-label>Motifs Consultation</tc-form-label>
+                        <tc-form-label>Motifs de consultation</tc-form-label>
                         <tc-textarea [(ngModel)]="entity.motifConsultations" name="motifConsultations"
                             id="motifConsultations" #motifConsultations="ngModel">
                         </tc-textarea>
@@ -93,7 +93,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
-                        <tc-form-label>Examens Cliniques</tc-form-label>
+                        <tc-form-label>Examens cliniques</tc-form-label>
                         <tc-textarea [(ngModel)]="entity.examenCliniques" name="examenCliniques" id="examenCliniques"
                             #examenCliniques="ngModel">
                         </tc-textarea>
@@ -105,7 +105,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
-                        <tc-form-label>Examen Paracliniques</tc-form-label>
+                        <tc-form-label>Examen paracliniques</tc-form-label>
                         <tc-textarea [(ngModel)]="entity.examenParacliniques" name="examenParacliniques"
                             id="examenParacliniques" #examenParacliniques="ngModel">
                         </tc-textarea>
@@ -117,7 +117,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
-                        <tc-form-label>Médicaments Préscrits</tc-form-label>
+                        <tc-form-label>Médicaments préscrits</tc-form-label>
                         <tc-textarea [(ngModel)]="entity.medicamentPrescrits" name="medicamentPrescrits"
                             id="medicamentPrescrits" #medicamentPrescrits="ngModel">
                         </tc-textarea>
@@ -137,8 +137,6 @@
                     beforeIcon="icofont-save" tc-button view="warning">
                     Mettre à jour
                 </button>
-                <button class="float-right mr-1" (click)="findEntity(entity.id)" afterIcon="icofont-refresh" tc-button
-                    type="button" view="success">Rafraichir</button>
             </div>
         </tc-card>
     </form>

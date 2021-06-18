@@ -8,6 +8,7 @@ import { IAppState } from 'src/app/interfaces/app-state';
 import { BasePageComponent } from '../../base-page';
 import { PathologieService } from '../../parametrage/pathologie/pathologie.service';
 import { finalize } from 'rxjs/operators';
+import * as XLSX from "xlsx";
 
 @Component({
   selector: 'app-surveillance-pathologique-journaliere',
@@ -21,10 +22,12 @@ export class SurveillancePathologiqueJournaliereComponent extends BasePageCompon
     { value: 'line', title: 'Courbe' },
   ];
   isLoad = false;
+  fileName: string =  "Surveillance_pathologique_mensuelle_"
   data: any;
   selectedAnnee: number;
   annees = [];
   selectedMois: any;
+  disableExportButton: boolean = false;
   listOfMonths = {'01':'Janvier', '02':'Février', '03':'Mars', '04':'Avril', '05':'Mai', '06':'Juin', '07':'Juillet', '08':'Aout', '09':'Septembre', '10':'Octobre', '11':'Novembre', '12':'Décembre'};
 
   //chart  
@@ -50,7 +53,7 @@ export class SurveillancePathologiqueJournaliereComponent extends BasePageCompon
     super(store, pathologieSrv);
 
     this.pageData = {
-      title: 'Surveillance pathologique journalière',
+      title: 'Surveillance pathologique mensuelle',
       loaded: true,
       breadcrumbs: [
         {
@@ -58,7 +61,7 @@ export class SurveillancePathologiqueJournaliereComponent extends BasePageCompon
           route: 'default-dashboard'
         },
         {
-          title: 'Surveillance Pathologique Journalière'
+          title: 'Surveillance Pathologique Mensuelle'
         }
       ]
     };

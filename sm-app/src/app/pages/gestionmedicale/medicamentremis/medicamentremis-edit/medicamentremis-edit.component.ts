@@ -16,21 +16,21 @@ import { Location } from '@angular/common';
 export class MedicamentRemisEditComponent extends BasePageComponent<MedicamentRemis> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public medicamentRemiSrv: MedicamentRemisService,
-              public router: Router,
-              private activatedRoute: ActivatedRoute,
-              public location: Location) {
+    public medicamentRemiSrv: MedicamentRemisService,
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    public location: Location) {
     super(store, medicamentRemiSrv);
     this.pageData = {
-      title: 'Modification - MedicamentRemis',
+      title: 'Modification - Médicament remis',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'MedicamentRemiss',
-          route: '/'+this.orientation+'/medicamentremis'
+          title: 'Liste des médicament remis',
+          route: '/' + this.orientation + '/medicamentremis'
         },
         {
           title: 'Modification'

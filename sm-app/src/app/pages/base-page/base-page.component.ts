@@ -9,6 +9,7 @@ import { BamboAbstractObject } from 'src/app/shared/classes/bambo-abstract-objec
 import Swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
 import { SETTINGS } from 'src/environments/settings';
+import * as XLSX from "xlsx";
 
 @Component({
   selector: 'base-page',
@@ -171,6 +172,20 @@ export class BasePageComponent<T extends BamboAbstractObject> implements OnInit,
       .subscribe((data: any) => {
         this.original = data;
       }, err => this.httpSv.httpSrv.catchError(err));
+  }
+
+  exportToExcel(table: string, fileName: string) {
+    /* table id is passed over here */
+
+    let element = document.getElementById(table);
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+    /* save to file */
+    XLSX.writeFile(wb, fileName + table + (new Date().toDateString()) + ".xlsx");
   }
 
 

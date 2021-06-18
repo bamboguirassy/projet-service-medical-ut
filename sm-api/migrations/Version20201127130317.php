@@ -21,7 +21,6 @@ final class Version20201127130317 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE dossier CHANGE lien_parente lien_parente VARCHAR(45) DEFAULT NULL COMMENT \'definir si type_patient = famille
         epoux ou enfant\'');
         $this->addSql('ALTER TABLE rendez_vous ADD consultation INT NOT NULL, DROP dossier');

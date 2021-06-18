@@ -20,11 +20,11 @@ export class RendezVousNewComponent implements OnInit {
 
   // @Input() dossier: Dossier;
   constructor(public rendezVousSrv: RendezVousService,
-              public router: Router, public datePipe: DatePipe) {
+    public router: Router, public datePipe: DatePipe) {
     this.entity = new RendezVous();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   save() {
     this.entity.consultation = this.consultation.id;

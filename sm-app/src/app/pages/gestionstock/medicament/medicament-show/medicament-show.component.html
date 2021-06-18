@@ -1,34 +1,35 @@
 <tc-card *ngIf="medicamentSrv.resourceName|showable" [tcGradient]="lightGradient">
     <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
-        <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-mail-reply">Retour</button>
+        <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-reply">Retour</button>
         <button [outline]="true" (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
             beforeIcon="icofont-refresh">Rafraichir</button>
-        <button (click)="remove(entity)" *ngIf="medicamentSrv.resourceName|deletable" [outline]="true" tc-button view="error"
-            beforeIcon="icofont-trash" class="ml-1">Supprimer</button>
-        <button *ngIf="medicamentSrv.resourceName|editable" [routerLink]="['/'+orientation,medicamentSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+        <button (click)="remove(entity)" *ngIf="medicamentSrv.resourceName|deletable" [outline]="true" tc-button
+            view="error" beforeIcon="icofont-trash" class="ml-1">Supprimer</button>
+        <button *ngIf="medicamentSrv.resourceName|editable"
+            [routerLink]="['/'+orientation,medicamentSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
             class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit">Modifier</button>
     </tc-card>
     <div class="row">
         <div class="col-12">
             <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
                 <table class="table">
-                                                                                                <tr>
-                            <th>Nom</th>
-                            <td>{{ entity?.nom }}</td>
-                        </tr>
-                                                                                <tr>
-                            <th>Filename</th>
-                            <td>{{ entity?.filename }}</td>
-                        </tr>
-                                                                                <tr>
-                            <th>Filepath</th>
-                            <td>{{ entity?.filepath }}</td>
-                        </tr>
-                                                                                <tr>
-                            <th>QuantiteStock</th>
-                            <td>{{ entity?.quantiteStock }}</td>
-                        </tr>
-                                                    </table>
+                    <tr>
+                        <th>Nom</th>
+                        <td>{{ entity?.nom }}</td>
+                    </tr>
+                    <tr>
+                        <th>File name</th>
+                        <td>{{ entity?.filename }}</td>
+                    </tr>
+                    <tr>
+                        <th>File path</th>
+                        <td>{{ entity?.filepath }}</td>
+                    </tr>
+                    <tr>
+                        <th>Quantité en stock</th>
+                        <td>{{ entity?.quantiteStock }}</td>
+                    </tr>
+                </table>
             </tc-card>
         </div>
     </div>

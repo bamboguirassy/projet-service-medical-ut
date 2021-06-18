@@ -31,11 +31,11 @@ export class RendezVousEditComponent implements OnInit {
     this.entity.dateRendezVous = this.datePipe.transform(this.entity.dateRendezVous, 'yyyy-MM-dd');
     this.rendezVousSrv.update(this.entity)
       .subscribe((data: any) => {
+        this.closeModal();
         this.update.emit(data);
       });
   }
 
-  // close modal window
   closeModal() {
     this.close.emit();
   }

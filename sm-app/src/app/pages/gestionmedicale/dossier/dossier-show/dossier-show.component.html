@@ -41,7 +41,7 @@
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-6 col-md-5 info-title">Date Naissance :</div>
+                            <div class="col-6 col-md-5 info-title">Date de naissance :</div>
                             <div class="col-6 col-md-7 info-content">{{entity?.dateNaissance|date:'dd/MM/yyyy'}}
                             </div>
                         </div>
@@ -54,13 +54,13 @@
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-6 info-title">Situation Matrimoniale  :</div>
+                            <div class="col-6 info-title">Situation matrimoniale :</div>
                             <div class="col-6 info-content">{{entity?.situationMatrimoniale}}</div>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Date Mariage :</div>
+                            <div class="col-sm-6 col-md-5 info-title">Date mariage :</div>
                             <div class="col-sm-6 col-md-7 info-content">{{entity?.dateMariage}}</div>
                         </div>
                     </li>
@@ -73,7 +73,8 @@
                     <li class="info-line">
                         <div class="row">
                             <div class="col-6 col-md-5 info-title">Téléphone :</div>
-                            <div class="col-6 col-md-7 info-content"><a href="tel:{{entity?.telephone}}">{{entity?.telephone}}</a></div>
+                            <div class="col-6 col-md-7 info-content"><a
+                                    href="tel:{{entity?.telephone}}">{{entity?.telephone}}</a></div>
                         </div>
                     </li>
                 </ul>
@@ -82,37 +83,43 @@
                 <ul class="info-section">
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Historiques Maladie  :</div>
+                            <div class="col-sm-6 col-md-5 info-title">Historiques maladie :</div>
                             <div class="col-sm-6 col-md-7 info-content">{{entity?.historiqueMaladies}}</div>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Niveau Instruction :</div>
+                            <div class="col-sm-6 col-md-5 info-title">Niveau d'jnstruction :</div>
                             <div class="col-sm-6 col-md-7 info-content">{{entity?.niveauInstruction}}</div>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Genre Vie :</div>
+                            <div class="col-sm-6 col-md-5 info-title">Genre vie :</div>
                             <div class="col-sm-6 col-md-7 info-content">{{entity?.genreVie}}</div>
+                        </div>
+                    </li>
+                    <li class="info-line" *ngIf="entity?.genreVie=='autres'">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-5 info-title">Description genre vie :</div>
+                            <div class="col-sm-6 col-md-7 info-content">{{entity?.descriptionGenreVie}}</div>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Antecedents Medicaux  :</div>
+                            <div class="col-sm-6 col-md-5 info-title">Antécédents médicaux :</div>
                             <div class="col-sm-6 col-md-7 info-content">{{entity?.antecedentMedicaux}}</div>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Antecedents Churirgicaux  :</div>
+                            <div class="col-sm-6 col-md-5 info-title">Antécédents churirgicaux :</div>
                             <div class="col-sm-6 col-md-7 info-content">{{entity?.antecedentChurirgicaux}}</div>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Antecedents Familiaux  :</div>
+                            <div class="col-sm-6 col-md-5 info-title">Antécédents familiaux :</div>
                             <div class="col-sm-6 col-md-7 info-content">{{entity?.antecedentFamiliaux}}</div>
                         </div>
                     </li>
@@ -148,7 +155,7 @@
             <nz-tab nzTitle="Repos médicaux">
                 <app-repos-medical-dossier *ngIf="entity" [dossier]="entity"></app-repos-medical-dossier>
             </nz-tab>
-          </nz-tabset>
+        </nz-tabset>
     </div>
 </div>
 <app-access-denied *ngIf="!(dossierSrv.resourceName|showable)"></app-access-denied>

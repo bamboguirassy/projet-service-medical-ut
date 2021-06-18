@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BasePageComponent } from 'src/app/pages/base-page';
+import { BasePageComponent } from '../../../base-page/base-page.component';
 import { MedicamentRemisService } from '../medicamentremis.service';
 import { Store } from '@ngrx/store';
-import { IAppState } from 'src/app/interfaces/app-state';
+import { IAppState } from './../../../../interfaces/app-state';
 import { MedicamentRemis } from '../medicamentremis';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';

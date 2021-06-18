@@ -43,7 +43,7 @@
         <span class="nowrap">{{ value?.nom }}</span>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Nombre Jour'" [columnName]="'nombreJour'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Nombre Jours'" [columnName]="'nombreJour'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <tc-badge view="info"><span class="nowrap"><b>{{ value }}</b> jours</span></tc-badge>
         <span class="nowrap"></span>
@@ -63,7 +63,7 @@
       <ng-template #tableTDTemplate let-row="row">
         <div class="actions">
           <button *ngIf="reposMedicalSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
-            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
+          [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" (click)="setEditItem(row)"></button>
           <button *ngIf="reposMedicalSrv.resourceName|deletable" (click)="remove(row)" tc-button
             [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
           <button *ngIf="reposMedicalSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'"
@@ -75,3 +75,5 @@
   <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
 </tc-card>
 <app-access-denied *ngIf="!(reposMedicalSrv.resourceName|listable)"></app-access-denied>
+<app-reposmedical-edit (update)="findAll()" *ngIf="selectedItem" [entity]="selectedItem"
+  [visible]="isEditModalVisible" (close)="closeEditModal()"></app-reposmedical-edit>

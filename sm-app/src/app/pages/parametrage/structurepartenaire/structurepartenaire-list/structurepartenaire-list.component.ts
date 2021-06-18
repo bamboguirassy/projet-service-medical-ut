@@ -13,11 +13,11 @@ import { StructurePartenaire } from '../structurepartenaire';
 export class StructurePartenaireListComponent extends BasePageComponent<StructurePartenaire> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public structurePartenaireSrv: StructurePartenaireService) {
+    public structurePartenaireSrv: StructurePartenaireService) {
     super(store, structurePartenaireSrv);
 
     this.pageData = {
-      title: 'Structures Partenaires',
+      title: 'Liste des structures partenaires',
       breadcrumbs: [
         {
           title: 'Accueil',
@@ -43,6 +43,6 @@ export class StructurePartenaireListComponent extends BasePageComponent<Structur
     this.findAll();
   }
 
-  handlePostLoad(){}
+  handlePostLoad() { }
 
 }

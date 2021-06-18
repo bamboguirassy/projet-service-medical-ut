@@ -13,11 +13,11 @@ import { Pathologie } from '../pathologie';
 export class PathologieListComponent extends BasePageComponent<Pathologie> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public pathologieSrv: PathologieService) {
+    public pathologieSrv: PathologieService) {
     super(store, pathologieSrv);
 
     this.pageData = {
-      title: 'Pathologie',
+      title: 'Liste des pathologies',
       breadcrumbs: [
         {
           title: 'Accueil',
@@ -43,6 +43,6 @@ export class PathologieListComponent extends BasePageComponent<Pathologie> imple
     this.findAll();
   }
 
-  handlePostLoad(){}
+  handlePostLoad() { }
 
 }

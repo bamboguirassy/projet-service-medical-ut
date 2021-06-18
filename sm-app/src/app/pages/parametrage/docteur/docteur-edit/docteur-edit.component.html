@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-12 col-md-6">
                     <tc-form-group>
-                        <tc-form-label>Prenoms</tc-form-label>
+                        <tc-form-label>Prénoms</tc-form-label>
                         <tc-input required="required" [(ngModel)]="entity.prenoms" name="prenoms" id="prenoms"
                             #prenoms="ngModel">
                         </tc-input>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="col-12 col-md-6">
                     <tc-form-group>
-                        <tc-form-label>Specialite</tc-form-label>
+                        <tc-form-label>Spécialité</tc-form-label>
                         <tc-input required="required" [(ngModel)]="entity.specialite" name="specialite" id="specialite"
                             #specialite="ngModel">
                         </tc-input>
@@ -54,8 +54,6 @@
                     beforeIcon="icofont-save" tc-button view="warning">
                     Mettre à jour
                 </button>
-                <button class="float-right mr-1" (click)="findEntity(entity.id)" afterIcon="icofont-refresh" tc-button
-                    type="button" view="success">Rafraichir</button>
             </div>
         </tc-card>
     </form>

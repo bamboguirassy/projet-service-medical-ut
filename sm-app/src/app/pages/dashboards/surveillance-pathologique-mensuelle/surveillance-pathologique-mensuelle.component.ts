@@ -21,6 +21,7 @@ export class SurveillancePathologiqueMensuelleComponent extends BasePageComponen
     { value: 'line', title: 'Courbe' },
   ];
   isLoad = false;
+  fileName:string = "Surveillance_pathologique_journalière_"
   data: any;
   selectedAnnee: number;
   annees = [];

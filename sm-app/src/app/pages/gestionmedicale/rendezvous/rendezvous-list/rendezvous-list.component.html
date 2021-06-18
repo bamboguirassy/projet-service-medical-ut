@@ -1,7 +1,7 @@
 <tc-card *ngIf="rendezVousSrv.resourceName|listable">
   <tc-card [view]="secondViewBorder" [outline]="true">
-    <div class="row">
-      <div class="col-12 col-md-7">
+    <div class="row mb-4">
+      <div class="col-12 col-md-4">
         <tc-form-group>
           <nz-range-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="dates" [nzSize]="'default'"></nz-range-picker>
         </tc-form-group>
@@ -10,73 +10,142 @@
         <button [disabled]="!dates" tc-button afterIcon="icofont-filter" (click)="filter()"
           view="accent">Filtrer</button>
       </div>
-      <div class="col-12 col-md-3">
+      <div class="col-12 col-md-2 float-end">
         <button tc-button afterIcon="icofont-refresh" (click)="findAll()">Rafraichir</button>
       </div>
     </div>
+
+    <nz-table class="mt-5 scroll-x" [nzBordered]="'true'" [nzShowPagination]="true" [nzPageSize]="10" [nzData]="items"
+      #nestedTable>
+
+      <thead>
+        <tr>
+          <th></th>
+          <th>Matricule</th>
+          <th>Prénoms</th>
+          <th>Nom</th>
+          <th>Date Prescription</th>
+          <th>Consultation</th>
+          <th>Présence</th>
+          <th>Date RV</th>
+          <th>Déscription</th>
+          <th>Ajouté par</th>
+        </tr>
+      </thead>
+
+
+      <tbody>
+        <ng-template ngFor let-data [ngForOf]="nestedTable.data">
+          <tr>
+            <td [(nzExpand)]="data.expand"></td>
+            <td><b>{{ data.consultation.dossier.matricule }}</b></td>
+            <td>{{ data.consultation.dossier.prenoms }}</td>
+            <td>{{ data.consultation.dossier.nom }}</td>
+            <td>{{ data.dateCreation | date: 'dd/MM/yyyy' }}</td>
+            <td><a [routerLink]="['/horizontal/consultation', data.consultation.id]">{{ data.consultation.dossier.numero
+                }}</a></td>
+            <td>
+              <tc-badge view="{{ data.presence ? 'success' : 'error' }}"><span class="nowrap">{{ data.presence ? 'Oui' :
+                  'Pas encore' }}</span></tc-badge>
+            </td>
+
+            <td>
+              <tc-badge view="info">{{data.dateRendezVous | date: 'dd/MM/yyyy'}}</tc-badge>
+            </td>
+            <td>
+              <span *ngIf="data.description" class="nowrap">{{ data.description }}</span>
+              <tc-badge *ngIf="!data.description" view="error"><span>Indéfinie</span></tc-badge>
+            </td>
+            <td><span class="nowrap">{{ data.userEmail }}</span></td>
+          </tr>
+          
+            <tr *ngIf="data.mesure" [nzExpand]="data.expand">
+              <nz-table class=" my-2" #innerTable [nzData]="toArray(data.mesure)" nzSize="small" [nzShowPagination]="false">
+                <tbody>
+                  <tr>
+                    <td>Tension artérielle</td>
+                    <td>{{ data.mesure.tensionArterielle }}</td>
+                  </tr>
+                  <tr>
+                    <td>Température</td>
+                    <td>{{ data.mesure.temperature }}</td>
+                  </tr>
+                  <tr>
+                    <td>Pouls</td>
+                    <td>{{ data.mesure.pouls }}</td>
+                  </tr>
+                  <tr>
+                    <td>Fréquence respiratoire</td>
+                    <td>{{ data.mesure.frequenceRespiratoire }}</td>
+                  </tr>
+                  <tr>
+                    <td>Poids</td>
+                    <td>{{ data.mesure.poids }}</td>
+                  </tr>
+                  <tr>
+                    <td>Glycémie</td>
+                    <td>{{ data.mesure.glycemie }}</td>
+                  </tr>
+                  <tr>
+                    <td>Examen paracliniques</td>
+                    <td>{{ data.mesure.examenParacliniques }}</td>
+                  </tr>
+                  <tr>
+                    <td>Examen cliniques</td>
+                    <td>{{ data.mesure.examenCliniques }}</td>
+                  </tr>
+                </tbody>
+                <!-- <tbody>
+                  <tr *ngFor="let data of innerTable.data">
+                    <td>{{ data.date }}</td>
+                    <td>{{ data.name }}</td>
+                    <td>
+                      <nz-badge [nzStatus]="'success'" [nzText]="'Finished'"></nz-badge>
+                    </td>
+                    <td>{{ data.upgradeNum }}</td>
+                    <td>
+                      <span class="table-operation">
+                        <a nz-dropdown class="operation" [nzDropdownMenu]="menu"> Pause <i nz-icon nzType="down"></i> </a>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                          <ul nz-menu>
+                            <li nz-menu-item>
+                              <a>Action 1</a>
+                            </li>
+                            <li nz-menu-item>
+                              <a>Action 2</a>
+                            </li>
+                          </ul>
+                        </nz-dropdown-menu>
+                        <nz-divider nzType="vertical"></nz-divider>
+                        <a class="operation">Stop</a>
+                        <nz-divider nzType="vertical"></nz-divider>
+                        <a>More</a>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody> -->
+              </nz-table>
+            </tr>
+
+        </ng-template>
+      </tbody>
+
+      <!-- <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+        <ng-template #tableTDTemplate let-row="row">
+          <div class="actions">
+            <button *ngIf="rendezVousSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
+              [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" (click)="setEditItem(row)"></button>
+            <button *ngIf="rendezVousSrv.resourceName|deletable" (click)="remove(row)" tc-button
+              [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+          </div>
+        </ng-template>
+      </tc-table-col> -->
+    </nz-table>
+    <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
   </tc-card>
-  <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
-    <tc-table-col [columnTitle]="'Date Prescription'" [columnName]="'dateCreation'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap">{{ value|date:'dd/MM/yyyy' }}</span>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Matricule'" [columnName]="'consultation'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <b class="nowrap" style="color: #BD3B19;">{{ value?.matricule }}</b>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Consultation'" [columnName]="'consultation'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap">
-          <a [routerLink]="['/horizontal/dossier',value?.dossier?.id]">{{ value?.dossier?.numero }}</a>
-        </span>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Prénoms'" [columnName]="'consultation'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap">{{ value?.dossier?.prenoms }}</span>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Nom'" [columnName]="'consultation'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap">{{ value?.dossier?.nom }}</span>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Date RV'" [columnName]="'dateRendezVous'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <tc-badge view="info">{{ value|date:'dd/MM/yyyy' }}</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Présence'" [columnName]="'presence'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <tc-badge view="{{value ? 'success' : 'error'}}">
-          <span class="nowrap">{{ value ? 'Oui' : 'Pas encore' }} </span>
-        </tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Description'" [columnName]="'description'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap" *ngIf="value">{{ value }}</span>
-        <tc-badge view="error" *ngIf="!value">Indéfinie</tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Ajouté par'" [columnName]="'userEmail'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap">{{ value }}</span>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
-      <ng-template #tableTDTemplate let-row="row">
-        <div class="actions">
-          <button *ngIf="rendezVousSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
-            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
-          <button *ngIf="rendezVousSrv.resourceName|deletable" (click)="remove(row)" tc-button
-            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
-        </div>
-      </ng-template>
-    </tc-table-col>
-  </tc-table>
-  <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
+
+
 </tc-card>
 <app-access-denied *ngIf="!(rendezVousSrv.resourceName|listable)"></app-access-denied>
+<app-rendezvous-edit (update)="commitEditChange()" [entity]="selectedItem" [visible]="isEditModalVisible"
+  (close)="closeEditModal()"></app-rendezvous-edit>

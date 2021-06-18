@@ -29,13 +29,13 @@
                 <ul class="info-section">
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-6 col-md-8 info-title">Tension Arterielle :</div>
+                            <div class="col-6 col-md-8 info-title">Tension artérielle :</div>
                             <div class="col-6 col-md-4 info-content">{{entity?.tensionArterielle}}</div>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-6 col-md-8 info-title">Temperature :</div>
+                            <div class="col-6 col-md-8 info-title">Température :</div>
                             <div class="col-6 col-md-4 info-content">{{entity?.temperature}}</div>
                         </div>
                     </li>
@@ -48,7 +48,7 @@
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-6 col-md-8 info-title">Glycemie :</div>
+                            <div class="col-6 col-md-8 info-title">Glycémie :</div>
                             <div class="col-6 col-md-4 info-content">{{entity?.glycemie}}</div>
                         </div>
                     </li>
@@ -58,25 +58,25 @@
                 <ul class="info-section">
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Médicaments Préscrits :</div>
+                            <div class="col-sm-6 col-md-5 info-title">Médicaments préscrits :</div>
                             <div class="col-sm-6 col-md-7 info-content">{{entity?.medicamentPrescrits}}</div>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Motifs Consultation :</div>
+                            <div class="col-sm-6 col-md-5 info-title">Motifs de consultation :</div>
                             <div class="col-sm-6 col-md-7 info-content">{{entity?.motifConsultations}}</div>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Examen Cliniques :</div>
+                            <div class="col-sm-6 col-md-5 info-title">Examens cliniques :</div>
                             <div class="col-sm-6 col-md-7 info-content">{{entity?.examenCliniques}}</div>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Examen Paracliniques :</div>
+                            <div class="col-sm-6 col-md-5 info-title">Examens paracliniques :</div>
                             <div class="col-sm-6 col-md-7 info-content">{{entity?.examenParacliniques}}</div>
                         </div>
                     </li>
@@ -96,19 +96,29 @@
             </div>
         </div>
     </div>
-    <div class="col-12">
-        <hr>
-    </div>
     <div class="col-12 d-flex justify-contend-end">
         <tc-card class="mb-1" title="Pathologie diagnostiquée">
-            <a href="javascript:void(0)" (click)="isPathologieModalVisible=true"
-                *ngIf="!entity?.pathologieDiagnostiquee && (consultationSrv.resourceName|editable)">Préciser
-                le résultat du diagnostic</a>
-            <tc-badge *ngIf="entity?.pathologieDiagnostiquee" view="error" [outline]="true">
-                <span class="nowrap">{{entity?.pathologieDiagnostiquee?.nom}}</span>
-            </tc-badge> &nbsp; <a href="javascript:void(0)" (click)="isPathologieModalVisible=true"
-                *ngIf="entity?.pathologieDiagnostiquee && (consultationSrv.resourceName|editable)">Changer
-                résultat diagnostic</a>
+           
+                <a href="javascript:void(0)" 
+                *ngIf="!entity?.pathologies?.length && (consultationSrv.resourceName|editable)" (click)="activated=false">Préciser le résultat du diagnostic</a>
+            <nz-select *ngIf="entity?.pathologies" [nzDisabled]="activated" [(ngModel)]="selectedPathologies" [nzSize]="size" nzMode="multiple" nzAllowClear nzShowSearch >
+                <ng-container *ngFor="let pathologie of pathologies">
+                    <nz-option  [nzLabel]="pathologie?.nom" [nzValue]="pathologie?.id">
+                    </nz-option>
+                </ng-container> 
+              </nz-select>&nbsp;
+              <div *ngIf="!activated" class="col-12 d-flex justify-content-end">
+                <button (click)="setPathologieDiagnostiquee()" *ngIf="!activated" tc-button [view]="'warning'">Modifier</button>&nbsp;
+                <button tc-button [view]="'error'" (click)="activated=true"  *ngIf="!activated">Annuler</button>
+               </div>&nbsp;
+  <div class="col-12 d-flex justify-contend-end">
+
+    <a href="javascript:void(0)" (click)="activated=false"
+                *ngIf=" entity?.pathologies?.length && (consultationSrv.resourceName|editable) && activated">Modifier le resultat du diagnostique</a>
+  </div>
+            
+         
+           
         </tc-card>
     </div>
     <div class="col-12">
@@ -131,7 +141,7 @@
 <app-access-denied *ngIf="!(consultationSrv.resourceName|showable)"></app-access-denied>
 
 <!-- Pathologie Dignostiquée Modal window -->
-<nz-modal nzWidth="50%" [(nzVisible)]="isPathologieModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
+<!-- <nz-modal nzWidth="50%" [(nzVisible)]="isPathologieModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
     [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closePathologieModal()">
     <ng-template #modalBody>
         <form #form="ngForm" ngNativeValidate>
@@ -139,13 +149,10 @@
                 <div class="col-12">
                     <tc-form-group>
                         <tc-form-label>Pathologie</tc-form-label>
-                        <nz-select name="pathologie" id="pathologie" #pathologie="ngModel" required="required"
-                            nzPlaceHolder="Selectionner la pathologie" nzAllowClear nzShowSearch
-                            [(ngModel)]="selectedPathologie">
-                            <ng-container *ngFor="let pathologie of pathologies">
-                                <nz-option [nzValue]="pathologie" [nzLabel]="pathologie?.nom"></nz-option>
-                            </ng-container>
-                        </nz-select>
+                        <nz-select name="pathologies" id="pathologie" #pathologie="ngModel" nzMode="multiple" nzPlaceHolder="Selectionner pathologie(s)" required="required"
+                        [(ngModel)]="selectedPathologies">
+                        <nz-option *ngFor="let pathologie of pathologies" [nzLabel]="pathologie?.nom" [nzValue]="pathologie"></nz-option>
+                      </nz-select>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="pathologie">
                             </app-form-field-validation-message>
@@ -155,16 +162,15 @@
             </div>
         </form>
     </ng-template>
-
     <ng-template #modalFooter>
         <div class="actions justify-content-between">
             <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
                 (click)="closePathologieModal()">Fermer</button>
-            <button [disabled]="!selectedPathologie" [disabled]="form.invalid" (click)="setPathologieDiagnostiquee()"
+            <button [disabled]="!selectedPathologies" [disabled]="form.invalid" (click)="setPathologieDiagnostiquee()"
                 [afterIcon]="'icofont-save'" tc-button [view]="'accent'">
                 Enregistrer
             </button>
         </div>
     </ng-template>
-</nz-modal>
+</nz-modal> -->
 <!-- end pathologie diagnostiquée Modal window -->

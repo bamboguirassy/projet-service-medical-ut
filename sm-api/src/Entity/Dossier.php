@@ -192,6 +192,11 @@ epoux ou enfant"})
      */
     private $dateMariage;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $descriptionGenreVie;
+
     public function __construct()
     {
         $this->consultations = new ArrayCollection();
@@ -594,6 +599,18 @@ epoux ou enfant"})
     public function setDateMariage(?string $dateMariage): self
     {
         $this->dateMariage = $dateMariage;
+
+        return $this;
+    }
+
+    public function getDescriptionGenreVie(): ?string
+    {
+        return $this->descriptionGenreVie;
+    }
+
+    public function setDescriptionGenreVie(?string $descriptionGenreVie): self
+    {
+        $this->descriptionGenreVie = $descriptionGenreVie;
 
         return $this;
     }

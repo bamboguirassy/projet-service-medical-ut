@@ -1,5 +1,5 @@
 import { PathologieService } from './../../../parametrage/pathologie/pathologie.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChildren } from '@angular/core';
 import { BasePageComponent } from 'src/app/pages/base-page';
 import { ConsultationService } from '../consultation.service';
 import { Store } from '@ngrx/store';
@@ -17,14 +17,15 @@ import { Pathologie } from 'src/app/pages/parametrage/pathologie/pathologie';
 export class ConsultationShowComponent extends BasePageComponent<Consultation> implements OnInit, OnDestroy {
   entity: Consultation;
   isPathologieModalVisible = false;
-  selectedPathologie: Pathologie;
+  selectedPathologies: Pathologie[] = [];
   pathologies: Pathologie[] = [];
-
+  @ViewChildren('form') form;
+  activated:Boolean;
   constructor(store: Store<IAppState>,
-              public consultationSrv: ConsultationService,
-              public activatedRoute: ActivatedRoute,
-              public location: Location,
-              public pathologieSrv: PathologieService) {
+    public consultationSrv: ConsultationService,
+    public activatedRoute: ActivatedRoute,
+    public location: Location,
+    public pathologieSrv: PathologieService) {
     super(store, consultationSrv);
     this.pageData = {
       title: '',
@@ -34,7 +35,7 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
           route: ''
         },
         {
-          title: 'Consultations',
+          title: 'Liste des consultations',
           route: '/' + this.orientation + '/consultation'
         },
         {
@@ -48,6 +49,7 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
     super.ngOnInit();
     this.findEntity(this.activatedRoute.snapshot.params.id);
     this.findPathologies();
+    this.activated=true;
   }
 
   ngOnDestroy() {
@@ -55,7 +57,9 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
   }
 
   handlePostLoad() {
+    this.selectedPathologies=this.entity?.pathologies?.map(pathologie=>pathologie.id);
     this.title = 'Consultation n° ' + this.entity?.id;
+   
   }
 
   handlePostDelete() {
@@ -68,18 +72,21 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
 
   findPathologies() {
     this.pathologieSrv.findAll()
-    .subscribe((data: any) => {
-      this.pathologies = data;
-    }, err => this.pathologieSrv.httpSrv.catchError(err));
+      .subscribe((data: any) => {
+        this.pathologies = data;
+      }, err => this.pathologieSrv.httpSrv.catchError(err));
   }
 
+
   setPathologieDiagnostiquee() {
-    this.entity.pathologieDiagnostiquee = this.selectedPathologie.id;
+   let pathologiesIds=this.selectedPathologies;
+    this.entity.pathologies=pathologiesIds;
     this.consultationSrv.update(this.entity)
-    .subscribe((data: any) => {
-      this.entity = data;
-      this.closePathologieModal();
-    }, err => this.consultationSrv.httpSrv.catchError(err));
+      .subscribe((data: any) => {  
+        this.entity = data;
+        this.consultationSrv.httpSrv.toastr.success("Modification réussie")
+        this.activated=true;
+      }, err => this.consultationSrv.httpSrv.catchError(err));
   }
 
 }

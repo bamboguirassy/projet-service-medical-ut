@@ -13,18 +13,18 @@ import { Medicament } from '../medicament';
 export class MedicamentListComponent extends BasePageComponent<Medicament> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public medicamentSrv: MedicamentService) {
+    public medicamentSrv: MedicamentService) {
     super(store, medicamentSrv);
 
     this.pageData = {
-      title: 'Liste des Médicaments',
+      title: 'Liste des médicaments en stock',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Stock de medicaments'
+          title: 'Liste des médicaments en stock'
         }
       ]
     };
@@ -43,6 +43,6 @@ export class MedicamentListComponent extends BasePageComponent<Medicament> imple
     this.findAll();
   }
 
-  handlePostLoad(){}
+  handlePostLoad() { }
 
 }
