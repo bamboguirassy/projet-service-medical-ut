@@ -6,12 +6,12 @@ import { ToastrService } from 'ngx-toastr';
 @Injectable({
   providedIn: 'root'
 })
-export class PathologieConsultationService extends BamboAbstractService {
+export class MesureService extends BamboAbstractService {
 
   constructor(public httpSrv: BamboHttpService, public toastr: ToastrService) {
     super(httpSrv, toastr);
-    this.routePrefix = 'pathologieconsultation/';
-    this.resourceName = 'PATHOLOGIECONSULTATION';
+    this.routePrefix = 'mesure/';
+    this.resourceName = 'MESURE';
   }
   
 }

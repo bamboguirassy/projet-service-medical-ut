@@ -151,6 +151,7 @@ class GroupController extends AbstractController {
                 new AccessModel('REPOSMEDICAL', "Repos-Medical"),
                 new AccessModel('SYMPTOME', "Symptome"),
                 new AccessModel('MEDICAMENTREMIS', "Médicament Rémis"),
+                new AccessModel('MESURE', "Mesure"),
                     ]),
             new AccessGroup("Gestion Stock médicament", [
                 new AccessModel('BONRECEPTION', "Bon Réception"),
