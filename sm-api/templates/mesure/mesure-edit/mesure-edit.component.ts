@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PathologieConsultation } from '../pathologieconsultation';
-import { PathologieConsultationService } from '../pathologieconsultation.service';
+import { Mesure } from '../mesure';
+import { MesureService } from '../mesure.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -9,28 +9,28 @@ import { BasePageComponent } from 'src/app/pages/base-page';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-pathologieconsultation-edit',
-  templateUrl: './pathologieconsultation-edit.component.html',
-  styleUrls: ['./pathologieconsultation-edit.component.scss']
+  selector: 'app-mesure-edit',
+  templateUrl: './mesure-edit.component.html',
+  styleUrls: ['./mesure-edit.component.scss']
 })
-export class PathologieConsultationEditComponent extends BasePageComponent<PathologieConsultation> implements OnInit, OnDestroy {
+export class MesureEditComponent extends BasePageComponent<Mesure> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public pathologieConsultationSrv: PathologieConsultationService,
+              public mesureSrv: MesureService,
               public router: Router,
               private activatedRoute: ActivatedRoute,
               public location: Location) {
-    super(store, pathologieConsultationSrv);
+    super(store, mesureSrv);
     this.pageData = {
-      title: 'Modification - PathologieConsultation',
+      title: 'Modification - Mesure',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'PathologieConsultations',
-          route: '/'+this.orientation+'/pathologieconsultation'
+          title: 'Mesures',
+          route: '/'+this.orientation+'/mesure'
         },
         {
           title: 'Modification'

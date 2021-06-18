@@ -1,35 +1,35 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BasePageComponent } from 'src/app/pages/base-page';
-import { PathologieConsultationService } from '../pathologieconsultation.service';
+import { MesureService } from '../mesure.service';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/interfaces/app-state';
-import { PathologieConsultation } from '../pathologieconsultation';
+import { Mesure } from '../mesure';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-pathologieconsultation-show',
-  templateUrl: './pathologieconsultation-show.component.html',
-  styleUrls: ['./pathologieconsultation-show.component.scss']
+  selector: 'app-mesure-show',
+  templateUrl: './mesure-show.component.html',
+  styleUrls: ['./mesure-show.component.scss']
 })
-export class PathologieConsultationShowComponent extends BasePageComponent<PathologieConsultation> implements OnInit, OnDestroy {
-  entity: PathologieConsultation;
+export class MesureShowComponent extends BasePageComponent<Mesure> implements OnInit, OnDestroy {
+  entity: Mesure;
 
   constructor(store: Store<IAppState>,
-    public pathologieConsultationSrv: PathologieConsultationService,
+    public mesureSrv: MesureService,
     private activatedRoute: ActivatedRoute,
     public location: Location) {
-    super(store, pathologieConsultationSrv);
+    super(store, mesureSrv);
     this.pageData = {
-      title: 'Détails - PathologieConsultation',
+      title: 'Détails - Mesure',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'PathologieConsultations',
-          route: '/'+this.orientation+'/pathologieconsultation'
+          title: 'Mesures',
+          route: '/'+this.orientation+'/mesure'
         },
         {
           title: 'Affichage'
@@ -48,7 +48,7 @@ export class PathologieConsultationShowComponent extends BasePageComponent<Patho
   }
 
   handlePostLoad() {
-    this.title = 'PathologieConsultation - ' + this.entity?.id;
+    this.title = 'Mesure - ' + this.entity?.id;
   }
 
   handlePostDelete() {
