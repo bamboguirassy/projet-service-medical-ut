@@ -1,4 +1,4 @@
-  <button *ngIf="inputationSrv.resourceName|creable" tc-button [afterIcon]="'icofont-plus'" [view]="'info'"
+  <button *ngIf="inputationSrv.resourceName|creable" tc-button [afterIcon]="'icofont-plus'" [view]="'accent'"
     (click)="openModal()">Imput.</button>
 <app-access-denied *ngIf="!(inputationSrv.resourceName|creable)"></app-access-denied>
 

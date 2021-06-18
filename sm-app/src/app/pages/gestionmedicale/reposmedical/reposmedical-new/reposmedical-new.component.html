@@ -1,4 +1,4 @@
-<button *ngIf="reposMedicalSrv.resourceName|creable" tc-button [afterIcon]="'icofont-plus'" [view]="'info'"
+<button *ngIf="reposMedicalSrv.resourceName|creable" tc-button [afterIcon]="'icofont-plus'" [view]="'accent'"
   [square]="true" (click)="openModal()">Rep. Medic</button>
 <app-access-denied *ngIf="!(reposMedicalSrv.resourceName|creable)"></app-access-denied>
 
