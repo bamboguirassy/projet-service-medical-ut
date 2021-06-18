@@ -68,7 +68,7 @@ class Mesure
     /**
      * @ORM\ManyToMany(targetEntity=Medicament::class)
      */
-    private $medicament;
+    private $medicaments;
 
     /**
      * @ORM\ManyToMany(targetEntity=Symptome::class)
@@ -77,7 +77,7 @@ class Mesure
 
     public function __construct()
     {
-        $this->medicament = new ArrayCollection();
+        $this->medicaments = new ArrayCollection();
         $this->symptomes = new ArrayCollection();
     }
 
@@ -199,22 +199,22 @@ class Mesure
      */
     public function getMedicament(): Collection
     {
-        return $this->medicament;
+        return $this->medicaments;
     }
 
-    public function addMedicament(Medicament $medicament): self
+    public function addMedicament(Medicament $medicaments): self
     {
-        if (!$this->medicament->contains($medicament)) {
-            $this->medicament[] = $medicament;
+        if (!$this->medicaments->contains($medicaments)) {
+            $this->medicaments[] = $medicaments;
         }
 
         return $this;
     }
 
-    public function removeMedicament(Medicament $medicament): self
+    public function removeMedicament(Medicament $medicaments): self
     {
-        if ($this->medicament->contains($medicament)) {
-            $this->medicament->removeElement($medicament);
+        if ($this->medicaments->contains($medicaments)) {
+            $this->medicaments->removeElement($medicaments);
         }
 
         return $this;
