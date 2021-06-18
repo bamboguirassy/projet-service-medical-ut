@@ -197,12 +197,12 @@ class Mesure
     /**
      * @return Collection|Medicament[]
      */
-    public function getMedicament(): Collection
+    public function getMedicaments(): Collection
     {
         return $this->medicaments;
     }
 
-    public function addMedicament(Medicament $medicaments): self
+    public function addMedicaments(Medicament $medicaments): self
     {
         if (!$this->medicaments->contains($medicaments)) {
             $this->medicaments[] = $medicaments;
