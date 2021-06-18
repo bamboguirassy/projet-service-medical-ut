@@ -24,6 +24,7 @@
         opacity: 0;
         padding: ($module-rem) ($module-rem * 2) ($module-rem * 4);
         transition: .2s opacity 0s $animation;
+        background: #EBEBEB;
 
         &.full-filled {
           height: 100%;
