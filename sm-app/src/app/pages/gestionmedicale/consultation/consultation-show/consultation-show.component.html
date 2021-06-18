@@ -96,23 +96,29 @@
             </div>
         </div>
     </div>
-    <div class="col-12">
-        <hr>
-    </div>
     <div class="col-12 d-flex justify-contend-end">
         <tc-card class="mb-1" title="Pathologie diagnostiquée">
+           
+                <a href="javascript:void(0)" 
+                *ngIf="!entity?.pathologies?.length && (consultationSrv.resourceName|editable)" (click)="activated=false">Préciser le résultat du diagnostic</a>
+            <nz-select *ngIf="entity?.pathologies" [nzDisabled]="activated" [(ngModel)]="selectedPathologies" [nzSize]="size" nzMode="multiple" nzAllowClear nzShowSearch >
+                <ng-container *ngFor="let pathologie of pathologies">
+                    <nz-option  [nzLabel]="pathologie?.nom" [nzValue]="pathologie?.id">
+                    </nz-option>
+                </ng-container> 
+              </nz-select>&nbsp;
+              <div *ngIf="!activated" class="col-12 d-flex justify-content-end">
+                <button (click)="setPathologieDiagnostiquee()" *ngIf="!activated" tc-button [view]="'warning'">Modifier</button>&nbsp;
+                <button tc-button [view]="'error'" (click)="activated=true"  *ngIf="!activated">Annuler</button>
+               </div>&nbsp;
+  <div class="col-12 d-flex justify-contend-end">
 
-            <a href="javascript:void(0)" (click)="isPathologieModalVisible=true"
-                *ngIf="!entity?.pathologies && (consultationSrv.resourceName|editable)">Préciser
-                le résultat du diagnostic</a>
-
-            <nz-select *ngIf="entity?.pathologies" [nzDisabled]="true" [(ngModel)]="entity.pathologies" [nzSize]="size" nzMode="tags" >
-                <nz-option *ngFor="let pathologie of entity?.pathologies" [nzLabel]="pathologie?.nom" [nzValue]="pathologie"></nz-option>
-              </nz-select>
-
-            <a href="javascript:void(0)" (click)="isPathologieModalVisible=true"
-                *ngIf=" entity?.pathologies && (consultationSrv.resourceName|editable)">Modifier le resultat du diagnostique</a>
-   
+    <a href="javascript:void(0)" (click)="activated=false"
+                *ngIf=" entity?.pathologies?.length && (consultationSrv.resourceName|editable) && activated">Modifier le resultat du diagnostique</a>
+  </div>
+            
+         
+           
         </tc-card>
     </div>
     <div class="col-12">
@@ -135,7 +141,7 @@
 <app-access-denied *ngIf="!(consultationSrv.resourceName|showable)"></app-access-denied>
 
 <!-- Pathologie Dignostiquée Modal window -->
-<nz-modal nzWidth="50%" [(nzVisible)]="isPathologieModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
+<!-- <nz-modal nzWidth="50%" [(nzVisible)]="isPathologieModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
     [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closePathologieModal()">
     <ng-template #modalBody>
         <form #form="ngForm" ngNativeValidate>
@@ -166,5 +172,5 @@
             </button>
         </div>
     </ng-template>
-</nz-modal>
+</nz-modal> -->
 <!-- end pathologie diagnostiquée Modal window -->

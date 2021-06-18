@@ -17,10 +17,10 @@ import { Pathologie } from 'src/app/pages/parametrage/pathologie/pathologie';
 export class ConsultationShowComponent extends BasePageComponent<Consultation> implements OnInit, OnDestroy {
   entity: Consultation;
   isPathologieModalVisible = false;
-  selectedPathologies: Pathologie[]=[];
+  selectedPathologies: Pathologie[] = [];
   pathologies: Pathologie[] = [];
   @ViewChildren('form') form;
-
+  activated:Boolean;
   constructor(store: Store<IAppState>,
     public consultationSrv: ConsultationService,
     public activatedRoute: ActivatedRoute,
@@ -49,6 +49,7 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
     super.ngOnInit();
     this.findEntity(this.activatedRoute.snapshot.params.id);
     this.findPathologies();
+    this.activated=true;
   }
 
   ngOnDestroy() {
@@ -56,7 +57,9 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
   }
 
   handlePostLoad() {
+    this.selectedPathologies=this.entity?.pathologies?.map(pathologie=>pathologie.id);
     this.title = 'Consultation n° ' + this.entity?.id;
+   
   }
 
   handlePostDelete() {
@@ -76,14 +79,13 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
 
 
   setPathologieDiagnostiquee() {
-   let pathologiesIds=this.selectedPathologies.map(pathologie => pathologie.id);
+   let pathologiesIds=this.selectedPathologies;
     this.entity.pathologies=pathologiesIds;
-    console.log(this.entity)
     this.consultationSrv.update(this.entity)
       .subscribe((data: any) => {  
         this.entity = data;
         this.consultationSrv.httpSrv.toastr.success("Modification réussie")
-        this.closePathologieModal();
+        this.activated=true;
       }, err => this.consultationSrv.httpSrv.catchError(err));
   }
 
