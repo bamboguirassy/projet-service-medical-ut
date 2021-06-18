@@ -1,3 +1,6 @@
+import { MesureNewComponent } from './gestionmedicale/mesure/mesure-new/mesure-new.component';
+import { MesureShowComponent } from './gestionmedicale/mesure/mesure-show/mesure-show.component';
+import { MesureEditComponent } from './gestionmedicale/mesure/mesure-edit/mesure-edit.component';
 import { MedicamentRemisEditComponent } from './gestionmedicale/medicamentremis/medicamentremis-edit/medicamentremis-edit.component';
 import { MedicamentRemisNewComponent } from './gestionmedicale/medicamentremis/medicamentremis-new/medicamentremis-new.component';
 import { MedicamentRemisListComponent } from './gestionmedicale/medicamentremis/medicamentremis-list/medicamentremis-list.component';
@@ -47,7 +50,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { NzDatePickerModule, NzDividerModule, NzTableModule, NzAvatarModule, NzButtonModule, NzCardModule, NzCarouselModule, NzCollapseModule, NzDescriptionsModule, NzDropDownModule, NzEmptyModule, NzFormModule, NzGridModule, NzIconModule, NzInputModule, NzListModule, NzModalModule, NzPopconfirmModule, NzSelectModule, NzSpinModule, NzStatisticModule, NzTabsModule, NzTypographyModule, NzUploadModule } from 'ng-zorro-antd';
 import { NzTagModule } from 'ng-zorro-antd/tag';
-
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { environment } from '../../environments/environment';
 import { UIModule } from '../ui/ui.module';
 import { LayoutModule } from '../layout/layout.module';
@@ -124,6 +127,7 @@ import { ChartsModule } from 'ng2-charts';
     NzFormModule,
     NzGridModule,
     NzIconModule,
+    NzBadgeModule,
     NzInputModule,
     NzListModule,
     NzModalModule,
@@ -207,6 +211,9 @@ import { ChartsModule } from 'ng2-charts';
     ImputationDossierComponent,
     RendezVousDossierComponent,
     MedicamentRemisListComponent,
+    MesureEditComponent,
+    MesureShowComponent,
+    MesureNewComponent,
     MedicamentRemisNewComponent,
     MedicamentRemisEditComponent,
     SurveillancePathologiqueGeneraleComponent,

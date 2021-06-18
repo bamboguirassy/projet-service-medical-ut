@@ -1,3 +1,4 @@
+import { mesureRoutes } from './../pages/gestionmedicale/mesure/mesure.routes';
 import { ConsultationJournaliereComponent } from './../pages/dashboards/consultation-journaliere/consultation-journaliere.component';
 import { SurveillancePathologiqueGeneraleComponent } from './../pages/dashboards/surveillance-pathologique-generale/surveillance-pathologique-generale.component';
 import { inputationRoutes } from './../pages/gestionmedicale/inputation/inputation.routes';
@@ -53,7 +54,8 @@ const VERTICAL_ROUTES: Routes = [
   consultationRoutes,
   rendezVousRoutes,
   reposMedicalRoutes,
-  inputationRoutes
+  inputationRoutes,
+  mesureRoutes
 
 ];
 

@@ -8,8 +8,7 @@ import {DatePipe} from "@angular/common";
 import {Consultation} from "../../consultation/consultation";
 
 @Component({selector: "app-rendezvous-list", templateUrl: "./rendezvous-list.component.html", styleUrls: ["./rendezvous-list.component.scss"]})
-export class RendezVousListComponent extends BasePageComponent<RendezVous>
-implements OnInit,
+export class RendezVousListComponent extends BasePageComponent<RendezVous> implements OnInit,
 OnDestroy {
   dates: any;
   isEditModalVisible = false;
@@ -38,6 +37,8 @@ OnDestroy {
     this.findAll();
   }
 
+  
+
   ngOnDestroy() {
     super.ngOnDestroy();
   }
@@ -48,6 +49,9 @@ OnDestroy {
 
   handlePostLoad() {
     this.dates = null;
+    this.items.forEach(item => item.expand = false);
+    console.log("RV;;;;;;", this.items);
+    
   }
 
   filter() {
@@ -89,5 +93,13 @@ OnDestroy {
   
   closeEditModal() {
     this.isEditModalVisible = false;
+  }
+
+  toArray(mesure: any){
+    console.log("MESURE::::", mesure);
+    
+    let a = [];
+    a.push(mesure);
+    return a;
   }
 }
