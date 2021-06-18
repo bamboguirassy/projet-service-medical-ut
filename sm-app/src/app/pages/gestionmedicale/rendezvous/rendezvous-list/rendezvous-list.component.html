@@ -40,7 +40,7 @@
       <tc-table-col [columnTitle]="'Consultation'" [columnName]="'consultation'" [enableSorting]="true">
         <ng-template #tableTDTemplate let-value>
           <span class="nowrap">
-            <a [routerLink]="['/horizontal/dossier',value?.dossier?.id]">{{ value?.dossier?.numero }}</a>
+            <a [routerLink]="['/horizontal/consultation',value?.id]">{{ value?.dossier?.numero }}</a>
           </span>
         </ng-template>
       </tc-table-col>
