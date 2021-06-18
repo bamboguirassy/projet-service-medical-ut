@@ -36,14 +36,14 @@
       [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <tc-badge *ngIf="!value" view="error"><span class="nowrap">Non précisé</span></tc-badge>
-        <tc-badge *ngIf="value" view="info"><span class="nowrap">{{ (value|map:'nom')|join:',' }}</span></tc-badge>
+        <tc-badge *ngIf="value" view="info"><span class="nowrap">{{ (value|map:'nom')|join:', ' }}</span></tc-badge>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Pathologie diagnostiquée'" [columnName]="'pathologieDiagnostiquee'"
+    <tc-table-col [columnTitle]="'Pathologie diagnostiquée'" [columnName]="'pathologies'"
       [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <tc-badge *ngIf="!value" view="error"><span class="nowrap">Non précisée</span></tc-badge>
-        <tc-badge *ngIf="value" view="info"><span class="nowrap">{{ value?.nom }}</span></tc-badge>
+        <tc-badge *ngIf="value" view="info"><span class="nowrap">{{ value|map:'nom'|join:',' }}</span></tc-badge>
       </ng-template>
     </tc-table-col>
     <tc-table-col [columnTitle]="'Prescrite par'" [columnName]="'docteur'" [enableSorting]="true">
