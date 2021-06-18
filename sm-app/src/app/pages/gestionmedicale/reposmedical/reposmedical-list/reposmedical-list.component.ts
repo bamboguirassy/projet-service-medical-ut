@@ -58,11 +58,6 @@ export class ReposMedicalListComponent extends BasePageComponent<ReposMedical> i
     this.isEditModalVisible = true;
   }
 
-  findAll() {
-    this.closeEditModal();
-    super.findAll();
-  }
-
   closeEditModal() {
     this.isEditModalVisible = false;
   }
