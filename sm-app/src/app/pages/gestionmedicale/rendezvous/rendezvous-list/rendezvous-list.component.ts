@@ -15,6 +15,7 @@ OnDestroy {
   selectedItem: RendezVous;
   _consultation: Consultation;
   uncommitItem: RendezVous;
+  colors: Array<string> = ['success', 'info', 'warning', 'error'];
 
   constructor(store : Store<IAppState>, public rendezVousSrv : RendezVousService, public datePipe : DatePipe) {
     super(store, rendezVousSrv);
@@ -49,7 +50,9 @@ OnDestroy {
 
   handlePostLoad() {
     this.dates = null;
-    this.items.forEach(item => item.expand = false);    
+    this.items.forEach(item => item.expand = false); 
+    console.log(this.items);
+       
   }
 
   filter() {
@@ -97,5 +100,15 @@ OnDestroy {
     let a = [];
     a.push(mesure);
     return a;
+  }
+
+  removeMesure(){
+    console.log("REMOVE ITEM");
+    
+  }
+
+  getRandomColor(): string{
+    let random = Math.trunc(Math.random() * this.colors.length);
+    return this.colors[random];
   }
 }
