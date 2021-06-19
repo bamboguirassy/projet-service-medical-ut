@@ -2,7 +2,8 @@
     <div class="col-12 mb-1">
         <div class="row">
             <div class="col-12 col-md-8" [ngStyle]="{'border-right': '3px dashed '+sidebarBg}">
-                <h5 [ngStyle]="{'color': sidebarBg}" class="m-0 pt-1">Dossier médical n° {{entity?.dossier?.numero}}</h5>
+                <h5 [ngStyle]="{'color': sidebarBg}" class="m-0 pt-1">Dossier médical n° {{entity?.dossier?.numero}}
+                </h5>
                 <!-- <h4 [ngStyle]="{'color': sidebarBg}" class="m-0">{{entity?.dossier?.prenoms+' '+entity?.dossier?.nom}}
                     <span *ngIf="entity?dossier?.matricule">{{entity?.dossier?.matricule}}</span>
                 </h4>
@@ -98,27 +99,30 @@
     </div>
     <div class="col-12 d-flex justify-contend-end">
         <tc-card class="mb-1" title="Pathologie diagnostiquée">
-           
-                <a href="javascript:void(0)" 
-                *ngIf="!entity?.pathologies?.length && (consultationSrv.resourceName|editable)" (click)="activated=false">Préciser le résultat du diagnostic</a>
-            <nz-select *ngIf="entity?.pathologies" [nzDisabled]="activated" [(ngModel)]="selectedPathologies" [nzSize]="size" nzMode="multiple" nzAllowClear nzShowSearch >
-                <ng-container *ngFor="let pathologie of pathologies">
-                    <nz-option  [nzLabel]="pathologie?.nom" [nzValue]="pathologie?.id">
-                    </nz-option>
-                </ng-container> 
-              </nz-select>&nbsp;
-              <div *ngIf="!activated" class="col-12 d-flex justify-content-end">
-                <button (click)="setPathologieDiagnostiquee()" *ngIf="!activated" tc-button [view]="'warning'">Modifier</button>&nbsp;
-                <button tc-button [view]="'error'" (click)="activated=true"  *ngIf="!activated">Annuler</button>
-               </div>&nbsp;
-  <div class="col-12 d-flex justify-contend-end">
 
-    <a href="javascript:void(0)" (click)="activated=false"
-                *ngIf=" entity?.pathologies?.length && (consultationSrv.resourceName|editable) && activated">Modifier le resultat du diagnostique</a>
-  </div>
-            
-         
-           
+            <a href="javascript:void(0)" *ngIf="!entity?.pathologies?.length && (consultationSrv.resourceName|editable)"
+                (click)="activated=false">Préciser le résultat du diagnostic</a>
+            <nz-select *ngIf="entity?.pathologies" [nzDisabled]="activated" [(ngModel)]="selectedPathologies"
+                [nzSize]="'small'" nzMode="multiple" nzAllowClear nzShowSearch>
+                <ng-container *ngFor="let pathologie of pathologies">
+                    <nz-option [nzLabel]="pathologie?.nom" [nzValue]="pathologie?.id">
+                    </nz-option>
+                </ng-container>
+            </nz-select>&nbsp;
+            <div *ngIf="!activated" class="col-12 d-flex justify-content-end">
+                <button (click)="setPathologieDiagnostiquee()" *ngIf="!activated" tc-button
+                    [view]="'warning'">Modifier</button>&nbsp;
+                <button tc-button [view]="'error'" (click)="activated=true" *ngIf="!activated">Annuler</button>
+            </div>&nbsp;
+            <div class="col-12 d-flex justify-contend-end">
+
+                <a href="javascript:void(0)" (click)="activated=false"
+                    *ngIf=" entity?.pathologies?.length && (consultationSrv.resourceName|editable) && activated">Modifier
+                    le resultat du diagnostique</a>
+            </div>
+
+
+
         </tc-card>
     </div>
     <div class="col-12">

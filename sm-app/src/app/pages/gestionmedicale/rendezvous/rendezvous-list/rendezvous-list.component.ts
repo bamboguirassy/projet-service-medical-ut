@@ -1,3 +1,6 @@
+import {MedicamentService} from "./../../../gestionstock/medicament/medicament.service";
+import {Medicament} from "./../../../gestionstock/medicament/medicament";
+import {MesureService} from "./../../mesure/mesure.service";
 import {BasePageComponent} from "../../../base-page/base-page.component";
 import {IAppState} from "./../../../../interfaces/app-state";
 import {Component, OnInit, OnDestroy} from "@angular/core";
@@ -6,18 +9,29 @@ import {RendezVousService} from "../rendezvous.service";
 import {RendezVous} from "../rendezvous";
 import {DatePipe} from "@angular/common";
 import {Consultation} from "../../consultation/consultation";
+import {Mesure} from "../../mesure/mesure";
+import {MedicamentRemisService} from "../../medicamentremis/medicamentremis.service";
 
 @Component({selector: "app-rendezvous-list", templateUrl: "./rendezvous-list.component.html", styleUrls: ["./rendezvous-list.component.scss"]})
-export class RendezVousListComponent extends BasePageComponent<RendezVous> implements OnInit,
+export class RendezVousListComponent extends BasePageComponent<RendezVous>
+implements OnInit,
 OnDestroy {
   dates: any;
   isEditModalVisible = false;
+  isEditMesureModal: boolean = false;
   selectedItem: RendezVous;
   _consultation: Consultation;
   uncommitItem: RendezVous;
-  colors: Array<string> = ['success', 'info', 'warning', 'error'];
+  uncommitMesure: Mesure;
+  colors: Array<string> = ["success", "info", "warning", "error"];
+  selectedMesure: Mesure;
+  medicaments: Medicament[];
+  listOfSelectedMedicaments: any[] = [];
+  activateMedicamentSelectList: boolean = false;
+  isLoad: boolean = false;
+  selectedRV: RendezVous;
 
-  constructor(store : Store<IAppState>, public rendezVousSrv : RendezVousService, public datePipe : DatePipe) {
+  constructor(store : Store<IAppState>, public medicamentSrv : MedicamentService, public rendezVousSrv : RendezVousService, public mesureSrv : MesureService, public datePipe : DatePipe) {
     super(store, rendezVousSrv);
 
     this.pageData = {
@@ -36,9 +50,14 @@ OnDestroy {
   ngOnInit(): void {
     super.ngOnInit();
     this.findAll();
+    this.findAllMedicament();
   }
 
-  
+  findAllMedicament() {
+    this.medicamentSrv.findAll().subscribe((data : any) => {
+      this.medicaments = data;
+    }, (err) => this.medicamentSrv.httpSrv.catchError(err));
+  }
 
   ngOnDestroy() {
     super.ngOnDestroy();
@@ -50,9 +69,7 @@ OnDestroy {
 
   handlePostLoad() {
     this.dates = null;
-    this.items.forEach(item => item.expand = false); 
-    console.log(this.items);
-       
+    this.items.forEach((item) => (item.expand = false));
   }
 
   filter() {
@@ -67,12 +84,14 @@ OnDestroy {
     }, (err) => this.rendezVousSrv.httpSrv.catchError(err));
   }
 
+  //***** RV *****
+
   setEditItem(item : RendezVous) {
     this.selectedItem = this.cloneItem(item);
     this.isEditModalVisible = true;
   }
 
-  cloneItem(item: RendezVous): RendezVous {
+  cloneItem(item : RendezVous): RendezVous {
     this.uncommitItem = item;
     let clone = new RendezVous();
     clone.consultation = item.consultation;
@@ -85,30 +104,91 @@ OnDestroy {
     return clone;
   }
 
-  commitEditChange(){
+  commitEditChange() {
     this.uncommitItem.dateRendezVous = this.selectedItem.dateRendezVous;
     this.uncommitItem.presence = this.selectedItem.presence;
     this.uncommitItem.description = this.selectedItem.description;
-    this.rendezVousSrv.toastr.success("Modifications sont enrégistrées", "Modification" )
+    this.rendezVousSrv.toastr.success("Modifications sont enrégistrées", "Modification");
   }
-  
+
   closeEditModal() {
     this.isEditModalVisible = false;
   }
 
-  toArray(mesure: any){
-    let a = [];
-    a.push(mesure);
-    return a;
+  toArray(mesure : any) {
+    return [mesure];
   }
 
-  removeMesure(){
-    console.log("REMOVE ITEM");
-    
+  removeMesure() {}
+
+  //***** MESURE *****
+
+  opendEditMesureModal(mesure : Mesure, rendezVous : RendezVous) {
+    this.selectedMesure = this.cloneSelectedMesure(mesure, rendezVous);
+    this.isEditMesureModal = true;
   }
 
-  getRandomColor(): string{
-    let random = Math.trunc(Math.random() * this.colors.length);
-    return this.colors[random];
+  closeEditMesureModal() {
+    this.isEditMesureModal = false;
   }
+
+  cloneSelectedMesure(mesure : Mesure, rendezVous : RendezVous): Mesure {
+    this.uncommitMesure = mesure;
+    this.uncommitMesure.rendezVous = rendezVous;
+    let clone = new Mesure();
+    clone.id = mesure.id;
+    clone.rendezVous = rendezVous;
+    clone.examenCliniques = mesure.examenCliniques;
+    clone.examenParacliniques = mesure.examenParacliniques;
+    clone.frequenceRespiratoire = mesure.frequenceRespiratoire;
+    clone.glycemie = mesure.glycemie;
+    clone.medicaments = mesure.medicaments;
+    clone.poids = mesure.poids;
+    clone.pouls = mesure.pouls;
+    clone.symptomes = mesure.symptomes;
+    clone.temperature = mesure.temperature;
+    clone.tensionArterielle = mesure.tensionArterielle;
+    return clone;
+  }
+
+  commitEditMesureChange() {
+    this.uncommitMesure.examenCliniques = this.selectedMesure.examenCliniques;
+    this.uncommitMesure.examenParacliniques = this.selectedMesure.examenParacliniques;
+    this.uncommitMesure.frequenceRespiratoire = this.selectedMesure.frequenceRespiratoire;
+    this.uncommitMesure.glycemie = this.selectedMesure.glycemie;
+    this.uncommitMesure.medicaments = this.selectedMesure.medicaments;
+    this.uncommitMesure.poids = this.selectedMesure.poids;
+    this.uncommitMesure.id = this.selectedMesure.id;
+    this.uncommitMesure.pouls = this.selectedMesure.pouls;
+    this.uncommitMesure.symptomes = this.selectedMesure.symptomes;
+    this.uncommitMesure.temperature = this.selectedMesure.temperature;
+    this.uncommitMesure.tensionArterielle = this.selectedMesure.tensionArterielle;
+    this.mesureSrv.toastr.success("Modification succès.", "Success");
+  }
+
+  editMesure(rendezVous : RendezVous) {}
+
+  editMedicaments(rendezVous : RendezVous) {
+    this.listOfSelectedMedicaments = [];
+    rendezVous.mesure.medicaments.forEach((e : Medicament) => {
+      this.listOfSelectedMedicaments.push(e.id);
+    });
+    this.activateMedicamentSelectList = true;
+  }
+
+  updateMedicaments(mesure : Mesure) {
+    this.isLoad = true;
+    this.mesureSrv.updateMedicamentsOfOnMesure(mesure, this.listOfSelectedMedicaments).subscribe((data) => {
+      mesure.medicaments = [];
+      Object.keys(data).map(function (key) {
+        mesure.medicaments.push(data[key]);
+      });
+      this.isLoad = false;
+      this.mesureSrv.toastr.success("Modification succès.", "Success");
+    }, (error) => {
+      console.error(error);
+    });
+  }
+
+  editSymptomes(rendezVous : RendezVous) {}
 }

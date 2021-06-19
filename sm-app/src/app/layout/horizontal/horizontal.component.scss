@@ -22,13 +22,13 @@
           &.horizontal-vertical {
             @media #{$min992} {
               box-shadow: 0 2px 5px rgba(#000, .05);
-              z-index: 9997;
+              z-index: 999;
             }
           }
           &.horizontal {
             @media #{$max991} {
               box-shadow: 0 2px 5px rgba(#000, .05);
-              z-index: 9997;
+              z-index: 999;
             }
           }
         }

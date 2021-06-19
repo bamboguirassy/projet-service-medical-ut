@@ -83,7 +83,7 @@
           <tr *ngIf="data.mesure" [nzExpand]="data.expand">
             <div nz-row class="p-2">
               <div nz-col nzSpan="7" class="px-1 mx-2">
-                <nz-card class="shadow" nzTitle="Mesures" [nzExtra]="extraTemplate">
+                <nz-card class="shadow" nzTitle="Mesures" [nzExtra]="extraMesureEditTemplate">
                   <div class="mt-2">
                     <ul class="p-0">
                       <li class="my-1">
@@ -213,42 +213,73 @@
                     </ul>
                   </div>
                 </nz-card>
-                <ng-template #extraTemplate>
-                  <i nz-icon nzType="edit"></i>
+                <ng-template #extraMesureEditTemplate>
+                  <i nz-icon nzType="edit" class="clic" (click)="opendEditMesureModal(data.mesure, data)"></i>
                 </ng-template>
 
 
-                <ng-template #avatarTemplate>
-                  <nz-avatar nzSrc="/assets/img/pressure.png"></nz-avatar>
-                </ng-template>
               </div>
-              <div nz-col nzSpan="7" class="px-1 mx-2">
-                <nz-card class="shadow" nzTitle="Médicaments" [nzExtra]="extraTemplate">
+              <div nz-col nzSpan="8" class="px-1 mx-2">
+                <nz-card class="shadow" nzTitle="Médicaments" [nzExtra]="extraMedicamentEditTemplate">
                   <div class="mt-2">
                     <div *ngIf="data.mesure.medicaments.length == 0; else medicamentsTemplate">
-                      <nz-alert nzType="info" nzMessage="Aucun médicaments préscrit pour ce rendez-vous." nzShowIcon></nz-alert>
+                      <nz-alert nzType="info" nzMessage="Aucun médicaments préscrit pour ce rendez-vous." nzShowIcon>
+                      </nz-alert>
                     </div>
                     <ng-template #medicamentsTemplate>
-                      <tc-badge *ngFor="let medicament of data.mesure.medicaments" class="m-1" [outline]="false" view="info">
+                      <tc-badge *ngFor="let medicament of data.mesure.medicaments" class="m-1" [outline]="false"
+                        view="info">
                         <span>{{medicament.nom}}</span>
                       </tc-badge>
                     </ng-template>
+                    <div class="mt-1 p-2" *ngIf="activateMedicamentSelectList">
+                      <div class="d-flex justify-content-between">
+                        <div>
+                          <span class="text-center">Ajouter/Supprimer des médicaments</span>
+                        </div>
+                        <div *ngIf="isLoad">
+                          <ng-template #indicatorTemplate><i nz-icon nzType="loading"></i></ng-template>
+                          <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+                        </div>
+                      </div>
+
+                      <nz-select class="col-12" *ngIf="medicaments.length != 0" [(ngModel)]="listOfSelectedMedicaments"
+                        [nzSize]="'default'" nzMode="multiple" nzPlaceHolder="Ajouter/Supprimer des médicaments">
+                        <nz-option *ngFor="let medicament of medicaments" [nzLabel]="medicament.nom"
+                          [nzValue]="medicament.id">
+                        </nz-option>
+                      </nz-select>
+                      <div class="col-12 d-flex justify-content-end">
+                        <button class="btn btn-sm btn-info m-1"
+                          (click)="updateMedicaments(data.mesure)">Modifier</button>
+                        <button class="btn btn-sm btn-warning m-1"
+                          (click)="activateMedicamentSelectList=false">Annuler</button>
+                      </div>
+                    </div>
                   </div>
+
                 </nz-card>
+                <ng-template #extraMedicamentEditTemplate>
+                  <i nz-icon nzType="edit" class="clic" (click)="editMedicaments(data)"></i>
+                </ng-template>
               </div>
-              <div nz-col nzSpan="8" class="px-1 mx-2">
-                <nz-card class="shadow" nzTitle="Symptomes" [nzExtra]="extraTemplate">
+              <div nz-col nzSpan="7" class="px-1 mx-2">
+                <nz-card class="shadow" nzTitle="Symptomes" [nzExtra]="extraSymptomeEditTemplate">
                   <div class="mt-2">
                     <div *ngIf="data.mesure.symptomes.length == 0; else symptomesTemplate">
-                      <nz-alert nzType="info" nzMessage="Aucun symptomes diagnotiqué." nzShowIcon></nz-alert>
+                      <nz-alert nzType="warning" nzMessage="Aucun symptomes diagnotiqué." nzShowIcon></nz-alert>
                     </div>
                     <ng-template #symptomesTemplate>
-                      <tc-badge *ngFor="let symptome of data.mesure.symptomes" class="m-1" [outline]="false" view="info">
+                      <tc-badge *ngFor="let symptome of data.mesure.symptomes" class="m-1" [outline]="false"
+                        view="info">
                         <span>{{symptome.nom}}</span>
                       </tc-badge>
                     </ng-template>
                   </div>
                 </nz-card>
+                <ng-template #extraSymptomeEditTemplate>
+                  <i nz-icon nzType="edit" class="clic" (click)="editSymptomes(data)"></i>
+                </ng-template>
               </div>
             </div>
           </tr>
@@ -261,3 +292,5 @@
 <app-access-denied *ngIf="!(rendezVousSrv.resourceName | listable)"></app-access-denied>
 <app-rendezvous-edit (update)="commitEditChange()" [entity]="selectedItem" [visible]="isEditModalVisible"
   (close)="closeEditModal()"></app-rendezvous-edit>
+<app-mesure-edit (update)="commitEditMesureChange()" (close)="closeEditMesureModal()" [entity]="selectedMesure"
+  [visible]="isEditMesureModal"></app-mesure-edit>

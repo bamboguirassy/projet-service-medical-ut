@@ -74,6 +74,7 @@ import {
   NzTypographyModule,
   NzUploadModule
 } from "ng-zorro-antd";
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import {NzTagModule} from "ng-zorro-antd/tag";
 import {NzAlertModule} from "ng-zorro-antd/alert";
 import {NzBadgeModule} from "ng-zorro-antd/badge";
@@ -158,6 +159,7 @@ import {ChartsModule} from "ng2-charts";
     NzListModule,
     NzModalModule,
     NzPopconfirmModule,
+    NzPopoverModule,
     NzAlertModule,
     NzSelectModule,
     NzSpinModule,
