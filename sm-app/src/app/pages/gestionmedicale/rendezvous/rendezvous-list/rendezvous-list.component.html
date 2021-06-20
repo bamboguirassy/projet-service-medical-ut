@@ -95,8 +95,9 @@
                           <div nz-col class="gutter-row" [nzSpan]="8">
                             <div class="text-end"><span *ngIf="data.mesure.tensionArterielle" class="nowrap">{{
                                 data.mesure.tensionArterielle }}</span>
-                              <tc-badge *ngIf="!data.mesure.tensionArterielle" [outline]="true" view="error">
-                                <span>Indéfinie</span>
+                              <tc-badge *ngIf="!data.mesure.tensionArterielle" [size]="'sm'" [outline]="true"
+                                view="error">
+                                <span>Non renseigné</span>
                               </tc-badge>
                             </div>
                           </div>
@@ -111,8 +112,8 @@
                             <div class="text-end"><span *ngIf="data.mesure.temperature" class="nowrap">{{
                                 data.mesure.temperature
                                 }}</span>
-                              <tc-badge *ngIf="!data.mesure.temperature" [outline]="true" view="error">
-                                <span>Indéfinie</span>
+                              <tc-badge *ngIf="!data.mesure.temperature" [size]="'sm'" [outline]="true" view="error">
+                                <span>Non renseigné</span>
                               </tc-badge>
                             </div>
                           </div>
@@ -127,8 +128,8 @@
                             <div class="text-end"><span *ngIf="data.mesure.pouls" class="nowrap">{{
                                 data.mesure.pouls
                                 }}</span>
-                              <tc-badge *ngIf="!data.mesure.pouls" [outline]="true" view="error">
-                                <span>Indéfinie</span>
+                              <tc-badge *ngIf="!data.mesure.pouls" [size]="'sm'" [outline]="true" view="error">
+                                <span>Non renseigné</span>
                               </tc-badge>
                             </div>
                           </div>
@@ -142,8 +143,9 @@
                           <div nz-col class="gutter-row" [nzSpan]="8">
                             <div class="text-end"><span *ngIf="data.mesure.frequenceRespiratoire" class="nowrap">{{
                                 data.mesure.frequenceRespiratoire }}</span>
-                              <tc-badge *ngIf="!data.mesure.frequenceRespiratoire" [outline]="true" view="error">
-                                <span>Indéfinie</span>
+                              <tc-badge *ngIf="!data.mesure.frequenceRespiratoire" [size]="'sm'" [outline]="true"
+                                view="error">
+                                <span>Non renseigné</span>
                               </tc-badge>
                             </div>
                           </div>
@@ -158,8 +160,8 @@
                             <div class="text-end"><span *ngIf="data.mesure.poids" class="nowrap">{{
                                 data.mesure.poids
                                 }}</span>
-                              <tc-badge *ngIf="!data.mesure.poids" [outline]="true" view="error">
-                                <span>Indéfinie</span>
+                              <tc-badge *ngIf="!data.mesure.poids" [size]="'sm'" [outline]="true" view="error">
+                                <span>Non renseigné</span>
                               </tc-badge>
                             </div>
                           </div>
@@ -174,8 +176,8 @@
                             <div class="text-end"><span *ngIf="data.mesure.glycemie" class="nowrap">{{
                                 data.mesure.glycemie
                                 }}</span>
-                              <tc-badge *ngIf="!data.mesure.glycemie" [outline]="true" view="error">
-                                <span>Indéfinie</span>
+                              <tc-badge *ngIf="!data.mesure.glycemie" [size]="'sm'" [outline]="true" view="error">
+                                <span>Non renseigné</span>
                               </tc-badge>
                             </div>
                           </div>
@@ -189,8 +191,9 @@
                           <div nz-col class="gutter-row" [nzSpan]="8">
                             <div class="text-end"> <span *ngIf="data.mesure.examenParacliniques" class="nowrap">{{
                                 data.mesure.examenParacliniques }}</span>
-                              <tc-badge *ngIf="!data.mesure.examenParacliniques" [outline]="true" view="error">
-                                <span>Indéfinie</span>
+                              <tc-badge *ngIf="!data.mesure.examenParacliniques" [size]="'sm'" [outline]="true"
+                                view="error">
+                                <span>Non renseigné</span>
                               </tc-badge>
                             </div>
                           </div>
@@ -204,8 +207,9 @@
                           <div nz-col class="gutter-row" [nzSpan]="8">
                             <div class="text-end"><span *ngIf="data.mesure.examenCliniques" class="nowrap">{{
                                 data.mesure.examenCliniques }}</span>
-                              <tc-badge *ngIf="!data.mesure.examenCliniques" [outline]="true" view="error">
-                                <span>Indéfinie</span>
+                              <tc-badge *ngIf="!data.mesure.examenCliniques" [size]="'sm'" [outline]="true"
+                                view="error">
+                                <span>Non renseigné</span>
                               </tc-badge>
                             </div>
                           </div>
@@ -220,6 +224,8 @@
 
 
               </div>
+<!--               
+              MEDICAMENTS DANS LES RV
               <div nz-col nzSpan="8" class="px-1 mx-2">
                 <nz-card class="shadow" nzTitle="Médicaments" [nzExtra]="extraMedicamentEditTemplate">
                   <div class="mt-2">
@@ -247,14 +253,14 @@
 
                       <nz-select class="col-12" *ngIf="medicaments.length != 0" [(ngModel)]="listOfSelectedMedicaments"
                         [nzSize]="'default'" nzMode="multiple" nzPlaceHolder="Ajouter/Supprimer des médicaments">
-                        <nz-option *ngFor="let medicament of medicaments" [nzLabel]="medicament.nom"
-                          [nzValue]="medicament.id">
-                        </nz-option>
+                        <div *ngFor="let medicament of medicaments">
+                          <nz-option *ngIf="medicament.quantiteStock" [nzLabel]="medicament.nom" [nzValue]="medicament.id"></nz-option>
+                        </div>
                       </nz-select>
                       <div class="col-12 d-flex justify-content-end">
-                        <button class="btn btn-sm btn-info m-1"
-                          (click)="updateMedicaments(data.mesure)">Modifier</button>
-                        <button class="btn btn-sm btn-warning m-1"
+                        <button class="btn btn-sm m-1" nz-button (click)="updateMedicaments(data.mesure)"
+                          nzType="primary">Modifier</button>
+                        <button class="btn btn-warning btn-sm m-1"
                           (click)="activateMedicamentSelectList=false">Annuler</button>
                       </div>
                     </div>
@@ -264,7 +270,7 @@
                 <ng-template #extraMedicamentEditTemplate>
                   <i nz-icon nzType="edit" class="clic" (click)="editMedicaments(data)"></i>
                 </ng-template>
-              </div>
+              </div> -->
               <div nz-col nzSpan="7" class="px-1 mx-2">
                 <nz-card class="shadow" nzTitle="Symptomes" [nzExtra]="extraSymptomeEditTemplate">
                   <div class="mt-2">
@@ -295,7 +301,8 @@
                         </nz-option>
                       </nz-select>
                       <div class="col-12 d-flex justify-content-end">
-                        <button class="btn btn-sm btn-info m-1" (click)="updateSymptome(data.mesure)">Modifier</button>
+                        <button class="btn btn-sm m-1" nz-button nzType="primary"
+                          (click)="updateSymptome(data.mesure)">Modifier</button>
                         <button class="btn btn-sm btn-warning m-1"
                           (click)="activateSymptomeSelectList=false">Annuler</button>
                       </div>
@@ -313,8 +320,8 @@
                   <nz-alert nzType="info" nzMessage="Information"
                     nzDescription="Aucun mesure enrégistrées pour ce rendez-vous. Cliquez sur le boutton en bas pour ajouter les informations.">
                   </nz-alert>
-                  <button (click)="openNewMesureModale(data)" class="my-2" nz-button nzType="primary" [nzSize]="'large'"><i nz-icon nzType="plus-circle"
-                      nzTheme="outline" >
+                  <button (click)="openNewMesureModale(data)" class="my-2" nz-button nzType="primary"
+                    [nzSize]="'large'"><i nz-icon nzType="plus-circle" nzTheme="outline">
                     </i>Ajouter les informations de mesure
                   </button>
                 </div>
@@ -327,6 +334,7 @@
     <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
   </tc-card>
 </tc-card>
+<!-- AUTRES COMPOSANTS -->
 <app-access-denied *ngIf="!(rendezVousSrv.resourceName | listable)"></app-access-denied>
 <app-rendezvous-edit (update)="commitEditChange()" [entity]="selectedItem" [visible]="isEditModalVisible"
   (close)="closeEditModal()"></app-rendezvous-edit>

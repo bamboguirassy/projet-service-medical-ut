@@ -122,14 +122,14 @@
 </tc-card> -->
 
 <!-- Modal window -->
-<nz-modal nzWidth="70%" [(nzVisible)]="visible" [nzClosable]="true" [nzTitle]="'Formulaire - Mise à jour Mesure d\'un RV'"
+<nz-modal nzWidth="70%" [(nzVisible)]="visible" [nzClosable]="true" [nzTitle]="'Renseigner les mesures prises - RV'"
     [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
     <ng-template #modalBody>
         <form #form="ngForm" ngNativeValidate>
             <div class="row">
                 <div class="col-12 col-md-6">
                     <tc-form-group>
-                        <tc-form-label>TensionArterielle</tc-form-label>
+                        <tc-form-label>Tension Arterielle</tc-form-label>
                         <tc-input required="required" [(ngModel)]="entity.tensionArterielle" name="tensionArterielle"
                             id="tensionArterielle" #tensionArterielle="ngModel">
                         </tc-input>
@@ -153,7 +153,7 @@
                 </div>
                 <div class="col-12 col-md-6">
                     <tc-form-group>
-                        <tc-form-label>FrequenceRespiratoire</tc-form-label>
+                        <tc-form-label>Frequence Respiratoire</tc-form-label>
                         <tc-input required="required" [(ngModel)]="entity.frequenceRespiratoire"
                             name="frequenceRespiratoire" id="frequenceRespiratoire" #frequenceRespiratoire="ngModel">
                         </tc-input>
@@ -177,7 +177,7 @@
                 </div>
                 <div class="col-12 col-md-6">
                     <tc-form-group>
-                        <tc-form-label>ExamenParacliniques</tc-form-label>
+                        <tc-form-label>Examen Paracliniques</tc-form-label>
                         <tc-input required="required" [(ngModel)]="entity.examenParacliniques"
                             name="examenParacliniques" id="examenParacliniques" #examenParacliniques="ngModel">
                         </tc-input>
@@ -185,7 +185,7 @@
                 </div>
                 <div class="col-12 col-md-6">
                     <tc-form-group>
-                        <tc-form-label>ExamenCliniques</tc-form-label>
+                        <tc-form-label>Examen Cliniques</tc-form-label>
                         <tc-input required="required" [(ngModel)]="entity.examenCliniques" name="examenCliniques"
                             id="examenCliniques" #examenCliniques="ngModel">
                         </tc-input>

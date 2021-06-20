@@ -82,6 +82,7 @@ OnDestroy {
   handlePostLoad() {
     this.dates = null;
     this.items.forEach((item) => (item.expand = false));
+    console.log(this.items);
   }
 
   filter() {
@@ -240,7 +241,6 @@ OnDestroy {
     this.newMesure.rendezVous = rendezVous.id;
     this.isNewMesureVisible = true;
   }
-
 
   createMesure(mesure: Mesure){
     this.selectedRV.mesure = mesure;
