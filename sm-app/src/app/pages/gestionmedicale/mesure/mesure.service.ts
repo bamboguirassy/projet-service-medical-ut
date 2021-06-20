@@ -1,3 +1,4 @@
+import { Symptome } from './../symptome/symptome';
 import { BamboAbstractService } from '../../../shared/services/bambo-abstract.service';
 import { BamboHttpService } from './../../../shared/services/bambo-http.service';
 import { Injectable } from '@angular/core';
@@ -9,6 +10,7 @@ import { Medicament } from '../../gestionstock/medicament/medicament';
   providedIn: 'root'
 })
 export class MesureService extends BamboAbstractService {
+  
 
   constructor(public httpSrv: BamboHttpService, public toastr: ToastrService) {
     super(httpSrv, toastr);
@@ -18,6 +20,10 @@ export class MesureService extends BamboAbstractService {
 
   updateMedicamentsOfOnMesure(mesure: Mesure, medicaments: Medicament[]){
     return this.httpSrv.put(this.routePrefix + mesure.id + "/edit-medicaments", medicaments);
+  }
+
+  updateSymptomesOfOnMesure(mesure: Mesure, symptomes: Symptome[]) {
+    return this.httpSrv.put(this.routePrefix + mesure.id + "/edit-symptomes", symptomes);
   }
   
 }

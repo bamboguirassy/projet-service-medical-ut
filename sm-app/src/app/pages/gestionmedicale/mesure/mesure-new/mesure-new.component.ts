@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChildren, Input } from '@angular/core';
 import { MesureService } from '../mesure.service';
 import { Mesure } from '../mesure';
 import { Router } from '@angular/router';
@@ -13,9 +13,10 @@ export class MesureNewComponent implements OnInit {
   @ViewChild('modalBody', { static: true }) modalBody: ElementRef<any>;
   @ViewChild('modalFooter', { static: true }) modalFooter: ElementRef<any>;
   @ViewChildren('form') form;
-  entity: Mesure;
+  @Input()entity: Mesure;
   @Output() creation: EventEmitter<Mesure> = new EventEmitter();
-  isModalVisible = false;
+  @Output() close: EventEmitter<boolean> = new EventEmitter();
+  @Input()isModalVisible;
 
   constructor(public mesureSrv: MesureService,
     public router: Router) {
@@ -40,6 +41,7 @@ export class MesureNewComponent implements OnInit {
 
   // close modal window
   closeModal() {
+    this.close.emit(true);
     this.isModalVisible = false;
   }
 

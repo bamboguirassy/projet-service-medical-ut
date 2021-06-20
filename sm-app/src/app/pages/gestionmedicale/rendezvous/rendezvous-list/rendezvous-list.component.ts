@@ -1,3 +1,4 @@
+import {Symptome} from "./../../symptome/symptome";
 import {MedicamentService} from "./../../../gestionstock/medicament/medicament.service";
 import {Medicament} from "./../../../gestionstock/medicament/medicament";
 import {MesureService} from "./../../mesure/mesure.service";
@@ -11,6 +12,7 @@ import {DatePipe} from "@angular/common";
 import {Consultation} from "../../consultation/consultation";
 import {Mesure} from "../../mesure/mesure";
 import {MedicamentRemisService} from "../../medicamentremis/medicamentremis.service";
+import { SymptomeService } from "../../symptome/symptome.service";
 
 @Component({selector: "app-rendezvous-list", templateUrl: "./rendezvous-list.component.html", styleUrls: ["./rendezvous-list.component.scss"]})
 export class RendezVousListComponent extends BasePageComponent<RendezVous>
@@ -23,15 +25,19 @@ OnDestroy {
   _consultation: Consultation;
   uncommitItem: RendezVous;
   uncommitMesure: Mesure;
-  colors: Array<string> = ["success", "info", "warning", "error"];
   selectedMesure: Mesure;
   medicaments: Medicament[];
+  symptomes: Symptome[];
   listOfSelectedMedicaments: any[] = [];
+  listOfSelectedSymptomes: any[] = [];
   activateMedicamentSelectList: boolean = false;
+  activateSymptomeSelectList: boolean = false;
   isLoad: boolean = false;
+  newMesure: Mesure;
+  isNewMesureVisible: boolean = false;
   selectedRV: RendezVous;
 
-  constructor(store : Store<IAppState>, public medicamentSrv : MedicamentService, public rendezVousSrv : RendezVousService, public mesureSrv : MesureService, public datePipe : DatePipe) {
+  constructor(store : Store<IAppState>, public medicamentSrv : MedicamentService, public symptomeSrv : SymptomeService, public rendezVousSrv : RendezVousService, public mesureSrv : MesureService, public datePipe : DatePipe) {
     super(store, rendezVousSrv);
 
     this.pageData = {
@@ -51,6 +57,12 @@ OnDestroy {
     super.ngOnInit();
     this.findAll();
     this.findAllMedicament();
+    this.findAllSymptomes();
+  }
+  findAllSymptomes() {
+    this.symptomeSrv.findAll().subscribe((data : any) => {
+      this.symptomes = data;
+    }, (err) => this.medicamentSrv.httpSrv.catchError(err));
   }
 
   findAllMedicament() {
@@ -184,11 +196,53 @@ OnDestroy {
         mesure.medicaments.push(data[key]);
       });
       this.isLoad = false;
+      this.activateMedicamentSelectList = false;
       this.mesureSrv.toastr.success("Modification succès.", "Success");
     }, (error) => {
       console.error(error);
     });
   }
 
-  editSymptomes(rendezVous : RendezVous) {}
+  //***** SYMPTOMES *****/
+
+  editSymptomes(rendezVous : RendezVous) {
+    this.listOfSelectedSymptomes = [];
+    rendezVous.mesure.symptomes.forEach((e : Symptome) => {
+      this.listOfSelectedSymptomes.push(e.id);
+    });
+    this.activateSymptomeSelectList = true;
+  }
+
+  updateSymptome(mesure : Mesure) {
+    this.isLoad = true;
+    this.mesureSrv.updateSymptomesOfOnMesure(mesure, this.listOfSelectedSymptomes).subscribe((data) => {
+      mesure.symptomes = [];
+      Object.keys(data).map(function (key) {
+        mesure.symptomes.push(data[key]);
+      });
+      this.isLoad = false;
+      this.activateSymptomeSelectList = false;
+      this.mesureSrv.toastr.success("Modification succès.", "Success");
+    }, (error) => {
+      console.error(error);
+    });
+  }
+
+  //****** CREATE A NEW MESURE *******/
+
+  closeNewMesureModal(){
+    this.isNewMesureVisible = false;
+  }
+
+  openNewMesureModale(rendezVous: RendezVous){
+    this.selectedRV = rendezVous;
+    this.newMesure = new Mesure();
+    this.newMesure.rendezVous = rendezVous.id;
+    this.isNewMesureVisible = true;
+  }
+
+
+  createMesure(mesure: Mesure){
+    this.selectedRV.mesure = mesure;
+  }
 }

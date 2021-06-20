@@ -62,26 +62,27 @@
                 }}</tc-badge>
             </td>
             <td>
-              <span *ngIf="data.description" class="nowrap">{{
+              <span *ngIf="data.description">{{
                 data.description
                 }}</span>
               <tc-badge *ngIf="!data.description" view="error"><span>Indéfinie</span></tc-badge>
             </td>
             <td>
-              <span class="nowrap">{{ data.userEmail }}</span>
+              {{ data.userEmail }}
             </td>
             <td>
-              <div class="actions">
-                <button *ngIf="rendezVousSrv.resourceName | editable" tc-button [afterIcon]="'icofont-ui-edit'"
-                  [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" (click)="setEditItem(data)"></button>
-                <button *ngIf="rendezVousSrv.resourceName | deletable" (click)="remove(data)" tc-button
+              <div class="nowrap">
+                <button class="mx-1" *ngIf="rendezVousSrv.resourceName | editable" tc-button
+                  [afterIcon]="'icofont-ui-edit'" [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"
+                  (click)="setEditItem(data)"></button>
+                <button class="mx-1" *ngIf="rendezVousSrv.resourceName | deletable" (click)="remove(data)" tc-button
                   [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
                   [size]="'sm'"></button>
               </div>
             </td>
           </tr>
-          <tr *ngIf="data.mesure" [nzExpand]="data.expand">
-            <div nz-row class="p-2">
+          <tr [nzExpand]="data.expand">
+            <div *ngIf="data.mesure; else noMesure" nz-row class="p-2">
               <div nz-col nzSpan="7" class="px-1 mx-2">
                 <nz-card class="shadow" nzTitle="Mesures" [nzExtra]="extraMesureEditTemplate">
                   <div class="mt-2">
@@ -229,7 +230,7 @@
                     <ng-template #medicamentsTemplate>
                       <tc-badge *ngFor="let medicament of data.mesure.medicaments" class="m-1" [outline]="false"
                         view="info">
-                        <span>{{medicament.nom}}</span>
+                        <span>{{medicament.nom | uppercase}}</span>
                       </tc-badge>
                     </ng-template>
                     <div class="mt-1 p-2" *ngIf="activateMedicamentSelectList">
@@ -238,7 +239,8 @@
                           <span class="text-center">Ajouter/Supprimer des médicaments</span>
                         </div>
                         <div *ngIf="isLoad">
-                          <ng-template #indicatorTemplate><i nz-icon nzType="loading"></i></ng-template>
+                          <ng-template #indicatorTemplate><i class="load-size" nz-icon nzType="loading"></i>
+                          </ng-template>
                           <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
                         </div>
                       </div>
@@ -272,9 +274,32 @@
                     <ng-template #symptomesTemplate>
                       <tc-badge *ngFor="let symptome of data.mesure.symptomes" class="m-1" [outline]="false"
                         view="info">
-                        <span>{{symptome.nom}}</span>
+                        <span>{{symptome.nom | uppercase}}</span>
                       </tc-badge>
                     </ng-template>
+                    <div class="mt-1 p-2" *ngIf="activateSymptomeSelectList">
+                      <div class="d-flex justify-content-between">
+                        <div>
+                          <span class="text-center">Ajouter/Supprimer des symptomes</span>
+                        </div>
+                        <div *ngIf="isLoad">
+                          <ng-template #indicatorTemplate><i class="load-size" nz-icon nzType="loading"></i>
+                          </ng-template>
+                          <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+                        </div>
+                      </div>
+
+                      <nz-select class="col-12" *ngIf="symptomes.length != 0" [(ngModel)]="listOfSelectedSymptomes"
+                        [nzSize]="'default'" nzMode="multiple" nzPlaceHolder="Ajouter/Supprimer des symptomes">
+                        <nz-option *ngFor="let symptome of symptomes" [nzLabel]="symptome.nom" [nzValue]="symptome.id">
+                        </nz-option>
+                      </nz-select>
+                      <div class="col-12 d-flex justify-content-end">
+                        <button class="btn btn-sm btn-info m-1" (click)="updateSymptome(data.mesure)">Modifier</button>
+                        <button class="btn btn-sm btn-warning m-1"
+                          (click)="activateSymptomeSelectList=false">Annuler</button>
+                      </div>
+                    </div>
                   </div>
                 </nz-card>
                 <ng-template #extraSymptomeEditTemplate>
@@ -282,6 +307,19 @@
                 </ng-template>
               </div>
             </div>
+            <ng-template #noMesure>
+              <div class="d-flex justify-content-center">
+                <div>
+                  <nz-alert nzType="info" nzMessage="Information"
+                    nzDescription="Aucun mesure enrégistrées pour ce rendez-vous. Cliquez sur le boutton en bas pour ajouter les informations.">
+                  </nz-alert>
+                  <button (click)="openNewMesureModale(data)" class="my-2" nz-button nzType="primary" [nzSize]="'large'"><i nz-icon nzType="plus-circle"
+                      nzTheme="outline" >
+                    </i>Ajouter les informations de mesure
+                  </button>
+                </div>
+              </div>
+            </ng-template>
           </tr>
         </ng-template>
       </tbody>
@@ -294,3 +332,5 @@
   (close)="closeEditModal()"></app-rendezvous-edit>
 <app-mesure-edit (update)="commitEditMesureChange()" (close)="closeEditMesureModal()" [entity]="selectedMesure"
   [visible]="isEditMesureModal"></app-mesure-edit>
+<app-mesure-new (close)="closeNewMesureModal()" (creation)="createMesure($event)" [entity]="newMesure"
+  [isModalVisible]="isNewMesureVisible"></app-mesure-new>

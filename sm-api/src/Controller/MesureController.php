@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Medicament;
 use App\Entity\Mesure;
+use App\Entity\Symptome;
 use App\Form\MesureType;
 use App\Repository\MesureRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -160,4 +161,39 @@ class MesureController extends AbstractController
         $entityManager->flush();
         return $mesure->getMedicaments()->toArray();
     }
+
+     /**
+     * @Rest\Put(path="/{id}/edit-symptomes", name="mesure_edit_symptomes",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode=200)
+     * @IsGranted("ROLE_MESURE_EDIT")
+     */
+     public function editSymtomes(Request $request, Mesure $mesure) :array
+     {
+         $entityManager = $this->getDoctrine()->getManager();
+         $symptomesRepository = $entityManager->getRepository(Symptome::class);
+         $symptomes = Utils::serializeRequestContent($request);
+         $symptomes = $symptomesRepository->createQueryBuilder('v')
+             ->select('v')
+             ->andWhere('v.id IN (:symptomes)')
+             ->setParameter('symptomes', $symptomes)
+             ->getQuery()
+             ->getResult();
+ 
+         $diffs = array_diff($symptomes, $mesure->getSymptomes()->toArray());
+         if(count($diffs) != 0){
+             foreach($diffs as $diff){
+                 $mesure->addSymptome($diff);
+             }
+         }
+ 
+         $diffs = array_diff($mesure->getSymptomes()->toArray(), $symptomes);
+         if(count($diffs) != 0){
+             foreach($diffs as $diff){
+                 $mesure->removeSymptome($diff);
+             }
+         }
+ 
+         $entityManager->flush();
+         return $mesure->getSymptomes()->toArray();
+     }
 }
