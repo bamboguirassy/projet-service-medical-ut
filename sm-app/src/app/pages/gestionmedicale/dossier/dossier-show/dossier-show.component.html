@@ -31,52 +31,76 @@
                     <li class="info-line">
                         <div class="row">
                             <div class="col-6 col-md-5 info-title">Prénoms :</div>
-                            <div class="col-6 col-md-7 info-content">{{entity?.prenoms}}</div>
+                            <div *ngIf="entity?.prenoms; else elseTen" class="col-6 col-md-7 info-content">{{entity?.prenoms}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-6 col-md-5 info-title">Nom :</div>
-                            <div class="col-6 col-md-7 info-content">{{entity?.nom}}</div>
+                            <div *ngIf="entity?.nom; else elseTen" class="col-6 col-md-7 info-content">{{entity?.nom}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-6 col-md-5 info-title">Date de naissance :</div>
-                            <div class="col-6 col-md-7 info-content">{{entity?.dateNaissance|date:'dd/MM/yyyy'}}
+                            <div *ngIf="entity?.dateNaissance; else elseTen" class="col-6 col-md-7 info-content">{{entity?.dateNaissance|date:'dd/MM/yyyy'}}
                             </div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-6 col-md-5 info-title">Sexe :</div>
-                            <div class="col-6 col-md-7 info-content">{{entity?.genre}}</div>
+                            <div *ngIf="entity?.genre; else elseTen" class="col-6 col-md-7 info-content">{{entity?.genre}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-6 info-title">Situation matrimoniale :</div>
-                            <div class="col-6 info-content">{{entity?.situationMatrimoniale}}</div>
+                            <div class="col-6  col-md-5 info-title">Situation matrimoniale :</div>
+                            <div *ngIf="entity?.situationMatrimoniale; else elseTen" class="col-6 col-md-7 info-content">{{entity?.situationMatrimoniale}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-sm-6 col-md-5 info-title">Date mariage :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.dateMariage}}</div>
+                            <div *ngIf="entity?.dateMariage; else elseTen" class="col-sm-6 col-md-7 info-content">{{entity?.dateMariage}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-6 col-md-5 info-title">CNI :</div>
-                            <div class="col-6 col-md-7 info-content">{{entity?.cni}}</div>
+                            <div *ngIf="entity?.cni; else elseTen" class="col-6 col-md-7 info-content">{{entity?.cni}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-6 col-md-5 info-title">Téléphone :</div>
-                            <div class="col-6 col-md-7 info-content"><a
+                            <div *ngIf="entity?.telephone; else elseTen" class="col-6 col-md-7 info-content"><a
                                     href="tel:{{entity?.telephone}}">{{entity?.telephone}}</a></div>
                         </div>
+                        <ng-template #elseTen>
+                            <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                        </ng-template>
                     </li>
                 </ul>
             </div>
@@ -85,43 +109,64 @@
                     <li class="info-line">
                         <div class="row">
                             <div class="col-sm-6 col-md-5 info-title">Historiques maladie :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.historiqueMaladies}}</div>
+                            <div *ngIf="entity?.historiqueMaladies; else elseTen" class="col-sm-6 col-md-7 info-content">{{entity?.historiqueMaladies}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-sm-6 col-md-5 info-title">Niveau d'jnstruction :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.niveauInstruction}}</div>
+                            <div *ngIf="entity?.niveauInstruction; else elseTen" class="col-sm-6 col-md-7 info-content">{{entity?.niveauInstruction}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-sm-6 col-md-5 info-title">Genre vie :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.genreVie}}</div>
+                            <div *ngIf="entity?.genreVie; else elseTen" class="col-sm-6 col-md-7 info-content">{{entity?.genreVie}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line" *ngIf="entity?.genreVie=='autres'">
                         <div class="row">
                             <div class="col-sm-6 col-md-5 info-title">Description genre vie :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.descriptionGenreVie}}</div>
+                            <div *ngIf="entity?.descriptionGenreVie; else elseTen" class="col-sm-6 col-md-7 info-content">{{entity?.descriptionGenreVie}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-sm-6 col-md-5 info-title">Antécédents médicaux :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.antecedentMedicaux}}</div>
+                            <div *ngIf="entity?.antecedentMedicaux; else elseTen" class="col-sm-6 col-md-7 info-content">{{entity?.antecedentMedicaux}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-sm-6 col-md-5 info-title">Antécédents churirgicaux :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.antecedentChurirgicaux}}</div>
+                            <div *ngIf="entity?.antecedentChurirgicaux; else elseTen" class="col-sm-6 col-md-7 info-content">{{entity?.antecedentChurirgicaux}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-sm-6 col-md-5 info-title">Antécédents familiaux :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.antecedentFamiliaux}}</div>
+                            <div *ngIf="entity?.antecedentFamiliaux; else elseTen" class="col-sm-6 col-md-7 info-content">{{entity?.antecedentFamiliaux}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li>
