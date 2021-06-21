@@ -102,7 +102,7 @@
 
             <a href="javascript:void(0)" *ngIf="!entity?.pathologies?.length && (consultationSrv.resourceName|editable)"
                 (click)="activated=false">Préciser le résultat du diagnostic</a>
-            <nz-select *ngIf="entity?.pathologies" [nzDisabled]="activated" [(ngModel)]="selectedPathologies"
+            <nz-select *ngIf="!activated || entity?.pathologies?.length" [nzDisabled]="activated" [(ngModel)]="selectedPathologies"
                 [nzSize]="'small'" nzMode="multiple" nzAllowClear nzShowSearch>
                 <ng-container *ngFor="let pathologie of pathologies">
                     <nz-option [nzLabel]="pathologie?.nom" [nzValue]="pathologie?.id">
