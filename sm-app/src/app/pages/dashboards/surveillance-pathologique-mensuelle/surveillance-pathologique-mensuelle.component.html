@@ -13,7 +13,9 @@
                 <button nz-button nzType="primary" (click)="exportToExcel('spcTable1', fileName)" class="shadow "
                     [nzSize]="'large'"><i nz-icon nzType="download"></i>Exporter le tableau</button>
             </div>
-            <table id="spcTable1" class="table table-responsive-sm table-bordered table-hover" *ngIf="data">
+            <nz-table id="spcTable1" nzScroll="x" [nzFrontPagination]="'false'" nzBordered="true"
+                [nzShowPagination]="'false'" class="table mt-5 table-scrollable table-hover table-responsive-sm"
+                #spcTable1 [nzData]="data.content">
                 <thead>
                     <tr>
                         <th rowspan="2"></th>
@@ -30,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of data?.content">
+                    <tr *ngFor="let item of spcTable1.data">
                         <td scope="row">{{item?.month}}</td>
                         <ng-container *ngFor="let val of item?.pathTab">
                             <td>{{val?.travailleur}}</td>
@@ -40,11 +42,14 @@
                         <td>{{item?.nombre}}</td>
                     </tr>
                 </tbody>
+            </nz-table>
+            <table id="spcTable1" class="table table-responsive-sm table-bordered table-hover">
+
             </table>
         </nz-tab>
         <nz-tab [nzTitle]="'Diagramme des statistiques'">
             <div class="row">
-                <div class="col-12 col-md-4 col-lg-4">
+                <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                     <h5>Choisir une Pathologie pour filtrer</h5>
                     <nz-select [(ngModel)]="selectedPathologie" (ngModelChange)="buildDiagram()" style="width: 100%;">
                         <nz-option *ngFor="let item of items" [nzValue]="item" [nzLabel]="item?.nom"></nz-option>
@@ -72,8 +77,10 @@
                     <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
                         [plugins]="chartPlugins" [legend]="chartLegend" [chartType]="selectedTypeDiagram">
                     </canvas>
-
-                    <table id="spcTable2" class="table table-responsive-sm table-bordered table-hover mt-5">
+                    <nz-table id="spcTable2" nzScroll="x" [nzFrontPagination]="'false'" nzBordered="true"
+                        [nzShowPagination]="'false'"
+                        class="table mt-5 table-scrollable mt-5 table-hover table-responsive-sm" #spcTable2
+                        [nzData]="chartData">
                         <thead>
                             <tr>
                                 <th>
@@ -82,12 +89,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of chartData">
+                            <tr *ngFor="let item of spcTable2.data">
                                 <td scope="row">{{item.label}}</td>
                                 <td *ngFor="let val of item.data">{{val}}</td>
                             </tr>
                         </tbody>
-                    </table>
+                    </nz-table>
                     <div class="ms-auto mt-4 p-2 bd-highlight">
                         <button nz-button nzType="primary" (click)="exportToExcel('spcTable2', fileName)"
                             class="shadow " [nzSize]="'large'"><i nz-icon nzType="download"></i>Exporter le
@@ -97,5 +104,4 @@
             </div>
         </nz-tab>
     </nz-tabset>
-
 </tc-card>

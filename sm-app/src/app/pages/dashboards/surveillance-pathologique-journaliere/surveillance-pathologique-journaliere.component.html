@@ -29,7 +29,10 @@
                     (click)="exportToExcel('spjTable1', fileName)" class="shadow " [nzSize]="'large'"><i nz-icon
                         nzType="download"></i>Exporter le tableau</button>
             </div>
-            <table id="spjTable1" class="table table-responsive-sm table-bordered table-hover">
+            <nz-table id="spjTable1" nzScroll="x" [nzFrontPagination]="'false'" nzBordered="true"
+                [nzShowPagination]="'false'" class="table table-scrollable table-hover table-responsive-sm" #spjTable1
+                [nzData]="tab">
+
                 <thead>
                     <tr>
                         <th rowspan="2"></th>
@@ -46,7 +49,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of tab?.dayTab">
+                    <tr *ngFor="let item of spjTable1.data">
                         <td scope="row">J{{item?.day}}</td>
                         <ng-container *ngFor="let val of item?.pathTab">
                             <td>{{(val?.travailleur>0)?val?.travailleur:'-'}}</td>
@@ -56,7 +59,7 @@
                         <td>{{item?.totalNT}}</td>
                     </tr>
                 </tbody>
-            </table>
+            </nz-table>
         </nz-tab>
         <nz-tab [nzTitle]="'Diagramme des statistiques'">
             <div class="row">
@@ -85,8 +88,9 @@
                 <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
                     [plugins]="chartPlugins" [legend]="chartLegend" [chartType]="selectedTypeDiagram">
                 </canvas>
-                
-                <table id="spjTable2" class="table-scrollable table table-bordered table-hover mt-5">
+                <nz-table id="spjTable2" nzScroll="x" [nzFrontPagination]="'false'" nzBordered="true"
+                    [nzShowPagination]="'false'" class="table mt-5 table-scrollable table-hover table-responsive-sm"
+                    #spjTable2 [nzData]="chartData">
                     <thead>
                         <tr>
                             <th>
@@ -95,13 +99,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of chartData">
+                        <tr *ngFor="let item of spjTable2.data">
                             <td scope="row">{{item.label}}</td>
                             <td *ngFor="let val of item.data">{{val}}</td>
                         </tr>
                     </tbody>
-                </table>
-                <div class="ms-auto my-3 my-3 p-2 bd-highlight">
+                </nz-table>
+                <div class="my-3 my-3 p-2">
                     <button [disabled]="disableExportButton" nz-button nzType="primary"
                         (click)="exportToExcel('spjTable2', fileName)" class="shadow" [nzSize]="'large'"><i nz-icon
                             nzType="download"></i>Exporter le tableau</button>

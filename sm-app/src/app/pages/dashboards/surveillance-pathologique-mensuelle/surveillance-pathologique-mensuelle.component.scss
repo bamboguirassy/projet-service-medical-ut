@@ -1,0 +1,31 @@
+.no-wrap{
+    white-space: nowrap;
+    width: 100%;
+    overflow-x: auto;
+}
+
+table{
+    width: 100%;
+}
+
+.table-scrollable{
+    overflow-x: auto;
+  }
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 15px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #06703a;
+    border-radius: 10px;
+  }

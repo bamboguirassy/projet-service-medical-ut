@@ -14,7 +14,9 @@
                 <button nz-button nzType="primary" (click)="exportToExcel('cmTable1', fileName)" class="shadow "
                     [nzSize]="'large'"><i nz-icon nzType="download"></i>Exporter le tableau</button>
             </div>
-            <table id="cmTable1" class="table table-bordered table-hover table-responsive-sm">
+            <nz-table id="cmTable1" nzScroll="x" [nzFrontPagination]="'false'" nzBordered="true"
+                [nzShowPagination]="'false'" class="table table-scrollable table-hover table-responsive-sm"
+                #cmTable1 [nzData]="data">
                 <thead>
                     <tr>
                         <th rowspan="2"></th>
@@ -29,7 +31,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of data">
+                    <tr *ngFor="let item of cmTable1.data">
                         <td scope="row">{{item?.month}}</td>
                         <td>{{item?.per}}</td>
                         <td>{{item?.pats}}</td>
@@ -38,8 +40,7 @@
                         <td>{{item?.total}}</td>
                     </tr>
                 </tbody>
-            </table>
-
+            </nz-table>
         </nz-tab>
         <nz-tab [nzTitle]="'Diagramme des statistiques'">
             <div *ngIf="!loading && isLoad">
@@ -61,7 +62,10 @@
                 <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
                     [plugins]="chartPlugins" [legend]="chartLegend" [chartType]="selectedTypeDiagram">
                 </canvas>
-                <table id="cmTable2" class="table table-bordered table-hover table-responsive-sm mt-5">
+                <nz-table id="cmTable2" nzScroll="x" [nzFrontPagination]="'false'" nzBordered="true"
+                    [nzShowPagination]="'false'" class="table mt-5 table-scrollable table-hover table-responsive-sm"
+                    #cmTable2 [nzData]="chartData">
+
                     <thead>
                         <tr>
                             <th>Mois
@@ -70,12 +74,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of chartData">
+                        <tr *ngFor="let item of cmTable2.data">
                             <td scope="row">{{item.label}}</td>
                             <td *ngFor="let val of item.data">{{val}}</td>
                         </tr>
                     </tbody>
-                </table>
+                </nz-table>
                 <div class="ms-auto p-2 bd-highlight">
                     <button nz-button nzType="primary" (click)="exportToExcel('cmTable2', fileName)" class="shadow "
                         [nzSize]="'large'"><i nz-icon nzType="download"></i>Exporter le tableau</button>
