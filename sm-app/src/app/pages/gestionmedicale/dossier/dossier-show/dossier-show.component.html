@@ -67,8 +67,8 @@
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-6 info-title">Situation matrimoniale :</div>
-                            <div *ngIf="entity?.situationMatrimoniale; else elseTen" class="col-6 info-content">{{entity?.situationMatrimoniale}}</div>
+                            <div class="col-6  col-md-5 info-title">Situation matrimoniale :</div>
+                            <div *ngIf="entity?.situationMatrimoniale; else elseTen" class="col-6 col-md-7 info-content">{{entity?.situationMatrimoniale}}</div>
                             <ng-template #elseTen>
                                 <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
                             </ng-template>
