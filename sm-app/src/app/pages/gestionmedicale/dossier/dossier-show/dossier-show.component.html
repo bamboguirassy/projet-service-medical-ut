@@ -9,14 +9,15 @@
                 <h6 class="m-0">{{entity?.typePatient}} - {{entity?.structure}}</h6>
             </div>
             <div class="col-12 col-md-4">
-                <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-reply"></button>
-                <button [outline]="true" (click)="findEntity(entity.id)" class="mr-1 ml-1" tc-button view="success"
+                <button tc-button class="mx-2" (click)="location.back()" [outline]="true"
+                    beforeIcon="icofont-reply"></button>
+                <button [outline]="true" class="mx-2" (click)="findEntity(entity.id)" tc-button view="success"
                     beforeIcon="icofont-refresh"></button>
                 <button (click)="remove(entity)" *ngIf="dossierSrv.resourceName|deletable" [outline]="true" tc-button
-                    view="error" beforeIcon="icofont-trash" class="mr-1"></button>
-                <button *ngIf="dossierSrv.resourceName|editable"
-                    [routerLink]="['/'+orientation,dossierSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
-                    class="mr-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
+                    view="error" beforeIcon="icofont-trash" class="mx-2"></button>
+                <button *ngIf="dossierSrv.resourceName|editable" class="mx-2"
+                    [routerLink]="['/'+orientation,dossierSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']" tc-button
+                    view="warning" beforeIcon="icofont-edit"></button>
             </div>
         </div>
     </div>

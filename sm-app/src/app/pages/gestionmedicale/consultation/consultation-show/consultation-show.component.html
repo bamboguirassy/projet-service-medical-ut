@@ -25,32 +25,49 @@
         <hr>
     </div>
     <div class="col-12">
-        <div class="row">
+        <div *ngIf="entity" class="row">
             <div class="col-12 col-md-4" [ngStyle]="{'border-right': '2px solid '+sidebarBg}">
                 <ul class="info-section">
                     <li class="info-line">
                         <div class="row">
                             <div class="col-6 col-md-8 info-title">Tension artérielle :</div>
-                            <div class="col-6 col-md-4 info-content">{{entity?.tensionArterielle}}</div>
+                            <div *ngIf="entity.tensionArterielle; else elseTen" class="col-6 col-md-4 info-content">
+                                {{entity?.tensionArterielle}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
+
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-6 col-md-8 info-title">Température :</div>
-                            <div class="col-6 col-md-4 info-content">{{entity?.temperature}}</div>
+                            <div *ngIf="entity.temperature; else elseTem" class="col-6 col-md-4 info-content">
+                                {{entity?.temperature}}</div>
+                            <ng-template #elseTem>
+
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-6 col-md-8 info-title">Poids :</div>
-                            <div class="col-6 col-md-4 info-content">{{entity?.poids}}
-                            </div>
+                            <div *ngIf="entity.poids; else elsePoids" class="col-6 col-md-4 info-content">
+                                {{entity?.poids}}</div>
+                            <ng-template #elsePoids>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-6 col-md-8 info-title">Glycémie :</div>
-                            <div class="col-6 col-md-4 info-content">{{entity?.glycemie}}</div>
+                            <div *ngIf="entity.glycemie; else elseGlycemie" class="col-6 col-md-4 info-content">
+                                {{entity?.glycemie}}</div>
+                            <ng-template #elseGlycemie>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                 </ul>
@@ -60,25 +77,45 @@
                     <li class="info-line">
                         <div class="row">
                             <div class="col-sm-6 col-md-5 info-title">Médicaments préscrits :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.medicamentPrescrits}}</div>
+                            <div *ngIf="entity.medicamentPrescrits; else elseMedicamentPrescrits"
+                                class="col-6 col-md-4 info-content">{{entity?.medicamentPrescrits}}</div>
+                            <ng-template #elseMedicamentPrescrits>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-sm-6 col-md-5 info-title">Motifs de consultation :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.motifConsultations}}</div>
+                            <div *ngIf="entity.motifConsultations; else elseMedicamentPrescrits"
+                                class="col-6 col-md-4 info-content">{{entity?.motifConsultations}}</div>
+                            <ng-template #elseMotifConsultations>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
+
+
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-sm-6 col-md-5 info-title">Examens cliniques :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.examenCliniques}}</div>
+                            <div *ngIf="entity.examenCliniques; else elseExamenCliniques"
+                                class="col-6 col-md-4 info-content">{{entity?.examenCliniques}}</div>
+                            <ng-template #elseExamenCliniques>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
+
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-sm-6 col-md-5 info-title">Examens paracliniques :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.examenParacliniques}}</div>
+                            <div *ngIf="entity.examenCliniques; else elseExamenCliniques"
+                                class="col-6 col-md-4 info-content">{{entity?.examenCliniques}}</div>
+                            <ng-template #elseExamenCliniques>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
+
                         </div>
                     </li>
                     <li>
