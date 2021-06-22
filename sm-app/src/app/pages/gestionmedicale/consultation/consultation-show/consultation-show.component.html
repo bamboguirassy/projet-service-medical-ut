@@ -1,5 +1,5 @@
-<div class="row" *ngIf="consultationSrv.resourceName|showable" style="background-color: white;">
-    <div class="col-12 mb-1">
+<div class="row" *ngIf="consultationSrv.resourceName|showable" [tcGradient]="secondGradient">
+    <div class="col-12 my-2">
         <div class="row">
             <div class="col-12 col-md-8" [ngStyle]="{'border-right': '3px dashed '+sidebarBg}">
                 <h5 [ngStyle]="{'color': sidebarBg}" class="m-0 pt-1">Dossier médical n° {{entity?.dossier?.numero}}
@@ -10,14 +10,14 @@
                 <h6 class="m-0">{{entity?.dossier?.typePatient}} - {{entity?.dossier?.structure}}</h6> -->
             </div>
             <div class="col-12 col-md-4 p-2">
-                <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-reply"></button>
-                <button [outline]="true" (click)="findEntity(entity.id)" class="mr-1 ml-1" tc-button view="success"
+                <button tc-button (click)="location.back()" class="mx-2" [outline]="true" beforeIcon="icofont-reply"></button>
+                <button [outline]="true" (click)="findEntity(entity.id)" class="mx-2" tc-button view="success"
                     beforeIcon="icofont-refresh"></button>
                 <button (click)="remove(entity)" *ngIf="consultationSrv.resourceName|deletable" [outline]="true"
-                    tc-button view="error" beforeIcon="icofont-trash" class="mr-1"></button>
+                    tc-button view="error" beforeIcon="icofont-trash" class="mx-2"></button>
                 <button *ngIf="consultationSrv.resourceName|editable"
                     [routerLink]="['/'+orientation,consultationSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
-                    class="mr-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
+                    class="mx-2" tc-button view="warning" beforeIcon="icofont-edit"></button>
             </div>
         </div>
     </div>

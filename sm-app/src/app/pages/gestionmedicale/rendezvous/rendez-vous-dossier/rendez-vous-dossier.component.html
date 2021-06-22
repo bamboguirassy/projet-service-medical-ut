@@ -1,104 +1,308 @@
 <tc-card *ngIf="rendezVousSrv.resourceName|listable" title="Rendez-vous">
-    <nz-table class="mt-5 scroll-x" [nzBordered]="'true'" [nzShowPagination]="true" [nzPageSize]="10" [nzData]="items"
-        #nestedTable>
-        <thead>
-            <tr>
-                <th></th>
-                <th>Actions</th>
-                <th>Date RV</th>
-                <th>Présence</th>
-                <th>Déscription</th>
-            </tr>
-        </thead>
-        <tbody>
-            <ng-template ngFor let-data [ngForOf]="nestedTable.data">
-                <tr>
-                    <td [(nzExpand)]="data.expand"></td>
-                    <td>
-                        <div class="actions nowrap">
-                            <button *ngIf="rendezVousSrv.resourceName|editable" tc-button
-                                [afterIcon]="'icofont-ui-edit'" [view]="'warning'" [square]="true" [tcShape]="500"
-                                [size]="'sm'" (click)="setEditItem(data)"></button>
-                            <button class="ml-1" *ngIf="rendezVousSrv.resourceName|deletable" (click)="remove(data)"
-                                tc-button [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true"
-                                [tcShape]="500" [size]="'sm'"></button>
-                        </div>
-                    </td>
-                    <td>
-                        <tc-badge view="info">{{data.dateRendezVous | date: 'dd/MM/yyyy'}}</tc-badge>
-                    </td>
-                    <td>
-                        <tc-badge view="{{ data.presence ? 'success' : 'error' }}"><span class="nowrap">{{ data.presence
-                                ? 'Oui' :
-                                'Pas encore' }}</span></tc-badge>
-                    </td>
-                    <td>
-                        <span *ngIf="data.description" class="nowrap">{{ data.description }}</span>
-                        <tc-badge *ngIf="!data.description" view="error"><span>Indéfinie</span></tc-badge>
-                    </td>
-                </tr>
-                <tr *ngIf="data.mesure" [nzExpand]="data.expand">
-                  <nz-table class="my-2 table-striped" #innerTable [nzData]="toArray(data.mesure)" nzSize="small"
-                    [nzShowPagination]="false">
-            <tbody>
-              <b>
-                <tr class="col-12">
-                  <td class="col-2">Tension artérielle :</td>
-                  <td class="col-4"><span *ngIf="data.mesure.tensionArterielle" class="nowrap">{{
-                      data.mesure.tensionArterielle }}</span>
-                    <tc-badge *ngIf="!data.mesure.tensionArterielle" [outline]="true" view="error"><span>Indéfinie</span>
-                    </tc-badge>
-                  </td>
-                  <td class="col-2">Température :</td>
-                  <td class="col-4"><span *ngIf="data.mesure.temperature" class="nowrap">{{ data.mesure.temperature }}</span>
-                    <tc-badge *ngIf="!data.mesure.temperature" [outline]="true" view="error"><span>Indéfinie</span></tc-badge>
-                  </td>
-                </tr>
-                <tr class="col-12">
-                  <td class="col-2">Pouls :</td>
-                  <td class="col-4"><span *ngIf="data.mesure.pouls" class="nowrap">{{ data.mesure.pouls }}</span>
-                    <tc-badge *ngIf="!data.mesure.pouls" [outline]="true" view="error"><span>Indéfinie</span></tc-badge>
-                  </td>
-                  <td class="col-2">Fréquence respiratoire :</td>
-                  <td class="col-4"><span *ngIf="data.mesure.frequenceRespiratoire" class="nowrap">{{
-                      data.mesure.frequenceRespiratoire }}</span>
-                    <tc-badge *ngIf="!data.mesure.frequenceRespiratoire" [outline]="true" view="error"><span>Indéfinie</span>
-                    </tc-badge>
-                  </td>
-                </tr>
-                <tr class="col-12">
-                  <td class="col-2">Poids :</td>
-                  <td class="col-4"><span *ngIf="data.mesure.poids" class="nowrap">{{ data.mesure.poids }}</span>
-                    <tc-badge *ngIf="!data.mesure.poids" [outline]="true" view="error"><span>Indéfinie</span></tc-badge>
-                  </td>
-                  <td class="col-2">Glycémie :</td>
-                  <td class="col-4"><span *ngIf="data.mesure.glycemie" class="nowrap">{{ data.mesure.glycemie }}</span>
-                    <tc-badge *ngIf="!data.mesure.glycemie" [outline]="true" view="error"><span>Indéfinie</span></tc-badge>
-                  </td>
-                </tr>
-                <tr class="col-12">
-                  <td class="col-2">Examen paracliniques :</td>
-                  <td class="col-4"><span *ngIf="data.mesure.examenParacliniques" class="nowrap">{{
-                      data.mesure.examenParacliniques }}</span>
-                    <tc-badge *ngIf="!data.mesure.examenParacliniques" [outline]="true" view="error"><span>Indéfinie</span>
-                    </tc-badge>
-                  </td>
-                  <td class="col-2">Examen cliniques :</td>
-                  <td class="col-4"><span *ngIf="data.mesure.examenCliniques" class="nowrap">{{ data.mesure.examenCliniques
-                      }}</span>
-                    <tc-badge *ngIf="!data.mesure.examenCliniques" [outline]="true" view="error"><span>Indéfinie</span>
-                    </tc-badge>
-                  </td>
-                </tr>
-              </b>
-            </tbody>
-          </nz-table>
-          </tr>
+  <nz-table nzScroll="x" *ngIf="items?.length" [nzBordered]="'true'" [nzShowPagination]="true" [nzPageSize]="10"
+    [nzData]="items" #nestedTable class="table table-scrollable table-responsive">
+    <thead>
+      <tr>
+        <th></th>
+        <th><b>Ajouté par</b></th>
+        <th><b>Date RV</b></th>
+        <th><b>Présence</b></th>
+        <th><b>Déscription</b></th>
+        <th><b>Actions</b></th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-data [ngForOf]="nestedTable.data">
+        <tr class="text-center">
+          <td [(nzExpand)]="data.expand"></td>
+          <td>
+            <span *ngIf="data.userEmail; else noUserEmail">{{data.userEmail | uppercase }}</span>
+            <ng-template #noUserEmail>
+              <tc-badge view="error">Non renseigné</tc-badge>
             </ng-template>
-        </tbody>
-    </nz-table>
-    <app-empty-table-message *ngIf="!items?.length"></app-empty-table-message>
+
+          </td>
+          <td>
+            <tc-badge view="info"> <span *ngIf="data.dateRendezVous; else noDateRV">{{data.dateRendezVous | date:
+                'dd/MM/yyyy'}}</span>
+            </tc-badge>
+            <ng-template #noDateRV>
+              <tc-badge view="error">Non renseigné</tc-badge>
+            </ng-template>
+          </td>
+          <td>
+            <tc-badge view="{{ data.presence ? 'success' : 'error' }}"><span class="nowrap">{{ data.presence
+                ? 'Oui' :
+                'Pas encore' }}</span></tc-badge>
+          </td>
+          <td>
+            <span *ngIf="data.description" class="nowrap">{{ data.description }}</span>
+            <tc-badge *ngIf="!data.description" view="error"><span>Indéfinie</span></tc-badge>
+          </td>
+          <td>
+            <div class="actions nowrap">
+              <button *ngIf="rendezVousSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
+                [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" (click)="setEditItem(data)"></button>
+              <button class="ml-1" *ngIf="rendezVousSrv.resourceName|deletable" (click)="remove(data)" tc-button
+                [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500"
+                [size]="'sm'"></button>
+            </div>
+          </td>
+        </tr>
+        <tr [nzExpand]="data.expand">
+          <div *ngIf="data.mesure; else noMesure" nz-row class="p-2">
+            <div nz-col nzSpan="11" class="px-1 mx-2">
+              <nz-card class="shadow" nzTitle="Mesures" [nzExtra]="extraMesureEditTemplate">
+                <div class="mt-2">
+                  <ul class="p-0">
+                    <li class="my-1">
+                      <div nz-row [nzGutter]="16">
+                        <div nz-col class="gutter-row" [nzSpan]="16">
+                          <div class="inner-box"><b>Tension artérielle</b></div>
+                        </div>
+                        <div nz-col class="gutter-row" [nzSpan]="8">
+                          <div class="text-end"><span *ngIf="data.mesure.tensionArterielle" class="nowrap">{{
+                              data.mesure.tensionArterielle }}</span>
+                            <tc-badge *ngIf="!data.mesure.tensionArterielle" [size]="'sm'" [outline]="true"
+                              view="error">
+                              <span>Non renseigné</span>
+                            </tc-badge>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="my-1">
+                      <div nz-row [nzGutter]="16">
+                        <div nz-col class="gutter-row" [nzSpan]="16">
+                          <div class="inner-box"><b>Température</b></div>
+                        </div>
+                        <div nz-col class="gutter-row" [nzSpan]="8">
+                          <div class="text-end"><span *ngIf="data.mesure.temperature" class="nowrap">{{
+                              data.mesure.temperature
+                              }}</span>
+                            <tc-badge *ngIf="!data.mesure.temperature" [size]="'sm'" [outline]="true" view="error">
+                              <span>Non renseigné</span>
+                            </tc-badge>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="my-1">
+                      <div nz-row [nzGutter]="16">
+                        <div nz-col class="gutter-row" [nzSpan]="16">
+                          <div class="inner-box"><b>Pouls</b></div>
+                        </div>
+                        <div nz-col class="gutter-row" [nzSpan]="8">
+                          <div class="text-end"><span *ngIf="data.mesure.pouls" class="nowrap">{{
+                              data.mesure.pouls
+                              }}</span>
+                            <tc-badge *ngIf="!data.mesure.pouls" [size]="'sm'" [outline]="true" view="error">
+                              <span>Non renseigné</span>
+                            </tc-badge>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="my-1">
+                      <div nz-row [nzGutter]="16">
+                        <div nz-col class="gutter-row" [nzSpan]="16">
+                          <div class="inner-box"><b>Fréquences respiratoire</b></div>
+                        </div>
+                        <div nz-col class="gutter-row" [nzSpan]="8">
+                          <div class="text-end"><span *ngIf="data.mesure.frequenceRespiratoire" class="nowrap">{{
+                              data.mesure.frequenceRespiratoire }}</span>
+                            <tc-badge *ngIf="!data.mesure.frequenceRespiratoire" [size]="'sm'" [outline]="true"
+                              view="error">
+                              <span>Non renseigné</span>
+                            </tc-badge>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="my-1">
+                      <div nz-row [nzGutter]="16">
+                        <div nz-col class="gutter-row" [nzSpan]="16">
+                          <div class="inner-box"><b>Poids</b></div>
+                        </div>
+                        <div nz-col class="gutter-row" [nzSpan]="8">
+                          <div class="text-end"><span *ngIf="data.mesure.poids" class="nowrap">{{
+                              data.mesure.poids
+                              }}</span>
+                            <tc-badge *ngIf="!data.mesure.poids" [size]="'sm'" [outline]="true" view="error">
+                              <span>Non renseigné</span>
+                            </tc-badge>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="my-1">
+                      <div nz-row [nzGutter]="16">
+                        <div nz-col class="gutter-row" [nzSpan]="16">
+                          <div class="inner-box"><b>Glycémie</b></div>
+                        </div>
+                        <div nz-col class="gutter-row" [nzSpan]="8">
+                          <div class="text-end"><span *ngIf="data.mesure.glycemie" class="nowrap">{{
+                              data.mesure.glycemie
+                              }}</span>
+                            <tc-badge *ngIf="!data.mesure.glycemie" [size]="'sm'" [outline]="true" view="error">
+                              <span>Non renseigné</span>
+                            </tc-badge>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="my-1">
+                      <div nz-row [nzGutter]="16">
+                        <div nz-col class="gutter-row" [nzSpan]="16">
+                          <div class="inner-box"><b>Examen Paracliniques</b></div>
+                        </div>
+                        <div nz-col class="gutter-row" [nzSpan]="8">
+                          <div class="text-end"> <span *ngIf="data.mesure.examenParacliniques" class="nowrap">{{
+                              data.mesure.examenParacliniques }}</span>
+                            <tc-badge *ngIf="!data.mesure.examenParacliniques" [size]="'sm'" [outline]="true"
+                              view="error">
+                              <span>Non renseigné</span>
+                            </tc-badge>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="my-1">
+                      <div nz-row [nzGutter]="16">
+                        <div nz-col class="gutter-row" [nzSpan]="16">
+                          <div class="inner-box"><b>Examen Cliniques</b></div>
+                        </div>
+                        <div nz-col class="gutter-row" [nzSpan]="8">
+                          <div class="text-end"><span *ngIf="data.mesure.examenCliniques" class="nowrap">{{
+                              data.mesure.examenCliniques }}</span>
+                            <tc-badge *ngIf="!data.mesure.examenCliniques" [size]="'sm'" [outline]="true" view="error">
+                              <span>Non renseigné</span>
+                            </tc-badge>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </nz-card>
+              <ng-template #extraMesureEditTemplate>
+                <i nz-icon nzType="edit" class="clic" (click)="opendEditMesureModal(data.mesure, data)"></i>
+              </ng-template>
+
+
+            </div>
+            <!--               
+              MEDICAMENTS DANS LES RV
+              <div nz-col nzSpan="8" class="px-1 mx-2">
+                <nz-card class="shadow" nzTitle="Médicaments" [nzExtra]="extraMedicamentEditTemplate">
+                  <div class="mt-2">
+                    <div *ngIf="data.mesure.medicaments.length == 0; else medicamentsTemplate">
+                      <nz-alert nzType="info" nzMessage="Aucun médicaments préscrit pour ce rendez-vous." nzShowIcon>
+                      </nz-alert>
+                    </div>
+                    <ng-template #medicamentsTemplate>
+                      <tc-badge *ngFor="let medicament of data.mesure.medicaments" class="m-1" [outline]="false"
+                        view="info">
+                        <span>{{medicament.nom | uppercase}}</span>
+                      </tc-badge>
+                    </ng-template>
+                    <div class="mt-1 p-2" *ngIf="activateMedicamentSelectList">
+                      <div class="d-flex justify-content-between">
+                        <div>
+                          <span class="text-center">Ajouter/Supprimer des médicaments</span>
+                        </div>
+                        <div *ngIf="isLoad">
+                          <ng-template #indicatorTemplate><i class="load-size" nz-icon nzType="loading"></i>
+                          </ng-template>
+                          <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+                        </div>
+                      </div>
+
+                      <nz-select class="col-12" *ngIf="medicaments.length != 0" [(ngModel)]="listOfSelectedMedicaments"
+                        [nzSize]="'default'" nzMode="multiple" nzPlaceHolder="Ajouter/Supprimer des médicaments">
+                        <div *ngFor="let medicament of medicaments">
+                          <nz-option *ngIf="medicament.quantiteStock" [nzLabel]="medicament.nom" [nzValue]="medicament.id"></nz-option>
+                        </div>
+                      </nz-select>
+                      <div class="col-12 d-flex justify-content-end">
+                        <button class="btn btn-sm m-1" nz-button (click)="updateMedicaments(data.mesure)"
+                          nzType="primary">Modifier</button>
+                        <button class="btn btn-warning btn-sm m-1"
+                          (click)="activateMedicamentSelectList=false">Annuler</button>
+                      </div>
+                    </div>
+                  </div>
+
+                </nz-card>
+                <ng-template #extraMedicamentEditTemplate>
+                  <i nz-icon nzType="edit" class="clic" (click)="editMedicaments(data)"></i>
+                </ng-template>
+              </div> -->
+            <div nz-col nzSpan="11" class="px-1 mx-2">
+              <nz-card class="shadow" nzTitle="Symptomes" [nzExtra]="extraSymptomeEditTemplate">
+                <div class="mt-2">
+                  <div *ngIf="data.mesure.symptomes.length == 0; else symptomesTemplate">
+                    <nz-alert nzType="warning" nzMessage="Aucun symptomes diagnotiqué." nzShowIcon></nz-alert>
+                  </div>
+                  <ng-template #symptomesTemplate>
+                    <tc-badge *ngFor="let symptome of data.mesure.symptomes" class="m-1" [outline]="false" view="info">
+                      <span>{{symptome.nom | uppercase}}</span>
+                    </tc-badge>
+                  </ng-template>
+                  <div class="mt-1 p-2" *ngIf="activateSymptomeSelectList">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <span class="text-center">Ajouter/Supprimer des symptomes</span>
+                      </div>
+                      <div *ngIf="isLoad">
+                        <ng-template #indicatorTemplate><i class="load-size" nz-icon nzType="loading"></i>
+                        </ng-template>
+                        <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+                      </div>
+                    </div>
+
+                    <nz-select class="col-12" *ngIf="symptomes.length != 0" [(ngModel)]="listOfSelectedSymptomes"
+                      [nzSize]="'default'" nzMode="multiple" nzPlaceHolder="Ajouter/Supprimer des symptomes">
+                      <nz-option *ngFor="let symptome of symptomes" [nzLabel]="symptome.nom" [nzValue]="symptome.id">
+                      </nz-option>
+                    </nz-select>
+                    <div class="col-12 d-flex justify-content-end">
+                      <button class="btn btn-sm m-1" nz-button nzType="primary"
+                        (click)="updateSymptome(data.mesure)">Modifier</button>
+                      <button class="btn btn-sm btn-warning m-1"
+                        (click)="activateSymptomeSelectList=false">Annuler</button>
+                    </div>
+                  </div>
+                </div>
+              </nz-card>
+              <ng-template #extraSymptomeEditTemplate>
+                <i nz-icon nzType="edit" class="clic" (click)="editSymptomes(data)"></i>
+              </ng-template>
+            </div>
+          </div>
+          <ng-template #noMesure>
+            <div class="d-flex justify-content-center">
+              <div>
+                <nz-alert nzType="info" nzMessage="Information"
+                  nzDescription="Aucun mesure enrégistrées pour ce rendez-vous. Cliquez sur le boutton en bas pour ajouter les informations.">
+                </nz-alert>
+                <button (click)="openNewMesureModale(data)" class="my-2" nz-button nzType="primary"
+                  [nzSize]="'large'"><i nz-icon nzType="plus-circle" nzTheme="outline">
+                  </i>Ajouter les informations de mesure
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </tr>
+      </ng-template>
+    </tbody>
+  </nz-table>
+  <app-empty-table-message *ngIf="!items?.length"></app-empty-table-message>
 </tc-card>
 <app-access-denied *ngIf="!(rendezVousSrv.resourceName|listable)"></app-access-denied>
 <app-rendezvous-edit (update)="findByConsultation()" [entity]="selectedItem" [visible]="isEditModalVisible"
-    (close)="closeEditModal()"></app-rendezvous-edit>
+  (close)="closeEditModal()"></app-rendezvous-edit>
+<app-mesure-edit (update)="commitEditMesureChange()" (close)="closeEditMesureModal()" [entity]="selectedMesure"
+  [visible]="isEditMesureModal"></app-mesure-edit>
+<app-mesure-new (close)="closeNewMesureModal()" (creation)="createMesure($event)" [entity]="newMesure"
+  [isModalVisible]="isNewMesureVisible"></app-mesure-new>

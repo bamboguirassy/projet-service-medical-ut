@@ -82,7 +82,6 @@ OnDestroy {
   handlePostLoad() {
     this.dates = null;
     this.items.forEach((item) => (item.expand = false));
-    console.log(this.items);
   }
 
   filter() {
@@ -178,8 +177,6 @@ OnDestroy {
     this.uncommitMesure.tensionArterielle = this.selectedMesure.tensionArterielle;
     this.mesureSrv.toastr.success("Modification succès.", "Success");
   }
-
-  editMesure(rendezVous : RendezVous) {}
 
   editMedicaments(rendezVous : RendezVous) {
     this.listOfSelectedMedicaments = [];
