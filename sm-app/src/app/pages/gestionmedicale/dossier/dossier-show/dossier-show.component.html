@@ -92,7 +92,7 @@
                             <div class="col-6  col-md-5 info-title">Situation matrimoniale :</div>
                             <div *ngIf="entity?.situationMatrimoniale; else elseSituation" class="col-6 col-md-7 info-content">{{entity?.situationMatrimoniale}}</div>
                             <ng-template #elseSituation>
-                                <tc-badge [outline]="true" size='sm' view="error">Non renseigné</tc-badge>
+                                <tc-badge [outline]="true"  view="error">Non renseigné</tc-badge>
                             </ng-template>
                         </div>
                     </li>
@@ -101,7 +101,7 @@
                             <div class="col-sm-6 col-md-5 info-title">Date mariage :</div>
                             <div *ngIf="entity?.dateMariage; else elseMar" class="col-sm-6 col-md-7 info-content">{{entity?.dateMariage}}</div>
                             <ng-template #elseMar>
-                                <tc-badge [outline]="true" size='sm' view="error">Non renseigné</tc-badge>
+                                <tc-badge [outline]="true"  view="error">Non renseigné</tc-badge>
                             </ng-template>
                         </div>
                     </li>
