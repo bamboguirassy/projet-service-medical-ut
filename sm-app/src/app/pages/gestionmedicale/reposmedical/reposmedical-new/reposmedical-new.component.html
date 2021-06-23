@@ -46,9 +46,11 @@
         <div class="col-12">
           <tc-form-group>
             <tc-form-label>Nombre de jours prescrits</tc-form-label>
-            <tc-input type="number" required="required" [(ngModel)]="entity.nombreJour" name="nombreJour"
+            <nz-input-group nzSuffix="jours" >
+              <tc-input type="number" required="required" [(ngModel)]="entity.nombreJour" name="nombreJour"
               id="nombreJour" #nombreJour="ngModel">
             </tc-input>
+            </nz-input-group>
             <tc-form-description>
               <app-form-field-validation-message [formField]="nombreJour"></app-form-field-validation-message>
             </tc-form-description>
