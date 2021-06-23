@@ -36,10 +36,11 @@
                             <span [innerHTML]="item?.cni" style="color: blue;">{{item?.cni}}</span>
                             <p *ngIf="item?.typePatient=='FAMILLE'">
                                 <span [innerHTML]="item?.lienParente" style="color: blue;">{{item?.lienParente}}</span>
-                                <br>
+                                <span> de </span>
                                 <span [innerHTML]="item?.prenomTravailleur"
-                                    class="thick">{{item?.prenomTravailleur}}</span>,
-                                <span [innerHTML]="item?.nomTravailleur" class="thick">{{item?.nomTravailleur}}</span>
+                                    style="color: blue;">{{item?.prenomTravailleur}}</span>&nbsp;
+                                <span [innerHTML]="item?.nomTravailleur"
+                                    style="color: blue;">{{item?.nomTravailleur}}</span>
                             </p>
                         </div>
                     </div>
