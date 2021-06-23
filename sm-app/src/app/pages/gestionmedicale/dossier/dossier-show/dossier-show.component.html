@@ -8,7 +8,8 @@
                         {{entity?.matricule}}</span></h4>
                 <h6 class="m-0">{{entity?.typePatient}} - {{entity?.structure}}</h6>
             </div>
-            <div class="col-12 col-md-4">
+            <!--div class="col-12 col-md-3">
+                 
                 <button tc-button class="mx-2" (click)="location.back()" [outline]="true"
                     beforeIcon="icofont-reply"></button>
                 <button [outline]="true" class="mx-2" (click)="findEntity(entity.id)" tc-button view="success"
@@ -18,6 +19,27 @@
                 <button *ngIf="dossierSrv.resourceName|editable" class="mx-2"
                     [routerLink]="['/'+orientation,dossierSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']" tc-button
                     view="warning" beforeIcon="icofont-edit"></button>
+                    <button size="sm" tc-button class="mx-2" 
+                    beforeIcon="icofont-email" view="accent" (click)="openModal()" [outline]="true"> Contacter</button>
+            </div-->
+            <div  class="col-12 col-md-3">
+                <div class="col-12 justify-content-center">
+                    <button size="sm" tc-button class="float-right ml-1" (click)="openModal()"
+                        beforeIcon="icofont-email" view="accent" [outline]="true"> Contacter</button>   
+                    <button size="sm" *ngIf="dossierSrv.resourceName|editable"
+                        [routerLink]="['/'+orientation,dossierSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+                        class="float-right ml-1" tc-button view="warning" [outline]="true"
+                        beforeIcon="icofont-edit"></button>
+                    <button size="sm" (click)="remove(entity)" *ngIf="dossierSrv.resourceName|deletable"
+                        tc-button view="error" beforeIcon="icofont-trash" [outline]="true"
+                        class=" float-right ml-1"></button>
+                    <button size="sm" (click)="findEntity(entity.id)" class="float-right ml-1" tc-button [outline]="true"
+                    view="success" beforeIcon="icofont-refresh"></button>
+                    <button size="sm" tc-button class="float-right" (click)="location.back()" [outline]="true"
+                        beforeIcon="icofont-reply"></button>
+                    
+                </div>
+
             </div>
         </div>
     </div>
@@ -205,3 +227,45 @@
     </div>
 </div>
 <app-access-denied *ngIf="!(dossierSrv.resourceName|showable)"></app-access-denied>
+<!-- Modal window -->
+<nz-modal nzWidth="50%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Nouveau Message'"
+  [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+  <ng-template #modalBody>
+    <form #form="ngForm" ngNativeValidate>
+      <div class="row">
+        <div class="col-12">
+          <tc-form-group>
+            <tc-form-label>Objet</tc-form-label>
+            <tc-input required="required" [(ngModel)]="email.object" name="object" id="object" #object="ngModel">
+            </tc-input>
+        <tc-form-description>
+            <app-form-field-validation-message [formField]="object"></app-form-field-validation-message>
+        </tc-form-description>
+      </tc-form-group>
+         <tc-form-group>
+            <tc-form-label>Message</tc-form-label>
+            <ckeditor nz-input [required]="true" id="message" name="message" #message="ngModel"
+                        [(ngModel)]="email.message" [editor]="editor" class="ckeditor-col-container clearfix">
+                    </ckeditor>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="message"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+         
+        </div>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+        (click)="closeModal()">Fermer</button>
+      <button [afterIcon]="'icofont-send-mail'"
+        tc-button [view]="'accent'" (click)="sendSingleEmail()">
+        Envoyer
+      </button>
+    </div>
+  </ng-template>
+</nz-modal>
+<!-- end Modal window -->

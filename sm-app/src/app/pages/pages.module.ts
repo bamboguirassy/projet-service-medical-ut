@@ -121,6 +121,7 @@ import {ConsultationMensuelleComponent} from "./dashboards/consultation-mensuell
 import {ConsultationJournaliereComponent} from "./dashboards/consultation-journaliere/consultation-journaliere.component";
 import {NgPipesModule} from "ng-pipes";
 import {ChartsModule} from "ng2-charts";
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 @NgModule({
   imports: [
     CommonModule,
@@ -128,6 +129,7 @@ import {ChartsModule} from "ng2-charts";
     ReactiveFormsModule,
     RouterModule,
     ChartsModule,
+    CKEditorModule,
     NgxChartsModule,
     NgxEchartsModule.forRoot({
       echarts: {
