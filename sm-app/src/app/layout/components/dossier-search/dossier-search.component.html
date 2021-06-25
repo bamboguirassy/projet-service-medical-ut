@@ -19,7 +19,7 @@
 </nz-autocomplete> -->
 <div class="col-4">
     <div class="example-input">
-        <input style="width: 300px; height: 35px;" placeholder="Rechercher un dossier" nz-input [(ngModel)]="searchTerm"
+        <input style="width: 170px; height: 35px;" placeholder="Rechercher un dossier" nz-input [(ngModel)]="searchTerm"
             (input)="getDossiers()" [nzAutocomplete]="auto" />
         <nz-autocomplete nzBackfill #auto>
             <nz-auto-option *ngFor="let item of datas">
