@@ -21,6 +21,8 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
   pathologies: Pathologie[] = [];
   @ViewChildren('form') form;
   activated:Boolean;
+  selectedTab = '';
+
   constructor(store: Store<IAppState>,
     public consultationSrv: ConsultationService,
     public activatedRoute: ActivatedRoute,
@@ -59,6 +61,7 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
   handlePostLoad() {
     this.selectedPathologies=this.entity?.pathologies?.map(pathologie=>pathologie.id);
     this.title = 'Consultation n° ' + this.entity?.id;
+    this.selectedTab = 'symptomes';
    
   }
 
@@ -87,6 +90,12 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
         this.consultationSrv.httpSrv.toastr.success("Modification réussie")
         this.activated=true;
       }, err => this.consultationSrv.httpSrv.catchError(err));
+  }
+
+  loadTab(tabName: string) {
+    setTimeout(()=>{
+      this.selectedTab= tabName;
+    });
   }
 
 }

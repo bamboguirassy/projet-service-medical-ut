@@ -21,11 +21,9 @@ export class MedicamentRemisListComponent extends BasePageComponent<MedicamentRe
   }
 
   ngOnInit(): void {
-    super.ngOnInit();
   }
 
   ngOnDestroy() {
-    super.ngOnDestroy();
   }
 
   handlePostDelete() {
