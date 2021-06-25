@@ -9,7 +9,7 @@
                 <h6 class="m-0">{{entity?.typePatient}} - {{entity?.structure}}</h6>
             </div>
             <div  class="col-12 col-md-3">
-                <div class="col-12 justify-content-center">
+                <div class="col-12 justify-content-center pt-4">
                     <button size="sm" tc-button class="float-right ml-1" (click)="openModal()"
                         beforeIcon="icofont-email" view="accent" [outline]="true"> Contacter</button>   
                     <button size="sm" *ngIf="dossierSrv.resourceName|editable"
