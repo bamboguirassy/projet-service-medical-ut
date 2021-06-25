@@ -19,6 +19,7 @@ export class DossierShowComponent extends BasePageComponent<Dossier> implements 
   @ViewChild('modalFooter', { static: true }) modalFooter: ElementRef<any>;
   isModalVisible = false;
   editor = ClassicEditor;
+  selectedTab = '';
   public email= {
       object: '',
       message: ''
@@ -58,6 +59,7 @@ export class DossierShowComponent extends BasePageComponent<Dossier> implements 
 
   handlePostLoad() {
     this.title = 'Dossier Médical - ' + this.entity?.numero;
+    this.selectedTab = 'consultations';
   }
 
   handlePostDelete() {
@@ -91,6 +93,12 @@ export class DossierShowComponent extends BasePageComponent<Dossier> implements 
       },
       error => this.dossierSrv.httpSrv.catchError(error))
 
+  }
+
+  loadTab(tabName: string) {
+    setTimeout(()=>{
+      this.selectedTab= tabName;
+    });
   }
     
 
