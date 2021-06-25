@@ -8,20 +8,6 @@
                         {{entity?.matricule}}</span></h4>
                 <h6 class="m-0">{{entity?.typePatient}} - {{entity?.structure}}</h6>
             </div>
-            <!--div class="col-12 col-md-3">
-                 
-                <button tc-button class="mx-2" (click)="location.back()" [outline]="true"
-                    beforeIcon="icofont-reply"></button>
-                <button [outline]="true" class="mx-2" (click)="findEntity(entity.id)" tc-button view="success"
-                    beforeIcon="icofont-refresh"></button>
-                <button (click)="remove(entity)" *ngIf="dossierSrv.resourceName|deletable" [outline]="true" tc-button
-                    view="error" beforeIcon="icofont-trash" class="mx-2"></button>
-                <button *ngIf="dossierSrv.resourceName|editable" class="mx-2"
-                    [routerLink]="['/'+orientation,dossierSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']" tc-button
-                    view="warning" beforeIcon="icofont-edit"></button>
-                    <button size="sm" tc-button class="mx-2" 
-                    beforeIcon="icofont-email" view="accent" (click)="openModal()" [outline]="true"> Contacter</button>
-            </div-->
             <div  class="col-12 col-md-3">
                 <div class="col-12 justify-content-center">
                     <button size="sm" tc-button class="float-right ml-1" (click)="openModal()"
@@ -214,14 +200,14 @@
     </div>
     <div class="col-12">
         <nz-tabset *ngIf="entity" nzSize="small">
-            <nz-tab nzTitle="Consultations">
-                <app-consultation-dossier [consultations]="entity?.consultations"></app-consultation-dossier>
+            <nz-tab (nzSelect)="loadTab('consultations')" nzTitle="Consultations">
+                <app-consultation-dossier *ngIf="selectedTab=='consultations'" [consultations]="entity?.consultations"></app-consultation-dossier>
             </nz-tab>
-            <nz-tab nzTitle="Imputations">
-                <app-imputation-dossier [imputations]="entity?.inputations"></app-imputation-dossier>
+            <nz-tab (nzSelect)="loadTab('imputations')" nzTitle="Imputations">
+                <app-imputation-dossier *ngIf="selectedTab=='imputations'" [imputations]="entity?.inputations"></app-imputation-dossier>
             </nz-tab>
-            <nz-tab nzTitle="Repos médicaux">
-                <app-repos-medical-dossier [dossier]="entity"></app-repos-medical-dossier>
+            <nz-tab (nzSelect)="loadTab('reposmedicaux')" nzTitle="Repos médicaux">
+                <app-repos-medical-dossier *ngIf="selectedTab=='reposmedicaux'" [dossier]="entity"></app-repos-medical-dossier>
             </nz-tab>
         </nz-tabset>
     </div>
