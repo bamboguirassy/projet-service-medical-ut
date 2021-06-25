@@ -23,8 +23,7 @@
         <div class="col-12">
           <tc-form-group>
             <tc-form-label>Description</tc-form-label>
-            <tc-textarea [(ngModel)]="entity.description" name="description" id="description"
-              #description="ngModel">
+            <tc-textarea [(ngModel)]="entity.description" name="description" id="description" #description="ngModel">
             </tc-textarea>
             <tc-form-description>
               <app-form-field-validation-message [formField]="description"></app-form-field-validation-message>

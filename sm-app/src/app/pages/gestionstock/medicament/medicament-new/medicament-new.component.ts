@@ -25,7 +25,7 @@ export class MedicamentNewComponent implements OnInit {
     this.entity = new Medicament();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   save() {
     this.entity.filename = this.fileModel.fileName;
@@ -47,7 +47,7 @@ export class MedicamentNewComponent implements OnInit {
   closeModal() {
     this.isModalVisible = false;
   }
-  
+
   // upload new file
   onFileChanged(inputValue: any) {
     let file: File = inputValue.target.files[0];

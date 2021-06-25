@@ -38,7 +38,7 @@ export class InputationNewComponent implements OnInit {
   save() {
     this.entity.structureHospitaliere = this.selectedStructurePartenaire.id;
     this.entity.dossier = this.dossier.id;
-    this.entity.date = this.datePipe.transform(this.entity.date,('yyyy-MM-dd'));
+    this.entity.date = this.datePipe.transform(this.entity.date, ('yyyy-MM-dd'));
     this.inputationSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();

@@ -13,11 +13,11 @@ import { BonReception } from '../bonreception';
 export class BonReceptionListComponent extends BasePageComponent<BonReception> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public bonReceptionSrv: BonReceptionService) {
+    public bonReceptionSrv: BonReceptionService) {
     super(store, bonReceptionSrv);
 
     this.pageData = {
-      title: 'Liste des Bons de Réception',
+      title: 'Liste des bons de réception',
       breadcrumbs: [
         {
           title: 'Accueil',
@@ -43,6 +43,6 @@ export class BonReceptionListComponent extends BasePageComponent<BonReception> i
     this.findAll();
   }
 
-  handlePostLoad(){}
+  handlePostLoad() { }
 
 }

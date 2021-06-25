@@ -1,18 +1,28 @@
-<tc-card *ngIf="pathologieSrv.resourceName|listable" [tcGradient]="statisticGradient">
+<tc-card *ngIf="pathologieSrv.resourceName|listable" [tcGradient]="lightGradient">
     <div class="row">
-        <div class="col-12 col-md-6 col-lg-6">
-            <h5>Choisir une année pour filtrer</h5>                       
-            <nz-select [(ngModel)]="selectedAnnee" (ngModelChange)="getData();buildDiagram()" style="width: 100%;">
-                <nz-option *ngFor="let annee of annees" [nzValue]="annee" [nzLabel]="annee"></nz-option>
-            </nz-select>
+        <div class="col-12">
+            <h5>Choisir une année pour filtrer</h5>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="col-md-3 p-2 bd-highlight">
+                    <nz-select class="size-2" [(ngModel)]="selectedAnnee" (ngModelChange)="getData();buildDiagram()"
+                        style="width: 100%;">
+                        <nz-option *ngFor="let annee of annees" [nzValue]="annee" [nzLabel]="annee"></nz-option>
+                    </nz-select>
+                </div>
+            </div>
         </div>
     </div>
-    <br>
-    <hr>
     <nz-tabset nzTabPosition="bottom" *ngIf="data">
         <nz-tab [nzTitle]="'Tableau des statistiques'">
-            <tc-card *ngIf="pathologieSrv.resourceName|listable" [tcGradient]="statisticGradient">
-                <table class="table table-responsive-sm table-bordered table-hover" *ngIf="data" >
+            <div *ngIf="pathologieSrv.resourceName|listable">
+                <div class="ms-auto p-2 bd-highlight">
+                    <button [disabled]="disableExportButton" nz-button nzType="primary"
+                        (click)="exportToExcel('spgTable1', fileName)" class="shadow " [nzSize]="'large'"><i nz-icon
+                            nzType="download"></i>Exporter le tableau</button>
+                </div>
+                <nz-table id="spgTable1" nzScroll="x" [nzFrontPagination]="'false'" nzBordered="true"
+                    [nzShowPagination]="'false'" class="table table-scrollable table-hover table-responsive-sm" #spgTable1
+                    [nzData]="data">
                     <thead>
                         <tr>
                             <th></th>
@@ -21,14 +31,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of data?.content">
+                        <tr *ngFor="let item of data.content">
                             <td scope="row">{{item.month}}</td>
                             <td *ngFor="let val of item.pathTab">{{val.nombre}}</td>
                             <td>{{item.total}}</td>
                         </tr>
                     </tbody>
-                </table>
-            </tc-card>
+                </nz-table>
+            </div>
         </nz-tab>
         <nz-tab [nzTitle]="'Diagramme des statistiques'">
             <div *ngIf="!loading && isLoad">
@@ -42,29 +52,33 @@
                         </ng-container>
                     </nz-select>
                 </tc-form-group>
-                <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions" [plugins]="chartPlugins"
-                    [legend]="chartLegend" [chartType]="selectedTypeDiagram" [colors]="lineChartColors">
+                <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
+                    [plugins]="chartPlugins" [legend]="chartLegend" [chartType]="selectedTypeDiagram"
+                    [colors]="lineChartColors">
                 </canvas>
-                <hr class="m-2">
-                <tc-card view="accent" [outline]="true">
-                    <table class="table table-responsive-sm">
-                        <thead>
-                            <tr>
-                                <th>Mois
-                                </th>
-                                <th *ngFor="let label of chartLabels">{{label}}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of chartData">
-                                <td scope="row">{{item.label}}</td>
-                                <td *ngFor="let val of item.data">{{val}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </tc-card>
+                <nz-table id="table2" nzScroll="x" [nzFrontPagination]="'false'" nzBordered="true"
+                    [nzShowPagination]="'false'" class="table table-scrollable mt-5 table-hover table-responsive-sm" #table2
+                    [nzData]="chartData">
+                    <thead>
+                        <tr>
+                            <th>
+                            </th>
+                            <th *ngFor="let label of chartLabels">{{label}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of table2.data">
+                            <td scope="row">{{item.label}}</td>
+                            <td *ngFor="let val of item.data">{{val}}</td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+                <div class="ms-auto my-4 p-2 bd-highlight">
+                    <button [disabled]="disableExportButton" nz-button nzType="primary"
+                        (click)="exportToExcel('table2', fileName)" class="shadow " [nzSize]="'large'"><i nz-icon
+                            nzType="download"></i>Exporter le tableau</button>
+                </div>
             </div>
-            
         </nz-tab>
-    </nz-tabset>    
+    </nz-tabset>
 </tc-card>

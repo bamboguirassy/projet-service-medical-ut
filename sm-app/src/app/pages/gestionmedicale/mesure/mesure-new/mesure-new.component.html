@@ -1,0 +1,116 @@
+<!-- Modal window -->
+<nz-modal nzWidth="70%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Ajouter une nouvelle mesure'"
+    [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+    <ng-template #modalBody>
+        <form #form="ngForm" ngNativeValidate>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Tension Arterielle</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.tensionArterielle" name="tensionArterielle"
+                            id="tensionArterielle" #tensionArterielle="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="tensionArterielle">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Temperature</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.temperature" name="temperature"
+                            id="temperature" #temperature="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="temperature">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Pouls</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.pouls" name="pouls" id="pouls"
+                            #pouls="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="pouls"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Frequence Respiratoire</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.frequenceRespiratoire"
+                            name="frequenceRespiratoire" id="frequenceRespiratoire" #frequenceRespiratoire="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="frequenceRespiratoire">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Poids</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.poids" name="poids" id="poids"
+                            #poids="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="poids"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Glycemie</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.glycemie" name="glycemie" id="glycemie"
+                            #glycemie="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="glycemie">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Examen Paracliniques</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.examenParacliniques"
+                            name="examenParacliniques" id="examenParacliniques" #examenParacliniques="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="examenParacliniques">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6">
+                    <tc-form-group>
+                        <tc-form-label>Examen Cliniques</tc-form-label>
+                        <tc-input required="required" [(ngModel)]="entity.examenCliniques" name="examenCliniques"
+                            id="examenCliniques" #examenCliniques="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="examenCliniques">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="actions justify-content-between">
+            <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+                (click)="closeModal()">Annuler</button>
+            <button [disabled]="form.valid" (click)="save()" [afterIcon]="'icofont-save'"
+                tc-button [view]="'accent'">
+                Enregistrer
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>
+<!-- end Modal window -->

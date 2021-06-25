@@ -29,7 +29,7 @@ export class DossierEditComponent extends BasePageComponent<Dossier> implements 
     { value: 'autres', label: 'Autres' },
   ];
   niveauInstructions = [
-    { value: 'non scolarisee', label: 'Non Scolarisée' },
+    { value: 'non scolarise', label: 'Non Scolarisé' },
     { value: 'primaire', label: 'Primaire' },
     { value: 'secondaire', label: 'Secondaire' },
     { value: 'superieur', label: 'Supérieur' },
@@ -43,10 +43,10 @@ export class DossierEditComponent extends BasePageComponent<Dossier> implements 
   ];
 
   constructor(store: Store<IAppState>,
-              public dossierSrv: DossierService,
-              public router: Router,
-              private activatedRoute: ActivatedRoute,
-              public location: Location, public datePipe: DatePipe) {
+    public dossierSrv: DossierService,
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    public location: Location, public datePipe: DatePipe) {
     super(store, dossierSrv);
     this.pageData = {
       title: 'Modification - Dossier',
@@ -56,7 +56,7 @@ export class DossierEditComponent extends BasePageComponent<Dossier> implements 
           route: ''
         },
         {
-          title: 'Dossiers',
+          title: 'Liste des dossiers',
           route: '/' + this.orientation + '/dossier'
         },
         {
@@ -89,10 +89,10 @@ export class DossierEditComponent extends BasePageComponent<Dossier> implements 
 
   getStructures() {
     this.dossierSrv.httpSrv.http.get('assets/data/structures.json')
-    .pipe(first())
-    .subscribe((data: any) => {
-      this.structures = data;
-    });
+      .pipe(first())
+      .subscribe((data: any) => {
+        this.structures = data;
+      });
   }
 
 }

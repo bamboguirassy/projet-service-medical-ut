@@ -11,7 +11,7 @@ import { DocteurService } from 'src/app/pages/parametrage/docteur/docteur.servic
   styleUrls: ['./reposmedical-edit.component.scss']
 })
 export class ReposMedicalEditComponent implements OnInit {
-  
+
   @Input() visible = false;
   @Input() entity: ReposMedical;
 
@@ -23,13 +23,13 @@ export class ReposMedicalEditComponent implements OnInit {
 
   docteurs: Docteur[] = [];
   selectedDocteurId: any;
-  
+
   constructor(public reposMedicalSrv: ReposMedicalService,
-     public datePipe: DatePipe,
-     public docteurSrv: DocteurService) {}
+    public datePipe: DatePipe,
+    public docteurSrv: DocteurService) { }
 
   ngOnInit(): void {
-    this.selectedDocteurId = this.entity.docteur?.id;
+    this.selectedDocteurId = this.entity?.docteur?.id;
     this.findDocteurs();
   }
 
@@ -38,6 +38,7 @@ export class ReposMedicalEditComponent implements OnInit {
     this.entity.date = this.datePipe.transform(this.entity.date, 'yyyy-MM-dd');
     this.reposMedicalSrv.update(this.entity)
       .subscribe((data: any) => {
+        this.closeModal();
         this.update.emit(data);
       });
   }

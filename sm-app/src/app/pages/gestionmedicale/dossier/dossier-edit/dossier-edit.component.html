@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-12">
                     <tc-form-group>
-                        <tc-form-label>Type Patient</tc-form-label>
+                        <tc-form-label>Type patient</tc-form-label>
                         <tc-radio [direction]="'horizontal'" required="required" [(ngModel)]="entity.typePatient"
                             name="typePatient" id="typePatient" #typePatient="ngModel" [value]="entity.typePatient">
                             <tc-radio-option [value]="'PER'">PER</tc-radio-option>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
-                        <tc-form-label>Date Naissance</tc-form-label>
+                        <tc-form-label>Date de naissance</tc-form-label>
                         <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required="required" [(ngModel)]="entity.dateNaissance"
                             name="dateNaissance" id="dateNaissance" #dateNaissance="ngModel"></nz-date-picker>
                         <tc-form-description>
@@ -74,7 +74,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
-                        <tc-form-label>Numéro Pièce Identité</tc-form-label>
+                        <tc-form-label>Numéro pièce d'identité</tc-form-label>
                         <tc-input [(ngModel)]="entity.cni" name="cni" id="cni" #cni="ngModel">
                         </tc-input>
                         <tc-form-description>
@@ -96,7 +96,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4" [hidden]="entity?.typePatient!='FAMILLE'">
                     <tc-form-group>
-                        <tc-form-label>Lien de Parenté</tc-form-label>
+                        <tc-form-label>Lien de parenté</tc-form-label>
                         <tc-radio required="required" [(ngModel)]="entity.lienParente" [value]="entity.lienParente" name="lienParente"
                             id="lienParente" #lienParente="ngModel" [direction]="'horizontal'">
                             <tc-radio-option [hidden]="entity?.genre!='Homme'" [value]="'époux'">Epoux</tc-radio-option>
@@ -113,7 +113,7 @@
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
                         <tc-form-label *ngIf="entity?.typePatient!='ETUDIANT'">Matricule {{entity?.typePatient=='FAMILLE'?'du travailleur':''}}</tc-form-label>
-                        <tc-form-label *ngIf="entity?.typePatient=='ETUDIANT'">Numéro Carte Etudiant</tc-form-label>
+                        <tc-form-label *ngIf="entity?.typePatient=='ETUDIANT'">Numéro carte étudiant</tc-form-label>
                         <tc-input required="required" [(ngModel)]="entity.matricule" name="matricule" id="matricule"
                             #matricule="ngModel">
                         </tc-input>
@@ -125,7 +125,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.typePatient=='FAMILLE'">
                     <tc-form-group>
-                        <tc-form-label>Prenom du Travailleur</tc-form-label>
+                        <tc-form-label>Prénom du travailleur</tc-form-label>
                         <tc-input required="required" [(ngModel)]="entity.prenomTravailleur" name="prenomTravailleur"
                             id="prenomTravailleur" #prenomTravailleur="ngModel">
                         </tc-input>
@@ -137,7 +137,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.typePatient=='FAMILLE'">
                     <tc-form-group>
-                        <tc-form-label>Nom du Travailleur</tc-form-label>
+                        <tc-form-label>Nom du travailleur</tc-form-label>
                         <tc-input required="required" [(ngModel)]="entity.nomTravailleur" name="nomTravailleur"
                             id="nomTravailleur" #nomTravailleur="ngModel">
                         </tc-input>
@@ -170,17 +170,25 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.typePatient!='ETUDIANT'">
                     <tc-form-group>
-                        <tc-form-label>Niveau Instruction</tc-form-label>
+                        <tc-form-label>Niveau d'instruction</tc-form-label>
                         <tc-select [options]="niveauInstructions" [(ngModel)]="entity.niveauInstruction" name="niveauInstruction" id="niveauInstruction"
                             #niveauInstruction="ngModel">
                         </tc-select>
                     </tc-form-group>
                 </div>
+                <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.typePatient=='ETUDIANT'">
+                    <tc-form-group>
+                        <tc-form-label>Niveau d'instruction</tc-form-label>
+                        <tc-input disabled="true" value="superieur" ngModel="Supérieur" name="niveauInstruction" id="niveauInstruction"
+                            #niveauInstruction="ngModel">
+                        </tc-input>
+                    </tc-form-group>
+                </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
-                        <tc-form-label>Situation Matrimoniale</tc-form-label>
+                        <tc-form-label>Situation matrimoniale</tc-form-label>
                         <tc-select [options]="situationMatrimoniales" [(ngModel)]="entity.situationMatrimoniale" name="situationMatrimoniale" id="situationMatrimoniale"
                             #situationMatrimoniale="ngModel">
                         </tc-select>
@@ -188,7 +196,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.situationMatrimoniale=='mariee' && entity?.genre=='Femme'">
                     <tc-form-group>
-                        <tc-form-label>Profession Mari</tc-form-label>
+                        <tc-form-label>Profession du mari</tc-form-label>
                         <tc-select [options]="professionMaris" [(ngModel)]="entity.professionMari" name="professionMari" id="professionMari"
                             #professionMari="ngModel">
                         </tc-select>
@@ -196,7 +204,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.situationMatrimoniale=='mariee'">
                     <tc-form-group>
-                        <tc-form-label>Date Mariage</tc-form-label>
+                        <tc-form-label>Date mariage</tc-form-label>
                         <tc-input [(ngModel)]="entity.dateMariage" name="dateMariage" id="dateMariage"
                             #dateMariage="ngModel">
                         </tc-input>
@@ -204,15 +212,27 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
-                        <tc-form-label>Genre Vie</tc-form-label>
+                        <tc-form-label>Genre vie</tc-form-label>
                         <tc-select [options]="genreVies" [(ngModel)]="entity.genreVie" name="genreVie" id="genreVie"
                             #genreVie="ngModel">
                         </tc-select>
                     </tc-form-group>
                 </div>
+                <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.genreVie=='autres'">
+                    <tc-form-group>
+                        <tc-form-label>Description genre vie</tc-form-label>
+                        <tc-textarea [(ngModel)]="entity.descriptionGenreVie" name="descriptionGenreVie" id="descriptionGenreVie"
+                            #descriptionGenreVie="ngModel">
+                        </tc-textarea>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="descriptionGenreVie">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
                 <div class="col-12 col-md-6 col-lg-4 col-lg-4">
                     <tc-form-group>
-                        <tc-form-label>Historiques Maladie</tc-form-label>
+                        <tc-form-label>Historiques maladie</tc-form-label>
                         <tc-textarea [(ngModel)]="entity.historiqueMaladies" name="historiqueMaladies"
                             id="historiqueMaladies" #historiqueMaladies="ngModel">
                         </tc-textarea>
@@ -220,7 +240,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
-                        <tc-form-label>Antecedents Medicaux</tc-form-label>
+                        <tc-form-label>Antécédents médicaux</tc-form-label>
                         <tc-textarea [(ngModel)]="entity.antecedentMedicaux" name="antecedentMedicaux" id="antecedentMedicaux"
                             #antecedentMedicaux="ngModel">
                         </tc-textarea>
@@ -228,7 +248,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
-                        <tc-form-label>Antecedents Churirgicaux</tc-form-label>
+                        <tc-form-label>Antécédents churirgicaux</tc-form-label>
                         <tc-textarea [(ngModel)]="entity.antecedentChurirgicaux" name="antecedentChurirgicaux" id="antecedentChurirgicaux"
                             #antecedentChurirgicaux="ngModel">
                         </tc-textarea>
@@ -236,7 +256,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <tc-form-group>
-                        <tc-form-label>Antecedents Familiaux</tc-form-label>
+                        <tc-form-label>Antécédents familiaux</tc-form-label>
                         <tc-textarea [(ngModel)]="entity.antecedentFamiliaux" name="antecedentFamiliaux" id="antecedentFamiliaux"
                             #antecedentFamiliaux="ngModel">
                         </tc-textarea>
@@ -252,8 +272,6 @@
                     beforeIcon="icofont-save" tc-button view="warning">
                     Mettre à jour
                 </button>
-                <button class="float-right mr-1" (click)="findEntity(entity.id)" afterIcon="icofont-refresh" tc-button
-                    type="button" view="success">Rafraichir</button>
             </div>
         </tc-card>
     </form>

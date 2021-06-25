@@ -41,10 +41,12 @@
         </div>
         <div class="col-12">
           <tc-form-group>
-            <tc-form-label>Nbre jours prescrits</tc-form-label>
-            <tc-input type="number" required="required" [(ngModel)]="entity.nombreJour" name="nombreJour"
-              id="nombreJour" #nombreJour="ngModel">
-            </tc-input>
+            <tc-form-label>Nombre jours prescrits</tc-form-label>
+            <div style="margin-bottom: 16px;">
+              <nz-input-group nzAddOnAfter="jour(s)">
+                <input type="number"  required="required" nz-input [(ngModel)]="entity.nombreJour" name="nombreJour" id="nombreJour" #nombreJour="ngModel"/>
+              </nz-input-group>
+            </div>
             <tc-form-description>
               <app-form-field-validation-message [formField]="nombreJour"></app-form-field-validation-message>
             </tc-form-description>
@@ -58,8 +60,7 @@
     <div class="actions justify-content-between">
       <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
         (click)="closeModal()">Fermer</button>
-      <button (click)="updateItem()" [afterIcon]="'icofont-pencil'"
-        tc-button [view]="'warning'">
+      <button (click)="updateItem()" [afterIcon]="'icofont-pencil'" tc-button [view]="'warning'">
         Mettre à jour
       </button>
     </div>

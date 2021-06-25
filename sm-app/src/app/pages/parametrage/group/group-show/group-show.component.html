@@ -1,20 +1,22 @@
 <tc-card *ngIf="groupSrv.resourceName|showable" [tcGradient]="lightGradient">
     <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
-        <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-reply">Retour</button>
-        <button *ngIf="groupSrv.resourceName|clonable" [outline]="true" view="info"
-            [routerLink]="['/'+orientation,groupSrv.getRoutePrefixWithoutSlash(), entity?.id,'clone']" tc-button beforeIcon="icofont-copy"
-            class="ml-1">Cloner</button>
-        <button [outline]="true" (click)="findEntity(entity.id)" tc-button view="accent" beforeIcon="icofont-refresh"
-            class="ml-1">Rafraichir</button>
-        <button (click)="remove(entity)" *ngIf="groupSrv.resourceName|deletable" tc-button view="error"
-            beforeIcon="icofont-trash" class="ml-1 float-right">Supprimer</button>
-        <button *ngIf="groupSrv.resourceName|editable" [routerLink]="['/'+orientation,groupSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
-            tc-button view="warning" beforeIcon="icofont-edit" class="ml-1 float-right">Modifier</button>
+        <div class="row">
+            <div class="col-12">
+                <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-reply">Retour</button>
+                <button [outline]="true" (click)="findEntity(entity.id)" tc-button view="accent"
+                    beforeIcon="icofont-refresh" class="ml-1">Rafraichir</button>
+                <button (click)="remove(entity)" *ngIf="groupSrv.resourceName|deletable" tc-button view="error"
+                    beforeIcon="icofont-trash" class="ml-1 float-right">Supprimer</button>
+                <button *ngIf="groupSrv.resourceName|editable"
+                    [routerLink]="['/'+orientation,groupSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']" tc-button
+                    view="warning" beforeIcon="icofont-edit" class="ml-1 float-right">Modifier</button>
+            </div>
+        </div>
     </tc-card>
-    <div class="row">
-        <div class="col-12">
-            <tc-card [title]="title" [view]="secondViewBorder" [outline]="true" [tcGradient]="secondGradient">
-                <table class="table">
+    <tc-card [title]="title" [view]="secondViewBorder" [outline]="true" [tcGradient]="secondGradient">
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-responsive">
                     <tr>
                         <th>Code</th>
                         <td>{{ entity?.code }}</td>
@@ -24,107 +26,99 @@
                         <td>{{ entity?.name }}</td>
                     </tr>
                 </table>
-            </tc-card>
+            </div>
         </div>
-        <div class="col-12">
-            <tc-card [title]="'Liste des accès'" [view]="secondViewBorder" [outline]="true" [tcGradient]="secondGradient">
-                <div class="row">
-                    <div class="col-lg-6" *ngFor="let accessGroup of accessGroups">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th colspan="8" class="text-center">
-                                        <b>{{accessGroup.groupName}}</b>
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th>Nom</th>
-                                    <th>
-                                        <i class="icofont-list" aria-hidden="true"></i>
-                                    </th>
-                                    <th>
-                                        <i class="icofont-eye-alt" aria-hidden="true"></i>
-                                    </th>
-                                    <th>
-                                        <i class="icofont-plus" aria-hidden="true"></i>
-                                    </th>
-                                    <th>
-                                        <i class="icofont-edit" aria-hidden="true"></i>
-                                    </th>
-                                    <th>
-                                        <i class="icofont-copy" aria-hidden="true"></i>
-                                    </th>
-                                    <th>
-                                        <i class="icofont-trash" aria-hidden="true"></i>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let accessModel of accessGroup.accessModels; let i=index">
-                                    <td scope="row">
-                                        <b>{{accessModel.tableName}}</b>
-                                    </td>
-                                    <td>
-                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                            <input disabled name="{{accessModel.tableName}}Index"
-                                                [(ngModel)]="accessModel.isIndexAllowed" type="checkbox"
-                                                class="custom-control-input" id="{{accessModel.tableName}}Index">
-                                            <label class="custom-control-label"
-                                                for="{{accessModel.tableName}}Index"></label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                            <input disabled name="{{accessModel.tableName}}Show"
-                                                [(ngModel)]="accessModel.isShowAllowed" type="checkbox"
-                                                class="custom-control-input" id="{{accessModel.tableName}}Show">
-                                            <label class="custom-control-label"
-                                                for="{{accessModel.tableName}}Show"></label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                            <input disabled name="{{accessModel.tableName}}Create"
-                                                [(ngModel)]="accessModel.isCreateAllowed" type="checkbox"
-                                                class="custom-control-input" id="{{accessModel.tableName}}Create">
-                                            <label class="custom-control-label"
-                                                for="{{accessModel.tableName}}Create"></label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                            <input disabled name="{{accessModel.tableName}}Edit"
-                                                [(ngModel)]="accessModel.isEditAllowed" type="checkbox"
-                                                class="custom-control-input" id="{{accessModel.tableName}}Edit">
-                                            <label class="custom-control-label"
-                                                for="{{accessModel.tableName}}Edit"></label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                            <input disabled name="{{accessModel.tableName}}Clone"
-                                                [(ngModel)]="accessModel.isCloneAllowed" type="checkbox"
-                                                class="custom-control-input" id="{{accessModel.tableName}}Clone">
-                                            <label class="custom-control-label"
-                                                for="{{accessModel.tableName}}Clone"></label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                            <input disabled name="{{accessModel.tableName}}Delete"
-                                                [(ngModel)]="accessModel.isDeleteAllowed" type="checkbox"
-                                                class="custom-control-input" id="{{accessModel.tableName}}Delete">
-                                            <label class="custom-control-label"
-                                                for="{{accessModel.tableName}}Delete"></label>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </tc-card>
+    </tc-card>
+    <tc-card [title]="'Liste des accès'" [view]="secondViewBorder" [outline]="true" [tcGradient]="secondGradient">
+        <div class="row">
+            <div class="col-12 col-lg-6" *ngFor="let accessGroup of accessGroups">
+                <table class="table table-bordered table-responsive">
+                    <thead>
+                        <tr>
+                            <th colspan="8" class="text-center">
+                                <b>{{accessGroup.groupName}}</b>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Nom</th>
+                            <th>
+                                <i class="icofont-list" aria-hidden="true"></i>
+                            </th>
+                            <th>
+                                <i class="icofont-eye-alt" aria-hidden="true"></i>
+                            </th>
+                            <th>
+                                <i class="icofont-plus" aria-hidden="true"></i>
+                            </th>
+                            <th>
+                                <i class="icofont-edit" aria-hidden="true"></i>
+                            </th>
+                            <th>
+                                <i class="icofont-copy" aria-hidden="true"></i>
+                            </th>
+                            <th>
+                                <i class="icofont-trash" aria-hidden="true"></i>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let accessModel of accessGroup.accessModels; let i=index">
+                            <td scope="row">
+                                <b>{{accessModel.tableName}}</b>
+                            </td>
+                            <td>
+                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                    <input disabled name="{{accessModel.tableName}}Index"
+                                        [(ngModel)]="accessModel.isIndexAllowed" type="checkbox"
+                                        class="custom-control-input" id="{{accessModel.tableName}}Index">
+                                    <label class="custom-control-label" for="{{accessModel.tableName}}Index"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                    <input disabled name="{{accessModel.tableName}}Show"
+                                        [(ngModel)]="accessModel.isShowAllowed" type="checkbox"
+                                        class="custom-control-input" id="{{accessModel.tableName}}Show">
+                                    <label class="custom-control-label" for="{{accessModel.tableName}}Show"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                    <input disabled name="{{accessModel.tableName}}Create"
+                                        [(ngModel)]="accessModel.isCreateAllowed" type="checkbox"
+                                        class="custom-control-input" id="{{accessModel.tableName}}Create">
+                                    <label class="custom-control-label" for="{{accessModel.tableName}}Create"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                    <input disabled name="{{accessModel.tableName}}Edit"
+                                        [(ngModel)]="accessModel.isEditAllowed" type="checkbox"
+                                        class="custom-control-input" id="{{accessModel.tableName}}Edit">
+                                    <label class="custom-control-label" for="{{accessModel.tableName}}Edit"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                    <input disabled name="{{accessModel.tableName}}Clone"
+                                        [(ngModel)]="accessModel.isCloneAllowed" type="checkbox"
+                                        class="custom-control-input" id="{{accessModel.tableName}}Clone">
+                                    <label class="custom-control-label" for="{{accessModel.tableName}}Clone"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                    <input disabled name="{{accessModel.tableName}}Delete"
+                                        [(ngModel)]="accessModel.isDeleteAllowed" type="checkbox"
+                                        class="custom-control-input" id="{{accessModel.tableName}}Delete">
+                                    <label class="custom-control-label" for="{{accessModel.tableName}}Delete"></label>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+    </tc-card>
 </tc-card>
 <app-access-denied *ngIf="!(groupSrv.resourceName|showable)"></app-access-denied>

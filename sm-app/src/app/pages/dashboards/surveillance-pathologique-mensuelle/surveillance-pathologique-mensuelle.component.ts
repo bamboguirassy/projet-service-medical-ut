@@ -21,6 +21,7 @@ export class SurveillancePathologiqueMensuelleComponent extends BasePageComponen
     { value: 'line', title: 'Courbe' },
   ];
   isLoad = false;
+  fileName:string = "Surveillance_pathologique_journalière_"
   data: any;
   selectedAnnee: number;
   annees = [];
@@ -123,7 +124,7 @@ export class SurveillancePathologiqueMensuelleComponent extends BasePageComponen
           this.isLoad = true;
           this.handlePostFetch(this.dataDiagram as []);
         }, err => {
-          this.pathologieSrv.httpSrv.handleError(err);
+          this.pathologieSrv.httpSrv.catchError(err);
         });
     }
   }

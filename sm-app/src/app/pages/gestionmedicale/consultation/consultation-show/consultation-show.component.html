@@ -1,22 +1,21 @@
-<div class="row" *ngIf="consultationSrv.resourceName|showable">
-    <div class="col-12 mb-1">
+<div class="row" *ngIf="consultationSrv.resourceName|showable" style="background: white;">
+    <div class="col-12 my-2">
         <div class="row">
             <div class="col-12 col-md-8" [ngStyle]="{'border-right': '3px dashed '+sidebarBg}">
-                <h5 [ngStyle]="{'color': sidebarBg}" class="m-0">Dossier médical n° {{entity?.dossier?.numero}}</h5>
-                <!-- <h4 [ngStyle]="{'color': sidebarBg}" class="m-0">{{entity?.dossier?.prenoms+' '+entity?.dossier?.nom}}
-                    <span *ngIf="entity?dossier?.matricule">{{entity?.dossier?.matricule}}</span>
+                <h4 [ngStyle]="{'color': sidebarBg}" class="m-0 pt-1">Consultation :
                 </h4>
-                <h6 class="m-0">{{entity?.dossier?.typePatient}} - {{entity?.dossier?.structure}}</h6> -->
+                <h5 [ngStyle]="{'color': sidebarBg}" class="m-0 pt-1">Dossier médical n° {{entity?.dossier?.numero}}
+                </h5>
             </div>
-            <div class="col-12 col-md-4">
-                <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-reply"></button>
-                <button [outline]="true" (click)="findEntity(entity.id)" class="mr-1 ml-1" tc-button view="success"
+            <div class="col-12 col-md-4 p-2">
+                <button tc-button (click)="location.back()" class="mx-2" [outline]="true" beforeIcon="icofont-reply"></button>
+                <button [outline]="true" (click)="findEntity(entity.id)" class="mx-2" tc-button view="success"
                     beforeIcon="icofont-refresh"></button>
                 <button (click)="remove(entity)" *ngIf="consultationSrv.resourceName|deletable" [outline]="true"
-                    tc-button view="error" beforeIcon="icofont-trash" class="mr-1"></button>
+                    tc-button view="error" beforeIcon="icofont-trash" class="mx-2"></button>
                 <button *ngIf="consultationSrv.resourceName|editable"
                     [routerLink]="['/'+orientation,consultationSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
-                    class="mr-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
+                    class="mx-2" tc-button view="warning" beforeIcon="icofont-edit"></button>
             </div>
         </div>
     </div>
@@ -24,60 +23,97 @@
         <hr>
     </div>
     <div class="col-12">
-        <div class="row">
-            <div class="col-12 col-md-4" [ngStyle]="{'border-right': '2px solid '+sidebarBg}">
+        <div *ngIf="entity" class="row">
+            <div class="col-12 col-lg-5 col-md-5" [ngStyle]="{'border-right': '2px solid '+sidebarBg}">
                 <ul class="info-section">
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-6 col-md-8 info-title">Tension Arterielle :</div>
-                            <div class="col-6 col-md-4 info-content">{{entity?.tensionArterielle}}</div>
+                            <div class="col-6 col-md-8 info-title">Tension artérielle :</div>
+                            <div *ngIf="entity.tensionArterielle; else elseTen" class="col-6 col-md-4 info-content">
+                                {{entity?.tensionArterielle}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
+
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-6 col-md-8 info-title">Temperature :</div>
-                            <div class="col-6 col-md-4 info-content">{{entity?.temperature}}</div>
+                            <div class="col-6 col-md-8 info-title">Température :</div>
+                            <div *ngIf="entity.temperature; else elseTem" class="col-6 col-md-4 info-content">
+                                {{entity?.temperature}}</div>
+                            <ng-template #elseTem>
+
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-6 col-md-8 info-title">Poids :</div>
-                            <div class="col-6 col-md-4 info-content">{{entity?.poids}}
-                            </div>
+                            <div *ngIf="entity.poids; else elsePoids" class="col-6 col-md-4 info-content">
+                                {{entity?.poids}}</div>
+                            <ng-template #elsePoids>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-6 col-md-8 info-title">Glycemie :</div>
-                            <div class="col-6 col-md-4 info-content">{{entity?.glycemie}}</div>
+                            <div class="col-6 col-md-8 info-title">Glycémie :</div>
+                            <div *ngIf="entity.glycemie; else elseGlycemie" class="col-6 col-md-4 info-content">
+                                {{entity?.glycemie}}</div>
+                            <ng-template #elseGlycemie>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                 </ul>
             </div>
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-lg-7 col-md-7">
                 <ul class="info-section">
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Médicaments Préscrits :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.medicamentPrescrits}}</div>
+                            <div class="col-sm-6 col-md-5 info-title">Médicaments préscrits :</div>
+                            <div *ngIf="entity.medicamentPrescrits; else elseMedicamentPrescrits"
+                                class="col-6 col-md-4 info-content">{{entity?.medicamentPrescrits}}</div>
+                            <ng-template #elseMedicamentPrescrits>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Motifs Consultation :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.motifConsultations}}</div>
+                            <div class="col-sm-6 col-md-5 info-title">Motifs de consultation :</div>
+                            <div *ngIf="entity.motifConsultations; else elseMedicamentPrescrits"
+                                class="col-6 col-md-4 info-content">{{entity?.motifConsultations}}</div>
+                            <ng-template #elseMotifConsultations>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
+
+
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Examen Cliniques :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.examenCliniques}}</div>
+                            <div class="col-sm-6 col-md-5 info-title">Examens cliniques :</div>
+                            <div *ngIf="entity.examenCliniques; else elseExamenCliniques"
+                                class="col-6 col-md-4 info-content">{{entity?.examenCliniques}}</div>
+                            <ng-template #elseExamenCliniques>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
+
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Examen Paracliniques :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.examenParacliniques}}</div>
+                            <div class="col-sm-6 col-md-5 info-title">Examens paracliniques :</div>
+                            <div *ngIf="entity.examenCliniques; else elseExamenCliniques"
+                                class="col-6 col-md-4 info-content">{{entity?.examenCliniques}}</div>
+                            <ng-template #elseExamenCliniques>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
+
                         </div>
                     </li>
                     <li>
@@ -96,75 +132,49 @@
             </div>
         </div>
     </div>
-    <div class="col-12">
-        <hr>
-    </div>
     <div class="col-12 d-flex justify-contend-end">
         <tc-card class="mb-1" title="Pathologie diagnostiquée">
-            <a href="javascript:void(0)" (click)="isPathologieModalVisible=true"
-                *ngIf="!entity?.pathologieDiagnostiquee && (consultationSrv.resourceName|editable)">Préciser
-                le résultat du diagnostic</a>
-            <tc-badge *ngIf="entity?.pathologieDiagnostiquee" view="error" [outline]="true">
-                <span class="nowrap">{{entity?.pathologieDiagnostiquee?.nom}}</span>
-            </tc-badge> &nbsp; <a href="javascript:void(0)" (click)="isPathologieModalVisible=true"
-                *ngIf="entity?.pathologieDiagnostiquee && (consultationSrv.resourceName|editable)">Changer
-                résultat diagnostic</a>
+
+            <a href="javascript:void(0)" *ngIf="!entity?.pathologies?.length && (consultationSrv.resourceName|editable)"
+                (click)="activated=false">Préciser le résultat du diagnostic</a>
+            <nz-select *ngIf="!activated || entity?.pathologies?.length" [nzDisabled]="activated" [(ngModel)]="selectedPathologies"
+                [nzSize]="'small'" nzMode="multiple" nzAllowClear nzShowSearch>
+                <ng-container *ngFor="let pathologie of pathologies">
+                    <nz-option [nzLabel]="pathologie?.nom" [nzValue]="pathologie?.id">
+                    </nz-option>
+                </ng-container>
+            </nz-select>&nbsp;
+            <div *ngIf="!activated" class="col-12 d-flex justify-content-end">
+                <button (click)="setPathologieDiagnostiquee()" *ngIf="!activated" tc-button
+                    [view]="'warning'">Modifier</button>&nbsp;
+                <button tc-button [view]="'error'" (click)="activated=true" *ngIf="!activated">Annuler</button>
+            </div>&nbsp;
+            <div class="col-12 d-flex justify-contend-end">
+
+                <a href="javascript:void(0)" (click)="activated=false"
+                    *ngIf=" entity?.pathologies?.length && (consultationSrv.resourceName|editable) && activated">Modifier
+                    le resultat du diagnostique</a>
+            </div>
+
+
+
         </tc-card>
     </div>
     <div class="col-12">
         <hr>
     </div>
     <div class="col-12">
-        <nz-tabset nzSize="small">
-            <nz-tab nzTitle="Symptômes">
-                <app-symptome-list [consultation]="entity"></app-symptome-list>
+        <nz-tabset nzSize="small" *ngIf="entity">
+            <nz-tab (nzSelect)="loadTab('symptomes')" nzTitle="Symptômes">
+                <app-symptome-list *ngIf="selectedTab=='symptomes'" [consultation]="entity"></app-symptome-list>
             </nz-tab>
-            <nz-tab nzTitle="Médicaments Remis">
-                <app-medicamentremis-list [consultation]="entity"></app-medicamentremis-list>
+            <nz-tab (nzSelect)="loadTab('medicamentsremis')" nzTitle="Médicaments Remis">
+                <app-medicamentremis-list *ngIf="selectedTab=='medicamentsremis'" [consultation]="entity"></app-medicamentremis-list>
             </nz-tab>
-            <nz-tab nzTitle="Rendez-vous">
-                <app-rendez-vous-dossier *ngIf="entity" [dossier]="entity"></app-rendez-vous-dossier>
+            <nz-tab (nzSelect)="loadTab('rendezvous')" nzTitle="Rendez-vous">
+                <app-rendez-vous-dossier *ngIf="selectedTab=='rendezvous'" [dossier]="entity"></app-rendez-vous-dossier>
             </nz-tab>
         </nz-tabset>
     </div>
 </div>
 <app-access-denied *ngIf="!(consultationSrv.resourceName|showable)"></app-access-denied>
-
-<!-- Pathologie Dignostiquée Modal window -->
-<nz-modal nzWidth="50%" [(nzVisible)]="isPathologieModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
-    [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closePathologieModal()">
-    <ng-template #modalBody>
-        <form #form="ngForm" ngNativeValidate>
-            <div class="row">
-                <div class="col-12">
-                    <tc-form-group>
-                        <tc-form-label>Pathologie</tc-form-label>
-                        <nz-select name="pathologie" id="pathologie" #pathologie="ngModel" required="required"
-                            nzPlaceHolder="Selectionner la pathologie" nzAllowClear nzShowSearch
-                            [(ngModel)]="selectedPathologie">
-                            <ng-container *ngFor="let pathologie of pathologies">
-                                <nz-option [nzValue]="pathologie" [nzLabel]="pathologie?.nom"></nz-option>
-                            </ng-container>
-                        </nz-select>
-                        <tc-form-description>
-                            <app-form-field-validation-message [formField]="pathologie">
-                            </app-form-field-validation-message>
-                        </tc-form-description>
-                    </tc-form-group>
-                </div>
-            </div>
-        </form>
-    </ng-template>
-
-    <ng-template #modalFooter>
-        <div class="actions justify-content-between">
-            <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
-                (click)="closePathologieModal()">Fermer</button>
-            <button [disabled]="!selectedPathologie" [disabled]="form.invalid" (click)="setPathologieDiagnostiquee()"
-                [afterIcon]="'icofont-save'" tc-button [view]="'accent'">
-                Enregistrer
-            </button>
-        </div>
-    </ng-template>
-</nz-modal>
-<!-- end pathologie diagnostiquée Modal window -->

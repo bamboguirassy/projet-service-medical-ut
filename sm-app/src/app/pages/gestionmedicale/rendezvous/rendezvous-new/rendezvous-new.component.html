@@ -1,5 +1,5 @@
 <button (click)="openModal()" tc-button [afterIcon]="'icofont-plus'" *ngIf="rendezVousSrv.resourceName|creable"
-  view="info">RV</button>
+  view="accent">RV</button>
 <app-access-denied *ngIf="!(rendezVousSrv.resourceName|creable)"></app-access-denied>
 
 <!-- Modal window -->
@@ -10,7 +10,7 @@
       <div class="row">
         <div class="col-12">
           <tc-form-group>
-            <tc-form-label>Date Rendez Vous</tc-form-label>
+            <tc-form-label>Date rendez-vous</tc-form-label>
             <nz-date-picker required="required" [(ngModel)]="entity.dateRendezVous" name="dateRendezVous"
               id="dateRendezVous" #dateRendezVous="ngModel" [nzFormat]="'dd/MM/yyyy'">
             </nz-date-picker>
@@ -37,8 +37,8 @@
     <div class="actions justify-content-between">
       <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
         (click)="closeModal()">Fermer</button>
-      <button [disabled]="!entity.dateRendezVous" [disabled]="form.invalid" (click)="save()" [afterIcon]="'icofont-save'"
-        tc-button [view]="'accent'">
+      <button [disabled]="!entity.dateRendezVous" [disabled]="form.invalid" (click)="save()"
+        [afterIcon]="'icofont-save'" tc-button [view]="'accent'">
         Enregistrer
       </button>
     </div>

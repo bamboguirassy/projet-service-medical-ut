@@ -11,6 +11,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use App\Utils\Utils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Swift_Mailer;
+use Swift_Message;
 
 /**
  * @Route("/api/dossier")
@@ -162,6 +164,46 @@ class DossierController extends AbstractController
         }
         
         return $dossiers;
+    }
+     /**
+     * @Rest\Post(path="/send-email", name="dossier_send-email")
+     * @Rest\View(StatusCode=200)
+     * @param Request $request
+     * @param Swift_Mailer $mailer
+     * @return array
+     * @throws Exception
+     */
+    public function sendEmail(Request $request, Swift_Mailer $mailer): array
+    {
+
+        $dossierIds = Utils::serializeRequestContent($request)['id'];
+        $entityManager = $this->getDoctrine()->getManager();
+        $object = Utils::serializeRequestContent($request)['object'];
+        $messaye_body = Utils::serializeRequestContent($request)['message'];
+        $result = []; 
+        $dossiersSendingEmail=$entityManager->createQuery('
+                SELECT e
+                FROM App\Entity\Dossier e
+                WHERE e.id IN (:dossierIds)
+            ')->setParameter('dossierIds', $dossierIds )
+                ->getResult();
+        foreach ($dossiersSendingEmail as $dossierSendingEmail) {
+            if($dossierSendingEmail->getUserEmail()!=NULL) {
+                $message = (new Swift_Message($object))
+                ->setFrom(Utils::$sender)
+                //->setTo($dossierSendingEmail->getUserEmail())
+                ->setTo("fallou.ndiaye95@univ-thies.sn")
+                ->setBody($messaye_body, 'text/html');
+                array_push($result,  [$dossierSendingEmail->getId() => $mailer->send($message)]); 
+            }
+            else{
+                    throw $this->createNotFoundException("L'employé {$dossierSendingEmail->getPrenoms()} {$dossierSendingEmail->getNom()} avec l'identifiant {$dossierSendingEmail->getId()} ne dispose d'aucun email dans le système");
+                 }
+
+
+        }
+          
+        return $result;
     }
     
 }

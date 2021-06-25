@@ -17,16 +17,14 @@ export class SymptomeListComponent extends BasePageComponent<Symptome> implement
   @Input() consultation: Consultation;
 
   constructor(store: Store<IAppState>,
-              public symptomeSrv: SymptomeService) {
+    public symptomeSrv: SymptomeService) {
     super(store, symptomeSrv);
   }
 
   ngOnInit(): void {
-    super.ngOnInit();
   }
 
   ngOnDestroy() {
-    super.ngOnDestroy();
   }
 
   handlePostDelete() {

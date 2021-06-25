@@ -1,4 +1,4 @@
-<tc-card *ngIf="inputationSrv.resourceName|listable">
+<tc-card *ngIf="inputationSrv.resourceName|listable" [tcGradient]="lightGradient">
   <tc-card [view]="secondViewBorder" [outline]="true">
     <div class="row">
       <div class="col-12 col-md-7">
@@ -15,58 +15,59 @@
       </div>
     </div>
   </tc-card>
-  <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
-    <tc-table-col [columnTitle]="'Date'" [columnName]="'date'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <b class="nowrap">{{ value|date:'dd/MM/yyyy' }}</b>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Matricule'" [columnName]="'dossier'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <b class="nowrap" style="color: #BD3B19;">{{ value?.matricule }}</b>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Dossier'" [columnName]="'dossier'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap">
-          <a [routerLink]="['/horizontal/dossier',value?.id]">{{ value?.numero }}</a>
-        </span>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Prénoms'" [columnName]="'dossier'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap">{{ value?.prenoms }}</span>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Nom'" [columnName]="'dossier'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap">{{ value?.nom }}</span>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Structure Hospitalière'" [columnName]="'structureHospitaliere'"
-      [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <tc-badge view="info">
+  
+    <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
+      <tc-table-col [columnTitle]="'Date'" [columnName]="'date'" [enableSorting]="true">
+        <ng-template #tableTDTemplate let-value>
+          <b class="nowrap">{{ value|date:'dd/MM/yyyy' }}</b>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Matricule'" [columnName]="'dossier'" [enableSorting]="true">
+        <ng-template #tableTDTemplate let-value>
+          <b class="nowrap" style="color: #BD3B19;">{{ value?.matricule }}</b>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Dossier'" [columnName]="'dossier'" [enableSorting]="true">
+        <ng-template #tableTDTemplate let-value>
+          <span class="nowrap">
+            <a [routerLink]="['/horizontal/dossier',value?.id]">{{ value?.numero }}</a>
+          </span>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Prénoms'" [columnName]="'dossier'" [enableSorting]="true">
+        <ng-template #tableTDTemplate let-value>
+          <span class="nowrap">{{ value?.prenoms }}</span>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Nom'" [columnName]="'dossier'" [enableSorting]="true">
+        <ng-template #tableTDTemplate let-value>
           <span class="nowrap">{{ value?.nom }}</span>
-        </tc-badge>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Utilisateur'" [columnName]="'userEmail'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap">{{ value }}</span>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
-      <ng-template #tableTDTemplate let-row="row">
-        <div class="actions">
-          <button *ngIf="inputationSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
-            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
-          <button *ngIf="inputationSrv.resourceName|deletable" (click)="remove(row)" tc-button
-            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
-        </div>
-      </ng-template>
-    </tc-table-col>
-  </tc-table>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Structure hospitalière'" [columnName]="'structureHospitaliere'"
+        [enableSorting]="true">
+        <ng-template #tableTDTemplate let-value>
+          <tc-badge view="info">
+            <span class="nowrap">{{ value?.nom }}</span>
+          </tc-badge>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Utilisateur'" [columnName]="'userEmail'" [enableSorting]="true">
+        <ng-template #tableTDTemplate let-value>
+          <span class="nowrap">{{ value }}</span>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+        <ng-template #tableTDTemplate let-row="row">
+          <div class="actions">
+            <button *ngIf="inputationSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
+              [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
+            <button *ngIf="inputationSrv.resourceName|deletable" (click)="remove(row)" tc-button
+              [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+          </div>
+        </ng-template>
+      </tc-table-col>
+    </tc-table>
   <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
 </tc-card>
 <app-access-denied *ngIf="!(inputationSrv.resourceName|listable)"></app-access-denied>

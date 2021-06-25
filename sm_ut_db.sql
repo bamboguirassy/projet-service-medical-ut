@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  ven. 27 nov. 2020 à 08:40
--- Version du serveur :  5.7.23
--- Version de PHP :  7.2.10
+-- Généré le :  lun. 14 juin 2021 à 09:13
+-- Version du serveur :  10.4.10-MariaDB
+-- Version de PHP :  7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -62,30 +62,41 @@ CREATE TABLE IF NOT EXISTS `consultation` (
   `date` date DEFAULT NULL,
   `docteur` int(11) DEFAULT NULL,
   `user_email` varchar(45) NOT NULL COMMENT 'mail de l''utilisateur ayant opéré l''action',
+  `medicament_prescrits` varchar(255) DEFAULT NULL,
+  `motif_consultations` varchar(255) DEFAULT NULL,
+  `tension_arterielle` varchar(255) DEFAULT NULL,
+  `temperature` varchar(255) DEFAULT NULL,
+  `pouls` varchar(255) DEFAULT NULL,
+  `frequence_respiratoire` varchar(255) DEFAULT NULL,
+  `poids` varchar(255) DEFAULT NULL,
+  `glycemie` varchar(255) DEFAULT NULL,
+  `examen_cliniques` varchar(255) DEFAULT NULL,
+  `examen_paracliniques` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_consultation_dossier_idx` (`dossier`),
   KEY `fk_consultation_pathologie1_idx` (`pathologie_diagnostiquee`),
   KEY `fk_consultation_docteur1_idx` (`docteur`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `consultation`
 --
 
-INSERT INTO `consultation` (`id`, `dossier`, `pathologie_diagnostiquee`, `date`, `docteur`, `user_email`) VALUES
-(1, 1, 13, '2020-01-01', 4, 'bamboguirassy'),
-(2, 1, 12, '2020-05-21', 1, 'bamboguirassy'),
-(3, 1, 7, '2020-08-12', 3, 'bamboguirassy'),
-(4, 1, 4, '2020-10-01', 1, 'bamboguirassy'),
-(5, 2, 14, '2020-06-17', 4, 'bamboguirassy'),
-(6, 2, 9, '2020-09-22', 1, 'bamboguirassy'),
-(7, 3, 11, '2020-04-14', 1, 'bamboguirassy'),
-(8, 3, 5, '2020-10-01', 3, 'bamboguirassy'),
-(9, 4, 2, '2020-09-24', 4, 'bamboguirassy'),
-(10, 4, 1, '2020-10-01', 4, 'bamboguirassy'),
-(11, 5, 8, '2020-05-20', 1, 'bamboguirassy'),
-(12, 5, 4, '2020-08-11', 4, 'bamboguirassy'),
-(13, 1, 1, '2020-10-02', 4, 'bamboguirassy');
+INSERT INTO `consultation` (`id`, `dossier`, `pathologie_diagnostiquee`, `date`, `docteur`, `user_email`, `medicament_prescrits`, `motif_consultations`, `tension_arterielle`, `temperature`, `pouls`, `frequence_respiratoire`, `poids`, `glycemie`, `examen_cliniques`, `examen_paracliniques`) VALUES
+(1, 1, 13, '2020-01-01', 4, 'bamboguirassy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 1, 12, '2020-05-21', 1, 'bamboguirassy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, 1, 7, '2020-08-12', 3, 'bamboguirassy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 1, 4, '2020-10-01', 1, 'bamboguirassy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, 2, 14, '2020-06-17', 4, 'bamboguirassy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(6, 2, 9, '2020-09-22', 1, 'bamboguirassy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(7, 3, 11, '2020-04-14', 1, 'bamboguirassy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(8, 3, 5, '2020-10-01', 3, 'bamboguirassy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(9, 4, 2, '2020-09-24', 4, 'bamboguirassy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(10, 4, 1, '2020-10-01', 4, 'bamboguirassy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(11, 5, 8, '2020-05-20', 1, 'bamboguirassy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(12, 5, 4, '2020-08-11', 4, 'bamboguirassy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(13, 1, 1, '2020-10-02', 4, 'bamboguirassy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(14, 2, 8, '2020-11-27', 1, 'bamboguirassy', NULL, 'mal de tete, seignement de nez', '12', '37', '20', '112', '75', '11', 'examen 1, examen 2', 'Examen para 1, examen para 2');
 
 -- --------------------------------------------------------
 
@@ -129,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `dossier` (
   `cni` varchar(45) DEFAULT NULL,
   `telephone` varchar(45) DEFAULT NULL,
   `type_patient` varchar(45) NOT NULL COMMENT 'per, pats, famille',
-  `lien_parente` varchar(45) DEFAULT NULL COMMENT 'definir si type_patient = famille\nepoux ou enfant',
+  `lien_parente` varchar(45) DEFAULT NULL COMMENT 'definir si type_patient = famille\r\n        epoux ou enfant',
   `matricule` varchar(45) NOT NULL,
   `prenom_travailleur` varchar(45) DEFAULT NULL,
   `nom_travailleur` varchar(45) DEFAULT NULL,
@@ -138,19 +149,32 @@ CREATE TABLE IF NOT EXISTS `dossier` (
   `user_email` varchar(45) NOT NULL COMMENT 'mail de l''utilisateur ayant opéré l''action',
   `etat` tinyint(1) NOT NULL,
   `structure` varchar(145) NOT NULL,
+  `historique_maladies` varchar(255) DEFAULT NULL,
+  `niveau_instruction` varchar(255) DEFAULT NULL,
+  `situation_matrimoniale` varchar(255) DEFAULT NULL,
+  `genre_vie` varchar(255) DEFAULT NULL,
+  `profession_mari` varchar(255) DEFAULT NULL,
+  `antecedent_medicaux` varchar(255) DEFAULT NULL,
+  `antecedent_churirgicaux` varchar(255) DEFAULT NULL,
+  `antecedent_familiaux` varchar(255) DEFAULT NULL,
+  `date_mariage` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `dossier`
 --
 
-INSERT INTO `dossier` (`id`, `numero`, `prenoms`, `nom`, `date_naissance`, `cni`, `telephone`, `type_patient`, `lien_parente`, `matricule`, `prenom_travailleur`, `nom_travailleur`, `genre`, `date_creation`, `user_email`, `etat`, `structure`) VALUES
-(1, '5F75B28C220B8', 'Professeur Mouhmadou', 'THIAM', '1963-10-16', NULL, '772859658', 'PER', NULL, '110285/J', NULL, NULL, 'Homme', '2020-10-01', 'bamboguirassy', 1, 'UFR SET'),
-(2, '5F75B2C57B636', 'Monsieur Moussa', 'FOFANA', '1991-10-01', '1916200200225', '+221780165026', 'PATS', NULL, '120254/B', NULL, NULL, 'Homme', '2020-10-01', 'bamboguirassy', 1, 'RECTORAT'),
-(3, '5F75B34661BCA', 'Madame Aminata', 'SAMB', '1991-12-27', NULL, '773509313', 'FAMILLE', 'épouse', '120254/B', 'Moussa', 'FOFANA', 'Femme', '2020-10-01', 'bamboguirassy', 1, 'RECTORAT'),
-(4, '5F75B3AA52854', 'Hawa', 'FOFANA', '2019-10-01', NULL, '773509313', 'FAMILLE', 'fille', '120254/B', 'Moussa FOFANA', 'PATS', 'Femme', '2020-10-01', 'bamboguirassy', 1, 'RECTORAT'),
-(5, '5F75B47064770', 'El Hadji Ahmadou', 'GUEYE', '1995-05-04', NULL, '779856851', 'ETUDIANT', NULL, '16030106465', NULL, NULL, 'Homme', '2020-10-01', 'bamboguirassy', 1, 'UFR SET');
+INSERT INTO `dossier` (`id`, `numero`, `prenoms`, `nom`, `date_naissance`, `cni`, `telephone`, `type_patient`, `lien_parente`, `matricule`, `prenom_travailleur`, `nom_travailleur`, `genre`, `date_creation`, `user_email`, `etat`, `structure`, `historique_maladies`, `niveau_instruction`, `situation_matrimoniale`, `genre_vie`, `profession_mari`, `antecedent_medicaux`, `antecedent_churirgicaux`, `antecedent_familiaux`, `date_mariage`) VALUES
+(1, '5F75B28C220B8', 'Professeur Mouhmadou', 'THIAM', '1963-10-16', NULL, '772859658', 'PER', NULL, '110285/J', NULL, NULL, 'Homme', '2020-10-01', 'bamboguirassy', 1, 'UFR SET', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, '5F75B2C57B636', 'Monsieur Moussa', 'FOFANA', '1991-10-01', '1916200200225', '+221780165026', 'PATS', NULL, '120254/B', NULL, NULL, 'Homme', '2020-10-01', 'bamboguirassy', 1, 'RECTORAT', NULL, 'superieur', 'mariee', NULL, NULL, 'aucun', 'aucun', 'Père diabétique', '16/12/2017'),
+(3, '5F75B34661BCA', 'Madame Aminata', 'SAMB', '1991-12-27', NULL, '773509313', 'FAMILLE', 'épouse', '120254/B', 'Moussa', 'FOFANA', 'Femme', '2020-10-01', 'bamboguirassy', 1, 'RECTORAT', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, '5F75B3AA52854', 'Hawa', 'FOFANA', '2019-10-01', NULL, '773509313', 'FAMILLE', 'fille', '120254/B', 'Moussa FOFANA', 'PATS', 'Femme', '2020-10-01', 'bamboguirassy', 1, 'RECTORAT', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, '5F75B47064770', 'El Hadji Ahmadou', 'GUEYE', '1995-05-04', NULL, '779856851', 'ETUDIANT', NULL, '16030106465', NULL, NULL, 'Homme', '2020-10-01', 'bamboguirassy', 1, 'UFR SET', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(6, '5FC0F1FD42497', 'Bernadette Codou', 'Dione', '1891-11-10', NULL, '778569856', 'PER', NULL, '120200/C', NULL, NULL, 'Femme', '2020-11-27', 'bamboguirassy', 1, 'RECTORAT', 'rsa, test', 'superieur', 'mariee', NULL, 'compte propre', 'medoc 1, medoc 2, medoc 3', 'ant chur 1, ant chur 2', 'ant fam 1, ant fam 2', '11/12/2019'),
+(17, '60AF7B4D62722', 'Moussa', 'FOFANA', '1993-06-03', '1916200200225', '+221780165026', 'PATS', NULL, '120254/B', NULL, NULL, 'Masculin', '2021-05-27', 'bamboguirassy', 1, 'UT', 'Néant', 'superieur', 'Marié(e)', 'alcool', NULL, 'Néant', 'Néant', 'Néant', NULL),
+(19, '60AF7F2061D5C', 'Aminata', 'Samb', '1991-11-11', '12511998755', '+221773509313', 'FAMILLE', 'épouse', '120254/B', 'Moussa', 'FOFANA', 'Femme', '2021-05-27', 'bamboguirassy', 1, 'UT', 'Néant', 'primaire', 'mariee', 'autres', NULL, 'Néant', 'Néant', 'Néant', '2021-05-03T11:14:20.531Z'),
+(21, '60AF81E842569', 'Khadija', 'YADE', '2000-04-30', '12365899945', '0613892385', 'ETUDIANT', NULL, '160301058888', NULL, NULL, 'Femme', '2021-05-27', 'bamboguirassy', 1, 'UFR SET', 'Néant', 'superieur', 'mariee', 'autres', 'salarie', 'Néant', 'Néant', 'Néant', '2021-04-25');
 
 -- --------------------------------------------------------
 
@@ -218,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `fos_user` (
 --
 
 INSERT INTO `fos_user` (`id`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `confirmation_token`, `password_requested_at`, `roles`, `prenom`, `nom`, `telephone`, `source`, `path_image`, `file_name`, `fonction`) VALUES
-(1, 'bamboguirassy', 'bamboguirassy', 'didegassama@gmail.com', 'didegassama@gmail.com', 1, 'T9kVKHjmHQPyPVoHd4fTQ9FB/NbS7AYqS8cru7RMs9s', '$2y$13$nNQoWq1fW9J/Hl9Z.ZCIz.oh9HeFzPAQnem4b15bihcvAA5.WRdk2', '2020-10-09 09:15:53', NULL, NULL, 'a:0:{}', 'Bambo', 'Guirassy', '+221780165026', 'sm', 'http://127.0.0.1:8000/uploads/user/profil/5f5ace2f88366.jpeg', '5f5ace2f88366.jpeg', 'Super Administrateur'),
+(1, 'bamboguirassy', 'bamboguirassy', 'didegassama@gmail.com', 'didegassama@gmail.com', 1, 'T9kVKHjmHQPyPVoHd4fTQ9FB/NbS7AYqS8cru7RMs9s', '$2y$13$b5VTxTIxzIIiFfheKSYUnuOMUWcZOEHexaRt4oADwJJjy.wizSpYm', '2021-06-03 16:24:53', NULL, NULL, 'a:0:{}', 'Bambo', 'Guirassy', '+221780165026', 'sm', 'http://127.0.0.1:8000/uploads/user/profil/5f5ace2f88366.jpeg', '5f5ace2f88366.jpeg', 'Super Administrateur'),
 (3, 'charles.tessier@georges.org', 'charles.tessier@georges.org', 'charles.tessier@georges.org', 'charles.tessier@georges.org', 0, NULL, 'uguqpLfnIHx', NULL, NULL, NULL, 'a:0:{}', 'Michelle', 'Jeanne Grondin', NULL, 'sm', NULL, NULL, NULL),
 (4, 'nathalie.charpentier@laposte.net', 'nathalie.charpentier@laposte.net', 'nathalie.charpentier@laposte.net', 'nathalie.charpentier@laposte.net', 0, NULL, 'FE596QG->qwJ', NULL, NULL, NULL, 'a:0:{}', 'Isaac', 'Nath-Sophie Merle', NULL, 'sm', NULL, NULL, NULL),
 (5, 'vfaivre@parent.fr', 'vfaivre@parent.fr', 'vfaivre@parent.fr', 'vfaivre@parent.fr', 1, NULL, '5lBMg=A[=QeSbVcj3f', NULL, NULL, NULL, 'a:0:{}', 'Anastasie', 'Luc-Thierry Roger', NULL, 'sm', NULL, NULL, NULL),
@@ -751,9 +775,10 @@ CREATE TABLE IF NOT EXISTS `migration_versions` (
 --
 
 INSERT INTO `migration_versions` (`version`, `executed_at`) VALUES
-('20200910151726', '2020-09-10 15:18:03'),
-('20200912122950', '2020-09-12 12:30:49'),
-('20200912123330', '2020-09-12 12:33:37');
+('20201127110706', '2020-11-27 11:07:18'),
+('20201127111823', '2020-11-27 11:18:32'),
+('20201127115305', '2020-11-27 11:53:18'),
+('20201127130317', '2020-11-27 13:03:32');
 
 -- --------------------------------------------------------
 
@@ -765,7 +790,7 @@ DROP TABLE IF EXISTS `pathologie`;
 CREATE TABLE IF NOT EXISTS `pathologie` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(45) NOT NULL,
-  `description` text,
+  `description` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
@@ -803,11 +828,18 @@ CREATE TABLE IF NOT EXISTS `rendez_vous` (
   `user_email` varchar(45) NOT NULL,
   `date_rendez_vous` datetime NOT NULL,
   `presence` tinyint(1) DEFAULT NULL COMMENT 'false par défaut, on le met à true si le patient se présente.',
-  `dossier` int(11) DEFAULT NULL,
-  `description` text,
+  `description` text DEFAULT NULL,
+  `consultation` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_rendez-vous_dossier1_idx` (`dossier`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  UNIQUE KEY `UNIQ_65E8AA0A964685A6` (`consultation`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `rendez_vous`
+--
+
+INSERT INTO `rendez_vous` (`id`, `date_creation`, `user_email`, `date_rendez_vous`, `presence`, `description`, `consultation`) VALUES
+(1, '2020-11-27 13:20:59', 'bamboguirassy', '2020-11-30 00:00:00', 0, NULL, 5);
 
 -- --------------------------------------------------------
 
@@ -818,10 +850,10 @@ CREATE TABLE IF NOT EXISTS `rendez_vous` (
 DROP TABLE IF EXISTS `repos_medical`;
 CREATE TABLE IF NOT EXISTS `repos_medical` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `dossier` int(11) NOT NULL,
+  `dossier` int(11) DEFAULT NULL,
   `date` date NOT NULL,
   `nombre_jour` int(11) DEFAULT NULL,
-  `docteur` int(11) NOT NULL COMMENT 'docteur ayant prescrit le repos medical',
+  `docteur` int(11) DEFAULT NULL,
   `user_email` varchar(45) NOT NULL COMMENT 'mail de l''utilisateur ayant opéré l''action',
   PRIMARY KEY (`id`),
   KEY `fk_repos_medical_dossier1_idx` (`dossier`),
@@ -845,7 +877,7 @@ DROP TABLE IF EXISTS `structure_partenaire`;
 CREATE TABLE IF NOT EXISTS `structure_partenaire` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(145) NOT NULL,
-  `adresse` text,
+  `adresse` text DEFAULT NULL,
   `telephone` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
@@ -869,11 +901,11 @@ INSERT INTO `structure_partenaire` (`id`, `nom`, `adresse`, `telephone`) VALUES
 DROP TABLE IF EXISTS `symptome`;
 CREATE TABLE IF NOT EXISTS `symptome` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `consultation` int(11) NOT NULL,
+  `consultation` int(11) DEFAULT NULL,
   `nom` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_symptome_consultation1_idx` (`consultation`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `symptome`
@@ -881,7 +913,10 @@ CREATE TABLE IF NOT EXISTS `symptome` (
 
 INSERT INTO `symptome` (`id`, `consultation`, `nom`) VALUES
 (1, 13, 'Toux'),
-(2, 13, 'Mal de tête');
+(2, 13, 'Mal de tête'),
+(6, 5, 'mal de tete'),
+(7, 5, 'mal de gorge'),
+(8, 5, 'fievre');
 
 --
 -- Contraintes pour les tables déchargées
@@ -891,9 +926,9 @@ INSERT INTO `symptome` (`id`, `consultation`, `nom`) VALUES
 -- Contraintes pour la table `consultation`
 --
 ALTER TABLE `consultation`
-  ADD CONSTRAINT `fk_consultation_docteur1` FOREIGN KEY (`docteur`) REFERENCES `docteur` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_consultation_dossier` FOREIGN KEY (`dossier`) REFERENCES `dossier` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_consultation_pathologie1` FOREIGN KEY (`pathologie_diagnostiquee`) REFERENCES `pathologie` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_consultation_docteur1` FOREIGN KEY (`docteur`) REFERENCES `docteur` (`id`),
+  ADD CONSTRAINT `fk_consultation_dossier` FOREIGN KEY (`dossier`) REFERENCES `dossier` (`id`),
+  ADD CONSTRAINT `fk_consultation_pathologie1` FOREIGN KEY (`pathologie_diagnostiquee`) REFERENCES `pathologie` (`id`);
 
 --
 -- Contraintes pour la table `fos_user_group`
@@ -906,41 +941,41 @@ ALTER TABLE `fos_user_group`
 -- Contraintes pour la table `inputation`
 --
 ALTER TABLE `inputation`
-  ADD CONSTRAINT `fk_inputation_dossier1` FOREIGN KEY (`dossier`) REFERENCES `dossier` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_inputation_structure_hospitaliere1` FOREIGN KEY (`structure_hospitaliere`) REFERENCES `structure_partenaire` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_inputation_dossier1` FOREIGN KEY (`dossier`) REFERENCES `dossier` (`id`),
+  ADD CONSTRAINT `fk_inputation_structure_hospitaliere1` FOREIGN KEY (`structure_hospitaliere`) REFERENCES `structure_partenaire` (`id`);
 
 --
 -- Contraintes pour la table `medicament_reception`
 --
 ALTER TABLE `medicament_reception`
-  ADD CONSTRAINT `fk_medicament_has_bon_reception_bon_reception1` FOREIGN KEY (`bon_reception`) REFERENCES `bon_reception` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_medicament_has_bon_reception_medicament1` FOREIGN KEY (`medicament`) REFERENCES `medicament` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_medicament_has_bon_reception_bon_reception1` FOREIGN KEY (`bon_reception`) REFERENCES `bon_reception` (`id`),
+  ADD CONSTRAINT `fk_medicament_has_bon_reception_medicament1` FOREIGN KEY (`medicament`) REFERENCES `medicament` (`id`);
 
 --
 -- Contraintes pour la table `medicament_remis`
 --
 ALTER TABLE `medicament_remis`
-  ADD CONSTRAINT `fk_medicament_consultation_consultation1` FOREIGN KEY (`consultation`) REFERENCES `consultation` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_medicament_consultation_medicament1` FOREIGN KEY (`medicament`) REFERENCES `medicament` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_medicament_consultation_consultation1` FOREIGN KEY (`consultation`) REFERENCES `consultation` (`id`),
+  ADD CONSTRAINT `fk_medicament_consultation_medicament1` FOREIGN KEY (`medicament`) REFERENCES `medicament` (`id`);
 
 --
 -- Contraintes pour la table `rendez_vous`
 --
 ALTER TABLE `rendez_vous`
-  ADD CONSTRAINT `fk_rendez-vous_dossier1` FOREIGN KEY (`dossier`) REFERENCES `dossier` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `FK_65E8AA0A964685A6` FOREIGN KEY (`consultation`) REFERENCES `consultation` (`id`);
 
 --
 -- Contraintes pour la table `repos_medical`
 --
 ALTER TABLE `repos_medical`
-  ADD CONSTRAINT `fk_repos_medical_docteur1` FOREIGN KEY (`docteur`) REFERENCES `docteur` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_repos_medical_dossier1` FOREIGN KEY (`dossier`) REFERENCES `dossier` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_repos_medical_docteur1` FOREIGN KEY (`docteur`) REFERENCES `docteur` (`id`),
+  ADD CONSTRAINT `fk_repos_medical_dossier1` FOREIGN KEY (`dossier`) REFERENCES `dossier` (`id`);
 
 --
 -- Contraintes pour la table `symptome`
 --
 ALTER TABLE `symptome`
-  ADD CONSTRAINT `fk_symptome_consultation1` FOREIGN KEY (`consultation`) REFERENCES `consultation` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_symptome_consultation1` FOREIGN KEY (`consultation`) REFERENCES `consultation` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

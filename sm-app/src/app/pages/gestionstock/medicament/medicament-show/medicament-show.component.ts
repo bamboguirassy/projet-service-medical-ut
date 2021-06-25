@@ -21,15 +21,15 @@ export class MedicamentShowComponent extends BasePageComponent<Medicament> imple
     public location: Location) {
     super(store, medicamentSrv);
     this.pageData = {
-      title: 'Détails - Medicament',
+      title: 'Détails - Médicament',
       breadcrumbs: [
         {
           title: 'Accueil',
           route: ''
         },
         {
-          title: 'Medicaments',
-          route: '/'+this.orientation+'/medicament'
+          title: 'Liste des médicaments en stock',
+          route: '/' + this.orientation + '/medicament'
         },
         {
           title: 'Affichage'
@@ -48,7 +48,7 @@ export class MedicamentShowComponent extends BasePageComponent<Medicament> imple
   }
 
   handlePostLoad() {
-    this.title = 'Medicament - ' + this.entity?.id;
+    this.title = 'Médicament - ' + this.entity?.id;
   }
 
   handlePostDelete() {

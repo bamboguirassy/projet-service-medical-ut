@@ -16,10 +16,10 @@ import { Location } from '@angular/common';
 export class PathologieEditComponent extends BasePageComponent<Pathologie> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public pathologieSrv: PathologieService,
-              public router: Router,
-              private activatedRoute: ActivatedRoute,
-              public location: Location) {
+    public pathologieSrv: PathologieService,
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    public location: Location) {
     super(store, pathologieSrv);
     this.pageData = {
       title: 'Modification - Pathologie',
@@ -29,8 +29,8 @@ export class PathologieEditComponent extends BasePageComponent<Pathologie> imple
           route: ''
         },
         {
-          title: 'Pathologies',
-          route: '/'+this.orientation+'/pathologie'
+          title: 'Liste des pathologies',
+          route: '/' + this.orientation + '/pathologie'
         },
         {
           title: 'Modification'

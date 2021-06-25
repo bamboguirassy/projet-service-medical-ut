@@ -1,4 +1,4 @@
-<div class="row" *ngIf="dossierSrv.resourceName|showable">
+<div class="row" *ngIf="dossierSrv.resourceName|showable" style="background-color: white;">
     <div class="col-12 mb-1">
         <div class="row">
             <div class="col-12 col-md-8" [ngStyle]="{'border-right': '3px dashed '+sidebarBg}">
@@ -8,15 +8,24 @@
                         {{entity?.matricule}}</span></h4>
                 <h6 class="m-0">{{entity?.typePatient}} - {{entity?.structure}}</h6>
             </div>
-            <div class="col-12 col-md-4">
-                <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-reply"></button>
-                <button [outline]="true" (click)="findEntity(entity.id)" class="mr-1 ml-1" tc-button view="success"
-                    beforeIcon="icofont-refresh"></button>
-                <button (click)="remove(entity)" *ngIf="dossierSrv.resourceName|deletable" [outline]="true" tc-button
-                    view="error" beforeIcon="icofont-trash" class="mr-1"></button>
-                <button *ngIf="dossierSrv.resourceName|editable"
-                    [routerLink]="['/'+orientation,dossierSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
-                    class="mr-1" tc-button view="warning" beforeIcon="icofont-edit"></button>
+            <div  class="col-12 col-md-3">
+                <div class="col-12 justify-content-center pt-4">
+                    <!-- <button size="sm" tc-button class="float-right ml-1" (click)="openModal()"
+                        beforeIcon="icofont-email" view="accent" [outline]="true"> Contacter</button>    -->
+                    <button size="sm" *ngIf="dossierSrv.resourceName|editable"
+                        [routerLink]="['/'+orientation,dossierSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+                        class="float-right ml-1" tc-button view="warning" [outline]="true"
+                        beforeIcon="icofont-edit"></button>
+                    <button size="sm" (click)="remove(entity)" *ngIf="dossierSrv.resourceName|deletable"
+                        tc-button view="error" beforeIcon="icofont-trash" [outline]="true"
+                        class=" float-right ml-1"></button>
+                    <button size="sm" (click)="findEntity(entity.id)" class="float-right ml-1" tc-button [outline]="true"
+                    view="success" beforeIcon="icofont-refresh"></button>
+                    <button size="sm" tc-button class="float-right" (click)="location.back()" [outline]="true"
+                        beforeIcon="icofont-reply"></button>
+                    
+                </div>
+
             </div>
         </div>
     </div>
@@ -30,51 +39,76 @@
                     <li class="info-line">
                         <div class="row">
                             <div class="col-6 col-md-5 info-title">Prénoms :</div>
-                            <div class="col-6 col-md-7 info-content">{{entity?.prenoms}}</div>
+                            <div *ngIf="entity?.prenoms; else elseTen" class="col-6 col-md-7 info-content">{{entity?.prenoms}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" size='sm' view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-6 col-md-5 info-title">Nom :</div>
-                            <div class="col-6 col-md-7 info-content">{{entity?.nom}}</div>
+                            <div *ngIf="entity?.nom; else elseTen" class="col-6 col-md-7 info-content">{{entity?.nom}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" size='sm' view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-6 col-md-5 info-title">Date Naissance :</div>
-                            <div class="col-6 col-md-7 info-content">{{entity?.dateNaissance|date:'dd/MM/yyyy'}}
+                            <div class="col-6 col-md-5 info-title">Date de naissance :</div>
+                            <div *ngIf="entity?.dateNaissance; else elseTen" class="col-6 col-md-7 info-content">{{entity?.dateNaissance|date:'dd/MM/yyyy'}}
                             </div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" size='sm' view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-6 col-md-5 info-title">Sexe :</div>
-                            <div class="col-6 col-md-7 info-content">{{entity?.genre}}</div>
+                            <div *ngIf="entity?.genre; else elseTen" class="col-6 col-md-7 info-content">{{entity?.genre}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" size='sm' view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-6 info-title">Situation Matrimoniale  :</div>
-                            <div class="col-6 info-content">{{entity?.situationMatrimoniale}}</div>
+                            <div class="col-6  col-md-5 info-title">Situation matrimoniale :</div>
+                            <div *ngIf="entity?.situationMatrimoniale; else elseSituation" class="col-6 col-md-7 info-content">{{entity?.situationMatrimoniale}}</div>
+                            <ng-template #elseSituation>
+                                <tc-badge [outline]="true"  view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Date Mariage :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.dateMariage}}</div>
+                            <div class="col-sm-6 col-md-5 info-title">Date mariage :</div>
+                            <div *ngIf="entity?.dateMariage; else elseMar" class="col-sm-6 col-md-7 info-content">{{entity?.dateMariage}}</div>
+                            <ng-template #elseMar>
+                                <tc-badge [outline]="true"  view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-6 col-md-5 info-title">CNI :</div>
-                            <div class="col-6 col-md-7 info-content">{{entity?.cni}}</div>
+                            <div *ngIf="entity?.cni; else elseCNI" class="col-6 col-md-7 info-content">{{entity?.cni}}</div>
+                            <ng-template #elseCNI>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
                             <div class="col-6 col-md-5 info-title">Téléphone :</div>
-                            <div class="col-6 col-md-7 info-content"><a href="tel:{{entity?.telephone}}">{{entity?.telephone}}</a></div>
+                            <div *ngIf="entity?.telephone; else elseTen" class="col-6 col-md-7 info-content"><a
+                                    href="tel:{{entity?.telephone}}">{{entity?.telephone}}</a></div>
                         </div>
+                        <ng-template #elseTen>
+                            <tc-badge [outline]="true" size='sm' view="error">Non renseigné</tc-badge>
+                        </ng-template>
                     </li>
                 </ul>
             </div>
@@ -82,38 +116,65 @@
                 <ul class="info-section">
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Historiques Maladie  :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.historiqueMaladies}}</div>
+                            <div class="col-sm-6 col-md-5 info-title">Historiques maladie :</div>
+                            <div *ngIf="entity?.historiqueMaladies; else elseTen" class="col-sm-6 col-md-7 info-content">{{entity?.historiqueMaladies}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" size='sm' view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Niveau Instruction :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.niveauInstruction}}</div>
+                            <div class="col-sm-6 col-md-5 info-title">Niveau d'instruction :</div>
+                            <div *ngIf="entity?.niveauInstruction; else elseTen" class="col-sm-6 col-md-7 info-content">{{entity?.niveauInstruction}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" size='sm' view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Genre Vie :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.genreVie}}</div>
+                            <div class="col-sm-6 col-md-5 info-title">Genre vie :</div>
+                            <div *ngIf="entity?.genreVie; else elseTen" class="col-sm-6 col-md-7 info-content">{{entity?.genreVie}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
+                        </div>
+                    </li>
+                    <li class="info-line" *ngIf="entity?.genreVie=='autres'">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-5 info-title">Description genre vie :</div>
+                            <div *ngIf="entity?.descriptionGenreVie; else elseTen" class="col-sm-6 col-md-7 info-content">{{entity?.descriptionGenreVie}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" size='sm' view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Antecedents Medicaux  :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.antecedentMedicaux}}</div>
+                            <div class="col-sm-6 col-md-5 info-title">Antécédents médicaux :</div>
+                            <div *ngIf="entity?.antecedentMedicaux; else elseTen" class="col-sm-6 col-md-7 info-content">{{entity?.antecedentMedicaux}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" size='sm' view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Antecedents Churirgicaux  :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.antecedentChurirgicaux}}</div>
+                            <div class="col-sm-6 col-md-5 info-title">Antécédents churirgicaux :</div>
+                            <div *ngIf="entity?.antecedentChurirgicaux; else elseTen" class="col-sm-6 col-md-7 info-content">{{entity?.antecedentChurirgicaux}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-sm-6 col-md-5 info-title">Antecedents Familiaux  :</div>
-                            <div class="col-sm-6 col-md-7 info-content">{{entity?.antecedentFamiliaux}}</div>
+                            <div class="col-sm-6 col-md-5 info-title">Antécédents familiaux :</div>
+                            <div *ngIf="entity?.antecedentFamiliaux; else elseTen" class="col-sm-6 col-md-7 info-content">{{entity?.antecedentFamiliaux}}</div>
+                            <ng-template #elseTen>
+                                <tc-badge [outline]="true" view="error">Non renseigné</tc-badge>
+                            </ng-template>
                         </div>
                     </li>
                     <li>
@@ -138,17 +199,59 @@
         <hr>
     </div>
     <div class="col-12">
-        <nz-tabset nzSize="small">
-            <nz-tab nzTitle="Consultations">
-                <app-consultation-dossier [consultations]="entity?.consultations"></app-consultation-dossier>
+        <nz-tabset *ngIf="entity" nzSize="small">
+            <nz-tab (nzSelect)="loadTab('consultations')" nzTitle="Consultations">
+                <app-consultation-dossier *ngIf="selectedTab=='consultations'" [consultations]="entity?.consultations"></app-consultation-dossier>
             </nz-tab>
-            <nz-tab nzTitle="Imputations">
-                <app-imputation-dossier [imputations]="entity?.inputations"></app-imputation-dossier>
+            <nz-tab (nzSelect)="loadTab('imputations')" nzTitle="Imputations">
+                <app-imputation-dossier *ngIf="selectedTab=='imputations'" [imputations]="entity?.inputations"></app-imputation-dossier>
             </nz-tab>
-            <nz-tab nzTitle="Repos médicaux">
-                <app-repos-medical-dossier *ngIf="entity" [dossier]="entity"></app-repos-medical-dossier>
+            <nz-tab (nzSelect)="loadTab('reposmedicaux')" nzTitle="Repos médicaux">
+                <app-repos-medical-dossier *ngIf="selectedTab=='reposmedicaux'" [dossier]="entity"></app-repos-medical-dossier>
             </nz-tab>
-          </nz-tabset>
+        </nz-tabset>
     </div>
 </div>
 <app-access-denied *ngIf="!(dossierSrv.resourceName|showable)"></app-access-denied>
+<!-- Modal window -->
+<nz-modal nzWidth="50%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Nouveau Message'"
+  [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
+  <ng-template #modalBody>
+    <form #form="ngForm" ngNativeValidate>
+      <div class="row">
+        <div class="col-12">
+          <tc-form-group>
+            <tc-form-label>Objet</tc-form-label>
+            <tc-input required="required" [(ngModel)]="email.object" name="object" id="object" #object="ngModel">
+            </tc-input>
+        <tc-form-description>
+            <app-form-field-validation-message [formField]="object"></app-form-field-validation-message>
+        </tc-form-description>
+      </tc-form-group>
+         <tc-form-group>
+            <tc-form-label>Message</tc-form-label>
+            <ckeditor nz-input [required]="true" id="message" name="message" #message="ngModel"
+                        [(ngModel)]="email.message" [editor]="editor" class="ckeditor-col-container clearfix">
+                    </ckeditor>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="message"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+         
+        </div>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+        (click)="closeModal()">Fermer</button>
+      <button [afterIcon]="'icofont-send-mail'"
+        tc-button [view]="'accent'" (click)="sendSingleEmail()">
+        Envoyer
+      </button>
+    </div>
+  </ng-template>
+</nz-modal>
+<!-- end Modal window -->

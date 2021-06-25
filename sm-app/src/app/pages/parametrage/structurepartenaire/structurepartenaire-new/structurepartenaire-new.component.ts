@@ -22,7 +22,7 @@ export class StructurePartenaireNewComponent implements OnInit {
     this.entity = new StructurePartenaire();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   save() {
     this.structurePartenaireSrv.create(this.entity)

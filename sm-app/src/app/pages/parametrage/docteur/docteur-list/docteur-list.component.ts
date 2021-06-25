@@ -13,11 +13,11 @@ import { Docteur } from '../docteur';
 export class DocteurListComponent extends BasePageComponent<Docteur> implements OnInit, OnDestroy {
 
   constructor(store: Store<IAppState>,
-              public docteurSrv: DocteurService) {
+    public docteurSrv: DocteurService) {
     super(store, docteurSrv);
 
     this.pageData = {
-      title: 'Docteur',
+      title: 'Liste des docteurs',
       breadcrumbs: [
         {
           title: 'Accueil',
@@ -43,6 +43,6 @@ export class DocteurListComponent extends BasePageComponent<Docteur> implements 
     this.findAll();
   }
 
-  handlePostLoad(){}
+  handlePostLoad() { }
 
 }

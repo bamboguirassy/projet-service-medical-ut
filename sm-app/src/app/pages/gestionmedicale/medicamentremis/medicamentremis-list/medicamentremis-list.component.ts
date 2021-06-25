@@ -16,16 +16,14 @@ export class MedicamentRemisListComponent extends BasePageComponent<MedicamentRe
   @Input() consultation: Consultation;
 
   constructor(store: Store<IAppState>,
-              public medicamentRemiSrv: MedicamentRemisService) {
+    public medicamentRemiSrv: MedicamentRemisService) {
     super(store, medicamentRemiSrv);
   }
 
   ngOnInit(): void {
-    super.ngOnInit();
   }
 
   ngOnDestroy() {
-    super.ngOnDestroy();
   }
 
   handlePostDelete() {
