@@ -75,6 +75,7 @@ export class ConsultationJournaliereComponent extends BasePageComponent<any> imp
       this.consultationSrv.getDaylyStatistic(this.selectedMois, this.selectedAnnee)
         .subscribe((data: any) => {
           this.data = data;
+          this.buildDiagram(data);
         }, err => this.consultationSrv.httpSrv.catchError(err));
     }
   }
@@ -107,18 +108,9 @@ export class ConsultationJournaliereComponent extends BasePageComponent<any> imp
   }
 
 
-  buildDiagram() {
-    if (this.selectedMois && this.selectedAnnee) {
-      this.loading = true;
-      this.consultationSrv.getDaylyStatistic(this.selectedMois, this.selectedAnnee)
-        .pipe(finalize(() => this.loading = false))
-        .subscribe((data: any) => {
-          this.isLoad = true;
-          this.handlePostFetch(data as []);
-        }, err => {
-          this.consultationSrv.httpSrv.handleError(err);
-        });
-    }
+  buildDiagram(data) {
+    this.isLoad = true;
+    this.handlePostFetch(data as []);
   }
 
   handlePostFetch(data: []) {
