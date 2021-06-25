@@ -10,31 +10,33 @@
             class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit">Modifier</button>
     </tc-card>
     <div class="row">
-        <div class="col-12">
-            <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
-                <table class="table">
-                    <tr>
-                        <th>Prénoms</th>
-                        <td>{{ entity?.prenoms }}</td>
-                    </tr>
-                    <tr>
-                        <th>Nom</th>
-                        <td>{{ entity?.nom }}</td>
-                    </tr>
-                    <tr>
-                        <th>Spécialité</th>
-                        <td>{{ entity?.specialite }}</td>
-                    </tr>
-                    <tr>
-                        <th>File name</th>
-                        <td>{{ entity?.filename }}</td>
-                    </tr>
-                    <tr>
-                        <th>File path</th>
-                        <td>{{ entity?.filepath }}</td>
-                    </tr>
-                </table>
-            </tc-card>
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card">
+                <img style="width: 100%; height: 200px;" class="card-img-top" [src]="entity?.filepath" alt="">
+                <div class="card-body">
+                    <h4 class="card-title">{{ entity?.prenoms }} {{ entity?.nom }}</h4>
+                    <tc-card [view]="secondViewBorder" [tcGradient]="secondGradient">
+                        <table class="table">
+                            <tr>
+                                <th>Prénoms</th>
+                                <td>{{ entity?.prenoms }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nom</th>
+                                <td>{{ entity?.nom }}</td>
+                            </tr>
+                            <tr>
+                                <th>Spécialité</th>
+                                <td>{{ entity?.specialite }}</td>
+                            </tr>
+                            <tr>
+                                <th>File name</th>
+                                <td>{{ entity?.filename }}</td>
+                            </tr>
+                        </table>
+                    </tc-card>
+                </div>
+            </div>
         </div>
     </div>
 </tc-card>
