@@ -85,7 +85,6 @@ export class RendezVousDossierComponent implements OnInit {
     this.rendezVousSrv.findByConsultation(this._consultation).subscribe((data : any) => {
       this.items = data;
       this.handlePostLoad();
-      console.log(this.items);
     }, (err) => this.rendezVousSrv.httpSrv.catchError(err));
   }
 

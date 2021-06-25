@@ -51,11 +51,9 @@ OnDestroy {
   }
 
   ngOnInit(): void {
-    super.ngOnInit();
   }
 
   ngOnDestroy() {
-    super.ngOnDestroy();
   }
 
   updateItem() {
