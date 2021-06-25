@@ -2,6 +2,8 @@
     <div class="col-12 my-2">
         <div class="row">
             <div class="col-12 col-md-8" [ngStyle]="{'border-right': '3px dashed '+sidebarBg}">
+                <h4 [ngStyle]="{'color': sidebarBg}" class="m-0 pt-1">Consultation :
+                </h4>
                 <h5 [ngStyle]="{'color': sidebarBg}" class="m-0 pt-1">Dossier médical n° {{entity?.dossier?.numero}}
                 </h5>
             </div>
@@ -22,7 +24,7 @@
     </div>
     <div class="col-12">
         <div *ngIf="entity" class="row">
-            <div class="col-12 col-md-4" [ngStyle]="{'border-right': '2px solid '+sidebarBg}">
+            <div class="col-12 col-lg-5 col-md-5" [ngStyle]="{'border-right': '2px solid '+sidebarBg}">
                 <ul class="info-section">
                     <li class="info-line">
                         <div class="row">
@@ -68,7 +70,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-lg-7 col-md-7">
                 <ul class="info-section">
                     <li class="info-line">
                         <div class="row">
