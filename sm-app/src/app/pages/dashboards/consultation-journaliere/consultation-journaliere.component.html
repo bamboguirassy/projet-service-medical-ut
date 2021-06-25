@@ -5,7 +5,7 @@
                 <div class="col-md-4 col-sm-4 col-lg-3">
                     <h5>Mois</h5>
                     <nz-select [(ngModel)]="selectedMois" style="width: 100%; margin-top: -10px;"
-                        (ngModelChange)="getData(); buildDiagram()">
+                        (ngModelChange)="getData();">
                         <nz-option *ngFor="let item of (listOfMonths | keyvalue)" [nzValue]="item.key"
                             [nzLabel]="item.value">
                         </nz-option>
@@ -14,7 +14,7 @@
                 <div class="col-md-4 col-sm-4 col-lg-3">
                     <h5>Année</h5>
                     <nz-select [(ngModel)]="selectedAnnee" style="width: 100%; margin-top: -10px;"
-                        (ngModelChange)="getData(); buildDiagram()">
+                        (ngModelChange)="getData();">
                         <nz-option *ngFor="let annee of annees" [nzValue]="annee" [nzLabel]="annee"></nz-option>
                     </nz-select>
                 </div>
