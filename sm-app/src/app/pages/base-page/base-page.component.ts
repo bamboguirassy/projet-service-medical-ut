@@ -131,7 +131,7 @@ export class BasePageComponent<T extends BamboAbstractObject> implements OnInit,
             Swal.close();
             this.httpSv.toastr.success("Suppression reussie");
             this.handlePostDelete();
-          });
+          },err=>this.httpSv.httpSrv.catchError(err));
         // For more information about handling dismissals please visit
         // https://sweetalert2.github.io/#handling-dismissals
       } else if (result.dismiss === Swal.DismissReason.cancel) {
