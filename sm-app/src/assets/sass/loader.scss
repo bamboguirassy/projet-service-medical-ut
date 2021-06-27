@@ -42,7 +42,7 @@ $bounce_height: 60px;
         width: $width;
 
         &:before {
-          background: accent-palette(500);
+          background: #1A7D47;
           border-radius: 50%;
           content: '';
           display: block;
@@ -55,11 +55,11 @@ $bounce_height: 60px;
       }
       .text {
         display: flex;
-        color: main-palette(500);
+        color: #1A7D47;
         margin-left: 15px;
 
         span {
-          color: accent-palette(500);
+          color: #1A7D47;
           font-size: 15px;
         }
       }

@@ -6,7 +6,7 @@ import { Spinkit } from 'ng-http-loader';
   template: `
   <ng-http-loader 
     [backdrop]="false"
-    [backgroundColor]="'#BD3B19'"
+    [backgroundColor]="'#1A7D47'"
     [debounceDelay]="100"
     [extraDuration]="300"
     [minDuration]="300"

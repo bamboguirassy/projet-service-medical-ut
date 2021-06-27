@@ -1,6 +1,8 @@
 <div class="col-4">
     <div class="example-input">
-        <input class="form-control" style="width: 300px;" placeholder="Rechercher un dossier" nz-input [(ngModel)]="searchTerm"
+        <input class="form-control  d-none d-sm-block" style="width: 300px;" placeholder="Rechercher un dossier" nz-input [(ngModel)]="searchTerm"
+            (input)="getDossiers()" [nzAutocomplete]="auto" />
+        <input class="form-control  d-block d-sm-none" style="width: 200px;" placeholder="Rechercher un dossier" nz-input [(ngModel)]="searchTerm"
             (input)="getDossiers()" [nzAutocomplete]="auto" />
         <nz-autocomplete nzBackfill #auto>
             <nz-auto-option *ngFor="let item of dossiers" nzValue="" nzLabel="">
