@@ -122,8 +122,8 @@
                         <tc-form-label>Sexe</tc-form-label>
                         <tc-radio [direction]="'horizontal'" required="required" [(ngModel)]="entity.genre" name="genre"
                             id="genre" #genre="ngModel">
-                            <tc-radio-option [value]="'Homme'">Homme</tc-radio-option>
-                            <tc-radio-option [value]="'Femme'">Femme</tc-radio-option>
+                            <tc-radio-option [value]="'Masculin'">Masculin</tc-radio-option>
+                            <tc-radio-option [value]="'Féminin'">Féminin</tc-radio-option>
                         </tc-radio>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="genre"></app-form-field-validation-message>
@@ -191,7 +191,7 @@
                     </tc-form-group>
                 </div>
                 <div class="col-12 col-md-6 col-lg-4"
-                    *ngIf="entity?.situationMatrimoniale=='mariee' && entity?.genre=='Femme' && (entity?.typePatient=='ETUDIANT' || selectedTypePatient=='FAMILLE')">
+                    *ngIf="entity?.situationMatrimoniale=='mariee' && entity?.genre=='Féminin' && (entity?.typePatient=='ETUDIANT' || selectedTypePatient=='FAMILLE')">
                     <tc-form-group>
                         <tc-form-label>Profession du mari</tc-form-label>
                         <tc-select [options]="professionMaris" [(ngModel)]="entity.professionMari" name="professionMari"
