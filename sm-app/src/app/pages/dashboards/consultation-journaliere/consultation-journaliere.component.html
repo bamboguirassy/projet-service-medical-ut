@@ -2,19 +2,19 @@
     <div class="row">
         <div class="col-12">
             <div class="d-flex justify-content-start align-items-center">
-                <div class="col-2 col-md-2 col-sm-6 col-lg-2">
+                <div class="col-md-4 col-sm-4 col-lg-3">
                     <h5>Mois</h5>
                     <nz-select [(ngModel)]="selectedMois" style="width: 100%; margin-top: -10px;"
-                        (ngModelChange)="getData(); buildDiagram()">
+                        (ngModelChange)="getData();">
                         <nz-option *ngFor="let item of (listOfMonths | keyvalue)" [nzValue]="item.key"
                             [nzLabel]="item.value">
                         </nz-option>
                     </nz-select>
                 </div>
-                <div class="col-2 col-md-2 col-lg-2 col-sm-6">
+                <div class="col-md-4 col-sm-4 col-lg-3">
                     <h5>Année</h5>
                     <nz-select [(ngModel)]="selectedAnnee" style="width: 100%; margin-top: -10px;"
-                        (ngModelChange)="getData(); buildDiagram()">
+                        (ngModelChange)="getData();">
                         <nz-option *ngFor="let annee of annees" [nzValue]="annee" [nzLabel]="annee"></nz-option>
                     </nz-select>
                 </div>
@@ -26,9 +26,11 @@
         <nz-tab [nzTitle]="'Tableau des statistiques'">
             <div class="ms-auto p-2 bd-highlight">
                 <button nz-button nzType="primary" (click)="exportToExcel('cjTable1', fileName)" class="shadow "
-                    [nzSize]="'large'"><i nz-icon nzType="download"></i>Exporter le tableau</button>
+                    [nzSize]="'large'"><i nz-icon nzType="download"></i>Exporterle tableau</button>
             </div>
-            <table id="cjTable1" class="table table-bordered table-hover table-responsive-sm">
+            <nz-table nzScroll="x" [nzFrontPagination]="'false'" nzBordered="true" [nzShowPagination]="'false'"
+                id="cjTable1" class="table table-scrollable table-hover table-responsive-sm" #basicTable
+                [nzData]="data">
                 <thead>
                     <tr>
                         <th rowspan="2"></th>
@@ -41,10 +43,9 @@
                         <th>PATS</th>
                         <th>FAMILLE</th>
                     </tr>
-                    <!-- <tr *ngFor="let dayData of data"></tr> -->
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of data">
+                    <tr *ngFor="let item of basicTable.data">
                         <td scope="row">J{{item?.day}}</td>
                         <td>{{item?.per}}</td>
                         <td>{{item?.pats}}</td>
@@ -53,7 +54,7 @@
                         <td>{{item?.total}}</td>
                     </tr>
                 </tbody>
-            </table>
+            </nz-table>
         </nz-tab>
         <nz-tab [nzTitle]="'Diagramme des statistiques'">
             <div *ngIf="!loading && isLoad">
@@ -74,7 +75,9 @@
                 <canvas class="no-wrap" baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
                     [plugins]="chartPlugins" [legend]="chartLegend" [chartType]="selectedTypeDiagram">
                 </canvas>
-                <table id="cjTable2" class="table table-responsive table-bordered table-hover mt-5">
+                <nz-table id="cjTable2" nzScroll="x" [nzFrontPagination]="'false'" nzBordered="true" [nzShowPagination]="'false'"
+                    class="table mt-5 table-scrollable table-hover table-responsive-sm" #chartDataTable
+                    [nzData]="chartData">
                     <thead>
                         <tr>
                             <th>Jours
@@ -83,12 +86,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of chartData">
+                        <tr *ngFor="let item of chartDataTable.data">
                             <td scope="row">{{item.label}}</td>
                             <td *ngFor="let val of item.data">{{val}}</td>
                         </tr>
                     </tbody>
-                </table>
+                </nz-table>
                 <div class="ms-auto p-2 bd-highlight">
                     <button nz-button nzType="primary" (click)="exportToExcel('cjTable2', fileName)"
                         [nzSize]="'large'"><i nz-icon nzType="download"></i>Exporter le tableau</button>

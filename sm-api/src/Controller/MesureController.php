@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Medicament;
 use App\Entity\Mesure;
+use App\Entity\Symptome;
 use App\Form\MesureType;
 use App\Repository\MesureRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use App\Utils\Utils;
+use Doctrine\Common\Collections\Collection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
@@ -33,7 +36,8 @@ class MesureController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_MESURE_CREATE")
      */
-    public function create(Request $request): Mesure    {
+    public function create(Request $request): Mesure
+    {
         $mesure = new Mesure();
         $form = $this->createForm(MesureType::class, $mesure);
         $form->submit(Utils::serializeRequestContent($request));
@@ -50,17 +54,19 @@ class MesureController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_MESURE_SHOW")
      */
-    public function show(Mesure $mesure): Mesure    {
+    public function show(Mesure $mesure): Mesure
+    {
         return $mesure;
     }
 
-    
+
     /**
      * @Rest\Put(path="/{id}/edit", name="mesure_edit",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_MESURE_EDIT")
      */
-    public function edit(Request $request, Mesure $mesure): Mesure    {
+    public function edit(Request $request, Mesure $mesure): Mesure
+    {
         $form = $this->createForm(MesureType::class, $mesure);
         $form->submit(Utils::serializeRequestContent($request));
 
@@ -68,15 +74,16 @@ class MesureController extends AbstractController
 
         return $mesure;
     }
-    
+
     /**
      * @Rest\Put(path="/{id}/clone", name="mesure_clone",requirements = {"id"="\d+"})
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_MESURE_CLONE")
      */
-    public function cloner(Request $request, Mesure $mesure):  Mesure {
-        $em=$this->getDoctrine()->getManager();
-        $mesureNew=new Mesure();
+    public function cloner(Request $request, Mesure $mesure): Mesure
+    {
+        $em = $this->getDoctrine()->getManager();
+        $mesureNew = new Mesure();
         $form = $this->createForm(MesureType::class, $mesureNew);
         $form->submit(Utils::serializeRequestContent($request));
         $em->persist($mesureNew);
@@ -91,20 +98,22 @@ class MesureController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_MESURE_EDIT")
      */
-    public function delete(Mesure $mesure): Mesure    {
+    public function delete(Mesure $mesure): Mesure
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($mesure);
         $entityManager->flush();
 
         return $mesure;
     }
-    
+
     /**
      * @Rest\Post("/delete-selection/", name="mesure_selection_delete")
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_MESURE_DELETE")
      */
-    public function deleteMultiple(Request $request): array {
+    public function deleteMultiple(Request $request): array
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $mesures = Utils::getObjectFromRequest($request);
         if (!count($mesures)) {
@@ -118,4 +127,73 @@ class MesureController extends AbstractController
 
         return $mesures;
     }
+
+    /**
+     * @Rest\Put(path="/{id}/edit-medicaments", name="mesure_edit_medicaments",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode=200)
+     * @IsGranted("ROLE_MESURE_EDIT")
+     */
+    public function editMedicaments(Request $request, Mesure $mesure) :array
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $medicamentsRepository = $entityManager->getRepository(Medicament::class);
+        $medicaments = Utils::serializeRequestContent($request);
+        $medicaments = $medicamentsRepository->createQueryBuilder('v')
+            ->select('v')
+            ->andWhere('v.id IN (:medicaments)')
+            ->setParameter('medicaments', $medicaments)->getQuery()
+            ->getResult();
+
+        $diffs = array_diff($medicaments, $mesure->getMedicaments()->toArray());
+        if(count($diffs) != 0){
+            foreach($diffs as $diff){
+                $mesure->addMedicaments($diff);
+            }
+        }
+
+        $diffs = array_diff($mesure->getMedicaments()->toArray(), $medicaments);
+        if(count($diffs) != 0){
+            foreach($diffs as $diff){
+                $mesure->removeMedicament($diff);
+            }
+        }
+
+        $entityManager->flush();
+        return $mesure->getMedicaments()->toArray();
+    }
+
+     /**
+     * @Rest\Put(path="/{id}/edit-symptomes", name="mesure_edit_symptomes",requirements = {"id"="\d+"})
+     * @Rest\View(StatusCode=200)
+     * @IsGranted("ROLE_MESURE_EDIT")
+     */
+     public function editSymtomes(Request $request, Mesure $mesure) :array
+     {
+         $entityManager = $this->getDoctrine()->getManager();
+         $symptomesRepository = $entityManager->getRepository(Symptome::class);
+         $symptomes = Utils::serializeRequestContent($request);
+         $symptomes = $symptomesRepository->createQueryBuilder('v')
+             ->select('v')
+             ->andWhere('v.id IN (:symptomes)')
+             ->setParameter('symptomes', $symptomes)
+             ->getQuery()
+             ->getResult();
+ 
+         $diffs = array_diff($symptomes, $mesure->getSymptomes()->toArray());
+         if(count($diffs) != 0){
+             foreach($diffs as $diff){
+                 $mesure->addSymptome($diff);
+             }
+         }
+ 
+         $diffs = array_diff($mesure->getSymptomes()->toArray(), $symptomes);
+         if(count($diffs) != 0){
+             foreach($diffs as $diff){
+                 $mesure->removeSymptome($diff);
+             }
+         }
+ 
+         $entityManager->flush();
+         return $mesure->getSymptomes()->toArray();
+     }
 }

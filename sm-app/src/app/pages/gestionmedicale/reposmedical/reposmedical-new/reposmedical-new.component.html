@@ -1,4 +1,4 @@
-<button *ngIf="reposMedicalSrv.resourceName|creable" tc-button [afterIcon]="'icofont-plus'" [view]="'info'"
+<button *ngIf="reposMedicalSrv.resourceName|creable" tc-button [afterIcon]="'icofont-plus'" [view]="'accent'"
   [square]="true" (click)="openModal()">Rep. Medic</button>
 <app-access-denied *ngIf="!(reposMedicalSrv.resourceName|creable)"></app-access-denied>
 
@@ -46,9 +46,10 @@
         <div class="col-12">
           <tc-form-group>
             <tc-form-label>Nombre de jours prescrits</tc-form-label>
-            <tc-input type="number" required="required" [(ngModel)]="entity.nombreJour" name="nombreJour"
+            <nz-input-group nzAddOnAfter="jour(s)" >
+              <input type="number" size="20" required="required" nz-input [(ngModel)]="entity.nombreJour" name="nombreJour"
               id="nombreJour" #nombreJour="ngModel">
-            </tc-input>
+            </nz-input-group>
             <tc-form-description>
               <app-form-field-validation-message [formField]="nombreJour"></app-form-field-validation-message>
             </tc-form-description>

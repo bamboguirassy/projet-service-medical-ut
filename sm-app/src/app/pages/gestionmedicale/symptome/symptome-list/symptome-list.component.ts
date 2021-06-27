@@ -22,11 +22,9 @@ export class SymptomeListComponent extends BasePageComponent<Symptome> implement
   }
 
   ngOnInit(): void {
-    super.ngOnInit();
   }
 
   ngOnDestroy() {
-    super.ngOnDestroy();
   }
 
   handlePostDelete() {

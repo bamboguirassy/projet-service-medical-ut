@@ -48,7 +48,10 @@ class PathologieController extends AbstractController {
             foreach ($pathologies as $pathologie) {
                 $monthNombreT = $em->createQuery('select count(c) from App\Entity\Consultation c '
                                 . 'JOIN c.dossier d '
-                                . 'where c.date>=?1 and c.date<=?2  and d.typePatient in (?4)')
+                                . 'where c.date>=?1 and c.date<=?2 and
+                                ?3 in (select p from App\Entity\PathologieConsultation pc
+                                 join pc.consultation cons
+                                 join pc.pathologie p where cons=c)  and d.typePatient in (?4)')
                         ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
                         ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
                         ->setParameter(3, $pathologie)
@@ -57,7 +60,10 @@ class PathologieController extends AbstractController {
                 $total_travailleur += $monthNombreT;
                 $monthNombreNT = $em->createQuery('select count(c) from App\Entity\Consultation c '
                                 . 'JOIN c.dossier d '
-                                . 'where c.date>=?1 and c.date<=?2  and d.typePatient not in (?4)')
+                                . 'where c.date>=?1 and c.date<=?2 and
+                                ?3 in (select p from App\Entity\PathologieConsultation pc
+                                 join pc.consultation cons
+                                 join pc.pathologie p where cons=c)  and d.typePatient not in (?4)')
                         ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
                         ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
                         ->setParameter(3, $pathologie)
@@ -96,7 +102,10 @@ class PathologieController extends AbstractController {
             //foreach ($pathologies as $pathologie) {
                 $monthNombreT = $em->createQuery('select count(c) from App\Entity\Consultation c '
                                 . 'JOIN c.dossier d '
-                                . 'where c.date>=?1 and c.date<=?2 and  and d.typePatient in (?4)')
+                                . 'where c.date>=?1 and c.date<=?2  and
+                                ?3 in (select p from App\Entity\PathologieConsultation pc
+                                 join pc.consultation cons
+                                 join pc.pathologie p where cons=c)  and d.typePatient in (?4)')
                         ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
                         ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
                         ->setParameter(3, $pathologie)
@@ -105,7 +114,10 @@ class PathologieController extends AbstractController {
                 $total_travailleur += $monthNombreT;
                 $monthNombreNT = $em->createQuery('select count(c) from App\Entity\Consultation c '
                                 . 'JOIN c.dossier d '
-                                . 'where c.date>=?1 and c.date<=?2 and  and d.typePatient not in (?4)')
+                                . 'where c.date>=?1 and c.date<=?2  and
+                                ?3 in (select p from App\Entity\PathologieConsultation pc
+                                 join pc.consultation cons
+                                 join pc.pathologie p where cons=c)  and d.typePatient not in (?4)')
                         ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
                         ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
                         ->setParameter(3, $pathologie)
@@ -145,7 +157,9 @@ class PathologieController extends AbstractController {
             foreach ($pathologies as $pathologie) {
                 $nbrTravailleurJr = $em->createQuery('select count(c) from App\Entity\Consultation c '
                                     . 'JOIN c.dossier d '
-                                    . 'where c.date=?1 and d.typePatient in (?2)')
+                                    . 'where c.date=?1 and d.typePatient in (?2) and ?3 in (select p from App\Entity\PathologieConsultation pc
+                                    join pc.consultation cons
+                                    join pc.pathologie p where cons=c)')
                             ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-' . $i)
                             ->setParameter(2, ['PATS', 'PER'])
                             ->setParameter(3, $pathologie)
@@ -153,7 +167,10 @@ class PathologieController extends AbstractController {
                 $totalT += $nbrTravailleurJr;
                 $nbrNTJr = $em->createQuery('select count(c) from App\Entity\Consultation c '
                                     . 'JOIN c.dossier d '
-                                    . 'where c.date=?1 and d.typePatient not in (?2)'
+                                    . 'where c.date=?1 and d.typePatient not in (?2) and ?3 
+                                    in (select p from App\Entity\PathologieConsultation pc
+                                    join pc.consultation cons
+                                    join pc.pathologie p where cons=c)'
                                            )
                             ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-' . $i)
                             ->setParameter(2, ['PATS', 'PER'])
@@ -190,7 +207,10 @@ class PathologieController extends AbstractController {
            // $totalNT = 0;
             $nbrTravailleurJr = $em->createQuery('select count(c) from App\Entity\Consultation c '
                                     . 'JOIN c.dossier d '
-                                    . 'where c.date=?1 and d.typePatient in (?2)'
+                                    . 'where c.date=?1 and d.typePatient in (?2) and 
+                                    ?3 in (select p from App\Entity\PathologieConsultation pc
+                                    join pc.consultation cons
+                                    join pc.pathologie p where cons=c)'
                                                  )
                             ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-' . $i)
                             ->setParameter(2, ['PATS', 'PER'])
@@ -199,7 +219,10 @@ class PathologieController extends AbstractController {
             //$totalT += $nbrTravailleurJr;
             $nbrNTJr = $em->createQuery('select count(c) from App\Entity\Consultation c '
                                     . 'JOIN c.dossier d '
-                                    . 'where c.date=?1 and d.typePatient not in (?2)'
+                                    . 'where c.date=?1 and d.typePatient not in (?2) 
+                                    and ?3 in (select p from App\Entity\PathologieConsultation pc
+                                    join pc.consultation cons
+                                    join pc.pathologie p where cons=c)'
                                        )
                             ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-' . $i)
                             ->setParameter(2, ['PATS', 'PER'])
@@ -228,7 +251,10 @@ class PathologieController extends AbstractController {
             $pathTab = [];
             foreach ($pathologies as $pathologie) {
                 $monthNombre = $em->createQuery('select count(c) from App\Entity\Consultation c '
-                                . 'where c.date>=?1 and c.date<=?2')
+                                . 'where c.date>=?1 and c.date<=?2 and
+                                 ?3 in (select p from App\Entity\PathologieConsultation pc
+                                  join pc.consultation cons
+                                  join pc.pathologie p where cons=c)')
                         ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
                         ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
                         ->setParameter(3, $pathologie)
@@ -264,7 +290,9 @@ class PathologieController extends AbstractController {
             $pathTab = [];
             foreach (Utils::$calendarParams as $calendarElt) {
                 $monthNombre = $em->createQuery('select count(c) from App\Entity\Consultation c '
-                                . 'where c.date>=?1 and c.date<=?2')
+                                . 'where c.date>=?1 and c.date<=?2 and ?3 in (select p from App\Entity\PathologieConsultation pc
+                                join pc.consultation cons
+                                join pc.pathologie p where cons=c)')
                         ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
                         ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
                         ->setParameter(3, $pathologie)

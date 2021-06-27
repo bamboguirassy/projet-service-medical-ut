@@ -28,22 +28,23 @@
     <tc-table-col [columnTitle]="'Motifs consul.'" [columnName]="'motifConsultations'"
       [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
-        <tc-badge *ngIf="!value" view="error"><span class="nowrap">Non précisé</span></tc-badge>
-        <tc-badge *ngIf="value" view="info"><span class="nowrap">{{ value }}</span></tc-badge>
+        <tc-badge [outline]="true" *ngIf="!value" view="error"><span class="nowrap">Non précisé</span></tc-badge>
+        <tc-badge [outline]="true" *ngIf="value" view="info"><span class="nowrap">{{ value }}</span></tc-badge>
       </ng-template>
     </tc-table-col>
     <tc-table-col [columnTitle]="'Symptômes'" [columnName]="'symptomes'"
       [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
-        <tc-badge *ngIf="!value" view="error"><span class="nowrap">Non précisé</span></tc-badge>
-        <tc-badge *ngIf="value" view="info"><span class="nowrap">{{ (value|map:'nom')|join:',' }}</span></tc-badge>
+        <tc-badge [outline]="true" *ngIf="value.length==0" view="error"><span  class="nowrap">Non précisé</span></tc-badge>
+        <tc-badge [outline]="true" *ngIf="value.length!=0" view="info"><span *ngIf="value" class="nowrap">{{ (value|map:'nom')|join:', ' }}</span>
+        </tc-badge>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Pathologie diagnostiquée'" [columnName]="'pathologieDiagnostiquee'"
+    <tc-table-col [columnTitle]="'Pathologie diagnostiquée'" [columnName]="'pathologies'"
       [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
-        <tc-badge *ngIf="!value" view="error"><span class="nowrap">Non précisée</span></tc-badge>
-        <tc-badge *ngIf="value" view="info"><span class="nowrap">{{ value?.nom }}</span></tc-badge>
+        <tc-badge [outline]="true" *ngIf="value.length==0" view="error"><span class="nowrap">Non précisée</span></tc-badge>
+        <tc-badge [outline]="true" *ngIf="value.length!=0" view="info"><span class="nowrap">{{ value|map:'nom'|join:',' }}</span></tc-badge>
       </ng-template>
     </tc-table-col>
     <tc-table-col [columnTitle]="'Prescrite par'" [columnName]="'docteur'" [enableSorting]="true">

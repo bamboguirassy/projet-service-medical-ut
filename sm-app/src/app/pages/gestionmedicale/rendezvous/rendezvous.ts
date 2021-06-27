@@ -10,6 +10,7 @@ export class RendezVous extends BamboAbstractObject {
     description: string;
     consultation: Consultation;
     mesure: Mesure;
+
     // champs tmp
     expand: boolean;
 }

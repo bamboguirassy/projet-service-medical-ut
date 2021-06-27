@@ -48,7 +48,7 @@ export class MedicamentShowComponent extends BasePageComponent<Medicament> imple
   }
 
   handlePostLoad() {
-    this.title = 'Medicament - ' + this.entity?.id;
+    this.title = 'Médicament - ' + this.entity?.id;
   }
 
   handlePostDelete() {

@@ -1,5 +1,5 @@
 <button (click)="openModal()" tc-button [afterIcon]="'icofont-plus'" *ngIf="consultationSrv.resourceName|creable"
-  view="info">Cons.</button>
+  view="accent">Cons.</button>
 <app-access-denied *ngIf="!(consultationSrv.resourceName|creable)"></app-access-denied>
 
 <!-- Modal window -->

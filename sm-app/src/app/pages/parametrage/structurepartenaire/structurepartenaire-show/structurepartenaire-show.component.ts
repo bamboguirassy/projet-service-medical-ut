@@ -48,7 +48,7 @@ export class StructurePartenaireShowComponent extends BasePageComponent<Structur
   }
 
   handlePostLoad() {
-    this.title = 'Structure partenaire - ' + this.entity?.id;
+    this.title = this.entity?.nom;
   }
 
   handlePostDelete() {

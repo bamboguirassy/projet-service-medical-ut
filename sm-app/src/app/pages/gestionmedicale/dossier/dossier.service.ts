@@ -18,6 +18,9 @@ export class DossierService extends BamboAbstractService {
   getDossierSearch(searchTerm: any) {
     return this.httpSrv.post(this.routePrefix+ 'search', {'searchTerm':searchTerm});
   }
-
+  sendEmail(id: any, object: any, message: any) {
+    const data = { id: id, object: object, message: message };
+    return this.httpSrv.post(this.routePrefix + "send-email", data);
+  }
   
 }
