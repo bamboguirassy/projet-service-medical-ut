@@ -64,8 +64,8 @@
                         <tc-form-label>Sexe</tc-form-label>
                         <tc-radio [direction]="'horizontal'" required="required" [(ngModel)]="entity.genre" name="genre" [value]="entity.genre"
                             id="genre" #genre="ngModel">
-                            <tc-radio-option [value]="'Homme'">Homme</tc-radio-option>
-                            <tc-radio-option [value]="'Femme'">Femme</tc-radio-option>
+                            <tc-radio-option [value]="'Masculin'">Masculin</tc-radio-option>
+                            <tc-radio-option [value]="'Féminin'">Féminin</tc-radio-option>
                         </tc-radio>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="genre"></app-form-field-validation-message>
@@ -79,6 +79,18 @@
                         </tc-input>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="cni"></app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <tc-form-group>
+                        <tc-form-label>Email</tc-form-label>
+                        <tc-input [(ngModel)]="entity.emailPatient" name="emailPatient" id="emailPatient"
+                            #emailPatient="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="emailPatient">
+                            </app-form-field-validation-message>
                         </tc-form-description>
                     </tc-form-group>
                 </div>
@@ -99,10 +111,10 @@
                         <tc-form-label>Lien de parenté</tc-form-label>
                         <tc-radio required="required" [(ngModel)]="entity.lienParente" [value]="entity.lienParente" name="lienParente"
                             id="lienParente" #lienParente="ngModel" [direction]="'horizontal'">
-                            <tc-radio-option [hidden]="entity?.genre!='Homme'" [value]="'époux'">Epoux</tc-radio-option>
-                            <tc-radio-option [hidden]="entity?.genre!='Femme'" [value]="'épouse'">Epouse</tc-radio-option>
-                            <tc-radio-option [hidden]="entity?.genre!='Homme'" [value]="'fils'">Fils</tc-radio-option>
-                            <tc-radio-option [hidden]="entity?.genre!='Femme'" [value]="'fille'">Fille</tc-radio-option>
+                            <tc-radio-option [hidden]="entity?.genre!='Masculin'" [value]="'époux'">Epoux</tc-radio-option>
+                            <tc-radio-option [hidden]="entity?.genre!='Féminin'" [value]="'épouse'">Epouse</tc-radio-option>
+                            <tc-radio-option [hidden]="entity?.genre!='Masculin'" [value]="'fils'">Fils</tc-radio-option>
+                            <tc-radio-option [hidden]="entity?.genre!='Féminin'" [value]="'fille'">Fille</tc-radio-option>
                         </tc-radio>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="lienParente">
@@ -194,7 +206,7 @@
                         </tc-select>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.situationMatrimoniale=='mariee' && entity?.genre=='Femme'">
+                <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.situationMatrimoniale=='mariee' && entity?.genre=='Féminin'">
                     <tc-form-group>
                         <tc-form-label>Profession du mari</tc-form-label>
                         <tc-select [options]="professionMaris" [(ngModel)]="entity.professionMari" name="professionMari" id="professionMari"

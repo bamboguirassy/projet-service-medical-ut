@@ -37,6 +37,7 @@ class DossierType extends AbstractType {
                 ->add('antecedentChurirgicaux')
                 ->add('antecedentFamiliaux')
                 ->add('dateMariage')
+                ->add('emailPatient')
         ;
     }
 

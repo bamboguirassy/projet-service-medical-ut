@@ -46,11 +46,14 @@ export class DossierShowComponent extends BasePageComponent<Dossier> implements 
         }
       ]
     };
+    this.selectedTab = '';
+    activatedRoute.params.subscribe(() => {
+      this.findEntity(this.activatedRoute.snapshot.params.id);
+    });
   }
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.findEntity(this.activatedRoute.snapshot.params.id);
   }
 
   ngOnDestroy() {
@@ -65,6 +68,7 @@ export class DossierShowComponent extends BasePageComponent<Dossier> implements 
   handlePostDelete() {
     this.location.back();
   }
+  
   // open modal window
   openModal() {
     setTimeout(() => {
@@ -78,6 +82,7 @@ export class DossierShowComponent extends BasePageComponent<Dossier> implements 
       this.isModalVisible = false;
     }, 0);
   }
+
   sendSingleEmail(){
     if(this.email.object.length==0 || this.email.message.length==0){
       this.dossierSrv.toastr.error('Verifier vos champs');

@@ -13,8 +13,9 @@
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Date</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.date" name="date" id="date" #date="ngModel">
-                        </tc-input>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.date" name="date" id="date"
+                            #date="ngModel">
+                        </nz-date-picker>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="date"></app-form-field-validation-message>
                         </tc-form-description>
@@ -45,8 +46,8 @@
                 <div class="col-12 col-md-6">
                     <tc-form-group>
                         <tc-form-label>Numéro</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.numero" name="numero" id="numero"
-                            #numero="ngModel">
+                        <tc-input required="required" disabled="disabled" [(ngModel)]="entity.numero" name="numero"
+                            id="numero" #numero="ngModel">
                         </tc-input>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="numero"></app-form-field-validation-message>

@@ -197,6 +197,11 @@ epoux ou enfant"})
      */
     private $descriptionGenreVie;
 
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $emailPatient;
+
     public function __construct()
     {
         $this->consultations = new ArrayCollection();
@@ -611,6 +616,18 @@ epoux ou enfant"})
     public function setDescriptionGenreVie(?string $descriptionGenreVie): self
     {
         $this->descriptionGenreVie = $descriptionGenreVie;
+
+        return $this;
+    }
+
+    public function getEmailPatient(): ?string
+    {
+        return $this->emailPatient;
+    }
+
+    public function setEmailPatient(?string $emailPatient): self
+    {
+        $this->emailPatient = $emailPatient;
 
         return $this;
     }
