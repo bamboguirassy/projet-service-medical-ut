@@ -28,12 +28,12 @@ export class DossierNewComponent implements OnInit {
     { value: 'separee', label: 'Séparée' },
   ];
   genreVies = [
-    { value: 'tabac', label: 'Tabac' },
-    { value: 'alcool', label: 'Alcool' },
+    { value: 'Tabac', label: 'Tabac' },
+    { value: 'Alcool', label: 'Alcool' },
     { value: 'autres', label: 'Autres' },
   ];
   niveauInstructions = [
-    { value: 'non scolarise', label: 'Non Scolarisé' },
+    { value: 'Non scolarisé', label: 'Non Scolarisé' },
     { value: 'primaire', label: 'Primaire' },
     { value: 'secondaire', label: 'Secondaire' },
     { value: 'superieur', label: 'Supérieur' },
@@ -141,6 +141,7 @@ export class DossierNewComponent implements OnInit {
     this.selected = true;
     this.selectedFamille = null;
   }
+  
   createDossierFamille(item) {
     this.selectedFamille = item;
     this.selectedTypePatient = "FAMILLE";
