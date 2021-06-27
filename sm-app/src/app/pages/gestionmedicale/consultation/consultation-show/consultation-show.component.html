@@ -7,7 +7,7 @@
                 <h5 [ngStyle]="{'color': sidebarBg}" class="m-0 pt-1">Dossier médical n° {{entity?.dossier?.numero}}
                 </h5>
             </div>
-            <div class="col-12 col-md-4 p-2">
+            <div class="col-12 col-md-4 p-4" style="background-color: #EBEBEB;">
                 <button size="sm" tc-button (click)="location.back()" class="mx-1" [outline]="true" beforeIcon="icofont-reply"></button>
                 <button size="sm" [outline]="true" (click)="findEntity(entity.id)" class="mx-1" tc-button view="accent"
                     beforeIcon="icofont-refresh"></button>

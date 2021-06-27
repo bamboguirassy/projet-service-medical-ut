@@ -17,6 +17,7 @@
                             name="typePatient" id="typePatient" #typePatient="ngModel">
                             <tc-radio-option [value]="'TRAVAILLEUR'">TRAVAILLEUR / FAMILLE</tc-radio-option>
                             <tc-radio-option [value]="'ETUDIANT'">ETUDIANT</tc-radio-option>
+                            <tc-radio-option [value]="'AUTRES'">Autres</tc-radio-option>
                         </tc-radio>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="typePatient">
@@ -42,9 +43,9 @@
                         Rechercher
                     </button>
                 </div>
-                <div class="col-12" *ngIf="item" [hidden]="entity?.typePatient=='ETUDIANT'">
-                    <nz-collapse nzAccordion>
-                        <nz-collapse-panel nzHeader="Employé & Membre Famille">
+                <div class="col-12" *ngIf="item" [hidden]="entity?.typePatient=='ETUDIANT' || entity?.typePatient=='AUTRES'">
+                    <nz-collapse nzAccordion  [nzBordered]="false">
+                        <nz-collapse-panel [nzActive]="true" nzHeader="Employé & Membre Famille">
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
@@ -59,7 +60,7 @@
                                         <td scope="row">Employé</td>
                                         <td>{{item?.employe.prenoms}}</td>
                                         <td>{{item?.employe.nom}}</td>
-                                        <td style="text-align: center"><button size="sm"
+                                        <td style="text-align: center"><button size="sm" type="button"
                                                 (click)="createDossierTravailleur(item?.employe)" tc-button>Créer
                                                 dossier</button></td>
                                     </tr>
@@ -67,7 +68,7 @@
                                         <td scope="row">{{item.lienParente}}</td>
                                         <td>{{item?.prenoms}}</td>
                                         <td>{{item?.nom}}</td>
-                                        <td style="text-align: center"><button size="sm"
+                                        <td style="text-align: center"><button size="sm" type="button"
                                                 (click)="createDossierFamille(item)" tc-button>Créer dossier</button>
                                         </td>
                                     </tr>
@@ -84,7 +85,7 @@
                         {{selectedEmploye?.nom}}</span>
                 </div>
                 <br>
-                <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.typePatient=='ETUDIANT'">
+                <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.typePatient=='ETUDIANT' || entity?.typePatient=='AUTRES'">
                     <tc-form-group>
                         <tc-form-label>Prénoms</tc-form-label>
                         <tc-input required="required" [(ngModel)]="entity.prenoms" name="prenoms" id="prenoms"
@@ -96,7 +97,7 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.typePatient=='ETUDIANT'">
+                <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.typePatient=='ETUDIANT' || entity?.typePatient=='AUTRES'">
                     <tc-form-group>
                         <tc-form-label>Nom</tc-form-label>
                         <tc-input required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
@@ -106,7 +107,7 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.typePatient=='ETUDIANT'">
+                <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.typePatient=='ETUDIANT' || entity?.typePatient=='AUTRES'">
                     <tc-form-group>
                         <tc-form-label>Date de naissance</tc-form-label>
                         <nz-date-picker [nzFormat]="'dd/MM/yyyy'" required="required" [(ngModel)]="entity.dateNaissance"
@@ -117,7 +118,7 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.typePatient=='ETUDIANT'">
+                <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.typePatient=='ETUDIANT' || entity?.typePatient=='AUTRES'">
                     <tc-form-group>
                         <tc-form-label>Sexe</tc-form-label>
                         <tc-radio [direction]="'horizontal'" required="required" [(ngModel)]="entity.genre" name="genre"
@@ -131,7 +132,7 @@
                     </tc-form-group>
                 </div>
                 <div class="col-12 col-md-6 col-lg-4"
-                    *ngIf="entity?.typePatient=='ETUDIANT' || selectedTypePatient=='FAMILLE'">
+                    *ngIf="entity?.typePatient=='ETUDIANT' || selectedTypePatient=='FAMILLE' || entity?.typePatient=='AUTRES'">
                     <tc-form-group>
                         <tc-form-label>Numéro pièce d'identité</tc-form-label>
                         <tc-input [(ngModel)]="entity.cni" name="cni" id="cni" #cni="ngModel">
@@ -141,7 +142,19 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.typePatient=='ETUDIANT'">
+                <div class="col-12 col-md-6 col-lg-4" *ngIf="selected || selectedTypePatient=='ETUDIANT' || entity?.typePatient=='AUTRES'">
+                    <tc-form-group>
+                        <tc-form-label>Email</tc-form-label>
+                        <tc-input [(ngModel)]="entity.emailPatient" name="emailPatient" id="emailPatient"
+                            #emailPatient="ngModel">
+                        </tc-input>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="emailPatient">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.typePatient=='ETUDIANT' || entity?.typePatient=='AUTRES'">
                     <tc-form-group>
                         <tc-form-label>Téléphone du patient ou d'un responsable</tc-form-label>
                         <tc-input required="required" [(ngModel)]="entity.telephone" name="telephone" id="telephone"
@@ -153,7 +166,7 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.typePatient=='ETUDIANT'">
+                <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.typePatient=='ETUDIANT' || entity?.typePatient=='AUTRES'">
                     <tc-form-group>
                         <tc-form-label>Numéro carte étudiant</tc-form-label>
                         <tc-input required="required" [(ngModel)]="entity.matricule" name="matricule" id="matricule"
@@ -165,7 +178,7 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.typePatient=='ETUDIANT'">
+                <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.typePatient=='ETUDIANT' || entity?.typePatient=='AUTRES'">
                     <tc-form-group>
                         <tc-form-label>Structure</tc-form-label>
                         <tc-select [placeholder]="'Selectionner la structure de travail'" [options]="structures"
@@ -178,7 +191,7 @@
                     </tc-form-group>
                 </div>
                 <div class="col-12 col-md-6 col-lg-4"
-                    *ngIf="entity?.typePatient=='ETUDIANT' || selectedTypePatient=='FAMILLE' && selected">
+                    *ngIf="entity?.typePatient=='ETUDIANT' || entity?.typePatient=='AUTRES' ||(selectedTypePatient=='FAMILLE' && selected)">
                     <tc-form-group>
                         <tc-form-label>Situation matrimoniale</tc-form-label>
                         <tc-select [options]="situationMatrimoniales" [(ngModel)]="entity.situationMatrimoniale"
@@ -204,7 +217,7 @@
                     </tc-form-group>
                 </div>
                 <div class="col-12 col-md-6 col-lg-4"
-                    *ngIf="entity?.situationMatrimoniale=='mariee' && (entity?.typePatient=='ETUDIANT' || selectedTypePatient=='FAMILLE')">
+                    *ngIf="entity?.situationMatrimoniale=='mariee' && (entity?.typePatient=='ETUDIANT' || selectedTypePatient=='FAMILLE' || entity?.typePatient=='AUTRES')">
                     <tc-form-group>
                         <tc-form-label>Date mariage</tc-form-label>
                         <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.dateMariage" name="dateMariage"
@@ -215,7 +228,7 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4" *ngIf="selected">
+                <div class="col-12 col-md-6 col-lg-4" *ngIf="selected || entity?.typePatient=='AUTRES'">
                     <tc-form-group>
                         <tc-form-label>Niveau d'instruction</tc-form-label>
                         <tc-select [options]="niveauInstructions" [(ngModel)]="entity.niveauInstruction"
@@ -230,8 +243,7 @@
                 <div class="col-12 col-md-6 col-lg-4" *ngIf="entity?.typePatient=='ETUDIANT'">
                     <tc-form-group>
                         <tc-form-label>Niveau d'instruction</tc-form-label>
-                        <tc-input disabled="true" value="superieur" ngModel="Supérieur" name="niveauInstruction" id="niveauInstruction"
-                            #niveauInstruction="ngModel">
+                        <tc-input disabled="true" value="superieur" name="niveauInstruction" id="niveauInstruction">
                         </tc-input>
                     </tc-form-group>
                 </div>

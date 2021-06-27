@@ -7,12 +7,7 @@
     </div>
   </tc-card>
   <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
-    <!-- <tc-table-col [columnTitle]="'#'" [columnName]="'#'">
-      <ng-template #tableTDTemplate let-row="row">
-        <i class="icofont-patient-file icofont-2x"></i>
-      </ng-template>
-    </tc-table-col> -->
-    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+     <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
       <ng-template #tableTDTemplate let-row="row">
         <div class="actions">
           <button *ngIf="dossierSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'" [view]="'warning'"
@@ -41,7 +36,7 @@
         <span class="nowrap">{{ value }}</span>
       </ng-template>
     </tc-table-col>
-    <tc-table-col [columnTitle]="'Date de naissance'" [columnName]="'dateNaissance'" [enableSorting]="true">
+    <tc-table-col [columnTitle]="'Date Naissance'" [columnName]="'dateNaissance'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <span class="nowrap">{{ value|date:'dd/MM/yyyy' }}</span>
       </ng-template>
@@ -62,6 +57,12 @@
     <tc-table-col [columnTitle]="'Téléphone'" [columnName]="'telephone'" [enableSorting]="true">
       <ng-template #tableTDTemplate let-value>
         <span class="nowrap">{{ value }}</span>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Email'" [columnName]="'emailPatient'" [enableSorting]="true">
+      <ng-template #tableTDTemplate let-value>
+        <span *ngIf="value" class="nowrap">{{ value }}</span>
+        <tc-badge view="error" *ngIf="!value" [outline]="true" size="sm">Indéfini</tc-badge>
       </ng-template>
     </tc-table-col>
     <tc-table-col [columnTitle]="'Structure'" [columnName]="'structure'" [enableSorting]="true">

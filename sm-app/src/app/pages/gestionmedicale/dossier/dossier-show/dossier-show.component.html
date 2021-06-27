@@ -10,18 +10,18 @@
             </div>
             <div  class="col-12 col-md-4">
                 <div class="col-12 justify-content-center pt-4">
-                    <!-- <button size="sm" tc-button class="float-right ml-1" (click)="openModal()"
-                        beforeIcon="icofont-email" view="accent" [outline]="true"> Contacter</button>    -->
+                    <button size="sm" tc-button class="ml-1" (click)="openModal()"
+                        beforeIcon="icofont-email" view="accent"> Contacter</button>   
                     <button size="sm" *ngIf="dossierSrv.resourceName|editable"
                         [routerLink]="['/'+orientation,dossierSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
-                        class="float-right ml-1" tc-button view="warning" [outline]="true"
+                        class="ml-1" tc-button view="warning"
                         beforeIcon="icofont-edit"></button>
                     <button size="sm" (click)="remove(entity)" *ngIf="dossierSrv.resourceName|deletable"
                         tc-button view="error" beforeIcon="icofont-trash" [outline]="true"
-                        class=" float-right ml-1"></button>
-                    <button size="sm" (click)="findEntity(entity.id)" class="float-right ml-1" tc-button [outline]="true"
-                    view="success" beforeIcon="icofont-refresh"></button>
-                    <button size="sm" tc-button class="float-right" (click)="location.back()" [outline]="true"
+                        class="ml-1"></button>
+                    <button size="sm" (click)="findEntity(entity.id)" class="ml-1" tc-button [outline]="true"
+                    view="accent" beforeIcon="icofont-refresh"></button>
+                    <button class="ml-1" size="sm" tc-button (click)="location.back()" [outline]="true"
                         beforeIcon="icofont-reply"></button>
                     
                 </div>

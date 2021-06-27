@@ -89,6 +89,7 @@ export class DossierNewComponent implements OnInit {
 
     }
     if (this.entity.typePatient == "ETUDIANT") {
+      this.entity.niveauInstruction = 'superieur';
       this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
     }
     if (this.entity.dateMariage) {
@@ -140,14 +141,17 @@ export class DossierNewComponent implements OnInit {
     this.selectedEmploye = item;
     this.selected = true;
     this.selectedFamille = null;
+    this.entity.emailPatient = this.item?.employe?.email ?? this.item?.employe?.emailUniv;
+
   }
-  
+
   createDossierFamille(item) {
     this.selectedFamille = item;
     this.selectedTypePatient = "FAMILLE";
     this.entity.typePatient = "FAMILLE";
     this.selected = true;
     this.selectedEmploye = null;
+    this.entity.emailPatient = '';
   }
 
 }
