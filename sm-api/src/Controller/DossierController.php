@@ -51,6 +51,7 @@ class DossierController extends AbstractController
         $dossier->setUserEmail($this->getUser());
         $dossier->setDateCreation(new \DateTime());
         $dossier->setNumero(strtoupper(uniqid()));
+        $dossier->setEtat(true);
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($dossier);
