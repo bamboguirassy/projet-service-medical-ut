@@ -1,3 +1,4 @@
+import { Dossier } from './../../../pages/gestionmedicale/dossier/dossier';
 import { Router } from '@angular/router';
 import { Component, Input, OnInit } from '@angular/core';
 import { DossierService } from 'src/app/pages/gestionmedicale/dossier/dossier.service';
@@ -9,7 +10,7 @@ import { DossierService } from 'src/app/pages/gestionmedicale/dossier/dossier.se
 })
 export class DossierSearchComponent implements OnInit {
   searchTerm: any;
-  datas: any;
+  dossiers: Dossier[] = [];
   @Input() layout = 'horizontal';
   constructor(public router: Router,
     public dossierSrv: DossierService) { }
@@ -19,14 +20,13 @@ export class DossierSearchComponent implements OnInit {
 
   selectEvent(item) {
     this.router.navigate(['/'+this.layout+'/' + this.dossierSrv.getRoutePrefix() + item.id]);
-    item = null;
   }
 
   getDossiers() {
-    if(this.searchTerm.length > 2){
+    if(this.searchTerm.length > 3){
       this.dossierSrv.getDossierSearch(this.searchTerm)
         .subscribe((data: any) => {
-          this.datas = data;          
+          this.dossiers = data;          
         }, err => this.dossierSrv.httpSrv.catchError(err));
     }
   }
