@@ -188,19 +188,14 @@ class DossierController extends AbstractController
             ')->setParameter('dossierIds', $dossierIds )
                 ->getResult();
         foreach ($dossiersSendingEmail as $dossierSendingEmail) {
-            if($dossierSendingEmail->getUserEmail()!=NULL) {
-                $message = (new Swift_Message($object))
-                ->setFrom(Utils::$sender)
-                //->setTo($dossierSendingEmail->getUserEmail())
-                ->setTo("fallou.ndiaye95@univ-thies.sn")
-                ->setBody($messaye_body, 'text/html');
-                array_push($result,  [$dossierSendingEmail->getId() => $mailer->send($message)]); 
+            if($dossierSendingEmail->getUserEmail()==NULL) {
+                throw $this->createNotFoundException("L'employé {$dossierSendingEmail->getPrenoms()} {$dossierSendingEmail->getNom()} ne dispose pas d'email dans le système.");
             }
-            else{
-                    throw $this->createNotFoundException("L'employé {$dossierSendingEmail->getPrenoms()} {$dossierSendingEmail->getNom()} avec l'identifiant {$dossierSendingEmail->getId()} ne dispose d'aucun email dans le système");
-                 }
-
-
+            $message = (new Swift_Message($object))
+                ->setFrom(Utils::$sender,Utils::$senderName)
+                ->setTo($dossierSendingEmail->getEmailPatient())
+                ->setBody($messaye_body, 'text/html');
+                array_push($result,  [$dossierSendingEmail->getId() => $mailer->send($message)]);
         }
           
         return $result;

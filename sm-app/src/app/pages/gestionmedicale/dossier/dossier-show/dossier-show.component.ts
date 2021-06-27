@@ -68,6 +68,7 @@ export class DossierShowComponent extends BasePageComponent<Dossier> implements 
   handlePostDelete() {
     this.location.back();
   }
+  
   // open modal window
   openModal() {
     setTimeout(() => {
