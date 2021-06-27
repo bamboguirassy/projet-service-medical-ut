@@ -1,15 +1,15 @@
-import {Component, Input, OnInit} from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import Swal from "sweetalert2";
-import {RendezVous} from "../rendezvous";
-import {RendezVousService} from "../rendezvous.service";
-import {Consultation} from "../../consultation/consultation";
-import {Medicament} from "src/app/pages/gestionstock/medicament/medicament";
-import {Mesure} from "../../mesure/mesure";
-import {Symptome} from "../../symptome/symptome";
-import {MesureService} from "../../mesure/mesure.service";
+import { RendezVous } from "../rendezvous";
+import { RendezVousService } from "../rendezvous.service";
+import { Consultation } from "../../consultation/consultation";
+import { Medicament } from "src/app/pages/gestionstock/medicament/medicament";
+import { Mesure } from "../../mesure/mesure";
+import { Symptome } from "../../symptome/symptome";
+import { MesureService } from "../../mesure/mesure.service";
 import { SymptomeService } from "../../symptome/symptome.service";
 
-@Component({selector: "app-rendez-vous-dossier", templateUrl: "./rendez-vous-dossier.component.html", styleUrls: ["./rendez-vous-dossier.component.scss"]})
+@Component({ selector: "app-rendez-vous-dossier", templateUrl: "./rendez-vous-dossier.component.html", styleUrls: ["./rendez-vous-dossier.component.scss"] })
 export class RendezVousDossierComponent implements OnInit {
   lightGradient = ["#fff", "#f79992"];
   deepGradient = ["#fff", "#d3e5d8"];
@@ -32,22 +32,25 @@ export class RendezVousDossierComponent implements OnInit {
   isEditMesureModal: boolean;
   uncommitMesure: Mesure;
 
-  @Input()set dossier(val) {
+  @Input() set dossier(val) {
     this._consultation = val;
     this.findByConsultation();
   }
 
-  constructor(public rendezVousSrv : RendezVousService, public symptomeSrv : SymptomeService, public mesureSrv : MesureService) {}
+  constructor(public rendezVousSrv: RendezVousService, public symptomeSrv: SymptomeService, public mesureSrv: MesureService) { }
 
-  ngOnInit(): void {this.findAllSymptomes();}
+  ngOnInit(): void { 
+    this.findAllSymptomes();
+    this.findByConsultation();
+   }
 
   findAllSymptomes() {
-    this.symptomeSrv.findAll().subscribe((data : any) => {
+    this.symptomeSrv.findAll().subscribe((data: any) => {
       this.symptomes = data;
     }, (err) => this.symptomeSrv.httpSrv.catchError(err));
   }
 
-  remove(entity : RendezVous) {
+  remove(entity: RendezVous) {
     Swal.fire({
       title: "Êtes-vous sûr ?",
       text: "Cette opération est irreversible !",
@@ -76,13 +79,13 @@ export class RendezVousDossierComponent implements OnInit {
     this.items.forEach((item) => (item.expand = false));
   }
 
-  setEditItem(item : RendezVous) {
+  setEditItem(item: RendezVous) {
     this.selectedItem = item;
     this.isEditModalVisible = true;
   }
 
   findByConsultation() {
-    this.rendezVousSrv.findByConsultation(this._consultation).subscribe((data : any) => {
+    this.rendezVousSrv.findByConsultation(this._consultation).subscribe((data: any) => {
       this.items = data;
       this.handlePostLoad();
     }, (err) => this.rendezVousSrv.httpSrv.catchError(err));
@@ -92,7 +95,7 @@ export class RendezVousDossierComponent implements OnInit {
     this.isEditModalVisible = false;
   }
 
-  toArray(mesure : any) {
+  toArray(mesure: any) {
     let a = [];
     a.push(mesure);
     return a;
@@ -100,7 +103,7 @@ export class RendezVousDossierComponent implements OnInit {
 
   //***** MESURE *****
 
-  opendEditMesureModal(mesure : Mesure, rendezVous : RendezVous) {
+  opendEditMesureModal(mesure: Mesure, rendezVous: RendezVous) {
     this.selectedMesure = this.cloneSelectedMesure(mesure, rendezVous);
     this.isEditMesureModal = true;
   }
@@ -109,7 +112,7 @@ export class RendezVousDossierComponent implements OnInit {
     this.isEditMesureModal = false;
   }
 
-  cloneSelectedMesure(mesure : Mesure, rendezVous : RendezVous): Mesure {
+  cloneSelectedMesure(mesure: Mesure, rendezVous: RendezVous): Mesure {
     this.uncommitMesure = mesure;
     this.uncommitMesure.rendezVous = rendezVous;
     let clone = new Mesure();
@@ -143,15 +146,15 @@ export class RendezVousDossierComponent implements OnInit {
     this.mesureSrv.toastr.success("Modification succès.", "Success");
   }
 
-  editMedicaments(rendezVous : RendezVous) {
+  editMedicaments(rendezVous: RendezVous) {
     this.listOfSelectedMedicaments = [];
-    rendezVous.mesure.medicaments.forEach((e : Medicament) => {
+    rendezVous.mesure.medicaments.forEach((e: Medicament) => {
       this.listOfSelectedMedicaments.push(e.id);
     });
     this.activateMedicamentSelectList = true;
   }
 
-  updateMedicaments(mesure : Mesure) {
+  updateMedicaments(mesure: Mesure) {
     this.isLoad = true;
     this.mesureSrv.updateMedicamentsOfOnMesure(mesure, this.listOfSelectedMedicaments).subscribe((data) => {
       mesure.medicaments = [];
@@ -168,15 +171,15 @@ export class RendezVousDossierComponent implements OnInit {
 
   //***** SYMPTOMES *****/
 
-  editSymptomes(rendezVous : RendezVous) {
+  editSymptomes(rendezVous: RendezVous) {
     this.listOfSelectedSymptomes = [];
-    rendezVous.mesure.symptomes.forEach((e : Symptome) => {
+    rendezVous.mesure.symptomes.forEach((e: Symptome) => {
       this.listOfSelectedSymptomes.push(e.id);
     });
     this.activateSymptomeSelectList = true;
   }
 
-  updateSymptome(mesure : Mesure) {
+  updateSymptome(mesure: Mesure) {
     this.isLoad = true;
     this.mesureSrv.updateSymptomesOfOnMesure(mesure, this.listOfSelectedSymptomes).subscribe((data) => {
       mesure.symptomes = [];
@@ -197,14 +200,14 @@ export class RendezVousDossierComponent implements OnInit {
     this.isNewMesureVisible = false;
   }
 
-  openNewMesureModale(rendezVous : RendezVous) {
+  openNewMesureModale(rendezVous: RendezVous) {
     this.selectedRV = rendezVous;
     this.newMesure = new Mesure();
     this.newMesure.rendezVous = rendezVous.id;
     this.isNewMesureVisible = true;
   }
 
-  createMesure(mesure : Mesure) {
+  createMesure(mesure: Mesure) {
     this.selectedRV.mesure = mesure;
   }
 }

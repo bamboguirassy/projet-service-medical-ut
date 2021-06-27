@@ -1,4 +1,6 @@
 <tc-card *ngIf="rendezVousSrv.resourceName|listable" title="Rendez-vous">
+  <button class="ml-2 mb-2 float-right" *ngIf="rendezVousSrv.resourceName|creable" tc-button [afterIcon]="'icofont-refresh'"
+  [view]="'accent'" (click)="findByConsultation()">Rafraichir</button>
   <nz-table nzScroll="x" *ngIf="items?.length" [nzBordered]="'true'" [nzShowPagination]="true" [nzPageSize]="10"
     [nzData]="items" #nestedTable class="table table-scrollable table-responsive">
     <thead>
