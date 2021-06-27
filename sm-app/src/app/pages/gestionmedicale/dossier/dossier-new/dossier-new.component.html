@@ -307,16 +307,6 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4" *ngIf="selected || entity?.typePatient=='ETUDIANT'">
-                    <tc-form-group>
-                        <tc-form-label>Etat du dossier</tc-form-label>
-                        <tc-switcher [(ngModel)]="entity.etat" name="etat" id="etat" #etat="ngModel">
-                        </tc-switcher>
-                        <tc-form-description>
-                            <app-form-field-validation-message [formField]="etat"></app-form-field-validation-message>
-                        </tc-form-description>
-                    </tc-form-group>
-                </div>
             </div>
         </form>
     </ng-template>
