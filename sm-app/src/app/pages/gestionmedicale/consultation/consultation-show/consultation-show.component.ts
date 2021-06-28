@@ -54,6 +54,7 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
     this.findEntity(this.activatedRoute.snapshot.params.id);
     this.findPathologies();
     this.activated=true;
+    this.selectedTab = 'symptomes';
   }
 
   ngOnDestroy() {
@@ -63,8 +64,6 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
   handlePostLoad() {
     this.selectedPathologies=this.entity?.pathologies?.map(pathologie=>pathologie.id);
     this.title = 'Consultation n° ' + this.entity?.id;
-    this.selectedTab = 'symptomes';
-   
   }
 
   handlePostDelete() {
@@ -98,6 +97,10 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
     setTimeout(()=>{
       this.selectedTab= tabName;
     });
+  }
+
+  refresh() {
+    this.findEntity(this.activatedRoute.snapshot.params.id);
   }
 
 }

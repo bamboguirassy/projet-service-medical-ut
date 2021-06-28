@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { BasePageComponent } from 'src/app/pages/base-page';
 import { DossierService } from '../dossier.service';
 import { Store } from '@ngrx/store';
@@ -20,10 +20,10 @@ export class DossierShowComponent extends BasePageComponent<Dossier> implements 
   isModalVisible = false;
   editor = ClassicEditor;
   selectedTab = '';
-  public email= {
-      object: '',
-      message: ''
-    };
+  public email = {
+    object: '',
+    message: ''
+  };
 
   constructor(store: Store<IAppState>,
     public dossierSrv: DossierService,
@@ -39,7 +39,7 @@ export class DossierShowComponent extends BasePageComponent<Dossier> implements 
         },
         {
           title: 'Liste des dossiers médicaux',
-          route: '/'+this.orientation+'/dossier'
+          route: '/' + this.orientation + '/dossier'
         },
         {
           title: 'Affichage'
@@ -50,6 +50,7 @@ export class DossierShowComponent extends BasePageComponent<Dossier> implements 
     activatedRoute.params.subscribe(() => {
       this.findEntity(this.activatedRoute.snapshot.params.id);
     });
+    this.selectedTab = 'consultations';
   }
 
   ngOnInit(): void {
@@ -62,13 +63,12 @@ export class DossierShowComponent extends BasePageComponent<Dossier> implements 
 
   handlePostLoad() {
     this.title = 'Dossier Médical - ' + this.entity?.numero;
-    this.selectedTab = 'consultations';
   }
 
   handlePostDelete() {
     this.location.back();
   }
-  
+
   // open modal window
   openModal() {
     setTimeout(() => {
@@ -83,28 +83,32 @@ export class DossierShowComponent extends BasePageComponent<Dossier> implements 
     }, 0);
   }
 
-  sendSingleEmail(){
-    if(this.email.object.length==0 || this.email.message.length==0){
+  sendSingleEmail() {
+    if (this.email.object.length == 0 || this.email.message.length == 0) {
       this.dossierSrv.toastr.error('Verifier vos champs');
       return;
     }
-    this.dossierSrv.sendEmail([this.entity.id],this.email.object,this.email.message)
-    .subscribe(
-      (data: any) => {
-        this.dossierSrv.toastr.success('Email Envoyé avec succès')
-        this.closeModal(); 
-        this.email.object=""
-        this.email.message=""
-      },
-      error => this.dossierSrv.httpSrv.catchError(error))
+    this.dossierSrv.sendEmail([this.entity.id], this.email.object, this.email.message)
+      .subscribe(
+        (data: any) => {
+          this.dossierSrv.toastr.success('Email Envoyé avec succès')
+          this.closeModal();
+          this.email.object = ""
+          this.email.message = ""
+        },
+        error => this.dossierSrv.httpSrv.catchError(error))
 
   }
 
   loadTab(tabName: string) {
-    setTimeout(()=>{
-      this.selectedTab= tabName;
+    setTimeout(() => {
+      this.selectedTab = tabName;
     });
   }
-    
+
+  refresh() {
+    this.findEntity(this.activatedRoute.snapshot.params.id);
+  }
+
 
 }

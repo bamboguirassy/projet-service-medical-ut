@@ -1,6 +1,6 @@
 import { InputationService } from './../inputation.service';
 import { Inputation } from './../inputation';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Dossier } from '../../dossier/dossier';
 import Swal from 'sweetalert2';
 
@@ -15,6 +15,7 @@ export class ImputationDossierComponent implements OnInit {
   deepGradient = ['#fff', '#d3e5d8'];
   secondViewBorder = 'error';
   @Input() imputations: Inputation[];
+  @Output() onDelete: EventEmitter<boolean> = new EventEmitter();
 
   constructor(public inputationSrv: InputationService) { }
 
@@ -35,6 +36,7 @@ export class ImputationDossierComponent implements OnInit {
         this.inputationSrv.remove(entity)
           .subscribe(() => {
             Swal.close();
+            this.onDelete.emit();
             this.inputationSrv.toastr.success("Suppression reussie");
           });
         // For more information about handling dismissals please visit
