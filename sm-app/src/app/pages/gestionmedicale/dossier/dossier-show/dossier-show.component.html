@@ -56,7 +56,7 @@
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-6 col-md-5 info-title">Date de naissance :</div>
+                            <div class="col-6 col-md-5 info-title">Date naiss :</div>
                             <div *ngIf="entity?.dateNaissance; else elseTen" class="col-6 col-md-7 info-content">{{entity?.dateNaissance|date:'dd/MM/yyyy'}}
                             </div>
                             <ng-template #elseTen>
@@ -75,7 +75,7 @@
                     </li>
                     <li class="info-line">
                         <div class="row">
-                            <div class="col-6  col-md-5 info-title">Situation matrimoniale :</div>
+                            <div class="col-6  col-md-5 info-title">Sit. matr. :</div>
                             <div *ngIf="entity?.situationMatrimoniale; else elseSituation" class="col-6 col-md-7 info-content">{{entity?.situationMatrimoniale}}</div>
                             <ng-template #elseSituation>
                                 <tc-badge [outline]="true"  view="error">Non renseigné</tc-badge>
@@ -201,7 +201,7 @@
     <div class="col-12">
         <nz-tabset *ngIf="entity" nzSize="small">
             <nz-tab (nzSelect)="loadTab('consultations')" nzTitle="Consultations">
-                <app-consultation-dossier *ngIf="selectedTab=='consultations'" [consultations]="entity?.consultations"></app-consultation-dossier>
+                <app-consultation-dossier (onDelete)="refresh()" *ngIf="selectedTab=='consultations'" [consultations]="entity?.consultations"></app-consultation-dossier>
             </nz-tab>
             <nz-tab (nzSelect)="loadTab('imputations')" nzTitle="Imputations">
                 <app-imputation-dossier *ngIf="selectedTab=='imputations'" [imputations]="entity?.inputations"></app-imputation-dossier>
