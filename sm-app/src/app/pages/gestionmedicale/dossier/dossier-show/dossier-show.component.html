@@ -204,7 +204,7 @@
                 <app-consultation-dossier (onDelete)="refresh()" *ngIf="selectedTab=='consultations'" [consultations]="entity?.consultations"></app-consultation-dossier>
             </nz-tab>
             <nz-tab (nzSelect)="loadTab('imputations')" nzTitle="Imputations">
-                <app-imputation-dossier *ngIf="selectedTab=='imputations'" [imputations]="entity?.inputations"></app-imputation-dossier>
+                <app-imputation-dossier (onDelete)="refresh()" *ngIf="selectedTab=='imputations'" [imputations]="entity?.inputations"></app-imputation-dossier>
             </nz-tab>
             <nz-tab (nzSelect)="loadTab('reposmedicaux')" nzTitle="Repos médicaux">
                 <app-repos-medical-dossier *ngIf="selectedTab=='reposmedicaux'" [dossier]="entity"></app-repos-medical-dossier>
