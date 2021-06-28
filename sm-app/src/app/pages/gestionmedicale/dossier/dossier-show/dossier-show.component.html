@@ -187,7 +187,7 @@
                                 <app-reposmedical-new class="mr-1" [dossier]="entity"
                                     (creation)="findEntity(activatedRoute.snapshot.params.id)"></app-reposmedical-new>
                                 <app-inputation-new [dossier]="entity"
-                                    (creation)="findEntity(activatedRoute.snapshot.params.id)"></app-inputation-new>
+                                    (creation)="refresh()"></app-inputation-new>
                             </div>
                         </div>
                     </li>

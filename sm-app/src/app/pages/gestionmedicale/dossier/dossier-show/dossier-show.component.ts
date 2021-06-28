@@ -50,6 +50,7 @@ export class DossierShowComponent extends BasePageComponent<Dossier> implements 
     activatedRoute.params.subscribe(() => {
       this.findEntity(this.activatedRoute.snapshot.params.id);
     });
+    this.selectedTab = 'consultations';
   }
 
   ngOnInit(): void {
@@ -62,7 +63,6 @@ export class DossierShowComponent extends BasePageComponent<Dossier> implements 
 
   handlePostLoad() {
     this.title = 'Dossier Médical - ' + this.entity?.numero;
-    this.selectedTab = 'consultations';
   }
 
   handlePostDelete() {
