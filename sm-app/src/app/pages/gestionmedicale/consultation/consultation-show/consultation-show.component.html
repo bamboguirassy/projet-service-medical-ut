@@ -126,7 +126,7 @@
                         <div class="row">
                             <div class="col-12 d-flex justify-content-end">
                                 <app-rendezvous-new *ngIf="entity" class="mr-1" [consultation]="entity"
-                                    (creation)="findEntity(activatedRoute.snapshot.params.id)">
+                                    (creation)="refresh()">
                                 </app-rendezvous-new>
                             </div>
                         </div>

@@ -26,7 +26,7 @@ export class ConsultationNewComponent implements OnInit {
   docteurs: Docteur[] = [];
   pathologies: Pathologie[] = [];
   selectedDocteur: Docteur;
-  selectedPathologie: Pathologie[]=[];
+  selectedPathologie: Pathologie[] = [];
 
   constructor(public consultationSrv: ConsultationService,
     public router: Router,
@@ -46,7 +46,7 @@ export class ConsultationNewComponent implements OnInit {
     this.entity.dossier = this.dossier.id;
     this.entity.docteur = this.selectedDocteur.id;
     if (this.selectedPathologie) {
-      let pathologiesIds=this.selectedPathologie.map(pathologie => pathologie.id);
+      let pathologiesIds = this.selectedPathologie.map(pathologie => pathologie.id);
       this.entity.pathologies = pathologiesIds;
     }
     this.entity.date = this.datePipe.transform(this.entity.date, 'yyyy-MM-dd');
@@ -71,7 +71,12 @@ export class ConsultationNewComponent implements OnInit {
 
   findDocteurs() {
     this.docteurSrv.findAll()
-      .subscribe((data: any) => { this.docteurs = data; },
+      .subscribe((data: any) => {
+        this.docteurs = data;
+        if (this.docteurs.length) {
+          this.selectedDocteur = this.docteurs[0];
+        }
+      },
         err => this.docteurSrv.httpSrv.catchError(err));
 
   }
