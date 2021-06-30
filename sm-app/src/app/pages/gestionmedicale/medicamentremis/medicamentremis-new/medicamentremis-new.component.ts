@@ -69,7 +69,6 @@ export class MedicamentRemisNewComponent implements OnInit {
       }, err => this.medicamentSrv.httpSrv.catchError(err));
   }
   convertNumber(value:string){
-    console.log(value);
     return parseInt(value);
   }
 
