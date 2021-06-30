@@ -130,6 +130,11 @@ export class BamboAuthService {
             "title": "Consultation mensuelle",
             "routing": "cons-mens",
             enabled: this.checkListAccess('consultation')
+          },
+          {
+            "title": "Imputation mensuelle",
+            "routing": "impu-mens",
+            enabled: this.checkListAccess('inputation')
           }
         ],
         enabled: true

@@ -17,5 +17,8 @@ export class InputationService extends BamboAbstractService {
   findByDate(dateInterval: any) {
     return this.httpSrv.post(this.routePrefix + 'filter-by-date/', dateInterval);
   }
+  getMensualStatistic(annee: number) {
+    return this.httpSrv.get(this.routePrefix + annee + '/statistique-mensuelle/');
+  }
   
 }

@@ -31,6 +31,7 @@ import { PageEditAccountComponent } from '../pages/apps/service-pages/edit-accou
 import { SurveillancePathologiqueJournaliereComponent } from '../pages/dashboards/surveillance-pathologique-journaliere/surveillance-pathologique-journaliere.component';
 import { SurveillancePathologiqueMensuelleComponent } from '../pages/dashboards/surveillance-pathologique-mensuelle/surveillance-pathologique-mensuelle.component';
 import { ConsultationMensuelleComponent } from '../pages/dashboards/consultation-mensuelle/consultation-mensuelle.component';
+import { ImputationMensuelleComponent } from '../pages/dashboards/imputation-mensuelle/imputation-mensuelle.component';
 
 const VERTICAL_ROUTES: Routes = [
   { path: 'default-dashboard', component: PageDashboardComponent },
@@ -39,6 +40,7 @@ const VERTICAL_ROUTES: Routes = [
   { path: 'surv-path-mens', component: SurveillancePathologiqueMensuelleComponent },
   { path: 'cons-mens', component: ConsultationMensuelleComponent },
   { path: 'cons-jour', component: ConsultationJournaliereComponent },
+  { path: 'impu-mens', component: ImputationMensuelleComponent },
 
   { path: 'edit-account', component: PageEditAccountComponent },
   { path: 'user-profile', component: PageUserProfileComponent },
