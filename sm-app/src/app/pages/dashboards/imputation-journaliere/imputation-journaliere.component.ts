@@ -7,13 +7,13 @@ import { BasePageComponent } from '../../base-page';
 import { IAppState } from 'src/app/interfaces/app-state';
 import { InputationService } from '../../gestionmedicale/inputation/inputation.service';
 import { ImpuJourStats } from '../impu-jour-stats';
-@Component({
-  selector: 'app-imputation-mensuelle',
-  templateUrl: './imputation-mensuelle.component.html',
-  styleUrls: ['./imputation-mensuelle.component.scss']
-})
-export class ImputationMensuelleComponent extends BasePageComponent<any> implements OnInit, OnDestroy{
 
+@Component({
+  selector: 'app-imputation-journaliere',
+  templateUrl: './imputation-journaliere.component.html',
+  styleUrls: ['./imputation-journaliere.component.scss']
+})
+export class ImputationJournaliereComponent  extends BasePageComponent<any> implements OnInit, OnDestroy {
   @Input() canSwitchDiagramType: boolean = true;
   typeDiagrams: { value: string, title: string }[] = [
     { value: 'bar', title: 'Barre verticale' },
@@ -21,9 +21,11 @@ export class ImputationMensuelleComponent extends BasePageComponent<any> impleme
   ];
   isLoad = false;
   data: any;
+  fileName: string = "Statistique_consultation_journalière_"
   selectedAnnee: number;
+  selectedMois: any;
   annees = [];
-  fileName:string = "Statistique_imputation_mensuelle_"
+  listOfMonths = { '01': 'Janvier', '02': 'Février', '03': 'Mars', '04': 'Avril', '05': 'Mai', '06': 'Juin', '07': 'Juillet', '08': 'Aout', '09': 'Septembre', '10': 'Octobre', '11': 'Novembre', '12': 'Décembre' };
 
   //chart  
   rawChartData: ImpuJourStats[];
@@ -40,7 +42,6 @@ export class ImputationMensuelleComponent extends BasePageComponent<any> impleme
   selectedTypeDiagram: ChartType = 'bar';
   tableData: any;
 
-
   constructor(
     store: Store<IAppState>,
     public inputationSrv: InputationService
@@ -48,7 +49,7 @@ export class ImputationMensuelleComponent extends BasePageComponent<any> impleme
     super(store, inputationSrv);
 
     this.pageData = {
-      title: 'Statistique imputation mensuelle',
+      title: 'Statistique imputation journalière',
       loaded: true,
       breadcrumbs: [
         {
@@ -56,7 +57,7 @@ export class ImputationMensuelleComponent extends BasePageComponent<any> impleme
           route: 'default-dashboard'
         },
         {
-          title: 'Statistique imputation mensuelle'
+          title: 'Statistique imputation  journalière'
         }
       ]
     };
@@ -65,16 +66,17 @@ export class ImputationMensuelleComponent extends BasePageComponent<any> impleme
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.getData();
     this.rangeAnnee();
-    this.buildDiagram();
   }
 
   getData() {
-    this.inputationSrv.getMensualStatistic(this.selectedAnnee)
-      .subscribe((data: any) => {
-        this.data = data;
-      }, err => this.inputationSrv.httpSrv.catchError(err));
+    if (this.selectedMois && this.selectedAnnee) {
+      this.inputationSrv.getDaylyStatistic(this.selectedMois, this.selectedAnnee)
+        .subscribe((data: any) => {
+          this.data = data;
+          this.buildDiagram(data);
+        }, err => this.inputationSrv.httpSrv.catchError(err));
+    }
   }
 
   handlePostLoad() { }
@@ -87,12 +89,11 @@ export class ImputationMensuelleComponent extends BasePageComponent<any> impleme
     }
     return this.annees;
   }
-
   setDataChart() {
     this.chartOptions = {
       responsive: true
     };
-    this.chartLabels = this.rawChartData.map(r => r.month);
+    this.chartLabels = this.rawChartData.map(r => "J" + r.day);
     this.chartType = 'bar';
     this.chartLegend = true;
     this.chartPlugins = [];
@@ -106,20 +107,16 @@ export class ImputationMensuelleComponent extends BasePageComponent<any> impleme
   }
 
 
-  buildDiagram() {
-    this.loading = true;
-    this.inputationSrv.getMensualStatistic(this.selectedAnnee)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe((data: any) => {
-        this.isLoad = true;
-        this.handlePostFetch(data as []);
-      }, err => {
-        this.inputationSrv.httpSrv.handleError(err);
-      });
+  buildDiagram(data) {
+    this.isLoad = true;
+    this.handlePostFetch(data as []);
   }
 
   handlePostFetch(data: []) {
     this.rawChartData = data;
     this.setDataChart();
   }
+
+
 }
+

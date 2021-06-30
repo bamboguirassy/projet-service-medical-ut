@@ -123,6 +123,7 @@ import {NgPipesModule} from "ng-pipes";
 import {ChartsModule} from "ng2-charts";
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { ImputationMensuelleComponent } from './dashboards/imputation-mensuelle/imputation-mensuelle.component';
+import { ImputationJournaliereComponent } from './dashboards/imputation-journaliere/imputation-journaliere.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -253,7 +254,8 @@ import { ImputationMensuelleComponent } from './dashboards/imputation-mensuelle/
     SurveillancePathologiqueMensuelleComponent,
     ConsultationMensuelleComponent,
     ConsultationJournaliereComponent,
-    ImputationMensuelleComponent
+    ImputationMensuelleComponent,
+    ImputationJournaliereComponent
   ],
   exports: [],
   entryComponents: []

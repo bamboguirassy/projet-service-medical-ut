@@ -29,6 +29,51 @@ class InputationController extends AbstractController {
 
         return count($inputations) ? $inputations : [];
     }
+        /**
+     * @Rest\Get(path="/{mois}/{annee}/statistique-journaliere/", name="inputation_statistique_journaliere")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_INPUTATION_INDEX")
+     */
+    public function getDaylyStatistic($mois,$annee): array {
+        //$tab_stats = [];
+        $em = $this->getDoctrine()->getManager();
+        $calendarElt = Utils::$calendarParams[$mois];
+       
+        $dayTab = [];
+        for ($i = 1; $i <= $calendarElt['endTo']; $i++) {
+            $nbreJr = $em->createQuery('select count(i) from App\Entity\Inputation i '
+                                . 'where i.date=?1')
+                        ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-' . $i)
+                        ->getSingleScalarResult();
+            $nbrPatsJr = $em->createQuery('select count(i) from App\Entity\Inputation i '
+                                . 'JOIN i.dossier d '
+                                . 'where i.date=?1 and d.typePatient=?2')
+                        ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-' . $i)
+                        ->setParameter(2, 'PATS')
+                        ->getSingleScalarResult();
+            $nbrPerJr = $em->createQuery('select count(i) from App\Entity\Inputation i '
+                                . 'JOIN i.dossier d '
+                                . 'where i.date=?1 and d.typePatient=?2')
+                        ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-' . $i)
+                        ->setParameter(2, 'PER')
+                        ->getSingleScalarResult();
+            $nbrFamilleJr = $em->createQuery('select count(i) from App\Entity\Inputation i '
+                                . 'JOIN i.dossier d '
+                                . 'where i.date=?1 and d.typePatient=?2')
+                        ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-' . $i)
+                        ->setParameter(2, 'FAMILLE')
+                        ->getSingleScalarResult();
+            $nbrEtudiantJr = $em->createQuery('select count(i) from App\Entity\Inputation i '
+                                . 'JOIN i.dossier d '
+                                . 'where i.date=?1 and d.typePatient=?2')
+                        ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-' . $i)
+                        ->setParameter(2, 'ETUDIANT')
+                        ->getSingleScalarResult();
+            $dayTab[] = ['month' => $calendarElt['month'],'day' => $i, 'total' => $nbreJr, 'pats' => $nbrPatsJr, 'per' => $nbrPerJr, 'famille' => $nbrFamilleJr, 'etudiant' => $nbrEtudiantJr];
+        }
+
+        return $dayTab;
+    }
 
     /**
      * @Rest\Get(path="/{annee}/statistique-mensuelle/", name="inputation_statistique_mensuelle")

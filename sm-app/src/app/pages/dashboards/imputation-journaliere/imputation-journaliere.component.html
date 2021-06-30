@@ -1,0 +1,103 @@
+<tc-card *ngIf="inputationSrv.resourceName|listable" [tcGradient]="lightGradient">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-start align-items-center">
+                <div class="col-md-4 col-sm-4 col-lg-3">
+                    <h5>Mois</h5>
+                    <nz-select [(ngModel)]="selectedMois" style="width: 100%; margin-top: -10px;"
+                        (ngModelChange)="getData();">
+                        <nz-option *ngFor="let item of (listOfMonths | keyvalue)" [nzValue]="item.key"
+                            [nzLabel]="item.value">
+                        </nz-option>
+                    </nz-select>
+                </div>
+                <div class="col-md-4 col-sm-4 col-lg-3">
+                    <h5>Année</h5>
+                    <nz-select [(ngModel)]="selectedAnnee" style="width: 100%; margin-top: -10px;"
+                        (ngModelChange)="getData();">
+                        <nz-option *ngFor="let annee of annees" [nzValue]="annee" [nzLabel]="annee"></nz-option>
+                    </nz-select>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <nz-tabset nzTabPosition="bottom" *ngIf="data">
+        <nz-tab [nzTitle]="'Tableau des statistiques'">
+            <div class="ms-auto p-2 bd-highlight">
+                <button nz-button nzType="primary" (click)="exportToExcel('cjTable1', fileName)" class="shadow "
+                    [nzSize]="'large'"><i nz-icon nzType="download"></i>Exporterle tableau</button>
+            </div>
+            <nz-table nzScroll="x" [nzFrontPagination]="'false'" nzBordered="true" [nzShowPagination]="'false'"
+                id="cjTable1" class="table table-scrollable table-hover table-responsive-sm" #basicTable
+                [nzData]="data">
+                <thead>
+                    <tr>
+                        <th rowspan="2"></th>
+                        <th colspan="3" style="text-align: center;"><b>PERMANENT</b></th>
+                        <th rowspan="2">ETUDIANTS</th>
+                        <th rowspan="2">TOTAL</th>
+                    </tr>
+                    <tr>
+                        <th>PERS</th>
+                        <th>PATS</th>
+                        <th>FAMILLE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of basicTable.data">
+                        <td scope="row">J{{item?.day}}</td>
+                        <td>{{item?.per}}</td>
+                        <td>{{item?.pats}}</td>
+                        <td>{{item?.famille}}</td>
+                        <td>{{item?.etudiant}}</td>
+                        <td>{{item?.total}}</td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </nz-tab>
+        <nz-tab [nzTitle]="'Diagramme des statistiques'">
+            <div *ngIf="!loading && isLoad">
+                <div class="row mt-4">
+                    <div class="col-12 col-md-4">
+                        <tc-form-group *ngIf="canSwitchDiagramType">
+                            <tc-form-label>Type de graphe</tc-form-label>
+                            <nz-select nzAllowClear nzShowSearch style="width: 100%" name="typeDiagram" id="typeDiagram"
+                                nzPlaceHolder="Selectionner type diagram" [(ngModel)]="selectedTypeDiagram">
+                                <ng-container *ngFor="let diagramType of typeDiagrams">
+                                    <nz-option [nzLabel]="diagramType?.title" [nzValue]="diagramType?.value">
+                                    </nz-option>
+                                </ng-container>
+                            </nz-select>
+                        </tc-form-group>
+                    </div>
+                </div>
+                <canvas class="no-wrap" baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
+                    [plugins]="chartPlugins" [legend]="chartLegend" [chartType]="selectedTypeDiagram">
+                </canvas>
+                <nz-table id="cjTable2" nzScroll="x" [nzFrontPagination]="'false'" nzBordered="true" [nzShowPagination]="'false'"
+                    class="table mt-5 table-scrollable table-hover table-responsive-sm" #chartDataTable
+                    [nzData]="chartData">
+                    <thead>
+                        <tr>
+                            <th>Jours
+                            </th>
+                            <th *ngFor="let label of chartLabels">{{label}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of chartDataTable.data">
+                            <td scope="row">{{item.label}}</td>
+                            <td *ngFor="let val of item.data">{{val}}</td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+                <div class="ms-auto p-2 bd-highlight">
+                    <button nz-button nzType="primary" (click)="exportToExcel('cjTable2', fileName)"
+                        [nzSize]="'large'"><i nz-icon nzType="download"></i>Exporter le tableau</button>
+                </div>
+            </div>
+        </nz-tab>
+    </nz-tabset>
+
+</tc-card>
