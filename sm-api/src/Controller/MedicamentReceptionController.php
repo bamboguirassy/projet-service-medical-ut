@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\MedicamentReception;
+use App\Entity\BonReception;
 use App\Form\MedicamentReceptionType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,11 +37,15 @@ class MedicamentReceptionController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_MEDICAMENTRECEPTION_CREATE")
      */
-    public function create(Request $request): MedicamentReception    {
+    public function create(Request $request): MedicamentReception
+    {
         $medicamentReception = new MedicamentReception();
         $form = $this->createForm(MedicamentReceptionType::class, $medicamentReception);
         $form->submit(Utils::serializeRequestContent($request));
-
+        if ($medicamentReception->getQuantite()<1) {
+            throw $this->createNotFoundException("La quantité de médicament receptionnée ne peut pas être null");
+        }
+        $medicamentReception->getMedicament()->setQuantiteStock($medicamentReception->getMedicament()->getQuantiteStock()+$medicamentReception->getQuantite());
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($medicamentReception);
         $entityManager->flush();
@@ -53,7 +58,8 @@ class MedicamentReceptionController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_MEDICAMENTRECEPTION_SHOW")
      */
-    public function show(MedicamentReception $medicamentReception): MedicamentReception    {
+    public function show(MedicamentReception $medicamentReception): MedicamentReception
+    {
         return $medicamentReception;
     }
 
@@ -63,10 +69,16 @@ class MedicamentReceptionController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_MEDICAMENTRECEPTION_EDIT")
      */
-    public function edit(Request $request, MedicamentReception $medicamentReception): MedicamentReception    {
+    public function edit(Request $request, MedicamentReception $medicamentReception): MedicamentReception
+    {
+        $ancienQuantite= $medicamentReception->getQuantite();
         $form = $this->createForm(MedicamentReceptionType::class, $medicamentReception);
         $form->submit(Utils::serializeRequestContent($request));
-
+        if ($medicamentReception->getQuantite()<1) {
+            throw $this->createNotFoundException("La quantité de médicament receptionnée ne peut pas être null");
+        }
+        $difference=$ancienQuantite-$medicamentReception->getQuantite();
+        $medicamentReception->getMedicament()->setQuantiteStock($medicamentReception->getMedicament()->getQuantiteStock()-$difference);
         $this->getDoctrine()->getManager()->flush();
 
         return $medicamentReception;
@@ -77,7 +89,8 @@ class MedicamentReceptionController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_MEDICAMENTRECEPTION_CLONE")
      */
-    public function cloner(Request $request, MedicamentReception $medicamentReception):  MedicamentReception {
+    public function cloner(Request $request, MedicamentReception $medicamentReception):  MedicamentReception
+    {
         $em=$this->getDoctrine()->getManager();
         $medicamentReceptionNew=new MedicamentReception();
         $form = $this->createForm(MedicamentReceptionType::class, $medicamentReceptionNew);
@@ -94,9 +107,11 @@ class MedicamentReceptionController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_MEDICAMENTRECEPTION_EDIT")
      */
-    public function delete(MedicamentReception $medicamentReception): MedicamentReception    {
+    public function delete(MedicamentReception $medicamentReception): MedicamentReception
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($medicamentReception);
+        $medicamentReception->getMedicament()->setQuantiteStock($medicamentReception->getMedicament()->getQuantiteStock()+$medicamentReception->getQuantite());
         $entityManager->flush();
 
         return $medicamentReception;
@@ -107,7 +122,8 @@ class MedicamentReceptionController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_MEDICAMENTRECEPTION_DELETE")
      */
-    public function deleteMultiple(Request $request): array {
+    public function deleteMultiple(Request $request): array
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $medicamentReceptions = Utils::getObjectFromRequest($request);
         if (!count($medicamentReceptions)) {
@@ -120,5 +136,20 @@ class MedicamentReceptionController extends AbstractController
         $entityManager->flush();
 
         return $medicamentReceptions;
+    }
+
+    
+    /**
+     * @Rest\Get(path="/{id}/bonreception", name="medicament_bon_reception")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_MEDICAMENTRECEPTION_INDEX")
+     */
+    public function findByBonReception(\App\Entity\BonReception $bonReception): array
+    {
+        $medicamentReceptions = $this->getDoctrine()
+            ->getRepository(MedicamentReception::class)
+            ->findByBonReception($bonReception);
+
+        return count($medicamentReceptions)?$medicamentReceptions:[];
     }
 }

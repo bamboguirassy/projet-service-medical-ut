@@ -1,3 +1,5 @@
+import { MedicamentReceptionNewComponent } from './gestionstock/medicamentreception/medicamentreception-new/medicamentreception-new.component';
+import { MedicamentReceptionListComponent } from './gestionstock/medicamentreception/medicamentreception-list/medicamentreception-list.component';
 import {MesureNewComponent} from "./gestionmedicale/mesure/mesure-new/mesure-new.component";
 import {MesureShowComponent} from "./gestionmedicale/mesure/mesure-show/mesure-show.component";
 import {MesureEditComponent} from "./gestionmedicale/mesure/mesure-edit/mesure-edit.component";
@@ -251,7 +253,9 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     SurveillancePathologiqueJournaliereComponent,
     SurveillancePathologiqueMensuelleComponent,
     ConsultationMensuelleComponent,
-    ConsultationJournaliereComponent
+    ConsultationJournaliereComponent,
+    MedicamentReceptionListComponent,
+    MedicamentReceptionNewComponent
   ],
   exports: [],
   entryComponents: []

@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\BonReception;
+use App\Entity\MedicamentReception;
 use App\Form\BonReceptionType;
+use App\Form\MedicamentReceptionType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,14 +17,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 /**
  * @Route("/api/bonreception")
  */
-class BonReceptionController extends AbstractController {
+class BonReceptionController extends AbstractController
+{
 
     /**
      * @Rest\Get(path="/", name="bon_reception_index")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_BONRECEPTION_INDEX")
      */
-    public function index(): array {
+    public function index(): array
+    {
         $bonReceptions = $this->getDoctrine()
                 ->getRepository(BonReception::class)
                 ->findAll();
@@ -35,23 +39,35 @@ class BonReceptionController extends AbstractController {
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_BONRECEPTION_CREATE")
      */
-    public function create(Request $request): BonReception {
+    public function create(Request $request)
+    {
+        $reqData = Utils::getObjectFromRequest($request);
+        $bon=$reqData->bonReception;
+        $medocs=$reqData->medicamentReceptions;
         $bonReception = new BonReception();
         $form = $this->createForm(BonReceptionType::class, $bonReception);
-        $form->submit(Utils::serializeRequestContent($request));
-        $data = Utils::getObjectFromRequest($request);
-        if(!isset($data->date)) {
+        $entityManager = $this->getDoctrine()->getManager();
+        if (!isset($bon->date)) {
             throw $this->createNotFoundException("La date du bon est obligatoire");
         }
-        $bonReception->setDate(new \DateTime($data->date));
+        $form->submit((array)$bon);
+        $bonReception->setDate(new \DateTime($bon->date));
         $bonReception->setUserEmail($this->getUser());
         $bonReception->setNumero(strtoupper(uniqid()));
         $bonReception->setNom("Bon de réception - ".$bonReception->getNumero());
-
-        $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($bonReception);
+        foreach ($medocs as $rowMedicamentRecu) {
+            $medicamentReception=new MedicamentReception();
+            $form = $this->createForm(MedicamentReceptionType::class, $medicamentReception);
+            $form->submit((array)$rowMedicamentRecu);
+            $medicamentReception->setBonReception($bonReception);
+            if ($medicamentReception->getQuantite()<1) {
+                throw $this->createNotFoundException("La quantité de médicament receptionnée ne peut pas être null");
+            }
+            $entityManager->persist($medicamentReception);
+            $medicamentReception->getMedicament()->setQuantiteStock($medicamentReception->getMedicament()->getQuantiteStock()+$medicamentReception->getQuantite());
+        }
         $entityManager->flush();
-
         return $bonReception;
     }
 
@@ -60,7 +76,8 @@ class BonReceptionController extends AbstractController {
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_BONRECEPTION_SHOW")
      */
-    public function show(BonReception $bonReception): BonReception {
+    public function show(BonReception $bonReception): BonReception
+    {
         return $bonReception;
     }
 
@@ -69,11 +86,10 @@ class BonReceptionController extends AbstractController {
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_BONRECEPTION_EDIT")
      */
-    public function edit(Request $request, BonReception $bonReception): BonReception {
+    public function edit(Request $request, BonReception $bonReception): BonReception
+    {
         $form = $this->createForm(BonReceptionType::class, $bonReception);
         $form->submit(Utils::serializeRequestContent($request));
-        $data = Utils::getObjectFromRequest($request);
-        $bonReception->setDate(new \DateTime($data->date));
 
         $this->getDoctrine()->getManager()->flush();
 
@@ -85,7 +101,8 @@ class BonReceptionController extends AbstractController {
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_BONRECEPTION_CLONE")
      */
-    public function cloner(Request $request, BonReception $bonReception): BonReception {
+    public function cloner(Request $request, BonReception $bonReception): BonReception
+    {
         $em = $this->getDoctrine()->getManager();
         $bonReceptionNew = new BonReception();
         $form = $this->createForm(BonReceptionType::class, $bonReceptionNew);
@@ -102,7 +119,8 @@ class BonReceptionController extends AbstractController {
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_BONRECEPTION_EDIT")
      */
-    public function delete(BonReception $bonReception): BonReception {
+    public function delete(BonReception $bonReception): BonReception
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($bonReception);
         $entityManager->flush();
@@ -115,7 +133,8 @@ class BonReceptionController extends AbstractController {
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_BONRECEPTION_DELETE")
      */
-    public function deleteMultiple(Request $request): array {
+    public function deleteMultiple(Request $request): array
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $bonReceptions = Utils::getObjectFromRequest($request);
         if (!count($bonReceptions)) {
@@ -129,5 +148,4 @@ class BonReceptionController extends AbstractController {
 
         return $bonReceptions;
     }
-
 }
