@@ -62,7 +62,7 @@
   <tc-dropdown-content [align]="'right'" [animation]="'fadeInUp'" [offset]="[10, 0]" [width]="180">
     <ul class="list">
       <li>
-        <a href="#" (click)="goTo($event, 'user-profile')" class="align-items-center">
+        <a [routerLink]="['/'+this.orientation,'edit-account']" routerLinkActive="router-link-active" (click)="onCloseDropdown()" class="align-items-center">
           <span class="icon icofont-ui-user"></span>
           Afficher profil
         </a>
