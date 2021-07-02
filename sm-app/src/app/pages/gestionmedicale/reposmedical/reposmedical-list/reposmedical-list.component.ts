@@ -71,5 +71,12 @@ export class ReposMedicalListComponent extends BasePageComponent<ReposMedical> i
         this.items = data;
       }, err => this.reposMedicalSrv.httpSrv.catchError(err));
   }
+  findAll(){
+    this.reposMedicalSrv.findLastReposMedidicaux()
+    .subscribe((data: any) => {
+      this.items = data;
+      this.setLoaded();
+    }, err => this.reposMedicalSrv.httpSrv.catchError(err));
+  }
 
 }
