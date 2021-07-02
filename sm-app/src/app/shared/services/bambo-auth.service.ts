@@ -233,4 +233,13 @@ export class BamboAuthService {
     });
     return this.menuItems.filter(menuItem=>menuItem.enabled);
   }
+
+  sendPasswordRequest(email: string) {
+    return this.httpSrv.post('auth/public/forgot-password', {email}).pipe(first());
+  }
+
+  createNewPassorwd(token: string, password: string) {
+    return this.httpSrv.post('auth/public/update-password', {password, token}).pipe(first());
+  }
+  
 }

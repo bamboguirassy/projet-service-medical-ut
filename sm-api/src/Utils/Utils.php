@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class Utils {
 
     public static $sender = 'admission@univ-thies.sn';
+    public static $senderName = 'SM UIDT';
     public static $websiteUrl = 'http://localhost:4200/#';
     public static $passwordResetLink = 'http://localhost:4200/#/public/new-password/';
     public static $calendarParams = [

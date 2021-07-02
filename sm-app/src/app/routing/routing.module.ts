@@ -1,3 +1,4 @@
+import { ResetPasswordComponent } from './../pages/apps/sessions/reset-password/reset-password.component';
 import { mesureRoutes } from './../pages/gestionmedicale/mesure/mesure.routes';
 import { ConsultationJournaliereComponent } from './../pages/dashboards/consultation-journaliere/consultation-journaliere.component';
 import { SurveillancePathologiqueGeneraleComponent } from './../pages/dashboards/surveillance-pathologique-generale/surveillance-pathologique-generale.component';
@@ -62,6 +63,8 @@ const VERTICAL_ROUTES: Routes = [
 const PUBLIC_ROUTES: Routes = [
   { path: 'sign-in', component: PageSignInComponent },
   { path: 'sign-up', component: PageSignUpComponent },
+  // { path: 'new-password/:token', component: ResetPasswordComponent },
+  { path: 'new-password/:email/:token', component: ResetPasswordComponent },
   { path: 'page-404', component: Page404Component },
   { path: 'page-500', component: Page500Component },
   { path: '**', component: Page404Component }

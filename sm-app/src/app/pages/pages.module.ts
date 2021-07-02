@@ -122,6 +122,8 @@ import {ConsultationJournaliereComponent} from "./dashboards/consultation-journa
 import {NgPipesModule} from "ng-pipes";
 import {ChartsModule} from "ng2-charts";
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { ResetPasswordComponent } from './apps/sessions/reset-password/reset-password.component';
+import { ResetPasswordFormComponent } from "../layout/components/reset-password-form/reset-password-form.component";
 @NgModule({
   imports: [
     CommonModule,
@@ -251,7 +253,9 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     SurveillancePathologiqueJournaliereComponent,
     SurveillancePathologiqueMensuelleComponent,
     ConsultationMensuelleComponent,
-    ConsultationJournaliereComponent
+    ConsultationJournaliereComponent,
+    ResetPasswordComponent,
+    ResetPasswordFormComponent,
   ],
   exports: [],
   entryComponents: []
