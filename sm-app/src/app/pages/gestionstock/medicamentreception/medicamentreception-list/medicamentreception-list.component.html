@@ -1,31 +1,57 @@
 <tc-card *ngIf="medicamentReceptionSrv.resourceName|listable" [tcGradient]="lightGradient">
-  <tc-card [view]="secondViewBorder" [outline]="true">
-    <div class="row">
-      <div class="col-12">
-        <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findAll()">Rafraichir</button>
-      </div>
+  <div class="card-header mb-1">
+    <h4> Liste des medicament réceptionnés</h4>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <app-medicamentreception-new (creation)="onCreate($event)"></app-medicamentreception-new>
+      <button class="float-right mb-2" tc-button afterIcon="icofont-refresh"
+        (click)="findByBonReception()">Rafraichir</button>
     </div>
-  </tc-card>
-  <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
-    <tc-table-col [columnTitle]="'Quantité'" [columnName]="'quantite'" [enableSorting]="true">
-      <ng-template #tableTDTemplate let-value>
-        <span class="nowrap">{{ value }}</span>
-      </ng-template>
-    </tc-table-col>
-    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
-      <ng-template #tableTDTemplate let-row="row">
-        <div class="actions">
-          <button *ngIf="medicamentReceptionSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
-            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
-          <button *ngIf="medicamentReceptionSrv.resourceName|deletable" (click)="remove(row)" tc-button
-            [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
-          <button *ngIf="medicamentReceptionSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'"
-            [view]="'accent'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id]"></button>
-        </div>
-      </ng-template>
-    </tc-table-col>
-  </tc-table>
-  <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
-  <app-medicamentreception-new (creation)="onCreate($event)"></app-medicamentreception-new>
+  </div>
+  <div style="overflow-x:auto; width:100%; height:300px;">
+    <tc-table [itemsPerPage]="15" [rows]="medicamentReceptions" [hovered]="true" [pagination]="true" [search]="true">
+      <tc-table-col [columnTitle]="'Médicament'" [columnName]="'medicament'" [enableSorting]="true">
+        <ng-template #tableTDTemplate let-value>
+          <span class="nowrap">{{ value?.nom }}</span>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Quantité'" [columnName]="'quantite'" [enableSorting]="true">
+        <ng-template #tableTDTemplate let-row="row">
+          <ng-container *ngIf="row.actevedModifQuantite">
+            <span class="nowrap" *ngIf="row.quantite">{{ row?.quantite }}</span>
+            <tc-badge view="error" *ngIf="!row.quantite">Indéfinie</tc-badge>
+          </ng-container>
+          <ng-container *ngIf="!row.actevedModifQuantite">
+            <tc-form-group>
+              <input type="number" class="form-control" min="1" required="required" [(ngModel)]="row.quantite"
+                name="quantite" id="quantite" #quantite="ngModel">
+              <tc-form-description>
+                <app-form-field-validation-message [formField]="quantite"></app-form-field-validation-message>
+              </tc-form-description>
+            </tc-form-group>
+          </ng-container>
+        </ng-template>
+      </tc-table-col>
+      <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+        <ng-template #tableTDTemplate let-row="row">
+          <div class="actions" *ngIf="row.actevedModifQuantite">
+            <button *ngIf="(medicamentReceptionSrv.resourceName|editable)" (click)="active(row)" tc-button
+              [afterIcon]="'icofont-ui-edit'" [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+            <button *ngIf="medicamentReceptionSrv.resourceName|deletable" (click)="remove(row)" tc-button
+              [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+          </div>
+          <div class="actions" *ngIf="!row.actevedModifQuantite">
+            <button (click)="edit(row)" *ngIf="(medicamentReceptionSrv.resourceName|editable)" tc-button
+              [afterIcon]="'icofont-save'" [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
+            <button tc-button (click)="desactive(row)" tc-button [view]="error" beforeIcon="icofont-close"
+              [square]="true" [tcShape]="500" [size]="'sm'"></button>
+          </div>
+        </ng-template>
+      </tc-table-col>
+    </tc-table>
+    <app-empty-table-message *ngIf="!medicamentReceptions.length"></app-empty-table-message>
+    <app-medicamentreception-new [bonReception]="bonReception" (creation)="onCreate($event)">
+    </app-medicamentreception-new>
+  </div>
 </tc-card>
-<app-access-denied *ngIf="!(medicamentReceptionSrv.resourceName|listable)"></app-access-denied>

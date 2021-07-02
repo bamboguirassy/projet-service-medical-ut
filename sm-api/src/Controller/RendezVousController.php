@@ -30,6 +30,19 @@ class RendezVousController extends AbstractController
 
         return count($rendezVouses)?$rendezVouses:[];
     }
+     /**
+     * @Rest\Get(path="/derniers_rendezVous", name="derniers_rendezVous")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_RENDEZVOUS_INDEX")
+     */
+    public function findLastRendezVous(): array {
+        $em = $this->getDoctrine()->getManager();
+        $rendezVouses= $em->createQuery('select rv from App\Entity\Inputation rv ORDER BY rv.dateRendezVous DESC')
+                ->setMaxResults( 300 )
+                ->getResult();
+
+        return  $rendezVouses;
+    }
     
     /**
      * @Rest\Get(path="/{id}/consultation", name="rendez_vous_consultation")

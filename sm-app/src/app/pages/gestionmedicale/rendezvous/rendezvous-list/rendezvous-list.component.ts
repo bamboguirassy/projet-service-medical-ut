@@ -242,4 +242,11 @@ OnDestroy {
   createMesure(mesure: Mesure){
     this.selectedRV.mesure = mesure;
   }
+ /* findAll(){
+    this.rendezVousSrv.findLastRendezVous()
+    .subscribe((data: any) => {
+      this.items = data;
+      this.setLoaded();
+    }, err => this.rendezVousSrv.httpSrv.catchError(err));
+  }*/
 }

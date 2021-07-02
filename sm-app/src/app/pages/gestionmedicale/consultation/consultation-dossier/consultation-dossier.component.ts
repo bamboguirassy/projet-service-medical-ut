@@ -1,6 +1,6 @@
 import { ConsultationService } from './../consultation.service';
 import { Consultation } from './../consultation';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,6 +12,7 @@ export class ConsultationDossierComponent implements OnInit {
 
   secondViewBorder = 'success';
   @Input() consultations: Consultation[];
+  @Output() onDelete: EventEmitter<boolean> = new EventEmitter();
 
   constructor(public consultationSrv: ConsultationService) { }
 
@@ -32,6 +33,7 @@ export class ConsultationDossierComponent implements OnInit {
         this.consultationSrv.remove(entity)
           .subscribe(() => {
             Swal.close();
+            this.onDelete.emit(true);
             this.consultationSrv.toastr.success("Suppression reussie");
           });
         // For more information about handling dismissals please visit

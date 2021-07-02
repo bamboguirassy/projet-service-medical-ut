@@ -12,10 +12,22 @@
       <div class="row">
         <div class="col-12 col-md-6">
           <tc-form-group>
+            <tc-form-label>Médicament</tc-form-label>
+            <nz-select style="width: 100%" nzPlaceHolder="Sélectionner médicament" nzAllowClear nzShowSearch
+              [(ngModel)]="selectedMedicament" name="medicament" id="medicament" #medicament="ngModel">
+              <ng-container *ngFor="let medicament of medicaments">
+                <nz-option [nzValue]="medicament" [nzLabel]="medicament.nom">
+                </nz-option>
+              </ng-container>
+            </nz-select>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="medicament"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+          <tc-form-group>
             <tc-form-label>Quantité</tc-form-label>
-            <tc-input required="required" [(ngModel)]="entity.quantite" name="quantite" id="quantite"
-              #quantite="ngModel">
-            </tc-input>
+            <input type="number" min="1" class="form-control" required="required" [(ngModel)]="entity.quantite"
+              name="quantite" id="quantite" #quantite="ngModel">
             <tc-form-description>
               <app-form-field-validation-message [formField]="quantite"></app-form-field-validation-message>
             </tc-form-description>

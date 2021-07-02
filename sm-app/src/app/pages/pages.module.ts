@@ -1,3 +1,5 @@
+import { MedicamentReceptionNewComponent } from './gestionstock/medicamentreception/medicamentreception-new/medicamentreception-new.component';
+import { MedicamentReceptionListComponent } from './gestionstock/medicamentreception/medicamentreception-list/medicamentreception-list.component';
 import {MesureNewComponent} from "./gestionmedicale/mesure/mesure-new/mesure-new.component";
 import {MesureShowComponent} from "./gestionmedicale/mesure/mesure-show/mesure-show.component";
 import {MesureEditComponent} from "./gestionmedicale/mesure/mesure-edit/mesure-edit.component";
@@ -122,8 +124,13 @@ import {ConsultationJournaliereComponent} from "./dashboards/consultation-journa
 import {NgPipesModule} from "ng-pipes";
 import {ChartsModule} from "ng2-charts";
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+<<<<<<< HEAD
 import { ResetPasswordComponent } from './apps/sessions/reset-password/reset-password.component';
 import { ResetPasswordFormComponent } from "../layout/components/reset-password-form/reset-password-form.component";
+=======
+import { ImputationMensuelleComponent } from './dashboards/imputation-mensuelle/imputation-mensuelle.component';
+import { ImputationJournaliereComponent } from './dashboards/imputation-journaliere/imputation-journaliere.component';
+>>>>>>> 2d9657aaf6d13f3491daa525b42cda9068bd6450
 @NgModule({
   imports: [
     CommonModule,
@@ -254,8 +261,15 @@ import { ResetPasswordFormComponent } from "../layout/components/reset-password-
     SurveillancePathologiqueMensuelleComponent,
     ConsultationMensuelleComponent,
     ConsultationJournaliereComponent,
+<<<<<<< HEAD
     ResetPasswordComponent,
     ResetPasswordFormComponent,
+=======
+    MedicamentReceptionListComponent,
+    MedicamentReceptionNewComponent,
+    ImputationMensuelleComponent,
+    ImputationJournaliereComponent
+>>>>>>> 2d9657aaf6d13f3491daa525b42cda9068bd6450
   ],
   exports: [],
   entryComponents: []

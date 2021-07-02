@@ -22,5 +22,9 @@ export class ReposMedicalService extends BamboAbstractService {
   findByDossier(dossier: Dossier) {
     return this.httpSrv.get(this.routePrefix + dossier.id+'/dossier');
   }
+  findLastReposMedidicaux(){
+    return this.httpSrv.get(this.routePrefix + 'derniers_reposmedicaux/');
+  }
+
   
 }

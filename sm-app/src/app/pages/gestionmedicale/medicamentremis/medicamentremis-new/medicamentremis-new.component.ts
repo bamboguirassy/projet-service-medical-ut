@@ -5,6 +5,7 @@ import { MedicamentRemis } from '../medicamentremis';
 import { Router } from '@angular/router';
 import { Medicament } from 'src/app/pages/gestionstock/medicament/medicament';
 import { Consultation } from '../../consultation/consultation';
+import { Toast, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-medicamentremis-new',
@@ -24,10 +25,10 @@ export class MedicamentRemisNewComponent implements OnInit {
   @Input() consultation: Consultation;
 
   constructor(public medicamentRemiSrv: MedicamentRemisService,
-    public router: Router, public medicamentSrv: MedicamentService) {
+    public router: Router, public medicamentSrv: MedicamentService,public toastrSrv: ToastrService) {
     this.entity = new MedicamentRemis();
   }
-
+  
   ngOnInit(): void {
     this.findMedicaments();
   }
@@ -35,13 +36,20 @@ export class MedicamentRemisNewComponent implements OnInit {
   save() {
     this.entity.consultation = this.consultation.id;
     this.entity.medicament = this.selectedMedicament.id;
-    this.medicamentRemiSrv.create(this.entity)
+    if(this.convertNumber(this.entity.quantite)>=1){
+      this.medicamentRemiSrv.create(this.entity)
       .subscribe((data: any) => {
         this.creation.emit(data);
         this.findMedicaments();
         this.entity = new MedicamentRemis();
         this.selectedMedicament = null;
       }, error => this.medicamentRemiSrv.httpSrv.catchError(error));
+    }
+    else{
+         this.toastrSrv.error("La quantite minimale ne doit pas être inférieur à 1","Enregistrement non reussie");
+    }
+   
+   
   }
 
   // open modal window
@@ -59,6 +67,9 @@ export class MedicamentRemisNewComponent implements OnInit {
       .subscribe((data: any) => {
         this.medicaments = data;
       }, err => this.medicamentSrv.httpSrv.catchError(err));
+  }
+  convertNumber(value:string){
+    return parseInt(value);
   }
 
 }

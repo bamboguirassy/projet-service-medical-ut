@@ -1,3 +1,4 @@
+import { DossierService } from 'src/app/pages/gestionmedicale/dossier/dossier.service';
 import { PathologieService } from './../../../parametrage/pathologie/pathologie.service';
 import { Component, OnInit, OnDestroy, ViewChildren } from '@angular/core';
 import { BasePageComponent } from 'src/app/pages/base-page';
@@ -27,7 +28,8 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
     public consultationSrv: ConsultationService,
     public activatedRoute: ActivatedRoute,
     public location: Location,
-    public pathologieSrv: PathologieService) {
+    public pathologieSrv: PathologieService,
+    public dossierSrv: DossierService) {
     super(store, consultationSrv);
     this.pageData = {
       title: '',
@@ -52,6 +54,7 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
     this.findEntity(this.activatedRoute.snapshot.params.id);
     this.findPathologies();
     this.activated=true;
+    this.selectedTab = 'symptomes';
   }
 
   ngOnDestroy() {
@@ -61,8 +64,6 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
   handlePostLoad() {
     this.selectedPathologies=this.entity?.pathologies?.map(pathologie=>pathologie.id);
     this.title = 'Consultation n° ' + this.entity?.id;
-    this.selectedTab = 'symptomes';
-   
   }
 
   handlePostDelete() {
@@ -96,6 +97,10 @@ export class ConsultationShowComponent extends BasePageComponent<Consultation> i
     setTimeout(()=>{
       this.selectedTab= tabName;
     });
+  }
+
+  refresh() {
+    this.findEntity(this.activatedRoute.snapshot.params.id);
   }
 
 }

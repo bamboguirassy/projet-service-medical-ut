@@ -26,8 +26,20 @@ class ConsultationController extends AbstractController {
         $consultations = $this->getDoctrine()
                 ->getRepository(Consultation::class)
                 ->findAll();
+         return count($consultations) ? $consultations : [];
+    }
+    /**
+     * @Rest\Get(path="/derniers_consultations", name="derniers_consultations")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_CONSULTATION_INDEX")
+     */
+    public function findLastConsultations(): array {
+        $em = $this->getDoctrine()->getManager();
+        $consultations= $em->createQuery('select c from App\Entity\Consultation c  ORDER BY c.date DESC')
+                ->setMaxResults( 200 )
+                ->getResult();
 
-        return count($consultations) ? $consultations : [];
+        return $consultations;
     }
 
     /**

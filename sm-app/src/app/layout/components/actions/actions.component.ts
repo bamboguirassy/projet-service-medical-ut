@@ -19,6 +19,7 @@ export class ActionsComponent implements OnInit, OnDestroy {
   @Input() layout: string;
   currentUser: User;
   subscription: Subscription;
+  orientation='horizontal';
 
   constructor(
     private httpSv: HttpService,
@@ -42,9 +43,9 @@ export class ActionsComponent implements OnInit, OnDestroy {
   
 
   ngOnInit() {
-    this.getData('assets/data/navbar-notifications.json', 'notifications');
-    this.getData('assets/data/navbar-messages.json', 'messages');
-    this.getData('assets/data/navbar-files.json', 'files');
+    // this.getData('assets/data/navbar-notifications.json', 'notifications');
+    // this.getData('assets/data/navbar-messages.json', 'messages');
+    // this.getData('assets/data/navbar-files.json', 'files');
   }
 
   getData(url: string, dataName: string) {
@@ -62,15 +63,6 @@ export class ActionsComponent implements OnInit, OnDestroy {
     this.closeDropdown.emit(true);
   }
 
-  goTo(event: Event, link: string, layout: string = '') {
-    event.preventDefault();
-
-    this.onCloseDropdown();
-
-    setTimeout(() => {
-      this.router.navigate([layout ? layout : this.layout, link]);
-    });
-  }
 
   logout(event:Event) {
     event.preventDefault();

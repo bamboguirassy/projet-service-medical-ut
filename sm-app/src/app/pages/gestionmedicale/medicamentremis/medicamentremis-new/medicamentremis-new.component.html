@@ -45,6 +45,8 @@
               #quantite="ngModel">
             </tc-input>
             <tc-form-description>
+              <tc-form-label *ngIf="convertNumber(entity.quantite)<1"><span 
+              style="color: red;">la quantité minimale ne doit pas être inférieure à  1 </span></tc-form-label>
               <app-form-field-validation-message [formField]="quantite"></app-form-field-validation-message>
             </tc-form-description>
           </tc-form-group>

@@ -17,7 +17,7 @@ export class Dossier extends BamboAbstractObject {
     prenomTravailleur: string;
     nomTravailleur: string;
     genre: string;
-    dateCreation: string;
+    dateCreation: Date;
     userEmail: string;
     etat: boolean;
     structure: string;
@@ -35,4 +35,5 @@ export class Dossier extends BamboAbstractObject {
     antecedentChurirgicaux: string;
     antecedentFamiliaux: string;
     dateMariage: string;
+    emailPatient: string;
 }

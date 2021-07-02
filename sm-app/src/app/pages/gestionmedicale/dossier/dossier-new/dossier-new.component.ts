@@ -28,12 +28,12 @@ export class DossierNewComponent implements OnInit {
     { value: 'separee', label: 'Séparée' },
   ];
   genreVies = [
-    { value: 'tabac', label: 'Tabac' },
-    { value: 'alcool', label: 'Alcool' },
+    { value: 'Tabac', label: 'Tabac' },
+    { value: 'Alcool', label: 'Alcool' },
     { value: 'autres', label: 'Autres' },
   ];
   niveauInstructions = [
-    { value: 'non scolarise', label: 'Non Scolarisé' },
+    { value: 'Non scolarisé', label: 'Non Scolarisé' },
     { value: 'primaire', label: 'Primaire' },
     { value: 'secondaire', label: 'Secondaire' },
     { value: 'superieur', label: 'Supérieur' },
@@ -89,10 +89,14 @@ export class DossierNewComponent implements OnInit {
 
     }
     if (this.entity.typePatient == "ETUDIANT") {
+      this.entity.niveauInstruction = 'superieur';
       this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
     }
     if (this.entity.dateMariage) {
       this.entity.dateMariage = this.datePipe.transform(this.entity.dateMariage, 'yyyy-MM-dd');
+    }
+    if (this.entity.dateNaissance) {
+      this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
     }
     this.dossierSrv.create(this.entity)
       .subscribe((data: any) => {
@@ -140,13 +144,17 @@ export class DossierNewComponent implements OnInit {
     this.selectedEmploye = item;
     this.selected = true;
     this.selectedFamille = null;
+    this.entity.emailPatient = this.item?.employe?.email ?? this.item?.employe?.emailUniv;
+
   }
+
   createDossierFamille(item) {
     this.selectedFamille = item;
     this.selectedTypePatient = "FAMILLE";
     this.entity.typePatient = "FAMILLE";
     this.selected = true;
     this.selectedEmploye = null;
+    this.entity.emailPatient = '';
   }
 
 }

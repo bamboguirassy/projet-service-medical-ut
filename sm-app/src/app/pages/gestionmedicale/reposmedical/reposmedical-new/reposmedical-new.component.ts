@@ -58,7 +58,10 @@ export class ReposMedicalNewComponent implements OnInit {
 
   findDocteurs() {
     this.docteurSrv.findAll()
-      .subscribe((data: any) => { this.docteurs = data },
+      .subscribe((data: any) => { 
+        this.docteurs = data
+        this.selectedDocteur=this.docteurs[0];
+       },
         err => this.docteurSrv.httpSrv.catchError(err));
   }
 

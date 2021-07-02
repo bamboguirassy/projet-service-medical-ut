@@ -20,6 +20,45 @@
             </tc-form-description>
           </tc-form-group>
         </div>
+        <div class="col-12">
+          <tc-form-group>
+            <tc-form-label>Liste des médicaments receptionés</tc-form-label>
+            <nz-select style="width:100%" [nzSize]="large" nzPlaceHolder="Selectionner liste medicaments recus"
+              [(ngModel)]="selectedMedicaments" id="medocs" name="medocs" #medocs="ngModel" nzMode="multiple"
+              nzAllowClear nzShowSearch>
+              <ng-container *ngFor="let medicament of medicaments">
+                <nz-option [nzLabel]="medicament?.nom" [nzValue]="medicament">
+                </nz-option>
+              </ng-container>
+            </nz-select>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="date"></app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+        <div class="col-12">
+          <button [afterIcon]="'icofont-reply'" class="float-right" tc-button [view]="'accent'" [square]="true"
+            [tcShape]="500" (click)="afficheMedicaments()">Suivant</button>
+        </div>
+        <div class="col-12">
+          <table class="table table-reponsive table-bordered" *ngIf="suivant==true">
+            <tr>
+              <th>Médicament</th>
+              <th>Quantité</th>
+            </tr>
+            <tbody>
+              <tr *ngFor="let medicamentRecu of medicamentReceptions; let i=index;">
+                <td>
+                  <span class="form-control">{{medicamentRecu.medicamentSelectionne.nom}}</span>
+                </td>
+                <td>
+                  <input type="number" min="1" class="form-control" [(ngModel)]="medicamentRecu.quantite"
+                    #quantite="ngModel" name="quantite{{i}}" id="quantite{{i}}">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </form>
   </ng-template>
