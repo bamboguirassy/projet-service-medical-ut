@@ -23,5 +23,7 @@ export class RendezVousService extends BamboAbstractService {
   findByConsultation(consultation: Consultation) {
     return this.httpSrv.get(this.routePrefix + consultation.id + '/consultation');
   }
-  
+  findLastRendezVous(){
+    return this.httpSrv.get(this.routePrefix + 'derniers_rendezVous/');
+  }
 }

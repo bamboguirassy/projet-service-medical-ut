@@ -33,7 +33,7 @@ class ReposMedicalController extends AbstractController
     /**
      * @Rest\Get(path="/derniers_reposmedicaux", name="derniers_reposmedicaux")
      * @Rest\View(StatusCode = 200)
-     * @IsGranted("ROLE_CONSULTATION_INDEX")
+     * @IsGranted("ROLE_REPOSMEDICAL_INDEX")
      */
     public function findLastReposmedicaux(): array {
         $em = $this->getDoctrine()->getManager();
