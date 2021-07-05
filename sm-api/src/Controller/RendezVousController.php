@@ -31,14 +31,14 @@ class RendezVousController extends AbstractController
         return count($rendezVouses)?$rendezVouses:[];
     }
      /**
-     * @Rest\Get(path="/derniers_rendezVous", name="derniers_rendezVous")
+     * @Rest\Get(path="/latest/", name="latest_rendezVous")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_RENDEZVOUS_INDEX")
      */
-    public function findLastRendezVous(): array {
+    public function findLastestRendezVous(): array {
         $em = $this->getDoctrine()->getManager();
-        $rendezVouses= $em->createQuery('select rv from App\Entity\Inputation rv ORDER BY rv.dateRendezVous DESC')
-                ->setMaxResults( 300 )
+        $rendezVouses= $em->createQuery('select rv from App\Entity\RendezVous rv ORDER BY rv.dateRendezVous DESC')
+                ->setMaxResults(300)
                 ->getResult();
 
         return  $rendezVouses;

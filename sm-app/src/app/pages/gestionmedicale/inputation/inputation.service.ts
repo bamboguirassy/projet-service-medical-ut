@@ -24,8 +24,8 @@ export class InputationService extends BamboAbstractService {
   getMensualStatistic(annee: number) {
     return this.httpSrv.get(this.routePrefix + annee + '/statistique-mensuelle/');
   }
-  findLastInputations(){
-    return this.httpSrv.get(this.routePrefix + 'derniers_inputations/');
+  findLastestInputation(){
+    return this.httpSrv.get(this.routePrefix + 'latest/');
   }
   
 }

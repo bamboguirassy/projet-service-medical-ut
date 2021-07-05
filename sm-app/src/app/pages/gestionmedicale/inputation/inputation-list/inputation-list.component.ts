@@ -61,7 +61,7 @@ export class InputationListComponent extends BasePageComponent<Inputation> imple
       }, err => this.inputationSrv.httpSrv.catchError(err));
   }
   findAll(){
-    this.inputationSrv.findLastInputations()
+    this.inputationSrv.findLastestInputation()
     .subscribe((data: any) => {
       this.items = data;
       this.setLoaded();

@@ -30,14 +30,14 @@ class InputationController extends AbstractController {
         return count($inputations) ? $inputations : [];
     }
     /**
-     * @Rest\Get(path="/derniers_inputations", name="derniers_inputations")
+     * @Rest\Get(path="/latest/", name="derniers_inputations")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_INPUTATION_INDEX")
      */
-    public function findLastInputations(): array {
+    public function findLastestInputations(): array {
         $em = $this->getDoctrine()->getManager();
         $inputations= $em->createQuery('select i from App\Entity\Inputation i ORDER BY i.date DESC')
-                ->setMaxResults( 300 )
+                ->setMaxResults(300)
                 ->getResult();
 
         return  $inputations;

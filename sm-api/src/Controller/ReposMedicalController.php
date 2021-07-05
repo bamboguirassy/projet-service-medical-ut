@@ -31,14 +31,14 @@ class ReposMedicalController extends AbstractController
         return count($reposMedicals)?$reposMedicals:[];
     }
     /**
-     * @Rest\Get(path="/derniers_reposmedicaux", name="derniers_reposmedicaux")
+     * @Rest\Get(path="/latest/", name="lest_reposmedicaux")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_REPOSMEDICAL_INDEX")
      */
-    public function findLastReposmedicaux(): array {
+    public function findLastestReposmedicaux(): array {
         $em = $this->getDoctrine()->getManager();
         $reposMedicals= $em->createQuery('select rm from App\Entity\ReposMedical rm  ORDER BY rm.date DESC')
-                ->setMaxResults( 200 )
+                ->setMaxResults(200)
                 ->getResult();
 
         return  $reposMedicals;
