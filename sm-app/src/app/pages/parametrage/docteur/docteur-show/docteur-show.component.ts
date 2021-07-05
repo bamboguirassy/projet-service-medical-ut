@@ -48,7 +48,7 @@ export class DocteurShowComponent extends BasePageComponent<Docteur> implements 
   }
 
   handlePostLoad() {
-    this.title = 'Docteur - ' + this.entity?.id;
+    this.title = this.entity?.prenoms + ' ' + this.entity?.nom;
   }
 
   handlePostDelete() {
