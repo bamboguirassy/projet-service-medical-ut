@@ -1,108 +1,152 @@
-<div class="row justify-content-center" *ngIf="entity">
-  <div class="col col-12 col-xl-8">
-    <form
-      [formGroup]="userForm"
-      novalidate
-      class="mb-4"
-      (ngSubmit)="updateProfile(userForm)"
-    >
-      <tc-form-group>
-        <tc-form-label>Photo</tc-form-label>
-        <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
-
-        <div class="d-flex align-items-center">
-          <tc-avatar [src]="currentAvatar" [size]="100"></tc-avatar>
-          <button
-            tc-button
-            [type]="'button'"
-            [afterIcon]="'icofont-ui-user'"
-            [view]="'accent'"
-            [outline]="true"
-            (click)="fileInput.click()"
-          >
-            Changer photo
-          </button>
+<tc-card [tcGradient]="lightGradient">
+  <tc-card [view]="secondViewBorder" [outline]="true">
+    <div class="actions justify-content-between">
+      <button [outline]="true" type="button" (click)="location.back()" tc-button
+        beforeIcon="icofont-reply">Retour</button>
+    </div>
+  </tc-card>
+  <tc-card [outline]="true" [view]="secondViewBorder" [tcGradient]="secondGradient">
+    <div class="row justify-content-center" *ngIf="entity">
+      <tc-card title="Détails" class="col-12 col col-sm-6">
+        <div class="row">
+          <div class="col-12">
+            <form [formGroup]="userForm" novalidate class="mb-4" (ngSubmit)="updateProfile(userForm)">
+              <div class="row">
+                <div class="col-12">
+                  <tc-form-group>
+                    <tc-form-label>Photo</tc-form-label>
+                    <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
+                    <div class="d-flex align-items-center">
+                      <div class="row">
+                        <div class="col-12 col-lg-6 col-sm-6 col-md-6">
+                          <tc-avatar [src]="currentAvatar" [size]="100"></tc-avatar>
+                        </div>
+                        <div class="col-12 col-lg-6 col-sm-6 col-md-6">
+                          <button tc-button [type]="'button'" [afterIcon]="'icofont-ui-user'" [view]="'accent'"
+                            [outline]="true" (click)="fileInput.click()">
+                            Changer photo
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </tc-form-group>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <tc-form-group>
+                    <tc-form-label>Prénoms</tc-form-label>
+                    <tc-input [placeholder]="'Prénoms'" formControlName="prenom"></tc-input>
+                  </tc-form-group>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <tc-form-group>
+                    <tc-form-label>Nom de famille</tc-form-label>
+                    <tc-input [placeholder]="'Nom de famille'" formControlName="nom"></tc-input>
+                  </tc-form-group>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 col-lg-6 col-sm-6 col-md-6">
+                  <tc-form-group>
+                    <tc-form-label>Email</tc-form-label>
+                    <tc-input [placeholder]="'Adresse Email'" formControlName="email" [type]="'email'"></tc-input>
+                  </tc-form-group>
+                </div>
+                <div class="col-12 col-lg-6 col-sm-6 col-md-6">
+                  <tc-form-group>
+                    <tc-form-label>Téléphone</tc-form-label>
+                    <tc-input [placeholder]="'Numéro de téléphone'" formControlName="telephone" [type]="'tel'">
+                    </tc-input>
+                  </tc-form-group>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <button tc-button [view]="'success'" [disabled]="!changes || userForm.invalid">
+                    Enregistrer les modifications
+                  </button>
+                </div>
+                <div class="col text-right">
+                  <button tc-button [type]="'button'" [view]="'error'" [outline]="true">
+                    <span class="d-none d-sm-block">Supprimer le compte</span>
+                    <span class="d-sm-none">Supprimer</span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-      </tc-form-group>
-
-      <tc-form-group>
-        <tc-form-label>Prénoms</tc-form-label>
-        <tc-input [placeholder]="'Prénoms'" formControlName="prenom"></tc-input>
-      </tc-form-group>
-
-      <tc-form-group>
-        <tc-form-label>Nom de famille</tc-form-label>
-        <tc-input [placeholder]="'Nom de famille'" formControlName="nom"></tc-input>
-      </tc-form-group>
-
-      <div class="row">
-        <div class="col-12 col-sm-6">
-          <tc-form-group>
-            <tc-form-label>Email</tc-form-label>
-            <tc-input [placeholder]="'Adresse Email'" formControlName="email" [type]="'email'"></tc-input>
-          </tc-form-group>
+      </tc-card>
+      <tc-card title="Changement de mot de passe" class="col-12 col-sm-6">
+        <div class="row">
+          <div class="col-12">
+            <form nz-form [formGroup]="validateForm" ngNativeValidate (ngSubmit)="updatePassword()">
+              <div class="row">
+                <div class="col-12">
+                  <nz-form-item>
+                    <div class="col-12">
+                      <nz-form-label nzRequired nzFor="oldPassword">Mot de passe actuel
+                      </nz-form-label>
+                    </div>
+                    <div class="col-12">
+                      <nz-form-control nzErrorTip="Champ obligatoire">
+                        <input style="width: 100%; height: 40px;" type="password" nz-input
+                          [placeholder]="'Mot de passe actuel'" formControlName="oldPassword" />
+                      </nz-form-control>
+                    </div>
+                  </nz-form-item>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <nz-form-item>
+                    <div class="col-12">
+                      <nz-form-label nzFor="newPassword" nzRequired>Nouveau mot de passe
+                      </nz-form-label>
+                    </div>
+                    <div class="col-12">
+                      <nz-form-control nzErrorTip="Entrez minimum 8 caractére!">
+                        <input style="width: 100%; height: 40px;" nz-input [placeholder]="'Nouveau mot de passe'"
+                          type="password" id="newPassword" formControlName="newPassword" minlength="8" />
+                      </nz-form-control>
+                    </div>
+                  </nz-form-item>
+                </div>
+                <div class="col-12">
+                  <nz-form-item>
+                    <div class="col-12">
+                      <nz-form-label nzFor="confirmPassword" nzRequired>Confirmation nouveau mot
+                        de
+                        passe</nz-form-label>
+                    </div>
+                    <div class="col-12">
+                      <nz-form-control [nzErrorTip]="errorTpl">
+                        <input style="width: 100%; height: 40px;" nz-input
+                          [placeholder]="'Confirmation nouveau mot de passe'" type="password"
+                          formControlName="confirmPassword" id="confirmPassword" />
+                        <ng-template #errorTpl let-control>
+                          <ng-container *ngIf="control.hasError('required')">
+                            Veuillez confirmer votre mot de passe svp!
+                          </ng-container>
+                          <ng-container *ngIf="control.hasError('confirm')">
+                            Les deux mots de passe que vous avez saisit sont incohérents !
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </div>
+                  </nz-form-item>
+                </div>
+              </div>
+              <button [disabled]="validateForm.invalid" tc-button [view]="'default'" [outline]="true" [type]="'submit'">
+                Changer mot de passe
+              </button>
+            </form>
+          </div>
         </div>
-
-        <div class="col-12 col-sm-6">
-          <tc-form-group>
-            <tc-form-label>Téléphone</tc-form-label>
-            <tc-input [placeholder]="'Numéro de téléphone'" formControlName="telephone" [type]="'tel'"></tc-input>
-          </tc-form-group>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          <button tc-button [view]="'success'" [disabled]="!changes || userForm.invalid">
-            Enregistrer les modifications
-          </button>
-        </div>
-        <div class="col text-right">
-          <button
-            tc-button
-            [type]="'button'"
-            [view]="'error'"
-            [outline]="true"
-          >
-            <span class="d-none d-sm-block">Supprimer le compte</span>
-            <span class="d-sm-none">Supprimer</span>
-          </button>
-        </div>
-      </div>
-    </form>
-
-    <hr>
-
-    <h4>Changement de mot de passe</h4>
-
-    <form ngNativeValidate #passwordForm="ngForm" (ngSubmit)="updatePassword()" >
-      <div class="row">
-        <div class="col-12 col-sm-6">
-          <tc-form-group>
-            <tc-form-label>Mot de passe actuel</tc-form-label>
-            <tc-input name="currentPassword" type="password" [required]="true" [(ngModel)]="passwordModel.oldPassword" [placeholder]="'Mot de passe actuel'"></tc-input>
-          </tc-form-group>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-sm-6">
-          <tc-form-group>
-            <tc-form-label>Nouveau mot de passe</tc-form-label>
-            <tc-input name="newPassword" type="password" [required]="true" [(ngModel)]="passwordModel.newPassword" [placeholder]="'Nouveau mot de passe'"></tc-input>
-          </tc-form-group>
-        </div>
-
-        <div class="col-12 col-sm-6">
-          <tc-form-group>
-            <tc-form-label>Confirmation nouveau mot de passe</tc-form-label>
-            <tc-input name="confirmPassword" type="password" [required]="true" [(ngModel)]="passwordModel.confirmPassword" [placeholder]="'Confirmation nouveau mot de passe'"></tc-input>
-          </tc-form-group>
-        </div>
-      </div>
-
-      <button [disabled]="passwordForm.invalid || (passwordModel.newPassword!=passwordModel.confirmPassword)" tc-button [view]="'default'" [outline]="true" [type]="'submit'">
-        Changer mot de passe
-      </button>
-    </form>
-  </div>
-</div>
+      </tc-card>
+    </div>
+  </tc-card>
+</tc-card>

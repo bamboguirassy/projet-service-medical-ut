@@ -8,6 +8,8 @@ import { IAppState } from '../../../../interfaces/app-state';
 import { HttpService } from '../../../../services/http/http.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { IOption } from '../../../../ui/interfaces/option';
+import { Location } from '@angular/common';
+import { NzTreeHigherOrderServiceToken } from 'ng-zorro-antd';
 
 @Component({
   selector: 'page-edit-account',
@@ -22,17 +24,19 @@ export class PageEditAccountComponent extends BasePageComponent<User> implements
   defaultAvatar: string;
   changes: boolean;
   passwordModel = { oldPassword: null, newPassword: null, confirmPassword: null };
+  validateForm!: FormGroup;
 
   constructor(
     store: Store<IAppState>,
     private formBuilder: FormBuilder,
     public authSrv: BamboAuthService,
-    public userSrv: UserService
+    public userSrv: UserService,
+    public location: Location
   ) {
     super(store, userSrv);
 
     this.pageData = {
-      title: 'Mis à jour du profil',
+      title: 'Mis à jour du profil utilisateur',
       loaded: true,
       breadcrumbs: [
         {
@@ -73,7 +77,7 @@ export class PageEditAccountComponent extends BasePageComponent<User> implements
     this.changes = false;
     const subscription = authSrv.currentUserProvider.subscribe((data) => {
       this.entity = data;
-      if(this.entity.pathImage) {
+      if (this.entity.pathImage) {
         this.currentAvatar = this.entity.pathImage;
       }
       this.initUserForm(data);
@@ -83,8 +87,22 @@ export class PageEditAccountComponent extends BasePageComponent<User> implements
 
   ngOnInit() {
     super.ngOnInit();
+    this.validateForm = this.formBuilder.group({
+      oldPassword: [null, [Validators.required]],
+      newPassword: [null, [Validators.required]],
+      confirmPassword: [null, [Validators.required, this.confirmationValidator]]
+    });
+
   }
 
+  confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
+    if (!control.value) {
+      return { required: true };
+    } else if (control.value !== this.validateForm.controls.newPassword.value) {
+      return { confirm: true, error: true };
+    }
+    return {};
+  };
   ngOnDestroy() {
     super.ngOnDestroy();
   }
@@ -115,21 +133,30 @@ export class PageEditAccountComponent extends BasePageComponent<User> implements
     }
   }
 
+  initPassword(form: FormGroup) {
+    if (form.valid) {
+      this.passwordModel.oldPassword = form.value.oldPassword;
+      this.passwordModel.newPassword = form.value.newPassword;
+      this.passwordModel.confirmPassword = form.value.confirmPassword;
+    }
+  }
   updatePassword() {
+    this.initPassword(this.validateForm);
     this.userSrv.updatePassword(this.passwordModel)
-      .subscribe((resp) => {
+      .subscribe(() => {
         this.userSrv.toastr.success('Mot de passe mis à jour avec succès !');
         this.passwordModel = { oldPassword: null, newPassword: null, confirmPassword: null };
-        console.log('resp',resp);
-        
-      }, err => {this.userSrv.httpSrv.catchError(err); console.log(err);
+
+      }, err => {
+        this.userSrv.httpSrv.catchError(err);
       });
   }
 
   prepareUpdate() {
   }
-  
+
   handlePostUpdate() {
+    this.location.back();
     this.changes = false;
     this.userSrv.toastr.success("Profil mis à jour avec succès");
   }
