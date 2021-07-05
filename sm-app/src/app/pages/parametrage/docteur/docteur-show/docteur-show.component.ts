@@ -14,7 +14,7 @@ import { Location } from '@angular/common';
 })
 export class DocteurShowComponent extends BasePageComponent<Docteur> implements OnInit, OnDestroy {
   entity: Docteur;
-
+  currentAvatar: any;
   constructor(store: Store<IAppState>,
     public docteurSrv: DocteurService,
     private activatedRoute: ActivatedRoute,
@@ -48,11 +48,27 @@ export class DocteurShowComponent extends BasePageComponent<Docteur> implements 
   }
 
   handlePostLoad() {
-    this.title = 'Docteur - ' + this.entity?.id;
+    this.title = this.entity?.prenoms + ' ' + this.entity?.nom;
   }
 
   handlePostDelete() {
     this.location.back();
+  }
+  // upload new file
+  onFileChanged(inputValue: any) {
+    let file: File = inputValue.target.files[0];
+    let reader: FileReader = new FileReader();
+    reader.onloadend = () => {
+      this.currentAvatar = reader.result;
+      this.docteurSrv.uploadPhoto(this.entity, this.currentAvatar.split(',')[1], file.name.split('.')[0])
+        .subscribe(
+          (data: any) => {
+            this.entity = data;
+            this.docteurSrv.toastr.success('Photo mise à jour !')
+          },
+          error => this.docteurSrv.httpSrv.catchError(error))
+    };
+    reader.readAsDataURL(file);
   }
 
 }

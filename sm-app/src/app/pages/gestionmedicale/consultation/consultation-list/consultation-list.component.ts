@@ -44,7 +44,7 @@ export class ConsultationListComponent extends BasePageComponent<Consultation> i
   }
 
   handlePostDelete() {
-    this.findAll();
+   this.findAll();
   }
 
   handlePostLoad() {
@@ -60,5 +60,12 @@ export class ConsultationListComponent extends BasePageComponent<Consultation> i
         this.items = data;
       }, err => this.consultationSrv.httpSrv.catchError(err));
   }
-
+  findAll(){
+    this.consultationSrv.findLastConsultations()
+    .subscribe((data: any) => {
+      this.items = data;
+      this.setLoaded();
+    }, err => this.consultationSrv.httpSrv.catchError(err));
+  }
+ 
 }

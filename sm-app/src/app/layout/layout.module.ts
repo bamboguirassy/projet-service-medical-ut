@@ -49,7 +49,7 @@ import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
     RegisterFormComponent,
     NavbarSkeletonComponent,
     SettingsComponent,
-    DossierSearchComponent
+    DossierSearchComponent,
   ],
   exports: [
     LoginFormComponent,

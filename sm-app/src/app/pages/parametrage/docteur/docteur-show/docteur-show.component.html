@@ -1,5 +1,5 @@
-<tc-card *ngIf="docteurSrv.resourceName|showable" [tcGradient]="lightGradient">
-    <tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
+<!--tc-card *ngIf="docteurSrv.resourceName|showable" [tcGradient]="lightGradient">
+    <!--tc-card [view]="secondViewBorder" [outline]="true" [padding]="0.5">
         <button tc-button (click)="location.back()" [outline]="true" beforeIcon="icofont-reply">Retour</button>
         <button [outline]="true" (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
             beforeIcon="icofont-refresh">Rafraichir</button>
@@ -8,11 +8,13 @@
         <button *ngIf="docteurSrv.resourceName|editable"
             [routerLink]="['/'+orientation,docteurSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
             class="float-right ml-1" tc-button view="warning" beforeIcon="icofont-edit">Modifier</button>
-    </tc-card>
-    <div class="row">
+    </tc-card-->
+    <!--div class="row">
         <div class="col-12 col-md-6 col-lg-4">
             <div class="card">
-                <img style="width: 100%; height: 200px;" class="card-img-top" [src]="entity?.filepath" alt="">
+                <img img (click)="fileInput.click()"
+                style="width: 100%; height: 200px;" class="card-img-top" [src]="entity?.filepath ? entity?.filepath:'assets/img/default-profile-picture1.jpg'" alt="">
+                <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
                 <div class="card-body">
                     <h4 class="card-title">{{ entity?.prenoms }} {{ entity?.nom }}</h4>
                     <tc-card [view]="secondViewBorder" [tcGradient]="secondGradient">
@@ -33,11 +35,78 @@
                                 <th>File name</th>
                                 <td>{{ entity?.filename }}</td>
                             </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="col-12">
+                                        <button *ngIf="docteurSrv.resourceName|editable"
+                                            [routerLink]="['/'+orientation,docteurSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+                                            class="float-right ml-1" tc-button view="warning"
+                                            beforeIcon="icofont-edit"></button>
+                                        <button (click)="remove(entity)" *ngIf="docteurSrv.resourceName|deletable"
+                                            tc-button view="error" beforeIcon="icofont-trash"
+                                            class=" float-right ml-1"></button>
+                                        <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
+                                            beforeIcon="icofont-refresh"></button>
+                                        <button tc-button class="float-right ml-1" (click)="location.back()"
+                                            beforeIcon="icofont-reply"></button>
+                                    </div>
+                                </td>
+                            </tr>
                         </table>
                     </tc-card>
                 </div>
             </div>
         </div>
     </div>
+</tc-card>
+<app-access-denied *ngIf="!(docteurSrv.resourceName|showable)"></app-access-denied-->
+
+
+<tc-card  *ngIf="docteurSrv.resourceName|showable"  [tcGradient]="lightGradient">
+    
+        <div class="col-12 col-lg-6" style="align-items: center;">
+            <tc-card [outline]="true" [view]="secondViewBorder" [title]="title" [tcGradient]="secondGradient">
+                <div class="row">
+                    <div class="col-12">
+                         <img class="card-img-top" style="width: 100%; height: 300px;" (click)="fileInput.click()" [src]="entity?.filepath ? entity?.filepath:'assets/img/default-profile-picture1.jpg'" alt="Image caisse sociale">
+                         <input type="file" accept="image/*" (change)="onFileChanged($event)" #fileInput hidden>
+                   </div>
+                   <div class="col-12">
+                       <table class="table">
+                         <tr>
+                                <th>Prénoms</th>
+                                <td>{{ entity?.prenoms }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nom</th>
+                                <td>{{ entity?.nom }}</td>
+                            </tr>
+                            <tr>
+                                <th>Spécialité</th>
+                                <td>{{ entity?.specialite }}</td>
+                            </tr>
+                           <tr>
+                               <td colspan="2">
+                                   <div class="col-12">
+                                       <button *ngIf="docteurSrv.resourceName|editable"
+                                           [routerLink]="['/'+orientation,docteurSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
+                                           class="float-right ml-1" tc-button view="warning"
+                                           beforeIcon="icofont-edit"></button>
+                                       <button (click)="remove(entity)" *ngIf="docteurSrv.resourceName|deletable"
+                                           tc-button view="error" beforeIcon="icofont-trash"
+                                           class=" float-right ml-1"></button>
+                                       <button (click)="findEntity(entity.id)" class="float-right ml-1" tc-button view="accent"
+                                           beforeIcon="icofont-refresh"></button>
+                                       <button tc-button class="float-right ml-1" (click)="location.back()"
+                                           beforeIcon="icofont-reply"></button>
+                                   </div>
+                               </td>
+                           </tr>
+                       </table>
+                   </div>
+                </div>
+            </tc-card>
+        </div>
+    
 </tc-card>
 <app-access-denied *ngIf="!(docteurSrv.resourceName|showable)"></app-access-denied>

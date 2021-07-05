@@ -124,6 +124,8 @@ import {ConsultationJournaliereComponent} from "./dashboards/consultation-journa
 import {NgPipesModule} from "ng-pipes";
 import {ChartsModule} from "ng2-charts";
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { ResetPasswordComponent } from './apps/sessions/reset-password/reset-password.component';
+import { ResetPasswordFormComponent } from "../layout/components/reset-password-form/reset-password-form.component";
 import { ImputationMensuelleComponent } from './dashboards/imputation-mensuelle/imputation-mensuelle.component';
 import { ImputationJournaliereComponent } from './dashboards/imputation-journaliere/imputation-journaliere.component';
 @NgModule({
@@ -256,6 +258,8 @@ import { ImputationJournaliereComponent } from './dashboards/imputation-journali
     SurveillancePathologiqueMensuelleComponent,
     ConsultationMensuelleComponent,
     ConsultationJournaliereComponent,
+    ResetPasswordComponent,
+    ResetPasswordFormComponent,
     MedicamentReceptionListComponent,
     MedicamentReceptionNewComponent,
     ImputationMensuelleComponent,

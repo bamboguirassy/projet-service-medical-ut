@@ -25,5 +25,8 @@ export class ConsultationService extends BamboAbstractService {
   getMensualStatistic(annee: number) {
     return this.httpSrv.get(this.routePrefix + annee + '/statistique-mensuelle/');
   }
+  findLastConsultations(){
+    return this.httpSrv.get(this.routePrefix + 'derniers_consultations/');
+  }
 
 }
