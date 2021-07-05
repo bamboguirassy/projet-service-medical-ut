@@ -61,7 +61,7 @@ export class ConsultationListComponent extends BasePageComponent<Consultation> i
       }, err => this.consultationSrv.httpSrv.catchError(err));
   }
   findAll(){
-    this.consultationSrv.findLastConsultations()
+    this.consultationSrv.findLastestConsultation()
     .subscribe((data: any) => {
       this.items = data;
       this.setLoaded();

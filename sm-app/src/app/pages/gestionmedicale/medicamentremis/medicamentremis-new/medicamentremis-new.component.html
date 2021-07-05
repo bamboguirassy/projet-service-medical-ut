@@ -41,9 +41,9 @@
           <tc-form-group>
             <tc-form-label>Quantité <span *ngIf="selectedMedicament"
                 style="color: red;">{{selectedMedicament?.quantiteStock}} unité(s) disponible(s)</span></tc-form-label>
-            <tc-input type="number" required="required" [(ngModel)]="entity.quantite" name="quantite" id="quantite"
-              #quantite="ngModel">
-            </tc-input>
+            <input type="number" min="1" class="form-control" required="required" [(ngModel)]="entity.quantite" name="quantite" id="quantite"
+              #quantite="ngModel"/>
+            
             <tc-form-description>
               <tc-form-label *ngIf="convertNumber(entity.quantite)<1"><span 
               style="color: red;">la quantité minimale ne doit pas être inférieure à  1 </span></tc-form-label>
