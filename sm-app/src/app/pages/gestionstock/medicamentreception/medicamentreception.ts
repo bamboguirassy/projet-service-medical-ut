@@ -3,11 +3,12 @@ import { BonReception } from './../bonreception/bonreception';
 import { Medicament } from './../medicament/medicament';
 export class MedicamentReception extends BamboAbstractObject {
     quantite: number;
-    bonReception:BonReception;
-    medicament:Medicament;
+    bonReception: BonReception;
+    medicament: Medicament;
 
     //champs temporaire
-    medicamentSelectionne:Medicament;
-    actevedModifQuantite:boolean;
+    medicamentSelectionne: Medicament;
+    edit: boolean;
+    oldQuantite: number;
 
 }

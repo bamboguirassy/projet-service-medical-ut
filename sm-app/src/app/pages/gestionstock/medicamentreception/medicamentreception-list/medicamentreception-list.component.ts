@@ -16,7 +16,10 @@ export class MedicamentReceptionListComponent extends BasePageComponent<Medicame
   @Input() bonReception: BonReception;
   @Input() orientation = '';
   medicamentReceptions: MedicamentReception[] = [];
-  ancienQuantite: number;
+  ancienvaleurs: any;
+  ancienvaleur: any;
+  row1: any;
+  row2: any;
   constructor(store: Store<IAppState>,
     public medicamentReceptionSrv: MedicamentReceptionService) {
     super(store, medicamentReceptionSrv);
@@ -52,8 +55,8 @@ export class MedicamentReceptionListComponent extends BasePageComponent<Medicame
       .subscribe((data: any) => {
         this.medicamentReceptions = data;
         this.medicamentReceptions.forEach(medicamentReception => {
-          medicamentReception.actevedModifQuantite = true;
-          this.ancienQuantite = medicamentReception.quantite;
+          medicamentReception.edit = false;
+          this.ancienvaleur = medicamentReception;
         });
       },
         error => this.medicamentReceptionSrv.httpSrv.catchError(error));
@@ -62,17 +65,18 @@ export class MedicamentReceptionListComponent extends BasePageComponent<Medicame
   edit(medicamentReception) {
     this.medicamentReceptionSrv.update(medicamentReception).subscribe
       (() => {
-        medicamentReception.actevedModifQuantite = true;
+        medicamentReception.edit = false;
       }, err => this.medicamentReceptionSrv.httpSrv.catchError(err));
   }
 
-  active(row) {
-    row.actevedModifQuantite = false;
+  active(item: MedicamentReception) {
+    item.edit = true;
+    item.oldQuantite = item.quantite;
   }
 
-  desactive(row) {
-    row.actevedModifQuantite = true;
-    row.quantite = this.ancienQuantite;
+  desactive(item: MedicamentReception) {
+    item.edit = false;
+    item.quantite = item.oldQuantite;
   }
 
   onCreate(item: MedicamentReception) {

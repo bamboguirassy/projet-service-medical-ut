@@ -18,11 +18,11 @@
       </tc-table-col>
       <tc-table-col [columnTitle]="'Quantité'" [columnName]="'quantite'" [enableSorting]="true">
         <ng-template #tableTDTemplate let-row="row">
-          <ng-container *ngIf="row.actevedModifQuantite">
+          <ng-container *ngIf="!row.edit">
             <span class="nowrap" *ngIf="row.quantite">{{ row?.quantite }}</span>
             <tc-badge view="error" *ngIf="!row.quantite">Indéfinie</tc-badge>
           </ng-container>
-          <ng-container *ngIf="!row.actevedModifQuantite">
+          <ng-container *ngIf="row.edit">
             <tc-form-group>
               <input type="number" class="form-control" min="1" required="required" [(ngModel)]="row.quantite"
                 name="quantite" id="quantite" #quantite="ngModel">
@@ -35,13 +35,13 @@
       </tc-table-col>
       <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
         <ng-template #tableTDTemplate let-row="row">
-          <div class="actions" *ngIf="row.actevedModifQuantite">
+          <div class="actions" *ngIf="!row.edit">
             <button *ngIf="(medicamentReceptionSrv.resourceName|editable)" (click)="active(row)" tc-button
               [afterIcon]="'icofont-ui-edit'" [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
             <button *ngIf="medicamentReceptionSrv.resourceName|deletable" (click)="remove(row)" tc-button
               [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
           </div>
-          <div class="actions" *ngIf="!row.actevedModifQuantite">
+          <div class="actions" *ngIf="row.edit">
             <button (click)="edit(row)" *ngIf="(medicamentReceptionSrv.resourceName|editable)" tc-button
               [afterIcon]="'icofont-save'" [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
             <button tc-button (click)="desactive(row)" tc-button [view]="'error'" beforeIcon="icofont-close"
