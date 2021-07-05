@@ -44,7 +44,7 @@
           <div class="actions" *ngIf="!row.actevedModifQuantite">
             <button (click)="edit(row)" *ngIf="(medicamentReceptionSrv.resourceName|editable)" tc-button
               [afterIcon]="'icofont-save'" [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
-            <button tc-button (click)="desactive(row)" tc-button [view]="error" beforeIcon="icofont-close"
+            <button tc-button (click)="desactive(row)" tc-button [view]="'error'" beforeIcon="icofont-close"
               [square]="true" [tcShape]="500" [size]="'sm'"></button>
           </div>
         </ng-template>
