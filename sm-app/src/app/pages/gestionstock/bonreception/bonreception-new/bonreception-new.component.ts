@@ -56,6 +56,7 @@ export class BonReceptionNewComponent implements OnInit {
       .subscribe((data: any) => {
         this.closeModal();
         this.creation.emit(data);
+        this.selectedMedicaments = [];
         this.entity = new BonReception();
         this.suivant = false;
       }, error => this.bonReceptionSrv.httpSrv.catchError(error));

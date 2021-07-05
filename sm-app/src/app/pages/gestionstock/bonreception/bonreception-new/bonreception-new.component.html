@@ -22,8 +22,8 @@
         </div>
         <div class="col-12">
           <tc-form-group>
-            <tc-form-label>Liste des médicaments receptionés</tc-form-label>
-            <nz-select style="width:100%" [nzSize]="large" nzPlaceHolder="Selectionner liste medicaments recus"
+            <tc-form-label>Liste des médicaments réceptionés</tc-form-label>
+            <nz-select style="width:100%" [nzSize]="'large'" nzPlaceHolder="Selectionner liste medicaments recus"
               [(ngModel)]="selectedMedicaments" id="medocs" name="medocs" #medocs="ngModel" nzMode="multiple"
               nzAllowClear nzShowSearch>
               <ng-container *ngFor="let medicament of medicaments">
@@ -37,7 +37,7 @@
           </tc-form-group>
         </div>
         <div class="col-12">
-          <button [afterIcon]="'icofont-reply'" class="float-right" tc-button [view]="'accent'" [square]="true"
+          <button *ngIf="!suivant" [afterIcon]="'icofont-arrow-right'" class="float-right" tc-button [view]="'accent'" [square]="true"
             [tcShape]="500" (click)="afficheMedicaments()">Suivant</button>
         </div>
         <div class="col-12">

@@ -1,6 +1,6 @@
 <tc-card *ngIf="medicamentReceptionSrv.resourceName|listable" [tcGradient]="lightGradient">
   <div class="card-header mb-1">
-    <h4> Liste des medicament réceptionnés</h4>
+    <h4> Liste des médicaments réceptionnés</h4>
   </div>
   <div class="row">
     <div class="col-12">
@@ -44,7 +44,7 @@
           <div class="actions" *ngIf="!row.actevedModifQuantite">
             <button (click)="edit(row)" *ngIf="(medicamentReceptionSrv.resourceName|editable)" tc-button
               [afterIcon]="'icofont-save'" [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
-            <button tc-button (click)="desactive(row)" tc-button [view]="error" beforeIcon="icofont-close"
+            <button tc-button (click)="desactive(row)" tc-button [view]="'error'" beforeIcon="icofont-close"
               [square]="true" [tcShape]="500" [size]="'sm'"></button>
           </div>
         </ng-template>
