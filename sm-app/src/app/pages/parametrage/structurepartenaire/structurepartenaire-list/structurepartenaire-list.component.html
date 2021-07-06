@@ -34,7 +34,7 @@
       <ng-template #tableTDTemplate let-row="row">
         <div class="actions">
           <button *ngIf="structurePartenaireSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
-            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
+            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" (click)="setEditItem(row)"></button>
           <button *ngIf="structurePartenaireSrv.resourceName|deletable" (click)="remove(row)" tc-button
             [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
           <button *ngIf="structurePartenaireSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'"
@@ -45,5 +45,7 @@
   </tc-table>
   <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
   <app-structurepartenaire-new (creation)="onCreate($event)"></app-structurepartenaire-new>
+  <app-structurepartenaire-edit (update)="findAll()" *ngIf="selectedItem" [entity]="selectedItem" [visible]="isEditModalVisible"
+  (close)="closeEditModal()"></app-structurepartenaire-edit>
 </tc-card>
 <app-access-denied *ngIf="!(structurePartenaireSrv.resourceName|listable)"></app-access-denied>

@@ -1,9 +1,9 @@
+import { StructurePartenaire } from './../structurepartenaire';
 import { BasePageComponent } from '../../../base-page/base-page.component';
 import { IAppState } from './../../../../interfaces/app-state';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { StructurePartenaireService } from '../structurepartenaire.service';
-import { StructurePartenaire } from '../structurepartenaire';
 
 @Component({
   selector: 'app-structurepartenaire-list',
@@ -11,6 +11,10 @@ import { StructurePartenaire } from '../structurepartenaire';
   styleUrls: ['./structurepartenaire-list.component.scss']
 })
 export class StructurePartenaireListComponent extends BasePageComponent<StructurePartenaire> implements OnInit, OnDestroy {
+  isEditModalVisible = false;
+  selectedItem: StructurePartenaire;
+  uncommitItem: StructurePartenaire;
+
 
   constructor(store: Store<IAppState>,
     public structurePartenaireSrv: StructurePartenaireService) {
@@ -44,5 +48,26 @@ export class StructurePartenaireListComponent extends BasePageComponent<Structur
   }
 
   handlePostLoad() { }
+
+  setEditItem(item : StructurePartenaire) {
+    this.selectedItem = this.cloneItem(item);
+    this.isEditModalVisible = true;
+  }
+
+  cloneItem(item : StructurePartenaire): StructurePartenaire {
+    this.uncommitItem = item;
+    let structure = new StructurePartenaire();
+    structure.id = item.id;
+    structure.nom = item.nom;
+    structure.adresse = item.adresse;
+    structure.telephone = item.telephone;
+   
+    return structure;
+  }
+ 
+  closeEditModal() {
+    this.isEditModalVisible = false;
+  }
+
 
 }

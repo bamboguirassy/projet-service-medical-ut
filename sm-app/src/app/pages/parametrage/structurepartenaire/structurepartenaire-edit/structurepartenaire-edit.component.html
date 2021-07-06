@@ -1,16 +1,11 @@
-<tc-card *ngIf="entity && structurePartenaireSrv.resourceName|editable" [tcGradient]="lightGradient">
-    <form #form="ngForm" novalidate>
-        <tc-card [view]="secondViewBorder" [outline]="true">
-            <div class="actions justify-content-between">
-                <button [outline]="true" type="button" (click)="location.back()" tc-button
-                    beforeIcon="icofont-reply">Retour</button>
-                <button (click)="findEntity(entity.id)" afterIcon="icofont-refresh" tc-button type="button"
-                    view="accent" class="float-right">Rafraichir</button>
-            </div>
-        </tc-card>
-        <tc-card title="Détails" [outline]="true" [view]="secondViewBorder" [tcGradient]="secondGradient">
+<!-- Modal window -->
+<nz-modal nzWidth="50%" [(nzVisible)]="visible" [nzClosable]="false"
+    [nzTitle]="'Formulaire - Modification structure partenaire'" [nzContent]="modalBody" [nzFooter]="modalFooter"
+    (nzOnCancel)="closeModal()">
+    <ng-template #modalBody>
+        <form #form="ngForm" ngNativeValidate>
             <div class="row">
-                <div class="col-12 col-md-6">
+                <div class="col-12">
                     <tc-form-group>
                         <tc-form-label>Nom</tc-form-label>
                         <tc-input required="required" [(ngModel)]="entity.nom" name="nom" id="nom" #nom="ngModel">
@@ -20,11 +15,11 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6">
+                <div class="col-12">
                     <tc-form-group>
                         <tc-form-label>Téléphone</tc-form-label>
-                        <tc-input required="required" [(ngModel)]="entity.telephone" name="telephone" id="telephone"
-                            #telephone="ngModel">
+                        <tc-input type="tel" [prefixIcon]="'icofont-phone'" [(ngModel)]="entity.telephone"
+                            name="telephone" id="telephone" #telephone="ngModel">
                         </tc-input>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="telephone">
@@ -32,10 +27,10 @@
                         </tc-form-description>
                     </tc-form-group>
                 </div>
-                <div class="col-12 col-md-6">
+                <div class="col-12">
                     <tc-form-group>
                         <tc-form-label>Adresse</tc-form-label>
-                        <tc-textarea required="required" [(ngModel)]="entity.adresse" name="adresse" id="adresse" #adresse="ngModel">
+                        <tc-textarea [(ngModel)]="entity.adresse" name="adresse" id="adresse" #adresse="ngModel">
                         </tc-textarea>
                         <tc-form-description>
                             <app-form-field-validation-message [formField]="adresse">
@@ -44,17 +39,17 @@
                     </tc-form-group>
                 </div>
             </div>
-        </tc-card>
-        <tc-card [view]="secondViewBorder" [outline]="true">
-            <div class="actions">
-                <button [outline]="true" type="button" (click)="location.back()" tc-button view="error"
-                    beforeIcon="icofont-close">Annuler</button>
-                <button type="button" [disabled]="form.invalid" class="float-right" (click)="update()"
-                    beforeIcon="icofont-save" tc-button view="warning">
-                    Mettre à jour
-                </button>
-            </div>
-        </tc-card>
-    </form>
-</tc-card>
-<app-access-denied *ngIf="!(structurePartenaireSrv.resourceName|editable)"></app-access-denied>
+        </form>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <div class="actions justify-content-between">
+            <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+                (click)="closeModal()">Fermer</button>
+            <button (click)="updateItem()" [afterIcon]="'icofont-pencil'" tc-button [view]="'warning'">
+                Mettre à jour
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>
+<!-- end Modal window -->

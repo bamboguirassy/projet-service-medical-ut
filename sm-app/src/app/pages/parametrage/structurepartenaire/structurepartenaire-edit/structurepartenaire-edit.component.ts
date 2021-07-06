@@ -1,51 +1,32 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ViewChildren, Output, EventEmitter, ElementRef } from '@angular/core';
 import { StructurePartenaire } from '../structurepartenaire';
 import { StructurePartenaireService } from '../structurepartenaire.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { first } from 'rxjs/operators';
-import { Store } from '@ngrx/store';
-import { IAppState } from 'src/app/interfaces/app-state';
-import { BasePageComponent } from 'src/app/pages/base-page';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-structurepartenaire-edit',
   templateUrl: './structurepartenaire-edit.component.html',
   styleUrls: ['./structurepartenaire-edit.component.scss']
 })
-export class StructurePartenaireEditComponent extends BasePageComponent<StructurePartenaire> implements OnInit, OnDestroy {
+export class StructurePartenaireEditComponent implements OnInit{
+  @Input() visible = false;
+  @Input() entity: StructurePartenaire;
 
-  constructor(store: Store<IAppState>,
+  @ViewChild('modalBody', { static: true }) modalBody: ElementRef<any>;
+  @ViewChild('modalFooter', { static: true }) modalFooter: ElementRef<any>;
+  @ViewChildren('form') form;
+  @Output() update: EventEmitter<StructurePartenaire> = new EventEmitter();
+  @Output() close: EventEmitter<any> = new EventEmitter();
+
+  constructor(
     public structurePartenaireSrv: StructurePartenaireService,
-    public router: Router,
-    private activatedRoute: ActivatedRoute,
-    public location: Location) {
-    super(store, structurePartenaireSrv);
-    this.pageData = {
-      title: 'Modification - Structure partenaire',
-      breadcrumbs: [
-        {
-          title: 'Accueil',
-          route: ''
-        },
-        {
-          title: 'Liste des structures partenaires',
-          route: '/' + this.orientation + '/structurepartenaire'
-        },
-        {
-          title: 'Modification'
-        }
-      ]
-    };
+    ) {
   }
 
   ngOnInit(): void {
-    super.ngOnInit();
-    this.findEntity(this.activatedRoute.snapshot.params.id);
+   
   }
 
   ngOnDestroy() {
-    super.ngOnDestroy();
   }
 
   handlePostLoad() {
@@ -55,7 +36,19 @@ export class StructurePartenaireEditComponent extends BasePageComponent<Structur
   }
 
   handlePostUpdate() {
-    this.location.back();
+  }
+ 
+  updateItem() {
+    this.structurePartenaireSrv.update(this.entity)
+      .subscribe((data: any) => {
+        this.closeModal();
+        this.update.emit(data);
+      });
+  }
+
+  // close modal window
+  closeModal() {
+    this.close.emit();
   }
 
 }
