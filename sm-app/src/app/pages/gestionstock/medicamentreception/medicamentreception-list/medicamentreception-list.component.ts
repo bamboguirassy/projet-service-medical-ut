@@ -16,10 +16,7 @@ export class MedicamentReceptionListComponent extends BasePageComponent<Medicame
   @Input() bonReception: BonReception;
   @Input() orientation = '';
   medicamentReceptions: MedicamentReception[] = [];
-  ancienvaleurs: any;
-  ancienvaleur: any;
-  row1: any;
-  row2: any;
+
   constructor(store: Store<IAppState>,
     public medicamentReceptionSrv: MedicamentReceptionService) {
     super(store, medicamentReceptionSrv);
@@ -56,7 +53,6 @@ export class MedicamentReceptionListComponent extends BasePageComponent<Medicame
         this.medicamentReceptions = data;
         this.medicamentReceptions.forEach(medicamentReception => {
           medicamentReception.edit = false;
-          this.ancienvaleur = medicamentReception;
         });
       },
         error => this.medicamentReceptionSrv.httpSrv.catchError(error));
