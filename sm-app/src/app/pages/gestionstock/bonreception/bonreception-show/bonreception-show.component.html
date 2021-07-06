@@ -31,10 +31,8 @@
                                         <button (click)="remove(entity)" *ngIf="bonReceptionSrv.resourceName|deletable"
                                             tc-button view="error" beforeIcon="icofont-trash"
                                             class="float-right ml-1"></button>
-                                        <button *ngIf="bonReceptionSrv.resourceName|editable"
-                                            [routerLink]="['/'+orientation,bonReceptionSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
-                                            class="float-right ml-1" tc-button view="warning"
-                                            beforeIcon="icofont-edit"></button>
+                                        <button (click)="openModal()" *ngIf="bonReceptionSrv.resourceName|editable"
+                                        class="float-right ml-1"tc-button view="warning" beforeIcon="icofont-edit"></button>
                                     </div>
                                 </td>
                             </tr>
@@ -49,4 +47,39 @@
         </div>
     </div>
 </tc-card>
+
+<!-- Modal window -->
+<nz-modal nzWidth="50%" [(nzVisible)]="isModalVisible" [nzClosable]="false"
+    [nzTitle]="'Formulaire - Mis à jour bon de réception'" [nzContent]="modalBody" [nzFooter]="modalFooter"
+    (nzOnCancel)="closeModal()">
+    <ng-template #modalBody>
+        <form #form="ngForm" ngNativeValidate>
+            <div class="row">
+                <div class="col-12">
+                    <tc-form-group>
+                        <tc-form-label>Date bon reception</tc-form-label>
+                        <nz-date-picker [nzFormat]="'dd/MM/yyyy'" [(ngModel)]="entity.date" name="date" id="date"
+                            #date="ngModel">
+                        </nz-date-picker>
+                        <tc-form-description>
+                            <app-form-field-validation-message [formField]="date">
+                            </app-form-field-validation-message>
+                        </tc-form-description>
+                    </tc-form-group>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #modalFooter>
+        <div class="actions justify-content-between">
+            <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+                (click)="closeModal()">Fermer</button>
+            <button [disabled]="!entity.date" class="float-right" (click)="updateItem()" beforeIcon="icofont-save"
+                tc-button view="warning">
+                Enregistrer
+            </button>
+        </div>
+    </ng-template>
+</nz-modal>
+<!-- end Modal window -->
 <app-access-denied *ngIf="!(bonReceptionSrv.resourceName|showable)"></app-access-denied>

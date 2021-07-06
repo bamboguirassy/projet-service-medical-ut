@@ -28,7 +28,6 @@ import {MedicamentEditComponent} from "./gestionstock/medicament/medicament-edit
 import {BonReceptionNewComponent} from "./gestionstock/bonreception/bonreception-new/bonreception-new.component";
 import {BonReceptionShowComponent} from "./gestionstock/bonreception/bonreception-show/bonreception-show.component";
 import {BonReceptionListComponent} from "./gestionstock/bonreception/bonreception-list/bonreception-list.component";
-import {BonReceptionEditComponent} from "./gestionstock/bonreception/bonreception-edit/bonreception-edit.component";
 import {StructurePartenaireShowComponent} from "./parametrage/structurepartenaire/structurepartenaire-show/structurepartenaire-show.component";
 import {StructurePartenaireNewComponent} from "./parametrage/structurepartenaire/structurepartenaire-new/structurepartenaire-new.component";
 import {StructurePartenaireListComponent} from "./parametrage/structurepartenaire/structurepartenaire-list/structurepartenaire-list.component";
@@ -213,7 +212,6 @@ import { ImputationJournaliereComponent } from './dashboards/imputation-journali
     DocteurListComponent,
     DocteurNewComponent,
     DocteurShowComponent,
-    BonReceptionEditComponent,
     BonReceptionListComponent,
     BonReceptionNewComponent,
     BonReceptionShowComponent,

@@ -88,9 +88,10 @@ class BonReceptionController extends AbstractController
      */
     public function edit(Request $request, BonReception $bonReception): BonReception
     {
+        $requestData = Utils::getObjectFromRequest($request);
         $form = $this->createForm(BonReceptionType::class, $bonReception);
         $form->submit(Utils::serializeRequestContent($request));
-
+        $bonReception->setDate(new \DateTime($requestData->date));
         $this->getDoctrine()->getManager()->flush();
 
         return $bonReception;

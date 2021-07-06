@@ -35,8 +35,6 @@
     <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
       <ng-template #tableTDTemplate let-row="row">
         <div class="actions">
-          <button *ngIf="bonReceptionSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'"
-            [view]="'warning'" [square]="true" [tcShape]="500" [size]="'sm'" [routerLink]="[row.id,'edit']"></button>
           <button *ngIf="bonReceptionSrv.resourceName|deletable" (click)="remove(row)" tc-button
             [afterIcon]="'icofont-ui-delete'" [view]="'error'" [square]="true" [tcShape]="500" [size]="'sm'"></button>
           <button *ngIf="bonReceptionSrv.resourceName|showable" tc-button [afterIcon]="'icofont-eye-open'"
