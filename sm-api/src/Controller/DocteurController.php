@@ -123,9 +123,13 @@ class DocteurController extends AbstractController
         ->findByDocteur($docteur);
         $reposMedicaux=  $this->getDoctrine()->getRepository(ReposMedical::class)
         ->findByDocteur($docteur);
+        if (count($reposMedicaux) && count($consultations)) {
+            throw $this->createNotFoundException("Suppression impossible, le médecin est rattaché à des repos médicaux et des consultations");
+        }
         if (count($consultations)) {
             throw $this->createNotFoundException("Suppression impossible, le médecin est rattaché à des consultations");
-        } elseif (count($reposMedicaux)) {
+        } 
+        if (count($reposMedicaux)) {
             throw $this->createNotFoundException("Suppression impossible, le médecin est rattaché à des repos médicaux");
         }
         $entityManager = $this->getDoctrine()->getManager();
