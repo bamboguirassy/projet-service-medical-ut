@@ -23,7 +23,7 @@
         <div class="col-12">
           <tc-form-group>
             <tc-form-label>Liste des médicaments réceptionés</tc-form-label>
-            <nz-select style="width:100%" [nzSize]="'large'" nzPlaceHolder="Selectionner liste medicaments recus"
+            <nz-select  [nzDisabled]="suivant" style="width:100%" [nzSize]="'large'" nzPlaceHolder="Selectionner liste medicaments recus"
               [(ngModel)]="selectedMedicaments" id="medocs" name="medocs" #medocs="ngModel" nzMode="multiple"
               nzAllowClear nzShowSearch>
               <ng-container *ngFor="let medicament of medicaments">
