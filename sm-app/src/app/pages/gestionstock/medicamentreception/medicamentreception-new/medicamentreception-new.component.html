@@ -16,7 +16,7 @@
             <nz-select style="width: 100%" nzPlaceHolder="Sélectionner médicament" nzAllowClear nzShowSearch
               [(ngModel)]="selectedMedicament" name="medicament" id="medicament" #medicament="ngModel">
               <ng-container *ngFor="let medicament of medicaments">
-                <nz-option *ngIf="(medicamentReceptions | map:'medicament.id').indexOf(medicament.id)==-1" [nzValue]="medicament" [nzLabel]="medicament.nom">
+                <nz-option *ngIf="((medicamentReceptions | map:'medicament.id')|contains:(medicament.id))==false" [nzValue]="medicament" [nzLabel]="medicament.nom">
                 </nz-option>
               </ng-container>
             </nz-select>
