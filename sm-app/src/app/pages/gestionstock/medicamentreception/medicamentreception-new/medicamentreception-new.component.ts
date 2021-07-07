@@ -1,10 +1,10 @@
+import { BonReception } from './../../bonreception/bonreception';
 import { Medicament } from 'src/app/pages/gestionstock/medicament/medicament';
 import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewChildren, Input } from '@angular/core';
 import { MedicamentReceptionService } from '../medicamentreception.service';
 import { MedicamentReception } from '../medicamentreception';
 import { Router } from '@angular/router';
 import { MedicamentService } from '../../medicament/medicament.service';
-import { BonReception } from '../../bonreception/bonreception';
 
 @Component({
   selector: 'app-medicamentreception-new',
@@ -20,6 +20,8 @@ export class MedicamentReceptionNewComponent implements OnInit {
   @Output() creation: EventEmitter<MedicamentReception> = new EventEmitter();
   isModalVisible = false;
   medicaments: Medicament[] = [];
+  medicamentReceptions: MedicamentReception[] = [];
+  medicamentReceptionIds: number[] = [];
   selectedMedicament: Medicament;
   @Input() bonReception: BonReception;
 
@@ -32,6 +34,8 @@ export class MedicamentReceptionNewComponent implements OnInit {
 
   ngOnInit(): void {
     this.findMedicaments();
+    this.findMedicamentReceptions();
+
   }
   handlePostLoad() {
   }
@@ -39,22 +43,30 @@ export class MedicamentReceptionNewComponent implements OnInit {
   save() {
     this.entity.bonReception = this.bonReception.id;
     this.entity.medicamentSelectionne = this.selectedMedicament;
-    this.entity.medicament=this.entity.medicamentSelectionne.id
+    this.entity.medicament = this.entity.medicamentSelectionne.id
     this.medicamentReceptionSrv.create(this.entity)
       .subscribe((data: any) => {
         this.closeModal();
         this.creation.emit(data);
         this.entity = new MedicamentReception();
-        this.selectedMedicament=null;
+        this.selectedMedicament = null;
       }, error => this.medicamentReceptionSrv.httpSrv.catchError(error));
   }
 
+  findMedicamentReceptions() {
+    this.medicamentReceptionSrv.findByBonReception(this.bonReception)
+      .subscribe((data: any) => {
+        this.medicamentReceptions = data
+      }, error => this.medicamentSrv.httpSrv.catchError(error));
+  }
+  
   findMedicaments() {
     this.medicamentSrv.findAll()
       .subscribe((data: any) => {
         this.medicaments = data;
       }, error => this.medicamentSrv.httpSrv.catchError(error));
   }
+
   // open modal window
   openModal() {
     this.isModalVisible = true;

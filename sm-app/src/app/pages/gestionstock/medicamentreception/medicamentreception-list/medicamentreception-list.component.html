@@ -4,7 +4,6 @@
   </div>
   <div class="row">
     <div class="col-12">
-      <app-medicamentreception-new (creation)="onCreate($event)"></app-medicamentreception-new>
       <button class="float-right mb-2" tc-button afterIcon="icofont-refresh"
         (click)="findByBonReception()">Rafraichir</button>
     </div>
@@ -51,7 +50,7 @@
       </tc-table-col>
     </tc-table>
     <app-empty-table-message *ngIf="!medicamentReceptions.length"></app-empty-table-message>
-    <app-medicamentreception-new [bonReception]="bonReception" (creation)="onCreate($event)">
+    <app-medicamentreception-new *ngIf="bonReception" [bonReception]="bonReception" (creation)="onCreate($event)">
     </app-medicamentreception-new>
   </div>
 </tc-card>

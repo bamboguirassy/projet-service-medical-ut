@@ -5,18 +5,18 @@
 <app-access-denied *ngIf="!(medicamentReceptionSrv.resourceName|creable)"></app-access-denied>
 
 <!-- Modal window -->
-<nz-modal nzWidth="80%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
+<nz-modal nzWidth="50%" [(nzVisible)]="isModalVisible" [nzClosable]="false" [nzTitle]="'Formulaire - Nouveau'"
   [nzContent]="modalBody" [nzFooter]="modalFooter" (nzOnCancel)="closeModal()">
   <ng-template #modalBody>
     <form #form="ngForm" ngNativeValidate>
       <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12">
           <tc-form-group>
             <tc-form-label>Médicament</tc-form-label>
             <nz-select style="width: 100%" nzPlaceHolder="Sélectionner médicament" nzAllowClear nzShowSearch
               [(ngModel)]="selectedMedicament" name="medicament" id="medicament" #medicament="ngModel">
               <ng-container *ngFor="let medicament of medicaments">
-                <nz-option [nzValue]="medicament" [nzLabel]="medicament.nom">
+                <nz-option *ngIf="(medicamentReceptions | map:'medicament.id').indexOf(medicament.id)==-1" [nzValue]="medicament" [nzLabel]="medicament.nom">
                 </nz-option>
               </ng-container>
             </nz-select>
