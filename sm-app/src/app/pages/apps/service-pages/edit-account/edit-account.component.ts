@@ -87,12 +87,7 @@ export class PageEditAccountComponent extends BasePageComponent<User> implements
 
   ngOnInit() {
     super.ngOnInit();
-    this.validateForm = this.formBuilder.group({
-      oldPassword: [null, [Validators.required]],
-      newPassword: [null, [Validators.required]],
-      confirmPassword: [null, [Validators.required, this.confirmationValidator]]
-    });
-
+    this.initPassword();
   }
 
   confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
@@ -133,20 +128,29 @@ export class PageEditAccountComponent extends BasePageComponent<User> implements
     }
   }
 
-  initPassword(form: FormGroup) {
+  initPassword() {
+    this.validateForm = this.formBuilder.group({
+      oldPassword: [null, [Validators.required]],
+      newPassword: [null, [Validators.required]],
+      confirmPassword: [null, [Validators.required, this.confirmationValidator]]
+    });
+  }
+
+  passwordValue(form: FormGroup) {
     if (form.valid) {
       this.passwordModel.oldPassword = form.value.oldPassword;
       this.passwordModel.newPassword = form.value.newPassword;
       this.passwordModel.confirmPassword = form.value.confirmPassword;
     }
   }
+
+
   updatePassword() {
-    this.initPassword(this.validateForm);
+    this.passwordValue(this.validateForm);
     this.userSrv.updatePassword(this.passwordModel)
       .subscribe(() => {
+        this.initPassword();
         this.userSrv.toastr.success('Mot de passe mis à jour avec succès !');
-        this.passwordModel = { oldPassword: null, newPassword: null, confirmPassword: null };
-
       }, err => {
         this.userSrv.httpSrv.catchError(err);
       });
