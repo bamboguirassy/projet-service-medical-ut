@@ -18,6 +18,7 @@ export class BonReceptionNewComponent implements OnInit {
   selectedMedicaments: Medicament[] = [];
   medicaments: Medicament[] = [];
   suivant = false;
+  entityId = Number;
   medicamentReceptions: MedicamentReception[] = [];
 
   @ViewChild('modalBody', { static: true }) modalBody: ElementRef<any>;
@@ -46,6 +47,8 @@ export class BonReceptionNewComponent implements OnInit {
   }
   handlePostLoad() {
     this.entity.medocs = this.selectedMedicaments;
+    console.log(this.entity.id);
+
   }
   save() {
     this.entity.date = this.datePipe.transform(this.entity.date, 'yyyy-MM-dd');
@@ -53,13 +56,14 @@ export class BonReceptionNewComponent implements OnInit {
       medicamentReception.medicament = medicamentReception.medicamentSelectionne.id;
     });
     this.bonReceptionSrv.save(this.entity, this.medicamentReceptions)
-      .subscribe((data: any) => {
-        this.closeModal();
+      .subscribe((data: any) => {        
         this.creation.emit(data);
         this.selectedMedicaments = [];
         this.entity = new BonReception();
         this.suivant = false;
+        this.bonReceptionSrv.httpSrv.router.navigate(['/horizontal', this.bonReceptionSrv.getRoutePrefixWithoutSlash(), data.id]);
       }, error => this.bonReceptionSrv.httpSrv.catchError(error));
+
   }
 
   // open modal window
