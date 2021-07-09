@@ -38,12 +38,13 @@ class DossierController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_DOSSIER_CREATE")
      */
-    public function create(Request $request): Dossier    {
+    public function create(Request $request): Dossier
+    {
         $dossier = new Dossier();
         $form = $this->createForm(DossierType::class, $dossier);
         $form->submit(Utils::serializeRequestContent($request));
         $requestData = Utils::getObjectFromRequest($request);
-        if(!isset($requestData->dateNaissance)) {
+        if (!isset($requestData->dateNaissance)) {
             throw $this->createNotFoundException("La date de naissance est obligatoire !");
         }
         $dossier->setDateNaissance(new \DateTime($requestData->dateNaissance));
@@ -65,7 +66,8 @@ class DossierController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_DOSSIER_SHOW")
      */
-    public function show(Dossier $dossier): Dossier    {
+    public function show(Dossier $dossier): Dossier
+    {
         return $dossier;
     }
 
@@ -75,7 +77,8 @@ class DossierController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_DOSSIER_EDIT")
      */
-    public function edit(Request $request, Dossier $dossier): Dossier    {
+    public function edit(Request $request, Dossier $dossier): Dossier
+    {
         $form = $this->createForm(DossierType::class, $dossier);
         $form->submit(Utils::serializeRequestContent($request));
 
@@ -89,7 +92,8 @@ class DossierController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_DOSSIER_CLONE")
      */
-    public function cloner(Request $request, Dossier $dossier):  Dossier {
+    public function cloner(Request $request, Dossier $dossier):  Dossier
+    {
         $em=$this->getDoctrine()->getManager();
         $dossierNew=new Dossier();
         $form = $this->createForm(DossierType::class, $dossierNew);
@@ -106,7 +110,8 @@ class DossierController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_DOSSIER_EDIT")
      */
-    public function delete(Dossier $dossier): Dossier    {
+    public function delete(Dossier $dossier): Dossier
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($dossier);
         $entityManager->flush();
@@ -119,7 +124,8 @@ class DossierController extends AbstractController
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_DOSSIER_DELETE")
      */
-    public function deleteMultiple(Request $request): array {
+    public function deleteMultiple(Request $request): array
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $dossiers = Utils::getObjectFromRequest($request);
         if (!count($dossiers)) {
@@ -139,20 +145,21 @@ class DossierController extends AbstractController
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_DOSSIER_INDEX")
      */
-    public function searchDossier(Request $request) {
+    public function searchDossier(Request $request)
+    {
         $em = $this->getDoctrine()->getManager();
         $redData = Utils::serializeRequestContent($request);
-        //$searchTerm = $redData['searchTerm'];       
-       $dossiers = [];
-        if(isset($redData['searchTerm'])){
-            $names = explode(' ',$redData['searchTerm']);             
-            if(count($names)>1){
+        //$searchTerm = $redData['searchTerm'];
+        $dossiers = [];
+        if (isset($redData['searchTerm'])) {
+            $names = explode(' ', $redData['searchTerm']);
+            if (count($names)>1) {
                 $dossiers = $em->createQuery('SELECT d
                     FROM App\Entity\Dossier d
                     WHERE CONCAT(d.prenoms,\' \',d.nom) LIKE :term')
                 ->setParameter('term', '%'.$redData['searchTerm'].'%')
                 ->getResult();
-            }else{
+            } else {
                 $dossiers = $em->createQuery('SELECT d
                     FROM App\Entity\Dossier d
                     WHERE d.prenoms LIKE :term OR
@@ -166,40 +173,40 @@ class DossierController extends AbstractController
         
         return $dossiers;
     }
-     /**
-     * @Rest\Post(path="/send-email", name="dossier_send-email")
-     * @Rest\View(StatusCode=200)
-     * @param Request $request
-     * @param Swift_Mailer $mailer
-     * @return array
-     * @throws Exception
-     */
+
+
+    /**
+    * @Rest\Post(path="/send-email", name="dossier_send_email")
+    * @Rest\View(StatusCode=200)
+    * @param Request $request
+    * @param Swift_Mailer $mailer
+    * @return array
+    * @throws Exception
+    */
     public function sendEmail(Request $request, Swift_Mailer $mailer): array
     {
-
         $dossierIds = Utils::serializeRequestContent($request)['id'];
         $entityManager = $this->getDoctrine()->getManager();
         $object = Utils::serializeRequestContent($request)['object'];
         $messaye_body = Utils::serializeRequestContent($request)['message'];
-        $result = []; 
+        $result = [];
+        $echecSendEmails = [];
         $dossiersSendingEmail=$entityManager->createQuery('
                 SELECT e
                 FROM App\Entity\Dossier e
                 WHERE e.id IN (:dossierIds)
-            ')->setParameter('dossierIds', $dossierIds )
+            ')->setParameter('dossierIds', $dossierIds)
                 ->getResult();
         foreach ($dossiersSendingEmail as $dossierSendingEmail) {
-            if($dossierSendingEmail->getUserEmail()==NULL) {
-                throw $this->createNotFoundException("L'employé {$dossierSendingEmail->getPrenoms()} {$dossierSendingEmail->getNom()} ne dispose pas d'email dans le système.");
+            if ($dossierSendingEmail->getEmailPatient()==null) {
+                array_push($echecSendEmails, $dossierSendingEmail);
             }
             $message = (new Swift_Message($object))
-                ->setFrom(Utils::$sender,Utils::$senderName)
+                ->setFrom(Utils::$sender, Utils::$senderName)
                 ->setTo($dossierSendingEmail->getEmailPatient())
                 ->setBody($messaye_body, 'text/html');
-                array_push($result,  [$dossierSendingEmail->getId() => $mailer->send($message)]);
+            array_push($result, [$dossierSendingEmail->getId() => $mailer->send($message)]);
         }
-          
-        return $result;
+        return [$result,$echecSendEmails];
     }
-    
 }

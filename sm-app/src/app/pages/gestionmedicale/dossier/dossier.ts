@@ -36,4 +36,8 @@ export class Dossier extends BamboAbstractObject {
     antecedentFamiliaux: string;
     dateMariage: string;
     emailPatient: string;
+
+    
+    // Champ temporaire
+    selected: boolean;
 }

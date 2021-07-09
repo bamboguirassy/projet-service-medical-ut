@@ -1,13 +1,27 @@
 <tc-card *ngIf="dossierSrv.resourceName|listable" [tcGradient]="lightGradient">
+
   <tc-card [view]="secondViewBorder" [outline]="true">
     <div class="row">
       <div class="col-12">
+        <button tc-button (click)="toogleSendEmailModal(modalBody, 'Edition d\'email', modalFooter, { width: '100%' })"
+          afterIcon="icofont-send-mail"> Envoyer Email</button>
         <button class="float-right" tc-button afterIcon="icofont-refresh" (click)="findAll()">Rafraichir</button>
       </div>
     </div>
   </tc-card>
+  <div class="d-flex vertical-align-top justify-content-between">
+    <h3 class="mb-1">Liste des dossiers</h3>
+    <label class="mb-1 h4" nz-checkbox [nzIndeterminate]="isPartialSelection && !isAllSelected "
+      [(ngModel)]="isAllSelected" (ngModelChange)="changeAllSelectionStateLink()">Tous
+      sélectionner</label>
+  </div>
   <tc-table [itemsPerPage]="10" [rows]="items" [hovered]="true" [pagination]="true" [search]="true">
-     <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
+    <tc-table-col [columnTitle]="''" [columnName]="''">
+      <ng-template #tableTDTemplate let-row="row">
+        <label nz-checkbox (ngModelChange)="onItemsSelectionStateChange()" [(ngModel)]="row.selected"></label>
+      </ng-template>
+    </tc-table-col>
+    <tc-table-col [columnTitle]="'Actions'" [columnName]="'actions'">
       <ng-template #tableTDTemplate let-row="row">
         <div class="actions">
           <button *ngIf="dossierSrv.resourceName|editable" tc-button [afterIcon]="'icofont-ui-edit'" [view]="'warning'"
@@ -114,7 +128,89 @@
       </ng-template>
     </tc-table-col>
   </tc-table>
+  <!-- Modal window -->
+  <nz-modal nzWidth="80%" [(nzVisible)]="visible" [nzClosable]="false"
+    [nzTitle]="'Envoie echoué pour ces patients, ils nont pas dadresse mail'" [nzContent]="corps" [nzFooter]="pied"
+    (nzOnCancel)="closeModal()">
+    <ng-template #corps>
+      <div class="row">
+        <div class="col-12">
+          <tc-table [itemsPerPage]="10" [rows]="echecSendEmails" [hovered]="true" [pagination]="true">
+            <tc-table-col [columnTitle]="'Prénoms'" [columnName]="'prenoms'" [enableSorting]="true">
+              <ng-template #tableTDTemplate let-value>
+                <span class="nowrap">{{ value }}</span>
+              </ng-template>
+            </tc-table-col>
+            <tc-table-col [columnTitle]="'Nom'" [columnName]="'nom'" [enableSorting]="true">
+              <ng-template #tableTDTemplate let-value>
+                <span class="nowrap">{{ value }}</span>
+              </ng-template>
+            </tc-table-col>
+            <tc-table-col [columnTitle]="'Matricule'" [columnName]="'matricule'" [enableSorting]="true">
+              <ng-template #tableTDTemplate let-value>
+                <span class="nowrap">{{ value }}</span>
+              </ng-template>
+            </tc-table-col>
+            <tc-table-col [columnTitle]="'Lien parenté'" [columnName]="'lienParente'" [enableSorting]="true">
+              <ng-template #tableTDTemplate let-value>
+                <span class="nowrap" *ngIf="value">{{ value }}</span>
+                <tc-badge [outline]="true" view="error" *ngIf="!value">Indéfinie</tc-badge>
+              </ng-template>
+            </tc-table-col>
+            <tc-table-col [columnTitle]="'Prénom travailleur'" [columnName]="'prenomTravailleur'"
+              [enableSorting]="true">
+              <ng-template #tableTDTemplate let-value>
+                <span class="nowrap" *ngIf="value">{{ value }}</span>
+                <tc-badge [outline]="true" view="error" *ngIf="!value">Indéfinie</tc-badge>
+              </ng-template>
+            </tc-table-col>
+            <tc-table-col [columnTitle]="'Nom travailleur'" [columnName]="'nomTravailleur'" [enableSorting]="true">
+              <ng-template #tableTDTemplate let-value>
+                <span class="nowrap" *ngIf="value">{{ value }}</span>
+                <tc-badge [outline]="true" view="error" *ngIf="!value">Indéfinie</tc-badge>
+              </ng-template>
+            </tc-table-col>
+            <tc-table-col [columnTitle]="'Téléphone'" [columnName]="'telephone'" [enableSorting]="true">
+              <ng-template #tableTDTemplate let-value>
+                <span class="nowrap">{{ value }}</span>
+              </ng-template>
+            </tc-table-col>
+          </tc-table>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template #pied>
+      <div class="actions justify-content-between">
+        <button beforeIcon="icofont-close" class="pull-right" tc-button [type]="'button'" [view]="'error'"
+          (click)="visible=false">Fermer</button>
+      </div>
+    </ng-template>
+  </nz-modal>
+  <!-- end Modal window -->
+
   <app-empty-table-message *ngIf="!items.length"></app-empty-table-message>
   <app-dossier-new (creation)="onCreate()"></app-dossier-new>
 </tc-card>
+<ng-container>
+  <ng-template #modalHeader>
+    <h2 class="title">Modal title</h2>
+    <div class="actions">
+      <tc-badge [view]="'warning'">New</tc-badge>
+    </div>
+  </ng-template>
+  <ng-template #modalBody>
+    <div>
+      <label class="mb-1" for="objet">Objet</label>
+      <tc-input id="objet" class="mb-4" [placeholder]="'Objet'" [(ngModel)]="emailEditionModel.object">
+      </tc-input>
+      <ckeditor [config]="config" [(ngModel)]="emailEditionModel.body" [editor]="emailEditor"></ckeditor>
+    </div>
+  </ng-template>
+  <ng-template #modalFooter>
+    <div class="actions justify-content-between">
+      <button tc-button [view]="'error'" (click)="closeModal()">Fermer</button>
+      <button tc-button [view]="'success'" (click)="sendEmaillToSelectedDossiers()">Envoyer</button>
+    </div>
+  </ng-template>
+</ng-container>
 <app-access-denied *ngIf="!(dossierSrv.resourceName|listable)"></app-access-denied>
