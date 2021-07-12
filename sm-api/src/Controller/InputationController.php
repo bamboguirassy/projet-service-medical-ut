@@ -138,23 +138,22 @@ class InputationController extends AbstractController
             $monthNombreT = $em->createQuery('select count(i) from App\Entity\Inputation i '
             . 'JOIN i.dossier d '
             . 'where i.date>=?1 and i.date<=?2 and d.typePatient in (?3) and i.structureHospitaliere=?4')
-    ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
-    ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
-    ->setParameter(3, ["PATS", "PER"])
-    ->setParameter(4, $structure)
-    ->getSingleScalarResult();
-    $totalMonthT+=$monthNombreT;
+            ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
+            ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
+            ->setParameter(3, ["PATS", "PER"])
+            ->setParameter(4, $structure)
+            ->getSingleScalarResult();
+            $totalMonthT+=$monthNombreT;
             $monthNombreNT = $em->createQuery('select count(i) from App\Entity\Inputation i '
             . 'JOIN i.dossier d '
             . 'where i.date>=?1 and i.date<=?2 and d.typePatient not in (?3) and i.structureHospitaliere=?4')
-    ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
-    ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
-    ->setParameter(3, ["PATS", "PER"])
-    ->setParameter(4, $structure)
-    ->getSingleScalarResult();
-    $totalMonthNT+=$monthNombreNT;
-    $monthByStructure[] = ['monthNombreT' => $monthNombreT, 'monthNombreNT' => $monthNombreNT];
-
+            ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
+            ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
+            ->setParameter(3, ["PATS", "PER"])
+            ->setParameter(4, $structure)
+            ->getSingleScalarResult();
+            $totalMonthNT+=$monthNombreNT;
+            $monthByStructure[] = ['monthNombreT' => $monthNombreT, 'monthNombreNT' => $monthNombreNT];
         }
         $monthNombre = $em->createQuery('select count(i) from App\Entity\Inputation i '
                             . 'where i.date>=?1 and i.date<=?2')
@@ -166,6 +165,40 @@ class InputationController extends AbstractController
                 'nombre' => $monthNombre, 'dayTab' => $dayTab, 'monthByStructure' => $monthByStructure, 'totalMonthT' => $totalMonthT, 'totalMonthNT' => $totalMonthNT];
         
         return ['header' => $structures,'content' => $monthTab];
+    }
+
+    /**
+    * @Rest\Get(path="/{id}/{mois}/{annee}/diagram-journaliere-travailleur-par-structure/", name="diagram_journaliere_travailleur_par_structure")
+    * @Rest\View(StatusCode = 200)
+    * @IsGranted("ROLE_INPUTATION_INDEX")
+    */
+    public function getDaylyTravailleurByStructureDiagram(StructurePartenaire $structure, $mois, $annee): array
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $calendarElt = Utils::$calendarParams[$mois];
+        $dayTab = [];
+        for ($i = 1; $i <= $calendarElt['endTo']; $i++) {
+            $nbrTravailleurJr = $em->createQuery('select count(i) from App\Entity\Inputation i '
+            . 'JOIN i.dossier d '
+            . 'where i.date=?1 and d.typePatient in (?2) and i.structureHospitaliere=?3')
+            ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-' . $i)
+            ->setParameter(2, ["PATS", "PER"])
+    ->setParameter(3, $structure)
+    ->getSingleScalarResult();
+    
+            $nbrNonTravailleurJr = $em->createQuery('select count(i) from App\Entity\Inputation i '
+            . 'JOIN i.dossier d '
+            . 'where i.date=?1 and d.typePatient not in (?2) and i.structureHospitaliere=?3')
+            ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-' . $i)
+            ->setParameter(2, ["PATS", "PER"])
+    ->setParameter(3, $structure)
+    ->getSingleScalarResult();
+            $dayTab[] = ['day' => $i, 'nbrTravailleurJr' => $nbrTravailleurJr, 'nbrNonTravailleurJr' => $nbrNonTravailleurJr];
+        }
+
+            
+        return $dayTab;
     }
 
 

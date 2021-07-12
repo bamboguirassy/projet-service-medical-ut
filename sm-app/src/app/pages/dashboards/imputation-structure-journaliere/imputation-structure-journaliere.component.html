@@ -28,8 +28,8 @@
                     [nzSize]="'large'"><i nz-icon nzType="download"></i>Exporterle tableau</button>
             </div>
             <nz-table nzScroll="x" [nzFrontPagination]="'false'" nzBordered="true" [nzShowPagination]="'false'"
-                id="cjTable1" class="table table-scrollable table-hover table-responsive-sm" #basicTable
-                [nzData]="data">
+                id="cjTable1" class="table table-scrollable table-hover table-responsive-sm" #spjTable1
+                [nzData]="tab">
                 <thead>
                     <tr>
                         <th rowspan="2"></th>
@@ -79,6 +79,57 @@
                     </ng-container>
                 </tfoot>
             </nz-table>
+        </nz-tab>
+        <nz-tab [nzTitle]="'Diagramme des statistiques'">
+            <div class="row">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <h5>Choisir une stucture pour filtrer</h5>
+                    <nz-select [(ngModel)]="selectedStructure" (ngModelChange)="buildDiagram()" style="width: 100%;">
+                        <nz-option *ngFor="let item of structures" [nzValue]="item" [nzLabel]="item?.nom"></nz-option>
+                    </nz-select>
+                </div>
+            </div>
+            <div *ngIf="!loading && isLoad">
+                <div class="row mt-4">
+                    <div class="col-12 col-md-4">
+                        <tc-form-group *ngIf="canSwitchDiagramType">
+                            <tc-form-label>Type de graphe</tc-form-label>
+                            <nz-select nzAllowClear nzShowSearch name="typeDiagram" id="typeDiagram"
+                                nzPlaceHolder="Selectionner type diagram" [(ngModel)]="selectedTypeDiagram">
+                                <ng-container *ngFor="let diagramType of typeDiagrams">
+                                    <nz-option [nzLabel]="diagramType?.title" [nzValue]="diagramType?.value">
+                                    </nz-option>
+                                </ng-container>
+                            </nz-select>
+                        </tc-form-group>
+                    </div>
+                </div>
+                <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
+                    [plugins]="chartPlugins" [legend]="chartLegend" [chartType]="selectedTypeDiagram">
+                </canvas>
+                <nz-table id="spjTable2" nzScroll="x" [nzFrontPagination]="'false'" nzBordered="true"
+                    [nzShowPagination]="'false'" class="table mt-5 table-scrollable table-hover table-responsive-sm"
+                    #spjTable2 [nzData]="chartData">
+                    <thead>
+                        <tr>
+                            <th>
+                            </th>
+                            <th *ngFor="let label of chartLabels">J{{label}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of spjTable2.data">
+                            <td scope="row">{{item.label}}</td>
+                            <td *ngFor="let val of item.data">{{val}}</td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+                <div class="my-3 my-3 p-2">
+                    <button [disabled]="disableExportButton" nz-button nzType="primary"
+                        (click)="exportToExcel('spjTable2', fileName)" class="shadow" [nzSize]="'large'"><i nz-icon
+                            nzType="download"></i>Exporter le tableau</button>
+                </div>
+            </div>
         </nz-tab>
     </nz-tabset>
 

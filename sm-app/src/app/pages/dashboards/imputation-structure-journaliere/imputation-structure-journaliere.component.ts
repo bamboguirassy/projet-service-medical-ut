@@ -1,3 +1,5 @@
+import { StructurePartenaireService } from './../../parametrage/structurepartenaire/structurepartenaire.service';
+import { StructurePartenaire } from './../../parametrage/structurepartenaire/structurepartenaire';
 import { Inputation } from './../../gestionmedicale/inputation/inputation';
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -16,13 +18,14 @@ import { ImpuStructureJourStats } from '../impu-structure-jour-stats';
 })
 export class ImputationStructureJournaliereComponent extends BasePageComponent<any> implements OnInit, OnDestroy {
   @Input() canSwitchDiagramType: boolean = true;
+  structures: StructurePartenaire[] = [];
   typeDiagrams: { value: string, title: string }[] = [
     { value: 'bar', title: 'Barre verticale' },
     { value: 'line', title: 'Courbe' },
   ];
   isLoad = false;
   data: any;
-  fileName: string = "Statistique_consultation_journalière_"
+  fileName: string = "Statistique_imput_jour_par_structure_"
   selectedAnnee: number;
   selectedMois: any;
   annees = [];
@@ -42,11 +45,13 @@ export class ImputationStructureJournaliereComponent extends BasePageComponent<a
   };
   selectedTypeDiagram: ChartType = 'bar';
   tableData: any;
-  selectedImputation: Inputation;
+  dataDiagram: any;
+  selectedStructure: StructurePartenaire;
 
   constructor(
     store: Store<IAppState>,
-    public inputationSrv: InputationService
+    public inputationSrv: InputationService,
+    public structuresSrv: StructurePartenaireService,
   ) {
     super(store, inputationSrv);
 
@@ -63,23 +68,28 @@ export class ImputationStructureJournaliereComponent extends BasePageComponent<a
         }
       ]
     };
-    this.selectedAnnee = new Date().getFullYear();    
-    
+    this.selectedAnnee = new Date().getFullYear();
+
   }
 
   ngOnInit(): void {
     super.ngOnInit();
     this.rangeAnnee();
     this.getData();
-    this.findAll();
+    this.findStructures();
+  }
+
+  findStructures() {
+    this.structuresSrv.findAll().subscribe((data: any) => {
+      this.structures = data;
+    }, err => this.structuresSrv.httpSrv.catchError(err));
   }
 
   getData() {
     if (this.selectedMois && this.selectedAnnee) {
       this.inputationSrv.getDaylyByStrucrureStatistic(this.selectedMois, this.selectedAnnee)
         .subscribe((data: any) => {
-          this.data = data;          
-console.log(this.data);
+          this.data = data;
         }, err => this.inputationSrv.httpSrv.catchError(err));
     }
   }
@@ -99,12 +109,12 @@ console.log(this.data);
       responsive: true,
       plugins: {
         title: {
-           display: true,
-           text: 'Imputation journaliére par structure'
-         }
-       }
+          display: true,
+          text: 'Imputation journaliére par structure'
+        }
+      }
     };
-    this.chartLabels = this.rawChartData.map(r =>  r.day);
+    this.chartLabels = this.rawChartData.map(r => r.day);
     this.chartType = 'bar';
     this.chartLegend = true;
     this.chartPlugins = [];
@@ -116,9 +126,19 @@ console.log(this.data);
   }
 
 
-  buildDiagram(data) {
-    this.isLoad = true;
-    this.handlePostFetch(data as []);
+  buildDiagram() {
+    if (this.selectedStructure && this.selectedMois && this.selectedAnnee) {
+      this.loading = true;
+      this.inputationSrv.getDaylyTravailleurByStructureDiagram(this.selectedStructure?.id, this.selectedMois, this.selectedAnnee)
+        .pipe(finalize(() => this.loading = false))
+        .subscribe((data: any) => {
+          this.dataDiagram = data;
+          this.isLoad = true;
+          this.handlePostFetch(this.dataDiagram as []);
+        }, err => {
+          this.inputationSrv.httpSrv.handleError(err);
+        });
+    }
   }
 
   handlePostFetch(data: []) {

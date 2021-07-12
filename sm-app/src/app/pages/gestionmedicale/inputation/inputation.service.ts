@@ -27,6 +27,10 @@ export class InputationService extends BamboAbstractService {
     return this.httpSrv.get(this.routePrefix + mois + '/' + annee + '/statistique-by-structure-journaliere/');
   }
 
+  getDaylyTravailleurByStructureDiagram(structure: any, mois: any, annee: number) {
+    return this.httpSrv.get(this.routePrefix +structure+'/'+mois +'/'+ annee + '/diagram-journaliere-travailleur-par-structure/');
+  }
+
   getMensualStatistic(annee: number) {
     return this.httpSrv.get(this.routePrefix + annee + '/statistique-mensuelle/');
   }
