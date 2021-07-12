@@ -129,53 +129,27 @@
     </tc-table-col>
   </tc-table>
   <!-- Modal window -->
-  <nz-modal nzWidth="80%" [(nzVisible)]="visible" [nzClosable]="false"
-    [nzTitle]="'Envoie echoué pour ces patients, ils nont pas dadresse mail'" [nzContent]="corps" [nzFooter]="pied"
-    (nzOnCancel)="closeModal()">
+  <nz-modal nzWidth="70%" [(nzVisible)]="visible" [nzClosable]="false" [nzTitle]="''" [nzContent]="corps"
+    [nzFooter]="pied" (nzOnCancel)="closeModal()">
     <ng-template #corps>
       <div class="row">
         <div class="col-12">
-          <tc-table [itemsPerPage]="10" [rows]="echecSendEmails" [hovered]="true" [pagination]="true">
-            <tc-table-col [columnTitle]="'Prénoms'" [columnName]="'prenoms'" [enableSorting]="true">
-              <ng-template #tableTDTemplate let-value>
-                <span class="nowrap">{{ value }}</span>
-              </ng-template>
-            </tc-table-col>
-            <tc-table-col [columnTitle]="'Nom'" [columnName]="'nom'" [enableSorting]="true">
-              <ng-template #tableTDTemplate let-value>
-                <span class="nowrap">{{ value }}</span>
-              </ng-template>
-            </tc-table-col>
-            <tc-table-col [columnTitle]="'Matricule'" [columnName]="'matricule'" [enableSorting]="true">
-              <ng-template #tableTDTemplate let-value>
-                <span class="nowrap">{{ value }}</span>
-              </ng-template>
-            </tc-table-col>
-            <tc-table-col [columnTitle]="'Lien parenté'" [columnName]="'lienParente'" [enableSorting]="true">
-              <ng-template #tableTDTemplate let-value>
-                <span class="nowrap" *ngIf="value">{{ value }}</span>
-                <tc-badge [outline]="true" view="error" *ngIf="!value">Indéfinie</tc-badge>
-              </ng-template>
-            </tc-table-col>
-            <tc-table-col [columnTitle]="'Prénom travailleur'" [columnName]="'prenomTravailleur'"
-              [enableSorting]="true">
-              <ng-template #tableTDTemplate let-value>
-                <span class="nowrap" *ngIf="value">{{ value }}</span>
-                <tc-badge [outline]="true" view="error" *ngIf="!value">Indéfinie</tc-badge>
-              </ng-template>
-            </tc-table-col>
-            <tc-table-col [columnTitle]="'Nom travailleur'" [columnName]="'nomTravailleur'" [enableSorting]="true">
-              <ng-template #tableTDTemplate let-value>
-                <span class="nowrap" *ngIf="value">{{ value }}</span>
-                <tc-badge [outline]="true" view="error" *ngIf="!value">Indéfinie</tc-badge>
-              </ng-template>
-            </tc-table-col>
-            <tc-table-col [columnTitle]="'Téléphone'" [columnName]="'telephone'" [enableSorting]="true">
-              <ng-template #tableTDTemplate let-value>
-                <span class="nowrap">{{ value }}</span>
-              </ng-template>
-            </tc-table-col>
-          </tc-table>
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Envoie echoué pour les patients ci-dessous, ils n'ont pas d'adresse mail</h4>
+              <ul class="list-group">
+                <li *ngFor="let echecSendEmail of echecSendEmails" class="list-group-item">
+                  <a [routerLink]="[echecSendEmail.id]" routerLinkActive="router-link-active" target="_blank">
+                    <h6 class="mb-1">{{echecSendEmail.prenoms}} {{echecSendEmail.nom}}
+                      <span *ngIf="echecSendEmail.lienParente" class="mb-1">{{echecSendEmail.lienParente}} de
+                        {{echecSendEmail.prenomTravailleur}} {{echecSendEmail.nomTravailleur}}</span> matricule
+                      {{echecSendEmail.matricule}}
+                    </h6>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </ng-template>
