@@ -10,7 +10,7 @@
             </div>
             <div class="col-12 col-md-4">
                 <div class="col-12 justify-content-center pt-4">
-                    <button *ngIf="entity.emailPatient" size="sm" tc-button class="ml-1" (click)="openModal()"
+                    <button *ngIf="entity?.emailPatient" size="sm" tc-button class="ml-1" (click)="openModal()"
                         beforeIcon="icofont-email" view="accent"> Contacter</button>
                     <button size="sm" *ngIf="dossierSrv.resourceName|editable"
                         [routerLink]="['/'+orientation,dossierSrv.getRoutePrefixWithoutSlash(),entity?.id,'edit']"
