@@ -1,3 +1,4 @@
+import { StructurePartenaire } from './../../parametrage/structurepartenaire/structurepartenaire';
 import { BamboAbstractService } from '../../../shared/services/bambo-abstract.service';
 import { BamboHttpService } from './../../../shared/services/bambo-http.service';
 import { Injectable } from '@angular/core';
@@ -17,15 +18,21 @@ export class InputationService extends BamboAbstractService {
   findByDate(dateInterval: any) {
     return this.httpSrv.post(this.routePrefix + 'filter-by-date/', dateInterval);
   }
-  getDaylyStatistic(mois:any, annee: number) {
-    return this.httpSrv.get(this.routePrefix + mois +'/'+annee + '/statistique-journaliere/');
+
+  getDaylyStatistic(mois: any, annee: number) {
+    return this.httpSrv.get(this.routePrefix + mois + '/' + annee + '/statistique-journaliere/');
+  }
+
+  getDaylyByStrucrureStatistic( mois: any, annee: number) {
+    return this.httpSrv.get(this.routePrefix + mois + '/' + annee + '/statistique-by-structure-journaliere/');
   }
 
   getMensualStatistic(annee: number) {
     return this.httpSrv.get(this.routePrefix + annee + '/statistique-mensuelle/');
   }
-  findLastestInputation(){
+
+  findLastestInputation() {
     return this.httpSrv.get(this.routePrefix + 'latest/');
   }
-  
+
 }

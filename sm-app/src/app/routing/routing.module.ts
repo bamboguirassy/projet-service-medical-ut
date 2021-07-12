@@ -1,3 +1,4 @@
+import { ImputationStructureJournaliereComponent } from './../pages/dashboards/imputation-structure-journaliere/imputation-structure-journaliere.component';
 import { ResetPasswordComponent } from './../pages/apps/sessions/reset-password/reset-password.component';
 import { mesureRoutes } from './../pages/gestionmedicale/mesure/mesure.routes';
 import { ConsultationJournaliereComponent } from './../pages/dashboards/consultation-journaliere/consultation-journaliere.component';
@@ -44,6 +45,7 @@ const VERTICAL_ROUTES: Routes = [
   { path: 'cons-jour', component: ConsultationJournaliereComponent },
   { path: 'impu-mens', component: ImputationMensuelleComponent },
   { path: 'impu-jour', component: ImputationJournaliereComponent },
+  { path: 'impu-jour-by-structure', component: ImputationStructureJournaliereComponent },
 
   { path: 'edit-account', component: PageEditAccountComponent },
   { path: 'user-profile', component: PageUserProfileComponent },

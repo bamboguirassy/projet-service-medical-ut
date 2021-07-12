@@ -137,6 +137,11 @@ export class BamboAuthService {
             enabled: this.checkListAccess('inputation')
           },
           {
+            "title": "Imputation journalière par structure",
+            "routing": "impu-jour-by-structure",
+            enabled: this.checkListAccess('inputation')
+          },
+          {
             "title": "Imputation mensuelle",
             "routing": "impu-mens",
             enabled: this.checkListAccess('inputation')

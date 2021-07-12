@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Inputation;
+use App\Entity\StructurePartenaire;
 use App\Form\InputationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,14 +16,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 /**
  * @Route("/api/inputation")
  */
-class InputationController extends AbstractController {
+class InputationController extends AbstractController
+{
 
     /**
      * @Rest\Get(path="/", name="inputation_index")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_INPUTATION_INDEX")
      */
-    public function index(): array {
+    public function index(): array
+    {
         $inputations = $this->getDoctrine()
                 ->getRepository(Inputation::class)
                 ->findAll();
@@ -34,7 +37,8 @@ class InputationController extends AbstractController {
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_INPUTATION_INDEX")
      */
-    public function findLastestInputations(): array {
+    public function findLastestInputations(): array
+    {
         $em = $this->getDoctrine()->getManager();
         $inputations= $em->createQuery('select i from App\Entity\Inputation i ORDER BY i.date DESC')
                 ->setMaxResults(300)
@@ -42,12 +46,14 @@ class InputationController extends AbstractController {
 
         return  $inputations;
     }
-        /**
+
+    /**
      * @Rest\Get(path="/{mois}/{annee}/statistique-journaliere/", name="inputation_statistique_journaliere")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_INPUTATION_INDEX")
      */
-    public function getDaylyStatistic($mois,$annee): array {
+    public function getDaylyStatistic($mois, $annee): array
+    {
         //$tab_stats = [];
         $em = $this->getDoctrine()->getManager();
         $calendarElt = Utils::$calendarParams[$mois];
@@ -87,13 +93,89 @@ class InputationController extends AbstractController {
 
         return $dayTab;
     }
+    /**
+     * @Rest\Get(path="/{mois}/{annee}/statistique-by-structure-journaliere/", name="statistique_by_structure_journaliere")
+     * @Rest\View(StatusCode = 200)
+     * @IsGranted("ROLE_INPUTATION_INDEX")
+     */
+    public function getDaylyByStrucrureStatistic($mois, $annee): array
+    {
+        //$tab_stats = [];
+        $em = $this->getDoctrine()->getManager();
+        $calendarElt = Utils::$calendarParams[$mois];
+        $dayTab = [];
+        $monthTab = [];
+        $structures = $this->getDoctrine()->getRepository(StructurePartenaire::class)
+        ->findAll();
+        for ($i = 1; $i <= $calendarElt['endTo']; $i++) {
+            $imputationTab = [];
+            $totalT = 0;
+            $totalNT = 0;
+            foreach ($structures as $structure) {
+                $nbrTravailleurJr = $em->createQuery('select count(i) from App\Entity\Inputation i '
+                                        . 'JOIN i.dossier d '
+                                        . 'where i.date=?1 and d.typePatient in (?2) and i.structureHospitaliere=?3')
+                                        ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-' . $i)
+                                        ->setParameter(2, ["PATS", "PER"])
+                                ->setParameter(3, $structure)
+                                ->getSingleScalarResult();
+                $totalT += $nbrTravailleurJr;
+                $nbrNonTravailleurJr = $em->createQuery('select count(i) from App\Entity\Inputation i '
+                                        . 'JOIN i.dossier d '
+                                        . 'where i.date=?1 and d.typePatient not in (?2) and i.structureHospitaliere=?3')
+                                        ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-' . $i)
+                                        ->setParameter(2, ["PATS", "PER"])
+                                ->setParameter(3, $structure)
+                                ->getSingleScalarResult();
+                $totalNT += $nbrNonTravailleurJr;
+                $imputationTab[] = ['travailleur' => $nbrTravailleurJr, 'nonTravailleur' => $nbrNonTravailleurJr];
+            }
+            $dayTab[] = ['day' => $i, 'imputationTab' => $imputationTab, 'totalT' => $totalT, 'totalNT' => $totalNT];
+        }
+        $totalMonthT=0;
+        $totalMonthNT=0;
+        foreach ($structures as $structure) {
+            $monthNombreT = $em->createQuery('select count(i) from App\Entity\Inputation i '
+            . 'JOIN i.dossier d '
+            . 'where i.date>=?1 and i.date<=?2 and d.typePatient in (?3) and i.structureHospitaliere=?4')
+    ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
+    ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
+    ->setParameter(3, ["PATS", "PER"])
+    ->setParameter(4, $structure)
+    ->getSingleScalarResult();
+    $totalMonthT+=$monthNombreT;
+            $monthNombreNT = $em->createQuery('select count(i) from App\Entity\Inputation i '
+            . 'JOIN i.dossier d '
+            . 'where i.date>=?1 and i.date<=?2 and d.typePatient not in (?3) and i.structureHospitaliere=?4')
+    ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
+    ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
+    ->setParameter(3, ["PATS", "PER"])
+    ->setParameter(4, $structure)
+    ->getSingleScalarResult();
+    $totalMonthNT+=$monthNombreNT;
+    $monthByStructure[] = ['monthNombreT' => $monthNombreT, 'monthNombreNT' => $monthNombreNT];
+
+        }
+        $monthNombre = $em->createQuery('select count(i) from App\Entity\Inputation i '
+                            . 'where i.date>=?1 and i.date<=?2')
+                    ->setParameter(1, $annee . '-' . $calendarElt['code'] . '-01')
+                    ->setParameter(2, $annee . '-' . $calendarElt['code'] . '-' . $calendarElt['endTo'])
+                    ->getSingleScalarResult();
+        
+        $monthTab[] = ['month' => $calendarElt['month'],
+                'nombre' => $monthNombre, 'dayTab' => $dayTab, 'monthByStructure' => $monthByStructure, 'totalMonthT' => $totalMonthT, 'totalMonthNT' => $totalMonthNT];
+        
+        return ['header' => $structures,'content' => $monthTab];
+    }
+
 
     /**
      * @Rest\Get(path="/{annee}/statistique-mensuelle/", name="inputation_statistique_mensuelle")
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_INPUTATION_INDEX")
      */
-    public function getMensualStatistic($annee): array {
+    public function getMensualStatistic($annee): array
+    {
         $tab_stats = [];
         $em = $this->getDoctrine()->getManager();
         foreach (Utils::$calendarParams as $calendarElt) {
@@ -142,7 +224,8 @@ class InputationController extends AbstractController {
      * @Rest\View(StatusCode = 200)
      * @IsGranted("ROLE_INPUTATION_INDEX")
      */
-    public function findByDate(Request $request): array {
+    public function findByDate(Request $request): array
+    {
         $reqData = Utils::getObjectFromRequest($request);
         if (!(isset($reqData->startDate) || isset($reqData->endDate))) {
             throw $this->createNotFoundException("Il faut un interval de date pour filtrer...");
@@ -162,7 +245,8 @@ class InputationController extends AbstractController {
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_INPUTATION_CREATE")
      */
-    public function create(Request $request): Inputation {
+    public function create(Request $request): Inputation
+    {
         $inputation = new Inputation();
         $form = $this->createForm(InputationType::class, $inputation);
         $form->submit(Utils::serializeRequestContent($request));
@@ -185,7 +269,8 @@ class InputationController extends AbstractController {
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_INPUTATION_SHOW")
      */
-    public function show(Inputation $inputation): Inputation {
+    public function show(Inputation $inputation): Inputation
+    {
         return $inputation;
     }
 
@@ -194,7 +279,8 @@ class InputationController extends AbstractController {
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_INPUTATION_EDIT")
      */
-    public function edit(Request $request, Inputation $inputation): Inputation {
+    public function edit(Request $request, Inputation $inputation): Inputation
+    {
         $form = $this->createForm(InputationType::class, $inputation);
         $form->submit(Utils::serializeRequestContent($request));
 
@@ -208,7 +294,8 @@ class InputationController extends AbstractController {
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_INPUTATION_CLONE")
      */
-    public function cloner(Request $request, Inputation $inputation): Inputation {
+    public function cloner(Request $request, Inputation $inputation): Inputation
+    {
         $em = $this->getDoctrine()->getManager();
         $inputationNew = new Inputation();
         $form = $this->createForm(InputationType::class, $inputationNew);
@@ -225,7 +312,8 @@ class InputationController extends AbstractController {
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_INPUTATION_EDIT")
      */
-    public function delete(Inputation $inputation): Inputation {
+    public function delete(Inputation $inputation): Inputation
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($inputation);
         $entityManager->flush();
@@ -238,7 +326,8 @@ class InputationController extends AbstractController {
      * @Rest\View(StatusCode=200)
      * @IsGranted("ROLE_INPUTATION_DELETE")
      */
-    public function deleteMultiple(Request $request): array {
+    public function deleteMultiple(Request $request): array
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $inputations = Utils::getObjectFromRequest($request);
         if (!count($inputations)) {
@@ -252,5 +341,4 @@ class InputationController extends AbstractController {
 
         return $inputations;
     }
-
 }

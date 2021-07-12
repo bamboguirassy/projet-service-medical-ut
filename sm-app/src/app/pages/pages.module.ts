@@ -128,6 +128,7 @@ import { ResetPasswordComponent } from './apps/sessions/reset-password/reset-pas
 import { ResetPasswordFormComponent } from "../layout/components/reset-password-form/reset-password-form.component";
 import { ImputationMensuelleComponent } from './dashboards/imputation-mensuelle/imputation-mensuelle.component';
 import { ImputationJournaliereComponent } from './dashboards/imputation-journaliere/imputation-journaliere.component';
+import { ImputationStructureJournaliereComponent } from './dashboards/imputation-structure-journaliere/imputation-structure-journaliere.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -263,7 +264,8 @@ import { ImputationJournaliereComponent } from './dashboards/imputation-journali
     MedicamentReceptionListComponent,
     MedicamentReceptionNewComponent,
     ImputationMensuelleComponent,
-    ImputationJournaliereComponent
+    ImputationJournaliereComponent,
+    ImputationStructureJournaliereComponent
   ],
   exports: [],
   entryComponents: []
