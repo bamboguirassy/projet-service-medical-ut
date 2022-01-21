@@ -110,7 +110,7 @@
             </tc-form-description>
           </tc-form-group>
         </div>
-        <div class="col-12 col-md-6 col-lg-4">
+        <!-- <div class="col-12 col-md-6 col-lg-4">
           <tc-form-group>
             <tc-form-label>Motifs de consultation</tc-form-label>
             <tc-textarea [(ngModel)]="entity.motifConsultations" name="motifConsultations" id="motifConsultations"
@@ -121,21 +121,7 @@
               </app-form-field-validation-message>
             </tc-form-description>
           </tc-form-group>
-        </div>
-        <div class="col-12 col-md-6 col-lg-4">
-          <tc-form-group>
-            <tc-form-label>Pathologie diagnostiquée</tc-form-label>
-            <nz-select name="pathologie" id="pathologie" #pathologie="ngModel" nzMode="multiple"
-              nzPlaceHolder="Selectionner la pathologie" nzAllowClear nzShowSearch [(ngModel)]="selectedPathologie">
-              <ng-container *ngFor="let pathologie of pathologies">
-                <nz-option [nzValue]="pathologie" [nzLabel]="pathologie.nom"></nz-option>
-              </ng-container>
-            </nz-select>
-            <tc-form-description>
-              <app-form-field-validation-message [formField]="pathologie"></app-form-field-validation-message>
-            </tc-form-description>
-          </tc-form-group>
-        </div>
+        </div> -->
         <div class="col-12 col-md-6 col-lg-4">
           <tc-form-group>
             <tc-form-label>Examens cliniques</tc-form-label>
@@ -169,6 +155,20 @@
             <tc-form-description>
               <app-form-field-validation-message [formField]="medicamentPrescrits">
               </app-form-field-validation-message>
+            </tc-form-description>
+          </tc-form-group>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <tc-form-group>
+            <tc-form-label>Pathologie diagnostiquée</tc-form-label>
+            <nz-select name="pathologie" id="pathologie" #pathologie="ngModel" nzMode="multiple"
+              nzPlaceHolder="Selectionner la pathologie" nzAllowClear nzShowSearch [(ngModel)]="selectedPathologie">
+              <ng-container *ngFor="let pathologie of pathologies">
+                <nz-option [nzValue]="pathologie" [nzLabel]="pathologie.nom"></nz-option>
+              </ng-container>
+            </nz-select>
+            <tc-form-description>
+              <app-form-field-validation-message [formField]="pathologie"></app-form-field-validation-message>
             </tc-form-description>
           </tc-form-group>
         </div>
