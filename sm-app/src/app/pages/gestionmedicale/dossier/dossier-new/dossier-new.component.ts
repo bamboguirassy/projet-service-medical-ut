@@ -32,6 +32,10 @@ export class DossierNewComponent implements OnInit {
     { value: 'Alcool', label: 'Alcool' },
     { value: 'autres', label: 'Autres' },
   ];
+  sources = [
+    { value: 'GRH', label: 'GRH' },
+    { value: 'MANUEL', label: 'Ajout Manuel' },
+  ];
   niveauInstructions = [
     { value: 'Non scolarisé', label: 'Non Scolarisé' },
     { value: 'primaire', label: 'Primaire' },
@@ -47,7 +51,7 @@ export class DossierNewComponent implements OnInit {
   ];
   item: any;
   selected = false;
-  selectedTypePatient: String;
+  selectedTypePatient: string;
   selectedFamille: any;
   selectedEmploye: any;
 
@@ -63,30 +67,32 @@ export class DossierNewComponent implements OnInit {
   }
 
   save() {
-    if (this.selectedTypePatient == "TRAVAILLEUR") {
-      this.entity.prenoms = this.item?.employe.prenoms;
-      this.entity.nom = this.item?.employe.nom;
-      this.entity.dateNaissance = this.item?.employe.dateNaissance;
-      this.entity.genre = this.item?.employe.genre;
-      this.entity.cni = this.item?.employe.cni;
-      this.entity.matricule = this.item?.employe.matricule;
-      this.entity.structure = this.item?.employe.structure.code;
-      this.entity.situationMatrimoniale = this.item?.employe.situtationMatrimoniale;
-      this.entity.telephone = this.item?.employe.telephonePrimaire;
-      this.entity.typePatient = this.item?.employe.typeEmploye.code;
-    }
-    if (this.selectedTypePatient == "FAMILLE") {
-      this.entity.prenoms = this.selectedFamille?.prenoms;
-      this.entity.nom = this.selectedFamille?.nom;
-      this.entity.dateNaissance = this.selectedFamille?.dateNaissance;
-      this.entity.genre = this.selectedFamille?.genre;
-      this.entity.lienParente = this.selectedFamille?.lienParente;
-      this.entity.structure = this.selectedFamille?.employe.structure.code;
-      this.entity.prenomTravailleur = this.selectedFamille?.employe.prenoms;
-      this.entity.nomTravailleur = this.selectedFamille?.employe.nom;
-      this.entity.matricule = this.selectedFamille?.employe.matricule;
-      this.entity.telephone = this.selectedFamille?.telephone;
+    if (this.entity.source == 'GRH') {
+      if (this.selectedTypePatient == "TRAVAILLEUR") {
+        this.entity.prenoms = this.item?.employe.prenoms;
+        this.entity.nom = this.item?.employe.nom;
+        this.entity.dateNaissance = this.item?.employe.dateNaissance;
+        this.entity.genre = this.item?.employe.genre;
+        this.entity.cni = this.item?.employe.cni;
+        this.entity.matricule = this.item?.employe.matricule;
+        this.entity.structure = this.item?.employe.structure.code;
+        this.entity.situationMatrimoniale = this.item?.employe.situtationMatrimoniale;
+        this.entity.telephone = this.item?.employe.telephonePrimaire;
+        this.entity.typePatient = this.item?.employe.typeEmploye.code;
+      }
+      if (this.selectedTypePatient == "FAMILLE") {
+        this.entity.prenoms = this.selectedFamille?.prenoms;
+        this.entity.nom = this.selectedFamille?.nom;
+        this.entity.dateNaissance = this.selectedFamille?.dateNaissance;
+        this.entity.genre = this.selectedFamille?.genre;
+        this.entity.lienParente = this.selectedFamille?.lienParente;
+        this.entity.structure = this.selectedFamille?.employe.structure.code;
+        this.entity.prenomTravailleur = this.selectedFamille?.employe.prenoms;
+        this.entity.nomTravailleur = this.selectedFamille?.employe.nom;
+        this.entity.matricule = this.selectedFamille?.employe.matricule;
+        this.entity.telephone = this.selectedFamille?.telephone;
 
+      }
     }
     if (this.entity.typePatient == "ETUDIANT") {
       this.entity.niveauInstruction = 'superieur';
@@ -95,7 +101,8 @@ export class DossierNewComponent implements OnInit {
     if (this.entity.dateMariage) {
       this.entity.dateMariage = this.datePipe.transform(this.entity.dateMariage, 'yyyy-MM-dd');
     }
-    if (this.entity.dateNaissance && this.entity.typePatient=='AUTRES') {
+    if (this.entity.dateNaissance && (this.entity.typePatient == 'AUTRES' || this.entity.source == 'MANUEL')) {
+      this.entity.typePatient = this.selectedTypePatient;
       this.entity.dateNaissance = this.datePipe.transform(this.entity.dateNaissance, 'yyyy-MM-dd');
     }
     this.dossierSrv.create(this.entity)
